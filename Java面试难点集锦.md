@@ -1,5 +1,15 @@
 # 							Java SE部分
 
+## ● 请解释一下String为什么不可变？
+
+考察点：面向对象 
+
+### 参考回答：
+
+不可变对象是指一个对象的状态在对象被创建之后就不再变化。不可改变的意思就是说：不能改变对象内的成员变量，包括基本数据类型的值不能改变，引用类型的变量不能指向其他的对象，引用类型指向的对象的状态也不能改变。 
+
+String 不可变是因为在 JDK 中 String 类被声明为一个 final 类，且类内部的 value 字节数组也是 final 的，只有当字符串是不可变时字符串池才有可能实现，字符串池的实现可以在运行时节约很多 heap 空间，因为不同的字符串变量都指向池中的同一个字符串；如果字符串是可变的则会引起很严重的安全问题，譬如数据库的用户名密码都是以字符串的形式传入来获得数据库的连接，或者在 socket 编程中主机名和端口都是以字符串的形式传入，因为字符串是不可变的，所以它的值是不可改变的，否则黑客们可以钻到空子改变字符串指向的对象的值造成安全漏洞；因为字符串是不可变的，所以是多线程安全的，同一个字符串实例可以被多个线程共享，这样便不用因为线程安全问题而使用同步，字符串自己便是线程安全的；因为字符串是不可变的所以在它创建的时候 hashcode 就被缓存了，不变性也保证了 hash 码的唯一性，不需要重新计算，这就使得字符串很适合作为 Map 的键，字符串的处理速度要快过其它的键对象，这就是 HashMap 中的键往往都使用字符串的原因。
+
 ## ● 请你说明String 和StringBuffer的区别，底层实现上呢？
 
 考察点：数据类型 
@@ -12,6 +22,8 @@ StringBuffer线程安全，StringBuilder线程不安全，底层实现上的话�
 
 
 
+
+
 ## ● 请你解释为什么重写equals还要重写hashcode？
 
 考点：java基础 
@@ -20,17 +32,13 @@ StringBuffer线程安全，StringBuilder线程不安全，底层实现上的话�
 
 HashMap中，如果要比较key是否相等，要同时使用这两个函数！因为自定义的类的hashcode()方法继承于Object类，其hashcode码为默认的内存地址，这样即便有相同含义的两个对象，比较也是不相等的。HashMap中的比较key是这样的，先求出key的hashcode(),比较其值是否相等，若相等再比较equals(),若相等则认为他们是相等的。若equals()不相等则认为他们不相等。如果只重写hashcode()不重写equals()方法，当比较equals()时只是看他们是否为同一对象（即进行内存地址的比较）,所以必定要两个方法一起重写。HashMap用来判断key是否相等的方法，其实是调用了HashSet判断加入元素 是否相等。重载hashCode()是为了对同一个key，能得到相同的Hash Code，这样HashMap就可以定位到我们指定的key上。重载equals()是为了向HashMap表明当前对象和key上所保存的对象是相等的，这样我们才真正地获得了这个key所对应的这个键值对。
 
+## ● 请判断，两个对象值相同(x.equals(y) == true)，但却可有不同的hash code，该说法是否正确，为什么？
 
-
-## ● 请你介绍一下volatile？ 
-
-考察点：java关键字
+考察点：对象 
 
 ### 参考回答：
 
-volatile关键字是用来保证有序性和可见性的。这跟Java内存模型有关。比如我们所写的代码，不一定是按照我们自己书写的顺序来执行的，编译器会做重排序，CPU也会做重排序的，这样的重排序是为了减少流水线的阻塞的，引起流水阻塞，比如数据相关性，提高CPU的执行效率。需要有一定的顺序和规则来保证，不然程序员自己写的代码都不知带对不对了，所以有happens-before规则，其中有条就是volatile变量规则：对一个变量的写操作先行发生于后面对这个变量的读操作；有序性实现的是通过插入内存屏障来保证的。可见性：首先Java内存模型分为，主内存，工作内存。比如线程A从主内存把变量从主内存读到了自己的工作内存中，做了加1的操作，但是此时没有将i的最新值刷新会主内存中，线程B此时读到的还是i的旧值。加了volatile关键字的代码生成的汇编代码发现，会多出一个lock前缀指令。Lock指令对Intel平台的CPU，早期是锁总线，这样代价太高了，后面提出了缓存一致性协议，MESI，来保证了多核之间数据不一致性问题。
-
-
+不对，如果两个对象x和y满足x.equals(y) == true，它们的哈希码（hash code）应当相同。Java对于eqauls方法和hashCode方法是这样规定的：(1)如果两个对象相同（equals方法返回true），那么它们的hashCode值一定要相同；(2)如果两个对象的hashCode相同，它们并不一定相同。当然，你未必要按照要求去做，但是如果你违背了上述原则就会发现在使用容器时，相同的对象可以出现在Set集合中，同时增加新元素的效率会大大下降（对于使用哈希存储的系统，如果哈希码频繁的冲突将会造成存取性能急剧下降）。
 
 ## ● 若对一个类不重写，它的equals()方法是如何比较的？ 
 
@@ -39,8 +47,6 @@ volatile关键字是用来保证有序性和可见性的。这跟Java内存模�
 ### 参考回答：
 
 比较是对象的地址。
-
-
 
 ## ● 请解释hashCode()和equals()方法有什么联系？
 
@@ -56,13 +62,19 @@ Java对象的eqauls方法和hashCode方法是这样规定的：
 
 
 
-## ● 请说明Java中的方法覆盖(Overriding)和方法重载(Overloading)是什么意思？
 
-考察点：方法 
+
+
+
+## ● 请你介绍一下volatile？ 
+
+考察点：java关键字
 
 ### 参考回答：
 
-Java中的方法重载发生在同一个类里面两个或者是多个方法的方法名相同但是参数不同的情况。与此相对，方法覆盖是说子类重新定义了父类的方法。方法覆盖必须有相同的方法名，参数列表和返回类型。覆盖者可能不会限制它所覆盖的方法的访问。
+volatile关键字是用来保证有序性和可见性的。这跟Java内存模型有关。比如我们所写的代码，不一定是按照我们自己书写的顺序来执行的，编译器会做重排序，CPU也会做重排序的，这样的重排序是为了减少流水线的阻塞的，引起流水阻塞，比如数据相关性，提高CPU的执行效率。需要有一定的顺序和规则来保证，不然程序员自己写的代码都不知带对不对了，所以有happens-before规则，其中有条就是volatile变量规则：对一个变量的写操作先行发生于后面对这个变量的读操作；有序性实现的是通过插入内存屏障来保证的。可见性：首先Java内存模型分为，主内存，工作内存。比如线程A从主内存把变量从主内存读到了自己的工作内存中，做了加1的操作，但是此时没有将i的最新值刷新会主内存中，线程B此时读到的还是i的旧值。加了volatile关键字的代码生成的汇编代码发现，会多出一个lock前缀指令。Lock指令对Intel平台的CPU，早期是锁总线，这样代价太高了，后面提出了缓存一致性协议，MESI，来保证了多核之间数据不一致性问题。
+
+
 
 
 
@@ -82,6 +94,16 @@ Java中的方法重载发生在同一个类里面两个或者是多个方法的�
 
 
 
+
+
+## ● 请说明Java中的方法覆盖(Overriding)和方法重载(Overloading)是什么意思？
+
+考察点：方法 
+
+### 参考回答：
+
+Java中的方法重载发生在同一个类里面两个或者是多个方法的方法名相同但是参数不同的情况。与此相对，方法覆盖是说子类重新定义了父类的方法。方法覆盖必须有相同的方法名，参数列表和返回类型。覆盖者可能不会限制它所覆盖的方法的访问。
+
 ## ● 请说明重载（Overload）和重写（Override）的区别。重载的方法能否根据返回类型进行区分？
 
 考察点：java重载 
@@ -92,13 +114,7 @@ Java中的方法重载发生在同一个类里面两个或者是多个方法的�
 
 
 
-## ● 请判断，两个对象值相同(x.equals(y) == true)，但却可有不同的hash code，该说法是否正确，为什么？
 
-考察点：对象 
-
-### 参考回答：
-
-不对，如果两个对象x和y满足x.equals(y) == true，它们的哈希码（hash code）应当相同。Java对于eqauls方法和hashCode方法是这样规定的：(1)如果两个对象相同（equals方法返回true），那么它们的hashCode值一定要相同；(2)如果两个对象的hashCode相同，它们并不一定相同。当然，你未必要按照要求去做，但是如果你违背了上述原则就会发现在使用容器时，相同的对象可以出现在Set集合中，同时增加新元素的效率会大大下降（对于使用哈希存储的系统，如果哈希码频繁的冲突将会造成存取性能急剧下降）。
 
 
 
@@ -155,6 +171,16 @@ Java接口中的成员函数默认是public的。抽象类的成员函数可以�
 
 
 
+
+
+## ● 请说明静态变量存在什么位置?
+
+考察点：类 
+
+### 参考回答：
+
+方法区
+
 ## ● 请你说明是否可以在static环境中访问非static变量？
 
 考察点：static变量 
@@ -162,8 +188,6 @@ Java接口中的成员函数默认是public的。抽象类的成员函数可以�
 ### 参考回答：
 
 static变量在Java中是属于类的，它在所有的实例中的值是一样的。当类被Java虚拟机载入的时候，会对static变量进行初始化。如果你的代码尝试不用实例来访问非static的变量，编译器会报错，因为这些变量还没有被创建出来，还没有跟任何实例关联上。
-
-
 
 ## ● 请说明”static”关键字是什么意思？Java中是否可以覆盖(override)一个private或者是static的方法？ 
 
@@ -173,6 +197,12 @@ static变量在Java中是属于类的，它在所有的实例中的值是一样�
 
 “static”关键字表明一个成员变量或者是成员方法可以在没有所属的类的实例变量的情况下被访问。 
 Java中static方法不能被覆盖，因为方法覆盖是基于运行时动态绑定的，而static方法是编译时静态绑定的。static方法跟类的任何实例都不相关，所以概念上不适用。 
+
+
+
+
+
+
 
 
 
@@ -195,14 +225,6 @@ Java中static方法不能被覆盖，因为方法覆盖是基于运行时动态�
 下界的list只能add，不能get 
 
 
-
-## ● 请说明静态变量存在什么位置?
-
-考察点：类 
-
-### 参考回答：
-
-方法区
 
 
 
@@ -228,15 +250,47 @@ Object()默认构造方法。clone() 创建并返回此对象的一个副本。e
 
 
 
-## ● 请解释一下String为什么不可变？
 
-考察点：面向对象 
+
+
+
+
+
+
+
+## ● 请说明Java集合类框架的基本接口有哪些？
+
+考察点：JAVA集合
 
 ### 参考回答：
 
-不可变对象是指一个对象的状态在对象被创建之后就不再变化。不可改变的意思就是说：不能改变对象内的成员变量，包括基本数据类型的值不能改变，引用类型的变量不能指向其他的对象，引用类型指向的对象的状态也不能改变。 
+集合类接口指定了一组叫做元素的对象。集合类接口的每一种具体的实现类都可以选择以它自己的方式对元素进行保存和排序。有的集合类允许重复的键，有些不允许。 
+Java集合类提供了一套设计良好的支持对一组对象进行操作的接口和类。Java集合类里面最基本的接口有： 
+Collection：代表一组对象，每一个对象都是它的子元素。 
+Set：不包含重复元素的Collection。 
+List：有顺序的collection，并且可以包含重复元素。 
+Map：可以把键(key)映射到值(value)的对象，键不能重复。
 
-String 不可变是因为在 JDK 中 String 类被声明为一个 final 类，且类内部的 value 字节数组也是 final 的，只有当字符串是不可变时字符串池才有可能实现，字符串池的实现可以在运行时节约很多 heap 空间，因为不同的字符串变量都指向池中的同一个字符串；如果字符串是可变的则会引起很严重的安全问题，譬如数据库的用户名密码都是以字符串的形式传入来获得数据库的连接，或者在 socket 编程中主机名和端口都是以字符串的形式传入，因为字符串是不可变的，所以它的值是不可改变的，否则黑客们可以钻到空子改变字符串指向的对象的值造成安全漏洞；因为字符串是不可变的，所以是多线程安全的，同一个字符串实例可以被多个线程共享，这样便不用因为线程安全问题而使用同步，字符串自己便是线程安全的；因为字符串是不可变的所以在它创建的时候 hashcode 就被缓存了，不变性也保证了 hash 码的唯一性，不需要重新计算，这就使得字符串很适合作为 Map 的键，字符串的处理速度要快过其它的键对象，这就是 HashMap 中的键往往都使用字符串的原因。
+## ● 请讲讲你所知道的常用集合类以及主要方法？
+
+考察点：集合 
+
+### 参考回答：
+
+最常用的集合类是List 和 Map。 
+
+List 的具体实现包括 ArrayList 和 Vector，它们是可变大小的列表，比较适合构建、存储和操作任何类型对象的元素列表。List 适用于按数值索引访问元素的情形。 
+
+Map 提供了一个更通用的元素存储方法。 Map 集合类用于存储元素对（称作"键"和"值"），其中每个键映射到一个值。
+
+## ● 请说明Collection 和 Collections的区别。
+
+考察点：集合
+
+### 参考回答：
+
+Collection是集合类的上级接口，继承与他的接口主要有Set 和List.
+Collections是针对集合类的一个帮助类，他提供一系列静态方法实现对各种集合的搜索、排序、线程安全化等操作。
 
 
 
@@ -250,8 +304,6 @@ String 不可变是因为在 JDK 中 String 类被声明为一个 final 类，�
 
 List以特定索引来存取元素，可以有重复元素。Set不能存放重复元素（用对象的equals()方法来区分元素是否重复）。Map保存键值对（key-value pair）映射，映射关系可以是一对一或多对一。Set和Map容器都有基于哈希存储和排序树的两种实现版本，基于哈希存储的版本理论存取时间复杂度为O(1)，而基于排序树版本的实现在插入或删除元素时会按照元素或元素的键（key）构成排序树从而达到排序和去重的效果。
 
-
-
 ## ● 请判断List、Set、Map是否继承自Collection接口？
 
 考察点：collection接口 
@@ -259,6 +311,763 @@ List以特定索引来存取元素，可以有重复元素。Set不能存放重�
 ### 参考回答：
 
 List、Set 是，Map 不是。Map是键值对映射容器，与List和Set有明显的区别，而Set存储的零散的元素且不允许有重复元素（数学中的集合也是如此），List是线性结构的容器，适用于按数值索引访问元素的情形。
+
+
+
+
+
+
+
+
+
+## ● 阐述ArrayList、Vector、LinkedList的存储性能和特性
+
+考察点：ArrayList
+
+### 参考回答：
+
+ArrayList 和Vector都是使用数组方式存储数据，此数组元素数大于实际存储的数据以便增加和插入元素，它们都允许直接按序号索引元素，但是插入元素要涉及数组元素移动等内存操作，所以索引数据快而插入数据慢，Vector中的方法由于添加了synchronized修饰，因此Vector是线程安全的容器，但性能上较ArrayList差，因此已经是Java中的遗留容器。LinkedList使用双向链表实现存储（将内存中零散的内存单元通过附加的引用关联起来，形成一个可以按序号索引的线性结构，这种链式存储方式与数组的连续存储方式相比，内存的利用率更高），按序号索引数据需要进行前向或后向遍历，但是插入数据时只需要记录本项的前后项即可，所以插入速度较快。Vector属于遗留容器（Java早期的版本中提供的容器，除此之外，Hashtable、Dictionary、BitSet、Stack、Properties都是遗留容器），已经不推荐使用，但是由于ArrayList和LinkedListed都是非线程安全的，如果遇到多个线程操作同一个容器的场景，则可以通过工具类Collections中的synchronizedList方法将其转换成线程安全的容器后再使用（这是对装潢模式的应用，将已有对象传入另一个类的构造器中创建新的对象来增强实现）。
+
+## ● 请说明ArrayList和LinkedList的区别，说明如果一直在list的尾部添加元素，用哪种方式的效率高？
+
+考察点：ArrayList 
+
+### 参考回答：
+
+ArrayList和LinkedList都实现了List接口，他们有以下的不同点： 
+ArrayList是基于索引的数据接口，它的底层是数组。它可以以O(1)时间复杂度对元素进行随机访问。与此对应，LinkedList是以元素列表的形式存储它的数据，每一个元素都和它的前一个和后一个元素链接在一起，在这种情况下，查找某个元素的时间复杂度是O(n)。 
+相对于ArrayList，LinkedList的插入，添加，删除操作速度更快，因为当元素被添加到集合任意位置的时候，不需要像数组那样重新计算大小或者是更新索引。 
+LinkedList比ArrayList更占内存，因为LinkedList为每一个节点存储了两个引用，一个指向前一个元素，一个指向下一个元素。
+
+ArrayList采用数组数组实现的，查找效率比LinkedList高。LinkedList采用双向链表实现的，插入和删除的效率比ArrayList要高。一直在list的尾部添加元素，LinkedList效率要高。
+
+## ● 请说明ArrayList是否会越界？
+
+考点：集合 
+
+### 参考回答：
+
+ArrayList是实现了基于动态数组的数据结构，而LinkedList是基于链表的数据结构2. 对于随机访问get和set，ArrayList要优于LinkedList，因为LinkedList要移动指针；**ArrayList并发add()可能出现数组下标越界异常。**
+
+
+
+
+
+
+
+
+
+
+
+## ● 请你说明一下Map和ConcurrentHashMap的区别？
+
+考点：集合 
+
+### 参考回答：
+
+hashmap是线程不安全的，put时在多线程情况下，会形成环从而导致死循环。CoucurrentHashMap是线程安全的，采用分段锁机制，减少锁的粒度。
+
+## ● 请你解释一下hashMap具体如何实现的？
+
+考点：集合 
+
+### 参考回答：
+
+Hashmap基于数组实现的，通过对key的hashcode & 数组的长度得到在数组中位置，如当前数组有元素，则数组当前元素next指向要插入的元素，这样来解决hash冲突的，形成了拉链式的结构。put时在多线程情况下，会形成环从而导致死循环。数组长度一般是2n，从0开始编号，所以hashcode & （2n-1），（2n-1）每一位都是1，这样会让散列均匀。需要注意的是，HashMap在JDK1.8的版本中引入了红黑树结构做优化，当链表元素个数大于等于8时，链表转换成树结构；若桶中链表元素个数小于等于6时，树结构还原成链表。因为红黑树的平均查找长度是log(n)，长度为8的时候，平均查找长度为3，如果继续使用链表，平均查找长度为8/2=4，这才有转换为树的必要。链表长度如果是小于等于6，6/2=3，虽然速度也很快的，但是转化为树结构和生成树的时间并不会太短。还有选择6和8，中间有个差值7可以有效防止链表和树频繁转换。假设一下，如果设计成链表个数超过8则链表转换成树结构，链表个数小于8则树结构转换成链表，如果一个HashMap不停的插入、删除元素，链表个数在8左右徘徊，就会频繁的发生树转链表、链表转树，效率会很低。
+
+## ● 请你说明HashMap和Hashtable的区别？ 
+
+考察点：集合 
+
+### 参考回答：
+
+HashMap和Hashtable都实现了Map接口，因此很多特性非常相似。但是，他们有以下不同点： 
+HashMap允许键和值是null，而Hashtable不允许键或者值是null。 
+Hashtable是同步的，而HashMap不是。因此，HashMap更适合于单线程环境，而Hashtable适合于多线程环境。 
+HashMap提供了可供应用迭代的键的集合，因此，HashMap是快速失败的。另一方面，Hashtable提供了对键的列举(Enumeration)。 
+一般认为Hashtable是一个遗留的类。
+
+## ● 请你解释HashMap的容量为什么是2的n次幂？
+
+考点：集合 
+
+### 参考回答：
+
+负载因子默认是0.75， 2^n是为了让散列更加均匀，例如出现极端情况都散列在数组中的一个下标，那么hashmap会由O（1）复杂退化为O（n）的。
+
+## ● 如果hashMap的key是一个自定义的类，怎么办？
+
+考点：集合 
+
+### 参考回答：
+
+使用HashMap，如果key是自定义的类，就必须重写hashcode()和equals()。
+
+## ● 请你说明一下ConcurrentHashMap的原理？
+
+考察点：JAVA内存模型 
+
+### 参考回答：
+
+ConcurrentHashMap 类中包含两个静态内部类 HashEntry 和 Segment。HashEntry 用来封装映射表的键 / 值对；Segment 用来充当锁的角色，每个 Segment 对象守护整个散列映射表的若干个桶。每个桶是由若干个 HashEntry 对象链接起来的链表。一个 ConcurrentHashMap 实例中包含由若干个 Segment 对象组成的数组。HashEntry 用来封装散列映射表中的键值对。在 HashEntry 类中，key，hash 和 next 域都被声明为 final 型，value 域被声明为 volatile 型。 
+
+```
+static final class HashEntry<K,V> {
+       final K key;                       // 声明 key 为 final 型
+       final int hash;                   // 声明 hash 值为 final 型
+       volatile V value;                 // 声明 value 为 volatile 型
+       final HashEntry<K,V> next;      // 声明 next 为 final 型
+  
+       HashEntry(K key, int hash, HashEntry<K,V> next, V value) {
+           this.key = key;
+           this.hash = hash;
+           this.next = next;
+           this.value = value;
+       }
+}
+```
+
+在ConcurrentHashMap 中，在散列时如果产生“碰撞”，将采用“分离链接法”来处理“碰撞”：把“碰撞”的 HashEntry 对象链接成一个链表。由于 HashEntry 的 next 域为 final 型，所以新节点只能在链表的表头处插入。 下图是在一个空桶中依次插入 A，B，C 三个 HashEntry 对象后的结构图： 
+
+图1. 插入三个节点后桶的结构示意图： 
+
+
+
+![img](https://uploadfiles.nowcoder.com/images/20180925/308572_1537878284540_B6C31D01D41C9E1714958F9C56D01D8F)
+
+注意：由于只能在表头插入，所以链表中节点的顺序和插入的顺序相反。 
+
+Segment 类继承于 ReentrantLock 类，从而使得 Segment 对象能充当锁的角色。每个 Segment 对象用来守护其（成员对象 table 中）包含的若干个桶。
+
+## ● 请你说明concurrenthashmap有什么优势以及1.7和1.8区别？
+
+考点：集合 
+
+### 参考回答：
+
+Concurrenthashmap线程安全的，1.7是在jdk1.7中采用Segment + HashEntry的方式进行实现的，lock加在Segment上面。1.7size计算是先采用不加锁的方式，连续计算元素的个数，最多计算3次：1、如果前后两次计算结果相同，则说明计算出来的元素个数是准确的；2、如果前后两次计算结果都不同，则给每个Segment进行加锁，再计算一次元素的个数； 
+
+1.8中放弃了Segment臃肿的设计，取而代之的是采用Node + CAS + Synchronized来保证并发安全进行实现，1.8中使用一个volatile类型的变量baseCount记录元素的个数，当插入新数据或则删除数据时，会通过addCount()方法更新baseCount，通过累加baseCount和CounterCell数组中的数量，即可得到元素的总个数；
+
+
+
+## ● 请解释一下TreeMap?
+
+考察点：key-value集合
+
+### 参考回答：
+
+TreeMap是一个有序的key-value集合，基于红黑树（Red-Black tree）的 NavigableMap实现。该映射根据其键的自然顺序进行排序，或者根据创建映射时提供的 Comparator进行排序，具体取决于使用的构造方法。
+TreeMap的特性：
+根节点是黑色 
+每个节点都只能是红色或者黑色
+每个叶节点（NIL节点，空节点）是黑色的。 
+如果一个节点是红色的，则它两个子节点都是黑色的，也就是说在一条路径上不能出现两个红色的节点。
+从任一节点到其每个叶子的所有路径都包含相同数目的黑色节点。
+
+## ● 请你说明一下TreeMap的底层实现？
+
+考点：集合 
+
+### 参考回答：
+
+TreeMap 的实现就是红黑树数据结构，也就说是一棵自平衡的排序二叉树，这样就可以保证当需要快速检索指定节点。 
+
+红黑树的插入、删除、遍历时间复杂度都为O(lgN)，所以性能上低于哈希表。但是哈希表无法提供键值对的有序输出，红黑树因为是排序插入的，可以按照键的值的大小有序输出。红黑树性质： 
+
+性质1：每个节点要么是红色，要么是黑色。 
+
+性质2：根节点永远是黑色的。 
+
+性质3：所有的叶节点都是空节点（即 null），并且是黑色的。 
+
+性质4：每个红色节点的两个子节点都是黑色。（从每个叶子到根的路径上不会有两个连续的红色节点） 
+
+性质5：从任一节点到其子树中每个叶子节点的路径都包含相同数量的黑色节点。
+
+
+
+
+
+## ● 请说说快速失败(fail-fast)和安全失败(fail-safe)的区别？
+
+考察点：集合 
+
+### 参考回答：
+
+Iterator的安全失败是基于对底层集合做拷贝，因此，它不受源集合上修改的影响。java.util包下面的所有的集合类都是快速失败的，而java.util.concurrent包下面的所有的类都是安全失败的。快速失败的迭代器会抛出ConcurrentModificationException异常，而安全失败的迭代器永远不会抛出这样的异常。
+
+
+
+
+
+## ● 请你说说Iterator和ListIterator的区别？
+
+考察点：迭代器 
+
+### 参考回答：
+
+Iterator和ListIterator的区别是： 
+Iterator可用来遍历Set和List集合，但是ListIterator只能用来遍历List。 
+Iterator对集合只能是前向遍历，ListIterator既可以前向也可以后向。 
+ListIterator实现了Iterator接口，并包含其他的功能，比如：增加元素，替换元素，获取前一个和后一个元素的索引，等等。
+
+## ● 请简单说明一下什么是迭代器？
+
+考察点：JAVA迭代器 
+
+### 参考回答：
+
+Iterator提供了统一遍历操作集合元素的统一接口, Collection接口实现Iterable接口, 
+每个集合都通过实现Iterable接口中iterator()方法返回Iterator接口的实例, 然后对集合的元素进行迭代操作. 
+有一点需要注意的是：在迭代元素的时候不能通过集合的方法删除元素, 否则会抛出ConcurrentModificationException 异常. 但是可以通过Iterator接口中的remove()方法进行删除.● 请解释为什么集合类没有实现Cloneable和Serializable接口？
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## ● 请详细描述一下线程从创建到死亡的几种状态都有哪些？
+
+考察点：JAVA线程状态
+
+### 参考回答：
+
+\1. 新建( new )：新创建了一个线程对象。 
+\2. 可运行( runnable )：线程对象创建后，其他线程(比如 main 线程）调用了该对象 的 start ()方法。该状态的线程位于可运行线程池中，等待被线程调度选中，获 取 cpu 的使用权 。 
+\3. 运行( running )：可运行状态( runnable )的线程获得了 cpu 时间片（ timeslice ） ，执行程序代码。 
+\4. 阻塞( block )：阻塞状态是指线程因为某种原因放弃了 cpu 使用权，也即让出了 cpu timeslice ，暂时停止运行。直到线程进入可运行( runnable )状态，才有 机会再次获得 cpu timeslice 转到运行( running )状态。阻塞的情况分三种： 
+(一). 等待阻塞：运行( running )的线程执行 o . wait ()方法， JVM 会把该线程放 入等待队列( waitting queue )中。 
+(二). 同步阻塞：运行( running )的线程在获取对象的同步锁时，若该同步锁 被别的线程占用，则 JVM 会把该线程放入锁池( lock pool )中。 
+(三). 其他阻塞: 运行( running )的线程执行 Thread . sleep ( long ms )或 t . join ()方法，或者发出了 I / O 请求时， JVM 会把该线程置为阻塞状态。 当 sleep ()状态超时、 join ()等待线程终止或者超时、或者 I / O 处理完毕时，线程重新转入可运行( runnable )状态。 
+\5. 死亡( dead )：线程 run ()、 main () 方法执行结束，或者因异常退出了 run ()方法，则该线程结束生命周期。死亡的线程不可再次复生。
+
+Java使用Thread类代表线程，所有的线程对象都必须是Thread类或其子类的实例。Java可以用四种方式来创建线程
+1）继承Thread类创建线程
+2）实现Runnable接口创建线程
+3）使用Callable和Future创建线程
+4）使用线程池例如用Executor框架
+
+实现Runnable接口这种方式更受欢迎，因为这不需要继承Thread类。在应用设计中已经继承了别的对象的情况下，这需要多继承（而Java不支持多继承），只能实现接口。同时，线程池也是非常高效的，很容易实现和使用。
+
+## ● 请列举一下启动线程有哪几种方式，之后再说明一下线程池的种类都有哪些？
+
+考察点：线程池 
+
+### 参考回答：
+
+①启动线程有如下三种方式： 
+
+一、继承Thread类创建线程类 
+
+（1）定义Thread类的子类，并重写该类的run方法，该run方法的方法体就代表了线程要完成的任务。因此把run()方法称为执行体。 
+
+（2）创建Thread子类的实例，即创建了线程对象。 
+
+（3）调用线程对象的start()方法来启动该线程。 
+
+代码： 
+
+```
+package com.thread;
+public class FirstThreadTest extends Thread{
+    int i = 0;
+    //重写run方法，run方法的方法体就是现场执行体
+    public void run()
+    {
+        for(;i<100;i++){
+        System.out.println(getName()+"  "+i);
+         
+        }
+    }
+    public static void main(String[] args)
+    {
+        for(int i = 0;i< 100;i++)
+        {
+            System.out.println(Thread.currentThread().getName()+"  : "+i);
+            if(i==20)
+            {
+                new FirstThreadTest().start();
+                new FirstThreadTest().start();
+            }
+        }
+    }
+  
+}
+```
+
+上述代码中Thread.currentThread()方法返回当前正在执行的线程对象。GetName()方法返回调用该方法的线程的名字。 
+
+二、通过Runnable接口创建线程类 
+
+（1）定义runnable接口的实现类，并重写该接口的run()方法，该run()方法的方法体同样是该线程的线程执行体。 
+
+（2）创建 Runnable实现类的实例，并依此实例作为Thread的target来创建Thread对象，该Thread对象才是真正的线程对象。 
+
+（3）调用线程对象的start()方法来启动该线程。 
+
+代码： 
+
+```
+package com.thread;
+  
+public class RunnableThreadTest implements Runnable
+{
+  
+    private int i;
+    public void run()
+    {
+        for(i = 0;i <100;i++)
+        {
+            System.out.println(Thread.currentThread().getName()+" "+i);
+        }
+    }
+    public static void main(String[] args)
+    {
+        for(int i = 0;i < 100;i++)
+        {
+            System.out.println(Thread.currentThread().getName()+" "+i);
+            if(i==20)
+            {
+                RunnableThreadTest rtt = new RunnableThreadTest();
+                new Thread(rtt,"新线程1").start();
+                new Thread(rtt,"新线程2").start();
+            }
+        }
+  
+    }
+  
+}
+```
+
+三、通过Callable和Future创建线程 
+
+（1）创建Callable接口的实现类，并实现call()方法，该call()方法将作为线程执行体，并且有返回值。 
+
+（2）创建Callable实现类的实例，使用FutureTask类来包装Callable对象，该FutureTask对象封装了该Callable对象的call()方法的返回值。 
+
+（3）使用FutureTask对象作为Thread对象的target创建并启动新线程。 
+
+（4）调用FutureTask对象的get()方法来获得子线程执行结束后的返回值 
+
+代码： 
+
+```
+package com.thread;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+  
+public class CallableThreadTest implements Callable<Integer>
+{
+  
+    public static void main(String[] args)
+    {
+        CallableThreadTest ctt = new CallableThreadTest();
+        FutureTask<Integer> ft = new FutureTask<>(ctt);
+        for(int i = 0;i < 100;i++)
+        {
+            System.out.println(Thread.currentThread().getName()+" 的循环变量i的值"+i);
+            if(i==20)
+            {
+                new Thread(ft,"有返回值的线程").start();
+            }
+        }
+        try
+        {
+            System.out.println("子线程的返回值："+ft.get());
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        } catch (ExecutionException e)
+        {
+            e.printStackTrace();
+        }
+  
+    }
+  
+    @Override
+    public Integer call() throws Exception
+    {
+        int i = 0;
+        for(;i<100;i++)
+        {
+            System.out.println(Thread.currentThread().getName()+" "+i);
+        }
+        return i;
+    }
+  
+}
+```
+
+②线程池的种类有： 
+
+Java通过Executors提供四种线程池，分别为：
+newCachedThreadPool创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
+newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
+newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任务执行。
+newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。 
+
+## ● 请你简要说明一下线程的基本状态以及状态之间的关系？
+
+考察点：线程
+
+### 参考回答：
+
+其中Running表示运行状态，Runnable表示就绪状态（万事俱备，只欠CPU），Blocked表示阻塞状态，阻塞状态又有多种情况，可能是因为调用wait()方法进入等待池，也可能是执行同步方法或同步代码块进入等锁池，或者是调用了sleep()方法或join()方法等待休眠或其他线程结束，或是因为发生了I/O中断。
+
+## ● 如何保证线程安全？
+
+考察点：线程 
+
+### 参考回答：
+
+通过合理的时间调度，避开共享资源的存取冲突。另外，在并行任务设计上可以通过适当的策略，保证任务与任务之间不存在共享资源，设计一个规则来保证一个客户的计算工作和数据访问只会被一个线程或一台工作机完成，而不是把一个客户的计算工作分配给多个线程去完成。
+
+## ● 请你解释一下什么是线程池（thread pool），说明一下线程池有什么优势？
+
+考察点：线程池 
+
+### 参考回答：
+
+线程池主要就是指定线程池核心线程数大小，最大线程数，存储的队列，拒绝策略，空闲线程存活时长。当需要任务大于核心线程数时候，就开始把任务往存储任务的队列里，当存储队列满了的话，就开始增加线程池创建的线程数量，如果当线程数量也达到了最大，就开始执行拒绝策略，比如说记录日志，直接丢弃，或者丢弃最老的任务。
+
+在面向对象编程中，创建和销毁对象是很费时间的，因为创建一个对象要获取内存资源或者其它更多资源。在Java中更是如此，虚拟机将试图跟踪每一个对象，以便能够在对象销毁后进行垃圾回收。所以提高服务程序效率的一个手段就是尽可能减少创建和销毁对象的次数，特别是一些很耗资源的对象创建和销毁，这就是”池化资源”技术产生的原因。线程池顾名思义就是事先创建若干个可执行的线程放入一个池（容器）中，需要的时候从池中获取线程不用自行创建，使用完毕不需要销毁线程而是放回池中，从而减少创建和销毁线程对象的开销。
+Java 5+中的Executor接口定义一个执行线程的工具。它的子类型即线程池接口是ExecutorService。要配置一个线程池是比较复杂的，尤其是对于线程池的原理不是很清楚的情况下，因此在工具类Executors面提供了一些静态工厂方法，生成一些常用的线程池，如下所示：
+\- newSingleThreadExecutor：创建一个单线程的线程池。这个线程池只有一个线程在工作，也就是相当于单线程串行执行所有任务。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它。此线程池保证所有任务的执行顺序按照任务的提交顺序执行。
+\- newFixedThreadPool：创建固定大小的线程池。每次提交一个任务就创建一个线程，直到线程达到线程池的最大大小。线程池的大小一旦达到最大值就会保持不变，如果某个线程因为执行异常而结束，那么线程池会补充一个新线程。
+\- newCachedThreadPool：创建一个可缓存的线程池。如果线程池的大小超过了处理任务所需要的线程，那么就会回收部分空闲（60秒不执行任务）的线程，当任务数增加时，此线程池又可以智能的添加新线程来处理任务。此线程池不会对线程池大小做限制，线程池大小完全依赖于操作系统（或者说JVM）能够创建的最大线程大小。
+\- newScheduledThreadPool：创建一个大小无限的线程池。此线程池支持定时以及周期性执行任务的需求。
+\- newSingleThreadExecutor：创建一个单线程的线程池。此线程池支持定时以及周期性执行任务的需求。
+
+
+
+第一：降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。 
+
+第二：提高响应速度。当任务到达时，任务可以不需要等到线程创建就能执行。 
+
+第三：提高线程的可管理性，线程是稀缺资源，如果无限制地创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一分配、调优和监控。
+
+## ● 举例说明同步和异步 
+
+考察点：线程
+
+### 参考回答：
+
+如果系统中存在临界资源（资源数量少于竞争资源的线程数量的资源），例如正在写的数据以后可能被另一个线程读到，或者正在读的数据可能已经被另一个线程写过了，那么这些数据就必须进行同步存取（数据库操作中的排他锁就是最好的例子）。当应用程序在对象上调用了一个需要花费很长时间来执行的方法，并且不希望让程序等待方法的返回时，就应该使用异步编程，在很多情况下采用异步途径往往更有效率。事实上，所谓的同步就是指阻塞式操作，而异步就是非阻塞式操作。
+
+## ● 请介绍一下线程同步和线程调度的相关方法。
+
+考察点：线程同步
+
+### 参考回答：
+
+\- wait()：使一个线程处于等待（阻塞）状态，并且释放所持有的对象的锁；
+\- sleep()：使一个正在运行的线程处于睡眠状态，是一个静态方法，调用此方法要处理InterruptedException异常；
+\- notify()：唤醒一个处于等待状态的线程，当然在调用此方法的时候，并不能确切的唤醒某一个等待状态的线程，而是由JVM确定唤醒哪个线程，而且与优先级无关；
+\- notityAll()：唤醒所有处于等待状态的线程，该方法并不是将对象的锁给所有线程，而是让它们竞争，只有获得锁的线程才能进入就绪状态；
+通过Lock接口提供了显式的锁机制（explicit lock），增强了灵活性以及对线程的协调。Lock接口中定义了加锁（lock()）和解锁（unlock()）的方法，同时还提供了newCondition()方法来产生用于线程之间通信的Condition对象；此外，Java 5还提供了信号量机制（semaphore），信号量可以用来限制对某个共享资源进行访问的线程的数量。在对资源进行访问之前，线程必须得到信号量的许可（调用Semaphore对象的acquire()方法）；在完成对资源的访问后，线程必须向信号量归还许可（调用Semaphore对象的release()方法）。
+
+## ● 请分别说明一下多线程和同步有几种实现方法,并且这些实现方法具体内容都是什么?  
+
+考察点：线程 
+
+### 参考回答：
+
+多线程有两种实现方法，分别是继承Thread类与实现Runnable接口同步的实现方面有两种，分别是synchronized,wait与notify。
+
+## ● 请问当一个线程进入一个对象的synchronized方法A之后，其它线程是否可进入此对象的synchronized方法B？
+
+考察点：线程
+
+### 参考回答：
+
+不能。其它线程只能访问该对象的非同步方法，同步方法则不能进入。因为非静态方法上的synchronized修饰符要求执行方法时要获得对象的锁，如果已经进入A方法说明对象锁已经被取走，那么试图进入B方法的线程就只能在等锁池（注意不是等待池哦）中等待对象的锁。
+
+## ● 请简述一下线程的sleep()方法和yield()方法有什么区别？
+
+考察点：线程
+
+参考回答： 
+
+①sleep()方法给其他线程运行机会时不考虑线程的优先级，因此会给低优先级的线程以运行的机会；yield()方法只会给相同优先级或更高优先级的线程以运行的机会；
+
+② 线程执行sleep()方法后转入阻塞（blocked）状态，而执行yield()方法后转入就绪（ready）状态；
+③ sleep()方法声明抛出InterruptedException，而yield()方法没有声明任何异常；
+④ sleep()方法比yield()方法（跟操作系统CPU调度相关）具有更好的可移植性。
+
+## ● 请说明一下sleep() 和 wait() 有什么区别？
+
+考察点：线程 
+
+### 参考回答：
+
+sleep是线程类（Thread）的方法，导致此线程暂停执行指定时间，把执行机会给其他线程，但是监控状态依然保持，到时后会自动恢复。调用sleep不会释放对象锁。
+wait是Object类的方法，对此对象调用wait方法导致本线程放弃对象锁，进入等待此对象的等待锁定池，只有针对此对象发出notify方法（或notifyAll）后本线程才进入对象锁定池准备获得对象锁进入运行状态。
+
+## ● 请回答以下几个问题： 第一个 问题：Java中有几种方法可以实现一个线程？ 第二个问题：用什么关键字修饰同步方法? 第三个问题：stop()和suspend()方法为何不推荐使用，请说明原因？ 
+
+考察点：线程 
+
+### 参考回答：
+
+有两种实现方法，分别是继承Thread类与实现Runnable接口用synchronized关键字修饰同步方法，反对使用stop()，是因为它不安全。它会解除由线程获取的所有锁定，而且如果对象处于一种不连贯状态，那么其他线程能在那种状态下检查和修改它们。结果很难检查出真正的问题所在。suspend()方法容易发生死锁。调用suspend()的时候，目标线程会停下来，但却仍然持有在这之前获得的锁定。此时，其他任何线程都不能访问锁定的资源，除非被”挂起”的线程恢复运行。对任何线程来说，如果它们想恢复目标线程，同时又试图使用任何一个锁定的资源，就会造成死锁。所以不应该使用suspend()，而应在自己的Thread类中置入一个标志，指出线程应该活动还是挂起。若标志指出线程应该挂起，便用 wait()命其进入等待状态。若标志指出线程应当恢复，则用一个notify()重新启动线程。
+
+## ● 启动一个线程是用run()还是start()?
+
+考察点：JAVA线程 
+
+### 参考回答：
+
+启动一个线程是调用start()方法，使线程所代表的虚拟处理机处于可运行状态，这意味着它可以由JVM调度并执行。这并不意味着线程就会立即运行。run()方法可以产生必须退出的标志来停止一个线程。
+
+## ● 请使用内部类实现线程设计4个线程，其中两个线程每次对j增加1，另外两个线程对j每次减少1。
+
+考察点：JAVA线程
+
+### 参考回答：
+
+public class ThreadTest1{
+private int j;
+public static void main(String args[]){
+ThreadTest1 tt=new ThreadTest1();
+Inc inc=tt.new Inc();
+Dec dec=tt.new Dec();
+for(int i=0;i<2;i++){
+Thread t=new Thread(inc);
+t.start();
+t=new Thread(dec);
+t.start();
+}
+}
+private synchronized void inc(){
+j++;
+System.out.println(Thread.currentThread().getName()+"-inc:"+j);
+}
+private synchronized void dec(){
+j--;
+System.out.println(Thread.currentThread().getName()+"-dec:"+j);
+}
+class Inc implements Runnable{
+public void run(){
+for(int i=0;i<100;i++){
+inc();
+}
+}
+}
+class Dec implements Runnable{
+public void run(){
+for(int i=0;i<100;i++){
+dec();
+}
+}
+}
+}
+
+## ● 如何在线程安全的情况下实现一个计数器？
+
+考察点：多线程 
+
+### 参考回答：
+
+可以使用加锁，比如synchronized或者lock。也可以使用Concurrent包下的原子类。
+
+## ● 多线程中的i++线程安全吗？请简述一下原因？
+
+考察点：多线程 
+
+### 参考回答：
+
+不安全。i++不是原子性操作。i++分为读取i值，对i值加一，再赋值给i++，执行期中任何一步都是有可能被其他线程抢占的。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Java EE部分
+
+## ● 请问Spring中Bean的作用域有哪些？
+
+考察点：框架 
+
+### 参考回答：
+
+在Spring的早期版本中，仅有两个作用域：singleton和prototype，前者表示Bean以单例的方式存在；后者表示每次从容器中调用Bean时，都会返回一个新的实例，prototype通常翻译为原型。 
+
+设计模式中的创建型模式中也有一个原型模式，原型模式也是一个常用的模式，例如做一个室内设计软件，所有的素材都在工具箱中，而每次从工具箱中取出的都是素材对象的一个原型，可以通过对象克隆来实现原型模式。Spring 2.x中针对WebApplicationContext新增了3个作用域，分别是：request（每次HTTP请求都会创建一个新的Bean）、session（同一个HttpSession共享同一个Bean，不同的HttpSession使用不同的Bean）和globalSession（同一个全局Session共享一个Bean）。 
+
+单例模式和原型模式都是重要的设计模式。一般情况下，无状态或状态不可变的类适合使用单例模式。在传统开发中，由于DAO持有Connection这个非线程安全对象因而没有使用单例模式；但在Spring环境下，所有DAO类对可以采用单例模式，因为Spring利用AOP和Java API中的ThreadLocal对非线程安全的对象进行了特殊处理。
+
+## ● 请说明一下Spring中BeanFactory和ApplicationContext的区别是什么？
+
+考察点：spring框架 
+
+### 参考回答：
+
+概念： 
+
+BeanFactory： 
+BeanFactory是spring中比较原始，比较古老的Factory。因为比较古老，所以BeanFactory无法支持spring插件，例如：AOP、Web应用等功能。 
+
+ApplicationContext 
+ApplicationContext是BeanFactory的子类，因为古老的BeanFactory无法满足不断更新的spring的需求，于是ApplicationContext就基本上代替了BeanFactory的工作，以一种更面向框架的工作方式以及对上下文进行分层和实现继承，并在这个基础上对功能进行扩展： 
+<1>MessageSource, 提供国际化的消息访问 
+<2>资源访问（如URL和文件） 
+<3>事件传递 
+<4>Bean的自动装配 
+<5>各种不同应用层的Context实现 
+
+区别： 
+
+<1>如果使用ApplicationContext，如果配置的bean是singleton，那么不管你有没有或想不想用它，它都会被实例化。好处是可以预先加载，坏处是浪费内存。 
+<2>BeanFactory，当使用BeanFactory实例化对象时，配置的bean不会马上被实例化，而是等到你使用该bean的时候（getBean）才会被实例化。好处是节约内存，坏处是速度比较慢。多用于移动设备的开发。 
+<3>没有特殊要求的情况下，应该使用ApplicationContext完成。因为BeanFactory能完成的事情，ApplicationContext都能完成，并且提供了更多接近现在开发的功能。
+
+
+
+## ● 请谈一谈Spring中自动装配的方式有哪些？
+
+考察点：spring框架 
+
+### 参考回答：
+
+\- no：不进行自动装配，手动设置Bean的依赖关系。
+\- byName：根据Bean的名字进行自动装配。
+\- byType：根据Bean的类型进行自动装配。
+\- constructor：类似于byType，不过是应用于构造器的参数，如果正好有一个Bean与构造器的参数类型相同则可以自动装配，否则会导致错误。
+\- autodetect：如果有默认的构造器，则通过constructor的方式进行自动装配，否则使用byType的方式进行自动装配。 
+
+自动装配没有自定义装配方式那么精确，而且不能自动装配简单属性（基本类型、字符串等），在使用时应注意。
+
+## ● 请问什么是IoC和DI？并且简要说明一下DI是如何实现的？
+
+考察点：控制反转 
+
+### 参考回答：
+
+IoC叫控制反转，是Inversion of Control的缩写，DI（Dependency Injection）叫依赖注入，是对IoC更简单的诠释。控制反转是把传统上由程序代码直接操控的对象的调用权交给容器，通过容器来实现对象组件的装配和管理。所谓的"控制反转"就是对组件对象控制权的转移，从程序代码本身转移到了外部容器，由容器来创建对象并管理对象之间的依赖关系。IoC体现了好莱坞原则 - "Don’t call me, we will call you"。依赖注入的基本原则是应用组件不应该负责查找资源或者其他依赖的协作对象。配置对象的工作应该由容器负责，查找资源的逻辑应该从应用组件的代码中抽取出来，交给容器来完成。DI是对IoC更准确的描述，即组件之间的依赖关系由容器在运行期决定，形象的来说，即由容器动态的将某种依赖关系注入到组件之中。 
+
+一个类A需要用到接口B中的方法，那么就需要为类A和接口B建立关联或依赖关系，最原始的方法是在类A中创建一个接口B的实现类C的实例，但这种方法需要开发人员自行维护二者的依赖关系，也就是说当依赖关系发生变动的时候需要修改代码并重新构建整个系统。如果通过一个容器来管理这些对象以及对象的依赖关系，则只需要在类A中定义好用于关联接口B的方法（构造器或setter方法），将类A和接口B的实现类C放入容器中，通过对容器的配置来实现二者的关联。
+依赖注入可以通过setter方法注入（设值注入）、构造器注入和接口注入三种方式来实现，Spring支持setter注入和构造器注入，通常使用构造器注入来注入必须的依赖关系，对于可选的依赖关系，则setter注入是更好的选择，setter注入需要类提供无参构造器或者无参的静态工厂方法来创建对象。
+
+①IoC（Inversion of Control，控制倒转）。这是spring的核心，贯穿始终。所谓IoC，对于spring框架来说，就是由spring来负责控制对象的生命周期和对象间的关系。 
+
+IoC的一个重点是在系统运行中，动态的向某个对象提供它所需要的其他对象。这一点是通过DI（Dependency Injection，依赖注入）来实现的。比如对象A需要操作数据库，以前我们总是要在A中自己编写代码来获得一个Connection对象，有了 spring我们就只需要告诉spring，A中需要一个Connection，至于这个Connection怎么构造，何时构造，A不需要知道。在系统运行时，spring会在适当的时候制造一个Connection，然后像打针一样，注射到A当中，这样就完成了对各个对象之间关系的控制。A需要依赖 Connection才能正常运行，而这个Connection是由spring注入到A中的，依赖注入的名字就这么来的。那么DI是如何实现的呢？ Java 1.3之后一个重要特征是反射（reflection），它允许程序在运行的时候动态的生成对象、执行对象的方法、改变对象的属性，spring就是通过反射来实现注入的。 
+
+举个简单的例子，我们找女朋友常见的情况是，我们到处去看哪里有长得漂亮身材又好的女孩子，然后打听她们的兴趣爱好、qq号、电话号、ip号、iq号………，想办法认识她们，投其所好送其所要，这个过程是复杂深奥的，我们必须自己设计和面对每个环节。传统的程序开发也是如此，在一个对象中，如果要使用另外的对象，就必须得到它（自己new一个，或者从JNDI中查询一个），使用完之后还要将对象销毁（比如Connection等），对象始终会和其他的接口或类藕合起来。 
+
+②实现IOC的步骤 
+
+定义用来描述bean的配置的Java类 
+
+解析bean的配置，將bean的配置信息转换为上面的BeanDefinition对象保存在内存中，spring中采用HashMap进行对象存储，其中会用到一些xml解析技术 
+
+遍历存放BeanDefinition的HashMap对象，逐条取出BeanDefinition对象，获取bean的配置信息，利用Java的反射机制实例化对象，將实例化后的对象保存在另外一个Map中即可。
+
+## ● 请简单说明一下依赖注入的方式有哪几种？以及这些方法如何使用？
+
+考察点：spring 
+
+### 参考回答：
+
+1、Set注入 2、构造器注入 3、接口注入 
+
+## ● 请说明一下@Controller和@RestController的区别是什么？
+
+考察点：spring 
+
+### 参考回答：
+
+@RestController注解相当于@ResponseBody ＋ @Controller合在一起的作用
+
+## ● 请问在以前的学习中有使用过Spring里面的注解吗？如果有请谈一下autowired 和resource区别是什么？
+
+考察点：Spring 
+
+### 参考回答：
+
+1、共同点 
+
+两者都可以写在字段和setter方法上。两者如果都写在字段上，那么就不需要再写setter方法。 
+
+2、不同点 
+
+（1）@Autowired 
+
+@Autowired为Spring提供的注解，需要导入包org.springframework.beans.factory.annotation.Autowired;只按照byType注入。 
+
+@Autowired注解是按照类型（byType）装配依赖对象，默认情况下它要求依赖对象必须存在，如果允许null值，可以设置它的required属性为false。如果我们想使用按照名称（byName）来装配，可以结合@Qualifier注解一起使用。 
+
+（2）@Resource 
+
+@Resource默认按照ByName自动注入，由J2EE提供，需要导入包javax.annotation.Resource。@Resource有两个重要的属性：name和type，而Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以，如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不制定name也不制定type属性，这时将通过反射机制使用byName自动注入策略。 
+
+## ● 请介绍一下bean的生命周期
+
+考察点：spring 
+
+### 参考回答：
+
+Spring生命周期流程图： 
+
+![img](https://uploadfiles.nowcoder.com/images/20180926/308572_1537967995043_4D7CF33471A392D943F00167D1C86C10)
+
+
+
+
+
+
 
 
 
@@ -431,6 +1240,10 @@ Servlet 通过调用 destroy() 方法终止（结束）。
 最后，Servlet 是由 JVM 的垃圾回收器进行垃圾回收的。 
 
 Servlet单实例，减少了产生servlet的开销；
+
+
+
+
 
 
 
