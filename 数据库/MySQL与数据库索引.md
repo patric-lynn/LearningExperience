@@ -1,8 +1,8 @@
 # MySQL与数据库索引知识
 
-## MySQL基础与优化
+#### MySQL基础与优化
 
-## 正文
+##### 正文
 
 > 你知道MySQL的基本架构么？你能在纸上给我大致画出这个示意图么？
 
@@ -106,6 +106,150 @@ MySQL拿到一个查询请求后，会先到查询缓存看看，之前是不是
 
 
 
+#### MySQL常见查询语句 leetCode
+
+##### [1. 第二高的薪水](https://leetcode-cn.com/problems/second-highest-salary/)
+
+编写一个 SQL 查询，获取 Employee 表中第二高的薪水（Salary） 。
+
++----+--------+
+| Id | Salary |
++----+--------+
+| 1  | 100    |
+| 2  | 200    |
+| 3  | 300    |
++----+--------+
+例如上述 Employee 表，SQL查询应该返回 200 作为第二高的薪水。如果不存在第二高的薪水，那么查询应返回 null。
+
++---------------------+
+| SecondHighestSalary |
++---------------------+
+| 200                 |
++---------------------+
+
+**思路：**
+
+首先先将数据去重：SELECT DISTINCT Salary FROM Employee
+再将是数据按薪水降序排除：SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC
+分页的思想是一页一条数据，第二高的薪水则在第二页：SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT 1, 1
+考虑到极端情况：没有第二薪水则为空，使用ifnull判断：
+SELECT IFNULL( (SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT 1, 1),null) AS SecondHighestSalary
+分页的其他使用：offset
+SQL查询语句中的 limit 与 offset 的区别：
+limit y 分句表示: 读取 y 条数据
+limit x, y 分句表示: 跳过 x 条数据，读取 y 条数据
+limit y offset x 分句表示: 跳过 x 条数据，读取 y 条数据
+
+**解法：**
+
+①	select Salary as SecondHighestSalary from Employee order by Salary desc limit 1 offset 1
+
+②	select ifNull((select distinct salary from Employee order by Salary Desc limit 1,1),null ) as  SecondHighestSalary;
+
+③	SELECT DISTINCT  Salary AS SecondHighestSalary FROM Employee ORDER BY Salary DESC LIMIT 1 OFFSET 1
+
+##### 2.[第N高的薪水](https://leetcode-cn.com/problems/nth-highest-salary/)
+
+编写一个 SQL 查询，获取 Employee 表中第 n 高的薪水（Salary）。
+
++----+--------+
+| Id | Salary |
++----+--------+
+| 1  | 100    |
+| 2  | 200    |
+| 3  | 300    |
++----+--------+
+例如上述 Employee 表，n = 2 时，应返回第二高的薪水 200。如果不存在第 n 高的薪水，那么查询应返回 null。
+
++------------------------+
+| getNthHighestSalary(2) |
++------------------------+
+| 200                    |
++------------------------+
+
+**解答：**
+
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+
+BEGIN
+
+  set N = N-1;
+
+ RETURN (
+
+   *# Write your MySQL query statement below.*
+
+   select ifNull((select distinct Salary from Employee 
+
+   order by Salary desc
+
+   limit 1 offset N),null) as SecondHighestSalary 
+
+ );
+
+END
+
+
+
+##### 3.[分数排名](https://leetcode-cn.com/problems/rank-scores/)
+
+编写一个 SQL 查询来实现分数排名。如果两个分数相同，则两个分数排名（Rank）相同。请注意，平分后的下一个名次应该是下一个连续的整数值。换句话说，名次之间不应该有“间隔”。
+
++----+-------+
+| Id | Score |
++----+-------+
+| 1  | 3.50  |
+| 2  | 3.65  |
+| 3  | 4.00  |
+| 4  | 3.85  |
+| 5  | 4.00  |
+| 6  | 3.65  |
++----+-------+
+例如，根据上述给定的 Scores 表，你的查询应该返回（按分数从高到低排列）：
+
++-------+------+
+| Score | Rank |
++-------+------+
+| 4.00  | 1    |
+| 4.00  | 1    |
+| 3.85  | 2    |
+| 3.65  | 3    |
+| 3.65  | 3    |
+| 3.50  | 4    |
++-------+------+
+
+**解答**：
+
+select a.Score as Score,
+
+(select count(distinct b.Score) from Scores as b where b.Score>=a.Score) as Rank
+
+from Scores as a
+
+order by a.Score desc
+
+##### 4.编写一个 SQL 查询，查找所有至少连续出现三次的数字。
+
+编写一个 SQL 查询，查找所有至少连续出现三次的数字。
+
++----+-----+
+| Id | Num |
++----+-----+
+| 1  |  1  |
+| 2  |  1  |
+| 3  |  1  |
+| 4  |  2  |
+| 5  |  1  |
+| 6  |  2  |
+| 7  |  2  |
++----+-----+
+例如，给定上面的 Logs 表， 1 是唯一连续出现至少三次的数字。
+
++-----------------+
+| ConsecutiveNums |
++-----------------+
+| 1               |
++-----------------+
 
 
 
@@ -114,9 +258,12 @@ MySQL拿到一个查询请求后，会先到查询缓存看看，之前是不是
 
 
 
-## 数据库索引知识
 
-### 前言
+
+
+#### 数据库索引知识
+
+##### 前言
 
 写数据库，我第一时间就想到了MySQL、Oracle、索引、存储过程、查询优化等等。
 
@@ -131,7 +278,7 @@ MySQL拿到一个查询请求后，会先到查询缓存看看，之前是不是
 面试官：那索引有哪些数据类型？索引是怎么样的一种结构？哪些字段又适合索引呢？B+的优点？聚合索引和非聚合索引的区别？为什么说索引会降低插入、删除、修改等维护任务的速度？……..
 
 
-## 正文
+##### 正文
 
 > 我看你简历上写到了熟悉MySQL数据库以及索引的相关知识，我们就从索引开始，索引有哪些数据结构？
 
@@ -145,7 +292,7 @@ MySQL拿到一个查询请求后，会先到查询缓存看看，之前是不是
 
 
 
-#### 我先聊一下Hash：
+##### 我先聊一下Hash：
 
 注意字段值所对应的数组下标是哈希算法随机算出来的，所以可能**出现哈希冲突。**
 
@@ -177,7 +324,7 @@ select * from sanguo where name>'鸡蛋'
 
 
 
-#### 二叉树
+##### 二叉树
 
 二叉树是有序的，所以是支持范围查询的。
 
@@ -265,7 +412,7 @@ select * from table where name = '丙丙'
 
 
 
-## 总结
+##### 总结
 
 索引在数据库中是一个非常重要的知识点！
 
