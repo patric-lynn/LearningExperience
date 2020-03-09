@@ -1,4 +1,4 @@
-### Spring经典面试问题（From CSDN）
+### Spring经典面试问题
 
 #### Spring概述
 
@@ -155,7 +155,7 @@ Spring框架支持以下五种bean的作用域：
 
 ##### Spring框架中的单例bean是线程安全的吗？
 
-不是，Spring框架中的单例bean不是线程安全的。
+不是，Spring框架中的单例bean**不是线程安全**的。
 
 spring 中的 bean 默认是单例模式，spring 框架并没有对单例 bean 进行多线程的封装处理。
 
@@ -163,6 +163,237 @@ spring 中的 bean 默认是单例模式，spring 框架并没有对单例 bean 
 
 - 有状态就是有数据存储功能。
 - 无状态就是不会保存数据。
+
+##### Spring如何处理线程并发问题？
+
+在一般情况下，只有无状态的Bean才可以在多线程环境下共享，在Spring中，绝大部分Bean都可以声明为singleton作用域，因为Spring对一些Bean中**非线程安全状态采用ThreadLocal进行处理**，解决线程安全问题。
+
+ThreadLocal和线程同步机制都是为了**解决多线程中相同变量的访问冲突问题**。同步机制采用了“时间换空间”的方式，仅提供一份变量，不同的线程在访问前需要获取锁，没获得锁的线程则需要排队。而ThreadLocal采用了“空间换时间”的方式。
+
+ThreadLocal会为每一个线程提供**一个独立的变量副本**，从而隔离了多个线程对数据的访问冲突。因为每一个线程都拥有自己的变量副本，从而也就没有必要对该变量进行同步了。ThreadLocal提供了线程安全的共享对象，在编写多线程代码时，可以把不安全的变量封装进ThreadLocal。
+
+##### 什么是bean装配？
+
+装配，或bean 装配是指在Spring 容器中把bean组装到一起，前提是容器需要知道bean的依赖关系，如何通过依赖注入来把它们装配到一起。
+
+##### 什么是bean的自动装配？
+
+在Spring框架中，在配置文件中设定bean的依赖关系是一个很好的机制，Spring 容器能够自动装配相互合作的bean，这意味着容器不需要和配置，能通过Bean工厂自动处理bean之间的协作。这意味着 Spring可以通过向Bean Factory中注入的方式自动搞定bean之间的依赖关系。自动装配可以设置在每个bean上，也可以设定在特定的bean上。
+
+##### 解释不同方式的自动装配，spring 自动装配 bean 有哪些方式？
+
+在spring中，对象无需自己查找或创建与其关联的其他对象，由容器负责把需要相互协作的对象引用赋予各个对象，使用autowire来配置自动装载模式。
+
+在Spring框架xml配置中共有5种自动装配：
+
+- no：默认的方式是不进行自动装配的，通过手工设置ref属性来进行装配bean。
+
+- byName：通过bean的名称进行自动装配，如果一个bean的 property 与另一bean 的name 相同，就进行自动装配。
+
+- byType：通过参数的数据类型进行自动装配。
+
+- constructor：利用构造函数进行装配，并且构造函数的参数通过byType进行装配。
+
+- autodetect：自动探测，如果有构造方法，通过 construct的方式自动装配，否则使用 byType的方式自动装配。
+
+##### 使用@Autowired注解自动装配的过程是怎样的？
+
+使用@Autowired注解来自动装配指定的bean。在使用@Autowired注解之前需要在Spring配置文件进行配置，<context:annotation-config />。
+
+在启动spring IoC时，容器自动装载了一个AutowiredAnnotationBeanPostProcessor后置处理器，当容器扫描到@Autowied、@Resource或@Inject时，就会在IoC容器自动查找需要的bean，并装配给该对象的属性。在使用@Autowired时，首先在容器中查询对应类型的bean：
+
+- 如果查询结果刚好为一个，就将该bean装配给@Autowired指定的数据；
+
+- 如果查询的结果不止一个，那么@Autowired会根据名称来查找；
+
+- 如果上述查找的结果为空，那么会抛出异常。解决方法时，使用required=false。
+
+##### 自动装配有哪些局限性？
+
+自动装配的局限性是：
+
+**重写**：你仍需用 和 配置来定义依赖，意味着总要重写自动装配。
+
+**基本数据类型**：你不能自动装配简单的属性，如基本数据类型，String字符串，和类。
+
+**模糊特性**：自动装配不如显式装配精确，如果有可能，建议使用显式装配。
+
+
+
+#### Spring注解
+
+##### @Component, @Controller, @Repository, @Service 有何区别？
+
+@Component：这将 java 类标记为 bean。它是任何 Spring 管理组件的通用构造型。spring 的组件扫描机制现在可以将其拾取并将其拉入应用程序环境中。
+
+@Controller：这将一个类标记为 **Spring Web MVC 控制器**。标有它的 Bean 会**自动导入到 IoC 容器**中。
+
+@Service：此注解是**组件注解的特化**。它不会对 @Component **注解提供任何其他行为**。您可以在服务层类中使用 @Service 而不是 @Component，因为它以更好的方式指定了意图。
+
+@Repository：这个注解是具有**类似用途和功能的 @Component 注解的特化**。它为 DAO 提供了额外的好处。它将 DAO 导入 IoC 容器，并使未经检查的异常有资格转换为 Spring DataAccessException。
+
+##### @Required 注解有什么作用
+
+这个注解表明bean的属性必须在配置的时候设置，通过一个bean定义的显式的属性值或通过自动装配，若@Required注解的bean属性未被设置，容器将抛出BeanInitializationException。示例：
+
+```Java
+public class Employee {
+    private String name;
+    @Required
+    public void setName(String name){
+        this.name=name;
+    }
+    public string getName(){
+        return name;
+    }
+}
+```
+
+##### @Autowired 注解有什么作用
+
+@Autowired默认是**按照类型装配注入**的，默认情况下**它要求依赖对象必须存在**（可以设置它required属性为false）。@Autowired 注解提供了更细粒度的控制，包括在何处以及如何完成自动装配。它的用法和@Required一样，修饰setter方法、构造器、属性或者具有任意名称和/或多个参数的PN方法。
+
+```Java
+public class Employee {
+    private String name;
+    @Autowired
+    public void setName(String name) {
+        this.name=name;
+    }
+    public string getName(){
+        return name;
+    }
+}
+```
+
+##### @Autowired和@Resource之间的区别
+
+@Autowired可用于：构造函数、成员变量、Setter方法
+
+@Autowired和@Resource之间的区别
+
+@Autowired默认是按照类型装配注入的，默认情况下它要求依赖对象必须存在（可以设置它required属性为false）。
+
+@Resource默认是按照名称来装配注入的，只有当找不到与名称匹配的bean才会按照类型来装配注入。
+
+##### @RequestMapping 注解有什么用？
+
+@RequestMapping 注解用于将特定 HTTP 请求方法映射到将处理相应请求的控制器中的特定类/方法。此注释可应用于两个级别：
+
+- 类级别：映射请求的 URL
+- 方法级别：映射 URL 以及 HTTP 请求方法
+
+
+
+#### Spring数据访问
+
+##### 解释对象/关系映射集成模块
+
+Spring 通过提供**ORM模块**，支持我们在直接JDBC之上使用一个对象/关系映射映射(ORM)工具，Spring 支持集成主流的ORM框架，如**Hiberate**，JDO和 **iBATIS，JPA**，TopLink，JDO，OJB 。Spring的事务管理同样支持以上所有ORM框架及JDBC。
+
+##### 在Spring框架中如何更有效地使用JDBC？
+
+使用Spring JDBC 框架，资源管理和错误处理的代价都会被减轻。所以开发者只需写statements 和 queries从数据存取数据，JDBC也可以在Spring框架提供的模板类的帮助下更有效地被使用，这个模板叫JdbcTemplate
+
+##### 解释JDBC抽象和DAO模块
+
+通过使用JDBC抽象和DAO模块，保证数据库代码的简洁，并能避免数据库资源错误关闭导致的问题，它在各种不同的数据库的错误信息之上，提供了一个统一的异常访问层。它还利用Spring的AOP 模块给Spring应用中的对象提供事务管理服务。
+
+##### spring DAO 有什么用？
+
+Spring DAO（数据访问对象） 使得 JDBC，Hibernate 或 JDO 这样的数据访问技术更容易以一种统一的方式工作。这使得用户容易在持久性技术之间切换。它还允许您在编写代码时，无需考虑捕获每种技术不同的异常。
+
+##### 使用Spring通过什么方式访问Hibernate？
+
+在Spring中有两种方式访问Hibernate：
+
+- 使用 Hibernate 模板和回调进行控制反转
+- 扩展 HibernateDAOSupport 并应用 AOP 拦截器节点
+
+##### Spring支持的事务管理类型， spring 事务实现方式有哪些？
+
+Spring支持两种类型的事务管理：
+
+编程式事务管理：这意味你通过编程的方式管理事务，给你带来极大的灵活性，但是难维护。
+
+声明式事务管理：这意味着你可以将业务代码和事务管理分离，你只需用注解和XML配置来管理事务。
+
+##### Spring事务的实现方式和实现原理
+
+Spring事务的本质其实就是数据库对事务的支持，没有数据库的事务支持，spring是无法提供事务功能的。真正的数据库层的事务提交和回滚是通过binlog或者redo log实现的。
+
+##### 说一下 spring 的事务隔离？
+
+spring 有五大隔离级别，默认值为 ISOLATION_DEFAULT（使用数据库的设置），其他四个隔离级别和数据库的隔离级别一致：
+
+- ISOLATION_DEFAULT：用底层数据库的设置隔离级别，数据库设置的是什么我就用什么；
+
+- ISOLATION_READ_UNCOMMITTED：未提交读，最低隔离级别、事务未提交前，就可被其他事务读取（会出现幻读、脏读、不可重复读）；
+
+- ISOLATION_READ_COMMITTED：提交读，一个事务提交后才能被其他事务读取到（会造成幻读、不可重复读），SQL server 的默认级别；
+
+- ISOLATION_REPEATABLE_READ：可重复读，保证多次读取同一个数据时，其值都和事务开始时候的内容是一致，禁止读取到别的事务未提交的数据（会造成幻读），MySQL 的默认级别；
+
+- ISOLATION_SERIALIZABLE：序列化，代价最高最可靠的隔离级别，该隔离级别能防止脏读、不可重复读、幻读。
+
+
+**脏读** ：表示一个事务能够读取另一个事务中还未提交的数据。比如，某个事务尝试插入记录 A，此时该事务还未提交，然后另一个事务尝试读取到了记录 A。
+
+**不可重复读** ：是指在一个事务内，多次读同一数据。
+
+**幻读** ：指同一个事务内多次查询返回的结果集不一样。比如同一个事务 A 第一次查询时候有 n 条记录，但是第二次同等条件下查询却有 n+1 条记录，这就好像产生了幻觉。发生幻读的原因也是另外一个事务新增或者删除或者修改了第一个事务结果集里面的数据，同一个记录的数据内容被修改了，所有数据行的记录就变多或者变少了。
+
+##### Spring框架的事务管理有哪些优点？
+
+为不同的事务API 如 JTA，JDBC，Hibernate，JPA 和JDO，提供一个不变的编程模式。
+为编程式事务管理提供了一套简单的API而不是一些复杂的事务API
+支持声明式事务管理。
+和Spring各种数据访问抽象层很好得集成。
+
+#### Spring面向切面编程(AOP)
+
+##### 什么是AOP
+
+OOP(Object-Oriented Programming)面向对象编程，允许开发者定义纵向的关系，但并适用于定义横向的关系，导致了大量代码的重复，而不利于各个模块的重用。
+
+AOP(Aspect-Oriented Programming)，一般称为面向切面编程，作为面向对象的一种补充，用于将那些与业务无关，但却对多个对象产生影响的公共行为和逻辑，抽取并封装为一个可重用的模块，这个模块被命名为“切面”（Aspect），减少系统中的重复代码，降低了模块间的耦合度，同时提高了系统的可维护性。可用于权限认证、日志、事务处理等。
+
+##### Spring AOP里面的几个名词
+
+（1）切面（Aspect）：切面是通知和切点的结合。通知和切点共同定义了切面的全部内容。 在Spring AOP中，切面可以使用通用类（基于模式的风格） 或者在普通类中以 @AspectJ 注解来实现。
+
+（2）连接点（Join point）：指方法，在Spring AOP中，一个连接点 总是 代表一个方法的执行。 应用可能有数以千计的时机应用通知。这些时机被称为连接点。连接点是在应用执行过程中能够插入切面的一个点。这个点可以是调用方法时、抛出异常时、甚至修改一个字段时。切面代码可以利用这些点插入到应用的正常流程之中，并添加新的行为。
+
+（3）通知（Advice）：在AOP术语中，切面的工作被称为通知。
+
+（4）切入点（Pointcut）：切点的定义会匹配通知所要织入的一个或多个连接点。我们通常使用明确的类和方法名称，或是利用正则表达式定义所匹配的类和方法名称来指定这些切点。
+
+（5）引入（Introduction）：引入允许我们向现有类添加新方法或属性。
+
+（6）目标对象（Target Object）： 被一个或者多个切面（aspect）所通知（advise）的对象。它通常是一个代理对象。也有人把它叫做 被通知（adviced） 对象。 既然Spring AOP是通过运行时代理实现的，这个对象永远是一个 被代理（proxied） 对象。
+
+（7）织入（Weaving）：织入是把切面应用到目标对象并创建新的代理对象的过程。在目标对象的生命周期里有多少个点可以进行织入：
+
+**编译期**：切面在目标类编译时被织入。AspectJ的织入编译器是以这种方式织入切面的。
+**类加载期**：切面在目标类加载到JVM时被织入。需要特殊的类加载器，它可以在目标类被引入应用之前增强该目标类的字节码。AspectJ5的加载时织入就支持以这种方式织入切面。
+**运行期**：切面在应用运行的某个时刻被织入。一般情况下，在织入切面时，AOP容器会为目标对象动态地创建一个代理对象。SpringAOP就是以这种方式织入切面。
+
+
+##### 什么是切面 Aspect？
+
+aspect 由 pointcount 和 advice 组成，切面是通知和切点的结合。 它既包含了横切逻辑的定义, 也包括了连接点的定义. Spring AOP 就是负责实施切面的框架, 它将切面所定义的横切逻辑编织到切面所指定的连接点中.
+AOP 的工作重心在于如何将增强编织目标对象的连接点上, 这里包含两个工作:
+
+如何通过 pointcut 和 advice 定位到特定的 joinpoint 上
+如何在 advice 中编写切面代码.
+
+
+
+
+
+
+
+
 
 
 
@@ -240,3 +471,129 @@ CSRF 代表跨站请求伪造。这是一种攻击，迫使最终用户在当前
 ##### Spring Boot 中的监视器是什么？
 
 Spring boot actuator 是 spring 启动框架中的重要功能之一。Spring boot 监视器可帮助您访问生产环境中正在运行的应用程序的当前状态。有几个指标必须在生产环境中进行检查和监控。即使一些外部应用程序可能正在使用这些服务来向相关人员触发警报消息。监视器模块公开了一组可直接作为 HTTP URL 访问的REST 端点来检查状态。
+
+##### 我们如何监视所有 Spring Boot 微服务？
+
+Spring Boot 提供监视器端点以监控各个微服务的度量。这些端点对于获取有关应用程序的信息（如它们是否已启动）以及它们的组件（如数据库等）是否正常运行很有帮助。但是，使用监视器的一个主要缺点或困难是，我们必须单独打开应用程序的知识点以了解其状态或健康状况。想象一下涉及 50 个应用程序的微服务，管理员将不得不击中所有 50 个应用程序的执行终端。为了帮助我们处理这种情况，我们将使用位于的开源项目。 它建立在 Spring Boot Actuator 之上，它提供了一个 Web UI，使我们能够可视化多个应用程序的度量。
+
+#### 第三方项目整合
+
+##### 什么是 WebSockets？
+
+WebSocket 是一种计算机通信协议，通过单个 TCP 连接提供全双工通信信道。
+
+1、WebSocket 是双向的 -使用 WebSocket 客户端或服务器可以发起消息发送。
+
+2、WebSocket 是**全双工的** -客户端和服务器通信是**相互独立**的。
+
+3、单个 TCP 连接 -初始连接使用 HTTP，然后将此连接升级到基于套接字的连接。然后这个单一连接用于所有未来的通信
+
+4、Light -与 http 相比，**WebSocket 消息数据交换要轻得多**。
+
+##### 什么是 Spring Data ?
+
+Spring Data 是 Spring 的一个子项目。用于简化数据库访问，支持NoSQL 和 关系数据存储。其主要目标是使数据库的访问变得方便快捷。Spring Data 具有如下特点：
+
+###### SpringData 项目支持 NoSQL 存储：
+
+MongoDB （文档数据库）
+Neo4j（图形数据库）
+Redis（键/值存储）
+Hbase（列族数据库）
+
+###### SpringData 项目所支持的关系数据存储技术：
+
+JDBC
+JPA
+
+###### Spring Data Jpa 致力于减少数据访问层 (DAO) 的开发量.
+
+ 开发者唯一要做的，就是声明持久层的接口，其他都交给 Spring Data JPA 来帮你完成！Spring Data JPA 通过**规范方法的名字**，根据**符合规范的名字来确定方法需要实现什么样的逻辑**。
+
+##### 什么是 Spring Batch？
+
+Spring Boot Batch 提供可重用的函数，这些函数在处理大量记录时非常重要，包括日志/跟踪，事务管理，作业处理统计信息，作业重新启动，跳过和资源管理。它还提供了更先进的技术服务和功能，通过优化和分区技术，可以实现极高批量和高性能批处理作业。简单以及复杂的大批量批处理作业可以高度可扩展的方式利用框架处理重要大量的信息。
+
+##### 什么是 Apache Kafka？
+
+Apache Kafka 是一个**分布式发布 - 订阅消息系统**。它是一个**可扩展**的，**容错的**发布 - 订阅消息系统，它使我们能够构建分布式应用程序。这是一个 Apache 顶级项目。Kafka 适合**离线和在线消息消费**。
+
+##### 什么是 Swagger？
+
+Swagger 广泛用于**可视化 API**，使用 Swagger UI 为前端开发人员提供在线沙箱。Swagger 是用于**生成 RESTful Web 服务**的可视化表示的工具，规范和完整框架实现。它使文档能够以与服务器相同的速度更新。当通过 Swagger 正确定义时，消费者可以使用最少量的实现逻辑来理解远程服务并与其进行交互。因此，Swagger消除了调用服务时的猜测。
+
+##### Swagger如何维护接口文档 ?
+
+前后端分离开发日益流行，大部分情况下，我们都是通过 Spring Boot 做前后端分离开发，前后端分离一定会有接口文档，不然会前后端会深深陷入到扯皮中。一个比较笨的方法就是使用 word 或者 md 来维护接口文档，但是效率太低，接口一变，所有人手上的文档都得变。在 Spring Boot 中，这个问题常见的解决方案是 **Swagger** ，使用 Swagger 我们可以**快速生成一个接口文档网站**，接口一旦发生变化，文档就会自动更新，所有开发工程师访问这一个在线网站**就可以获取到最新的接口文档**，非常方便。
+
+#### 相关重要问题
+
+##### Spring Boot项目如何热部署？
+
+这可以使用 DEV 工具来实现。通过这种依赖关系，您可以节省任何更改，嵌入式tomcat 将重新启动。Spring Boot 有一个开发工具（DevTools）模块，它有助于提高开发人员的生产力。Java 开发人员面临的一个主要挑战是将文件更改自动部署到服务器并自动重启服务器。开发人员可以重新加载 Spring Boot 上的更改，而无需重新启动服务器。这将消除每次手动部署更改的需要。Spring Boot 在发布它的第一个版本时没有这个功能。这是开发人员最需要的功能。DevTools 模块完全满足开发人员的需求。该模块将在生产环境中被禁用。它还提供 H2 数据库控制台以更好地测试应用程序。
+
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+</dependency>
+```
+
+**Spring Boot 中的 starter 到底是什么 ?**
+
+首先，这个 Starter 并非什么新的技术点，基本上还是基于 Spring 已有功能来实现的。首先它提供了一个自动化配置类，一般命名为 XXXAutoConfiguration ，在这个配置类中通过条件注解来决定一个配置是否生效（条件注解就是 Spring 中原本就有的），然后它还会提供一系列的默认配置，也允许开发者根据实际情况自定义相关配置，然后通过类型安全的属性注入将这些配置属性注入进来，新注入的属性会代替掉默认属性。正因为如此，很多第三方框架，我们只需要引入依赖就可以直接使用了。当然，开发者也可以自定义 Starter
+
+##### spring-boot-starter-parent 有什么用 ?
+
+我们都知道，新创建一个 Spring Boot 项目，默认都是有 parent 的，这个 parent 就是 spring-boot-starter-parent ，spring-boot-starter-parent 主要有如下作用：
+
+- 定义了 Java 编译版本为 1.8 。
+- 使用 UTF-8 格式编码。
+- 继承自 spring-boot-dependencies，这个里边定义了依赖的版本，也正是因为继承了这个依赖，所以我们在写依赖时才不需要写版本号。
+- 执行打包操作的配置。
+- 自动化的资源过滤。
+- 自动化的插件配置。
+- 针对 application.properties 和 application.yml 的资源过滤，包括通过 profile 定义的不同环境的配置文件，例如 application-dev.properties 和 application-dev.yml。
+
+##### Spring Boot 打成的 jar 和普通的 jar 有什么区别 ?
+
+Spring Boot 项目最终打包成的 jar 是可执行 jar ，这种 jar 可以直接通过 java -jar xxx.jar 命令来运行，这种 jar **不可以作为普通的 jar 被其他项目依赖**，**即使依赖了也无法使用其中的类**。
+
+Spring Boot 的 jar 无法被其他项目依赖，**主要还是他和普通 jar 的结构不同**。普通的 jar 包，解压后直接就是包名，包里就是我们的代码，而 Spring Boot 打包成的可执行 jar 解压后，在 \BOOT-INF\classes 目录下才是我们的代码，因此无法被直接引用。**如果非要引用，可以在 pom.xml 文件中增加配置**，将 Spring Boot 项目**打包成两个 jar ，一个可执行，一个可引用。**
+
+
+
+##### 运行 Spring Boot 有哪几种方式？
+
+1）打包用命令或者放到容器中运行
+
+2）用 Maven/ Gradle 插件运行
+
+3）直接执行 main 方法运行
+
+##### 开启 Spring Boot 特性有哪几种方式？
+
+1）继承spring-boot-starter-parent项目
+
+2）导入spring-boot-dependencies项目依赖
+
+##### 如何使用 Spring Boot 实现异常处理？
+
+Spring 提供了一种使用 ControllerAdvice 处理异常的非常有用的方法。 我们通过实现一个 ControlerAdvice 类，来处理控制器类抛出的所有异常。
+
+**如何使用 Spring Boot 实现分页和排序？**
+
+使用 Spring Boot 实现分页非常简单。使用 Spring Data-JPA 可以实现将可分页的传递给存储库方法。
+
+**微服务中如何实现 session 共享 ?**
+
+在微服务中，一个完整的项目被拆分成多个不相同的独立的服务，各个服务**独立部署在不同的服务器上**，各自的 session 被从物理空间上隔离开了，但是经常，我们需要在不同微服务之间共享 session ，常见的方案就是 Spring Session + Redis 来实现 session 共享。将所有微服务的 session 统一保存在 Redis 上，当各个微服务对 session 有相关的读写操作时，都去操作 Redis 上的 session 。这样就**实现了 session 共享**，Spring Session 基于 Spring 中的代理过滤器实现，使得 session 的同步操作对开发人员而言是透明的，非常简便。
+
+##### Spring Boot 中如何实现定时任务 ?
+
+定时任务也是一个常见的需求，Spring Boot 中对于定时任务的支持主要还是来自 Spring 框架。在 Spring Boot 中使用定时任务主要有两种不同的方式，一个就是**使用 Spring 中的 @Scheduled 注解**，另一个则是使用第三方框架 Quartz。
+
+- 使用 Spring 中的 @Scheduled 的方式主要通过 @Scheduled 注解来实现。
+
+- 使用 Quartz ，则按照 Quartz 的方式，定义 Job 和 Trigger 即可。
+    
