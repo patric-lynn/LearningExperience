@@ -134,3 +134,109 @@ Setter方法注入：Setter方法注入是容器通过调用无参构造器或�
 ##### 什么是Spring beans？
 
 Spring beans 是那些形成Spring应用的主干的java对象。它们被Spring IOC容器初始化，装配，和管理。这些beans通过容器中配置的元数据创建。比如，以XML文件中 的形式定义。
+
+##### 如何给Spring 容器提供配置元数据？Spring有几种配置方式
+
+这里有三种重要的方法给Spring 容器提供配置元数据。
+
+- XML配置文件。
+- 基于注解的配置。
+- 基于java的配置。
+
+##### 解释Spring支持的几种bean的作用域
+
+Spring框架支持以下五种bean的作用域：
+
+- singleton : bean在每个Spring ioc 容器中只有一个实例。
+- prototype：一个bean的定义可以有多个实例。
+- request：每次http请求都会创建一个bean，该作用域仅在基于web的Spring ApplicationContext情形下有效。
+- session：在一个HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。
+- global-session：在一个全局的HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。
+
+##### Spring框架中的单例bean是线程安全的吗？
+
+不是，Spring框架中的单例bean不是线程安全的。
+
+spring 中的 bean 默认是单例模式，spring 框架并没有对单例 bean 进行多线程的封装处理。
+
+实际上大部分时候 spring bean 无状态的（比如 dao 类），所有某种程度上来说 bean 也是安全的，但如果 bean 有状态的话（比如 view model 对象），那就要开发者自己去保证线程安全了，最简单的就是改变 bean 的作用域，把“singleton”变更为“prototype”，这样请求 bean 相当于 new Bean()了，所以就可以保证线程安全了。
+
+- 有状态就是有数据存储功能。
+- 无状态就是不会保存数据。
+
+
+
+### SpringBoot经典面试问题
+
+#### 概述
+
+##### 什么是 Spring Boot？
+
+Spring Boot 是 Spring 开源组织下的子项目，是 Spring 组件一站式解决方案，主要是简化了使用 Spring 的难度，简省了繁重的配置，提供了各种启动器，开发者能快速上手。
+
+##### Spring Boot 有哪些优点？
+
+Spring Boot 主要有如下优点：
+
+- 容易上手，提升开发效率，为 Spring 开发提供一个更快、更广泛的入门体验。
+- 开箱即用，远离繁琐的配置。
+- 提供了一系列大型项目通用的非业务性功能，例如：内嵌服务器、安全管理、运行数据监控、运行状况检查和外部化配置等。
+- 没有代码生成，也不需要XML配置。
+- 避免大量的 Maven 导入和各种版本冲突。
+
+##### Spring Boot 的核心注解是哪个？它主要由哪几个注解组成的？
+
+启动类上面的注解是**@SpringBootApplication**，它也是 Spring Boot 的**核心注解**，主要组合包含了以下 3 个注解：
+
+@SpringBootConfiguration：组合了 @Configuration 注解，实现配置文件的功能。
+
+@EnableAutoConfiguration：打开自动配置的功能，也可以关闭某个自动配置的选项，如关闭数据源自动配置功能： @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })。
+
+@ComponentScan：Spring组件扫描。
+
+#### 配置
+
+##### 什么是 JavaConfig？
+
+Spring JavaConfig 是 Spring 社区的产品，它提供了配置 Spring IoC 容器的纯Java 方法。因此它有助于避免使用 XML 配置。使用 JavaConfig 的优点在于：
+
+（1）面向对象的配置。由于配置被定义为 JavaConfig 中的类，因此用户可以充分利用 Java 中的面向对象功能。一个配置类可以继承另一个，重写它的@Bean 方法等。
+
+（2）减少或消除 XML 配置。基于依赖注入原则的外化配置的好处已被证明。但是，许多开发人员不希望在 XML 和 Java 之间来回切换。JavaConfig 为开发人员提供了一种纯 Java 方法来配置与 XML 配置概念相似的 Spring 容器。从技术角度来讲，只使用 JavaConfig 配置类来配置容器是可行的，但实际上很多人认为将JavaConfig 与 XML 混合匹配是理想的。
+
+（3）类型安全和重构友好。JavaConfig 提供了一种类型安全的方法来配置 Spring容器。由于 Java 5.0 对泛型的支持，现在可以按类型而不是按名称检索 bean，不需要任何强制转换或基于字符串的查找。
+
+##### Spring Boot 自动配置原理是什么？
+
+注解 @EnableAutoConfiguration, @Configuration, @ConditionalOnClass 就是自动配置的核心，
+
+@EnableAutoConfiguration 给容器导入META-INF/spring.factories 里定义的自动配置类。
+
+筛选有效的自动配置类。每一个自动配置类结合对应的 xxxProperties.java 读取配置文件进行自动配置功能
+
+##### spring boot 核心配置文件是什么？
+
+单纯做 Spring Boot 开发，可能不太容易遇到 bootstrap.properties 配置文件，但是在结合 Spring Cloud 时，这个配置就会经常遇到了，特别是在需要加载一些远程配置文件的时侯。
+
+spring boot 核心的两个配置文件：
+
+bootstrap (. yml 或者 . properties)：boostrap 由父 ApplicationContext 加载的，比 applicaton 优先加载，配置在应用程序上下文的引导阶段生效。一般来说我们在 Spring Cloud Config 或者 Nacos 中会用到它。且 boostrap 里面的属性不能被覆盖；
+application (. yml 或者 . properties)： 由ApplicatonContext 加载，用于 spring boot 项目的自动化配置。
+
+##### 在自定义端口上运行 Spring Boot 应用程序？
+
+为了在自定义端口上运行 Spring Boot 应用程序，您可以在application.properties 中指定端口。server.port = 8090
+
+#### 安全与监视器
+
+##### 如何实现 Spring Boot 应用程序的安全性？
+
+为了实现 Spring Boot 的安全性，我们使用 spring-boot-starter-security 依赖项，并且必须添加安全配置。它只需要很少的代码。配置类将必须扩展WebSecurityConfigurerAdapter 并覆盖其方法。
+
+##### 什么是 CSRF 攻击？
+
+CSRF 代表跨站请求伪造。这是一种攻击，迫使最终用户在当前通过身份验证的Web 应用程序上执行不需要的操作。CSRF 攻击专门针对状态改变请求，而不是数据窃取，因为攻击者无法查看对伪造请求的响应。
+
+##### Spring Boot 中的监视器是什么？
+
+Spring boot actuator 是 spring 启动框架中的重要功能之一。Spring boot 监视器可帮助您访问生产环境中正在运行的应用程序的当前状态。有几个指标必须在生产环境中进行检查和监控。即使一些外部应用程序可能正在使用这些服务来向相关人员触发警报消息。监视器模块公开了一组可直接作为 HTTP URL 访问的REST 端点来检查状态。
