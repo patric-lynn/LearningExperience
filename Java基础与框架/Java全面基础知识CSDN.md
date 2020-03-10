@@ -249,9 +249,9 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 
 - 核心能力要求
 
-- - 了解大数据体系整体的框架、组成
-        - 熟悉各种大数据存储，计算框架，查询引擎等主要的架构、功能和适用场景
-        - 能够在项目的架构过程中进行合理的大数据技术方案选型
+- 了解大数据体系整体的框架、组成
+      - 熟悉各种大数据存储，计算框架，查询引擎等主要的架构、功能和适用场景
+      - 能够在项目的架构过程中进行合理的大数据技术方案选型
 
 ##### **6. 安全与日志**
 
@@ -262,38 +262,39 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 
 - 核心知识点：
 
-- - RBAC（基于角色的权限控制）模型
-        - 理解OAuth 2.0的设计思想和运行流程
+- RBAC（基于角色的权限控制）模型
+
+  理解OAuth 2.0的设计思想和运行流程
 
 6.2 安全相关
 
 - 介绍
 
-- - 在后端开发中需要关注很多的安全问题，这些安全问题可能来自恶意的攻击，也可能来自系统本身的安全性和健壮性不足。防止应用安全漏洞产生的前提是理解常见的漏洞概念、原理以及产生的原因
+- 在后端开发中需要关注很多的安全问题，这些安全问题可能来自恶意的攻击，也可能来自系统本身的安全性和健壮性不足。防止应用安全漏洞产生的前提是理解常见的漏洞概念、原理以及产生的原因
 
 - 核心知识点
 
-- - 水平权限和垂直权限漏洞，以及在程序开发中怎样避免
-        - SQL注入攻击（mybatis预编译可以避免）
-        - 常用的限流策略
-        - CSRF 攻击
-        - XSS 攻击
+- 水平权限和垂直权限漏洞，以及在程序开发中怎样避免
+      - SQL注入攻击（mybatis预编译可以避免）
+      - 常用的限流策略
+      - CSRF 攻击
+      - XSS 攻击
 
 6.3 日志相关
 
 - 核心知识点
 
-- - Log4j、Logback、SLF4J之间的关系，应用中不可直接使用日志系统（Log4j、Logback）中的API，而应依赖使用日志框架SLF4J中的API
-        - 日志的等级（error/warn/info/debug）
-        - 日志的保留时间
+- Log4j、Logback、SLF4J之间的关系，应用中不可直接使用日志系统（Log4j、Logback）中的API，而应依赖使用日志框架SLF4J中的API
+      - 日志的等级（error/warn/info/debug）
+      - 日志的保留时间
 
 6.4 异常处理相关
 
 - 核心知识点
 
-- - 异常的分类，正确区分异常处理方式
-        - 异常处理原则
-        - 学会借助spring框架等，将异常转为对用户或者调用方更加友好的错误码和错误信息
+- 异常的分类，正确区分异常处理方式
+      - 异常处理原则
+      - 学会借助spring框架等，将异常转为对用户或者调用方更加友好的错误码和错误信息
 
 6.5 RestFul接口设计相关
 
@@ -433,7 +434,7 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 
 ##### **Java工具包的基本构成**
 
-![Java技术体系](https://img-blog.csdnimg.cn/20190826135741553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RoaW5rV29u,size_16,color_FFFFFF,t_70)
+![image-20200310151807287](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310151807287.png)
 
 ##### **JVM**
 
@@ -487,11 +488,11 @@ Java标识符大小写敏感，长度无限制
 
 ##### **Java关键字/保留字(Java 8版本)**
 
-![img](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvSmF2YSVFNSU4NSVCMyVFOSU5NCVBRSVFNSVBRCU5NyVFRiVCQyU4OEphdmElMjA4JUU3JTg5JTg4JUU2JTlDJUFDJUVGJUJDJTg5LnBuZw?x-oss-process=image/format,png)
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310151918898.png" alt="image-20200310151918898" style="zoom:50%;" />
 
 ##### **Java8以后新增关键字**
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20191214173453247.png)
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310151948760.png" alt="image-20200310151948760" style="zoom:50%;" />
 
 
 
@@ -542,7 +543,7 @@ Java标识符大小写敏感，长度无限制
 
 ##### **常见转义字符表**
 
-![常见转义字符表](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvJUU1JUI4JUI4JUU4JUE3JTgxJUU4JUJEJUFDJUU0JUI5JTg5JUU1JUFEJTk3JUU3JUFDJUE2JUU4JUExJUE4LnBuZw?x-oss-process=image/format,png)
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152141800.png" alt="image-20200310152141800" style="zoom:50%;" />
 
 ##### **Java中需要转义的字符**
 
@@ -559,6 +560,7 @@ Java标识符大小写敏感，长度无限制
 
 ##### **分支结构-if**
 
+```
 if(条件表达式){
 执行的代码块；
 }
@@ -577,6 +579,7 @@ if(条件表达式){
 else{
 执行代码块;
 }
+```
 
 ##### **分支结构-switch**
 
@@ -586,9 +589,11 @@ else{
 
 ##### **循环结构-for**
 
+```
 for(初始化语句;判断条件语句;控制条件语句) {
 循环体语句;
 }
+```
 
 ##### **循环结构-foreach**
 
@@ -614,6 +619,7 @@ for (声明语句 : 表达式) {
 
 ##### **循环语句-while**
 
+```
 基本格式
 while(判断条件语句) {
 循环体语句;
@@ -625,9 +631,11 @@ while(判断条件语句) {
 循环体语句;
 控制条件语句;
 }
+```
 
 ##### **循环语句-do…while**
 
+```
 基本格式
 do {
 循环体语句;
@@ -639,6 +647,9 @@ do {
 循环体语句;
 控制条件语句;
 } while((判断条件语句);
+```
+
+
 
 ##### **跳转语句(控制循环结构)**
 
@@ -656,7 +667,7 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
 
 ##### 算术运算符
 
-![算术运算符](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvJUU3JUFFJTk3JUU2JTlDJUFGJUU4JUJGJTkwJUU3JUFFJTk3JUU3JUFDJUE2LnBuZw?x-oss-process=image/format,png)
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152315099.png" alt="image-20200310152315099" style="zoom:50%;" />
 
 - 注意事项
     - 1、/ 左右两端的类型需要一致；
@@ -666,7 +677,7 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
 
 ##### 比较运算符（关系运算符）
 
-![比较运算符2](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvJUU2JUFGJTk0JUU4JUJFJTgzJUU4JUJGJTkwJUU3JUFFJTk3JUU3JUFDJUE2Mi5wbmc?x-oss-process=image/format,png)
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152332471.png" alt="image-20200310152332471" style="zoom:50%;" />
 
 - 注意事项
     - 1、比较运算符的两端都是boolean类型，也就是说要么是true，要么是false；
@@ -680,7 +691,7 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
 
 ##### 逻辑运算符（符号的两端都是boolean类型）
 
-![逻辑运算符](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvJUU5JTgwJUJCJUU4JUJFJTkxJUU4JUJGJTkwJUU3JUFFJTk3JUU3JUFDJUE2LnBuZw?x-oss-process=image/format,png)
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152348297.png" alt="image-20200310152348297" style="zoom:50%;" />
 
 注意事项
 
@@ -692,13 +703,11 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
 
 ##### 位运算符（两端都是数值型的数据）
 
-![位运算符1](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvJUU0JUJEJThEJUU4JUJGJTkwJUU3JUFFJTk3JUU3JUFDJUE2MS5wbmc?x-oss-process=image/format,png)
-
-![位运算符2](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvJUU0JUJEJThEJUU4JUJGJTkwJUU3JUFFJTk3JUU3JUFDJUE2Mi5wbmc?x-oss-process=image/format,png)
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152412191.png" alt="image-20200310152412191" style="zoom:50%;" />
 
 ##### 三元运算符（三目运算符）
 
-![三元运算符](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvJUU0JUI4JTg5JUU1JTg1JTgzJUU4JUJGJTkwJUU3JUFFJTk3JUU3JUFDJUE2LnBuZw?x-oss-process=image/format,png)
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152445704.png" alt="image-20200310152445704" style="zoom:50%;" />
 
 - 注意事项
     - 1、表达式1与表达式2的类型必须一致；
@@ -706,7 +715,7 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
 
 ##### 运算符优先级
 
-![运算符的优先级](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvJUU4JUJGJTkwJUU3JUFFJTk3JUU3JUFDJUE2JUU3JTlBJTg0JUU0JUJDJTk4JUU1JTg1JTg4JUU3JUJBJUE3LnBuZw?x-oss-process=image/format,png)
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152502026.png" alt="image-20200310152502026" style="zoom:50%;" />
 
 
 
@@ -863,6 +872,8 @@ byte,short,int,long,float,double,char,boolean  12484821
 数据类型 变量名 = 初始化值;
 注意：格式是固定的，记住格式，以不变应万变
 举例
+
+```
 public class Variable{
     // 类变量
     static int allClicks=0;    
@@ -873,6 +884,7 @@ public class Variable{
         int i =0;  
     }
 }
+```
 
 ###### 注意事项：类外面不能有变量的声明
 
@@ -886,7 +898,7 @@ public class Variable{
 
 ##### 分类
 
-![Java基本数据类型](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvSmF2YSVFNSU5RiVCQSVFNiU5QyVBQyVFNiU5NSVCMCVFNiU4RCVBRSVFNyVCMSVCQiVFNSU5RSU4Qi5wbmc?x-oss-process=image/format,png)
+![image-20200310152544126](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152544126.png)
 
 - 基本数据类型
     - 数值型
@@ -899,7 +911,7 @@ public class Variable{
     - 接口(interface)
     - 数组([])
 
-##### 计算机存储单元
+**计算机存储单元**
 
 ​		定义：变量是内存中的小容器，用来存储数据。那么计算机内存是怎么存储数据的呢？无论是内存还是硬盘，计算机存储设备的最小信息单元叫“位（bit）”，我们又称之为“比特位”，通常用小写的字母b表示。而计算机最小的存储单元叫“字节（byte）”，通常用大写字母B表示，字节是由连续的8个位组成。
 
@@ -913,12 +925,12 @@ public class Variable{
 
 ​		在运算过程中，由于不同的数据类型会转换成同一种数据类型，所以整型、浮点型以及字符型都可以参与混合运算。自动转换的规则是从低级类型数据转换成高级类型数据。
 
-##### 		转换规则
+​		**转换规则**
 
 ​		数值型数据的转换：byte→short→int→long→float→double。
 ​		字符型转换为整型：char→int。
 
-##### 		转换条件
+​		**转换条件**
 
 ​		自动类型转换的实现需要同时满足两个条件：①两种数据类型彼此兼容，②目标类型的取值范围大于源数据类型（低级类型数据转换成高级类型数据）。例如 byte 类型向 short 类型转换时，由于 short 类型的取值范围较大，会自动将 byte 转换为 short 类型。
 
@@ -1071,10 +1083,14 @@ Class代表类的实体，在运行的Java应用程序中表示类和接口。�
 
 ​		The common interface extended by all annotation types.注解的本质就是一个继承了 Annotation 接口的接口。有关这一点，你可以去反编译任意一个注解类得到结果。**一个注解准确意义上来说，只不过是一种特殊的注释而已，如果没有解析它的代码，它可能连注释都不如。**而解析一个类或者方法的注解往往有两种形式，一种是编译期直接的扫描，一种是运行期反射。反射的事情我们先不讨论，而编译器的扫描指的是编译器在对 Java 代码编译成字节码的过程中会检测到某个类或者方法被一些注解修饰，这时它就会对于这些注解进行某些处理。
 
+```
 @Override
 public String toString() {
     return "Hello Annotation";
 }
+```
+
+
 上面的代码中，我重写了toString()方法并使用了@Override注解。但是，即使我不使用@Override注解标记代码，程序也能够正常执行。那么，该注解表示什么？这么写有什么好处吗？事实上，@Override告诉编译器这个方法是一个重写方法(描述方法的元数据)，如果父类中不存在该方法，编译器便会报错，提示该方法没有重写父类中的方法。如果我不小心拼写错误，例如将toString()写成了toStrring()，而且我也没有使用@Override注解，那程序依然能编译运行。但运行结果会和我期望的大不相同。现在我们了解了什么是注解，并且使用注解有助于提高代码的可读性。
 
 ##### 注解的用途
@@ -1139,23 +1155,32 @@ Repeatable使用场景：在需要对同一种注解多次使用时，往往需�
 
  **先声明一个Persons类用来包含所有的身份**
 
+```
 @Target(ElementType.TYPE) 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Persons {
 	Person[] value();
 }
+```
+
+
 这里@Target是声明Persons注解的作用范围，参数ElementType.Type代表可以给一个类进行注解。@Retention是注解的有效时间，RetentionPolicy.RUNTIME是指程序运行的时候。
 
 **Person注解**
 
+```
 @Repeatable(Persons.class)
 public @interface Person{
 	String role() default "";
 }
+```
+
+
 @Repeatable括号内的就相当于用来保存该注解内容的容器。
 
 **声明一个Man类，给该类加上一些身份**。
 
+```
 @Person(role="CEO")
 @Person(role="husband")
 @Person(role="father")
@@ -1163,9 +1188,11 @@ public @interface Person{
 public   class Man {
 	String name="";
 }
+```
 
 **在主方法中访问该注解。**
 
+```
 public static void main(String[] args) {
     Annotation[] annotations = Man.class.getAnnotations();  
     System.out.println(annotations.length);
@@ -1174,14 +1201,19 @@ public static void main(String[] args) {
     	System.out.println(t.role());
     }
 }
+```
 
 **运行结果**
 
+```
 1
 CEO
 husband
 father
 son
+```
+
+
 
 ##### 注解的属性
 
@@ -1196,15 +1228,20 @@ son
 
 ​		上面代码定义了 @TestAnnotation 这个注解中拥有 id 和 msg 两个属性。在使用的时候，我们应该给它们进行赋值。赋值的方式是在注解的括号内以 value="" 形式，多个属性之前用 ，隔开。
 
+```
 @TestAnnotation(id=3, msg="hello annotation")
 public class Test {
 
 }
+```
+
+
 
 ##### 快捷方式
 
 所谓的快捷方式就是注解中定义了名为value的元素，并且在使用该注解时，如果该元素是唯一需要赋值的一个元素，那么此时无需使用key=value的语法，而只需在括号内给出value元素所需的值即可。这可以应用于任何合法类型的元素，记住，这限制了元素名必须为value，简单案例如下
 
+```
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @interface IntegerVaule{
@@ -1221,6 +1258,9 @@ public class QuicklyWay {
    public int money;
 
 }
+```
+
+
 
 ##### 注解不支持继承
 
@@ -2106,6 +2146,7 @@ XML 应用于 Web 开发的许多方面，常用于简化数据的存储和传�
 
 ###### 存放数据栗子
 
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <persons>
     <person id="p001">
@@ -2115,10 +2156,23 @@ XML 应用于 Web 开发的许多方面，常用于简化数据的存储和传�
         <name>李四</name>
     </person>
 </persons>
+```
 
 ###### 配置文件栗子
 
-
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5">
+    <servlet>
+        <servlet-name>HelloMyServlet</servlet-name>
+        <servlet-class>com.jourwon.HelloMyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HelloMyServlet</servlet-name>
+        <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+</web-app>
+```
 
 ##### XML 语法
 
