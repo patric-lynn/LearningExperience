@@ -1,6 +1,6 @@
 ### Java技术栈之并发编程 CSDN
 
-#### 并发编程理论
+#### 并发编程基本概念
 
 Java并发编程是整个Java开发体系中最难以理解，但也是最重要的知识点之一，因此学习起来比较费劲，从而导致很多人望而却步，但是无论是职场面试还是高并发高流量的系统的实现都离不开并发编程，能够真正掌握并发编程的人才在市场上供不应求。
 
@@ -168,6 +168,42 @@ Found 1 deadlock.
 概括来说就是：当前任务在执行完 CPU 时间片切换到另一个任务之前会先保存自己的状态，以便下次再切换回这个任务时，可以再加载这个任务的状态。**任务从保存到再加载的过程就是一次上下文切换。**
 
 上下文切换通常是计算密集型的。也就是说，它需要相当可观的处理器时间，在每秒几十上百次的切换中，每次切换都需要**纳秒量级的时间**。所以，上下文切换对系统来说意味着消耗大量的 CPU 时间，事实上，可能是操作系统中时间消耗最大的操作。Linux 相比与其他操作系统（包括其他类 Unix 系统）有很多的优点，其中有一项就是，其上下文切换和模式切换的时间消耗非常少。
+
+
+
+#### Java并发编程理论
+
+##### 1.Java内存模型
+
+###### Java内存模型（JMM）的介绍
+
+什么是线程安全？在<<深入理解Java虚拟机>>中看到的定义。原文如下：
+当多个线程访问同一个对象时，如果不用考虑这些线程在运行时环境下的调度和交替运行，也不需要进行额外的同步，或者在调用方进行任何其他的协调操作，调用这个对象的行为都可以获取正确的结果，那这个对象是线程安全的。
+
+关于定义的理解是一个仁者见仁智者见智的事情。出现线程安全的问题一般是因为**主内存和工作内存数据不一致性和重排序**导致的，而解决线程安全的问题最重要的就是理解这两种问题是怎么来的，那么，理解它们的核心在于理解Java内存模型（JMM）。
+
+在多线程条件下，多个线程肯定会相互协作完成一件事情，一般来说就会涉及到多个线程间相互通信告知彼此的状态以及当前的执行结果等，另外，为了性能优化，还会涉及到**编译器指令重排序和处理器指令重排序**。下面会一一来聊聊这些知识。
+
+###### 内存模型抽象结构
+
+线程间协作通信可以类比人与人之间的协作的方式，在现实生活中，之前网上有个流行语“你妈喊你回家吃饭了”，就以这个生活场景为例，小明在外面玩耍，小明妈妈在家里做饭，做完饭后准备叫小明回家吃饭，那么就存在两种方式：
+
+小明妈妈要去上班了十分紧急这个时候手机又没有电了，于是就在桌子上贴了一张纸条“饭做好了，放在…”小明回家后看到纸条如愿吃到妈妈做的饭菜，那么，如果将小明妈妈和小明作为两个线程，那么这张纸条就是这两个线程间通信的共享变量，通过读写共享变量实现两个线程间协作；
+
+还有一种方式就是，妈妈的手机还有电，妈妈在赶去坐公交的路上给小明打了个电话，这种方式就是通知机制来完成协作。同样，可以引申到线程间通信机制。
+
+通过上面这个例子，应该有些认识。在并发编程中主要需要解决两个问题：1. 线程之间如何通信；2.线程之间如何完成同步（这里的线程指的是并发执行的活动实体）。通信是指线程之间以何种机制来交换信息，主要有两种：共享内存和消息传递。这里，可以分别类比上面的两个举例。Java内存模型是共享内存的并发模型，线程之间主要通过读-写共享变量来完成隐式通信。如果程序员不能理解Java的共享内存模型在编写并发程序时一定会遇到各种各样关于内存可见性的问题。
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -569,22 +605,185 @@ public final void setPriority(int newPriority) {
 
 ##### 5.守护线程和用户线程
 
-守护线程和用户线程简介:
+###### 守护线程和用户线程简介:
 
-**用户 (User) 线程：**运行在**前台**，执行具体的任务，如程序的主线程、连接网络的子线程等都是用户线程
-**守护 (Daemon) 线程：**运行在**后台**，为其他前台线程服务。也可以说守护线程是 JVM 中非守护线程的 “佣人”。一旦所有用户线程都结束运行，守护线程会随 JVM 一起结束工作
+- **用户 (User) 线程：**运行在**前台**，执行具体的任务，如程序的主线程、连接网络的子线程等都是用户线程
+- **守护 (Daemon) 线程：**运行在**后台**，为其他前台线程服务。也可以说守护线程是 JVM 中非守护线程的 “佣人”。一旦所有用户线程都结束运行，守护线程会随 JVM 一起结束工作
+
 main 函数所在的线程就是一个用户线程啊，main 函数启动的同时在 JVM 内部同时还启动了好多守护线程，比如垃圾回收线程。
 
 那么守护线程和用户线程有什么区别呢？
 
 比较明显的区别之一是用户线程结束，JVM 退出，不管这个时候有没有守护线程运行。而守护线程不会影响 JVM 的退出。
 
-注意事项：
+**注意事项**：
 
-setDaemon(true)必须在start()方法前执行，否则会抛出 IllegalThreadStateException 异常
-在守护线程中产生的新线程也是守护线程
-不是所有的任务都可以分配给守护线程来执行，比如读写操作或者计算逻辑
-守护 (Daemon) 线程中不能依靠 finally 块的内容来确保执行关闭或清理资源的逻辑。因为我们上面也说过了一旦所有用户线程都结束运行，守护线程会随 JVM 一起结束工作，所以守护 (Daemon) 线程中的 finally 语句块可能无法被执行。
-————————————————
-版权声明：本文为CSDN博主「ThinkWon」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/ThinkWon/article/details/102027115
+- setDaemon(true)必须在start()方法前执行，否则会抛出 IllegalThreadStateException 异常
+- 在守护线程中产生的新线程也是守护线程
+- 不是所有的任务都可以分配给守护线程来执行，比如读写操作或者计算逻辑
+- 守护 (Daemon) 线程中不能依靠 finally 块的内容来确保执行关闭或清理资源的逻辑。因为我们上面也说过了一旦所有用户线程都结束运行，守护线程会随 JVM 一起结束工作，所以守护 (Daemon) 线程中的 finally 语句块可能无法被执行。
+
+###### 守护线程详解
+
+守护线程是一种特殊的线程，就和它的名字一样，它是系统的守护者，在后台默默地守护一些系统服务，比如垃圾回收线程，JIT线程就可以理解为守护线程。与之对应的就是用户线程，用户线程就可以认为是系统的工作线程，它会完成整个系统的业务操作。用户线程完全结束后就意味着整个系统的业务任务全部结束了，因此系统就没有对象需要守护的了，守护线程自然而然就会退。当一个Java应用，只有守护线程的时候，虚拟机就会自然退出。下面以一个简单的例子来表述Daemon线程的使用。
+
+```Java
+public class DaemonDemo {
+    public static void main(String[] args) {
+        Thread daemonThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        System.out.println("i am alive");
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } finally {
+                        System.out.println("finally block");
+                    }
+                }
+            }
+        });
+        daemonThread.setDaemon(true);
+        daemonThread.start();
+        //确保main线程结束前能给daemonThread能够分到时间片
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+输出结果为：
+i am alive
+finally block
+i am alive
+```
+
+上面的例子中daemodThread run()方法中是一个while死循环，会一直打印,但是当main线程结束后daemonThread就会退出所以不会出现死循环的情况。main线程先睡眠800ms保证daemonThread能够拥有一次时间片的机会，也就是说可以正常执行一次打印“i am alive”操作和一次finally块中"finally block"操作。紧接着main 线程结束后，daemonThread退出，这个时候只打印了"i am alive"并没有打印finnal块中的。因此，这里需要注意的是**守护线程在退出的时候并不会执行finnaly块中的代码，所以守护 (Daemon) 线程中不能依靠 finally 块的内容来确保执行关闭或清理资源的逻辑**
+
+线程可以通过setDaemon(true)的方法将线程设置为守护线程。并且需要注意的是设置守护线程要先于start()方法，否则会报
+
+```
+Exception in thread "main" java.lang.IllegalThreadStateException
+```
+
+
+但是该线程还是会执行，只不过会当做正常的用户线程执行。
+
+##### 6.线程死锁
+
+###### 认识线程死锁
+
+百度百科：死锁是指两个或两个以上的进程（线程）在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，这些永远在互相等待的进程（线程）称为死锁进程（线程）。
+
+多个线程同时被阻塞，它们中的一个或者全部都在等待某个资源被释放。由于线程被无限期地阻塞，因此程序不可能正常终止。
+
+如下图所示，线程 A 持有资源 2，线程 B 持有资源 1，他们同时都想申请对方的资源，所以这两个线程就会互相等待而进入死锁状态。
+![image-20200310185746133](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310185746133.png)
+
+下面通过一个例子来说明线程死锁，代码模拟了上图的死锁的情况 (代码来源于《并发编程之美》)：
+
+```Java
+public class DeadLockDemo {
+    private static Object resource1 = new Object();//资源 1
+    private static Object resource2 = new Object();//资源 2
+
+    public static void main(String[] args) {
+        new Thread(() -> {
+            synchronized (resource1) {
+                System.out.println(Thread.currentThread() + "get resource1");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread() + "waiting get resource2");
+                synchronized (resource2) {
+                    System.out.println(Thread.currentThread() + "get resource2");
+                }
+            }
+        }, "线程 1").start();
+
+        new Thread(() -> {
+            synchronized (resource2) {
+                System.out.println(Thread.currentThread() + "get resource2");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread() + "waiting get resource1");
+                synchronized (resource1) {
+                    System.out.println(Thread.currentThread() + "get resource1");
+                }
+            }
+        }, "线程 2").start();
+    }
+}
+运行结果：
+Thread[线程 1,5,main]get resource1
+Thread[线程 2,5,main]get resource2
+Thread[线程 1,5,main]waiting get resource2
+Thread[线程 2,5,main]waiting get resource1
+```
+
+线程 A 通过 synchronized (resource1) 获得 resource1 的监视器锁，然后通过Thread.sleep(1000)；让线程 A 休眠 1s 为的是让线程 B 得到CPU执行权，然后获取到 resource2 的监视器锁。线程 A 和线程 B 休眠结束了都开始企图请求获取对方的资源，然后这两个线程就会陷入互相等待的状态，这也就产生了死锁。上面的例子符合产生死锁的四个必要条件。
+
+形成死锁的四个必要条件：
+
+- 互斥条件：线程(进程)对于所分配到的资源具有排它性，即一个资源只能被一个线程(进程)占用，直到被该线程(进程)释放
+- 请求与保持条件：一个线程(进程)因请求被占用资源而发生阻塞时，对已获得的资源保持不放。
+- 不剥夺条件：线程(进程)已获得的资源在末使用完之前不能被其他线程强行剥夺，只有自己使用完毕后才释放资源。
+- 循环等待条件：当发生死锁时，所等待的线程(进程)必定会形成一个环路（类似于死循环），造成永久阻塞
+
+###### 如何避免线程死锁
+
+我们只要破坏产生死锁的四个条件中的其中一个就可以了。
+
+**破坏互斥条件**
+
+这个条件我们没有办法破坏，因为我们用锁本来就是想让他们互斥的（临界资源需要互斥访问）。
+
+**破坏请求与保持条件**
+
+一次性申请所有的资源。
+
+**破坏不剥夺条件**
+
+占用部分资源的线程进一步申请其他资源时，如果申请不到，可以主动释放它占有的资源。
+
+**破坏循环等待条件**
+
+靠按序申请资源来预防。按某一顺序申请资源，释放资源则反序释放。破坏循环等待条件。
+
+我们对线程 2 的代码修改成下面这样就不会产生死锁了。
+
+```Java
+new Thread(() -> {
+    synchronized (resource1) {
+        System.out.println(Thread.currentThread() + "get resource1");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(Thread.currentThread() + "waiting get resource2");
+        synchronized (resource2) {
+            System.out.println(Thread.currentThread() + "get resource2");
+        }
+    }
+}, "线程 2").start();
+
+运行结果：
+Thread[线程 1,5,main]get resource1
+Thread[线程 1,5,main]waiting get resource2
+Thread[线程 1,5,main]get resource2
+Thread[线程 2,5,main]get resource1
+Thread[线程 2,5,main]waiting get resource2
+Thread[线程 2,5,main]get resource2
+```
+
+线程 1 首先获得到 resource1 的监视器锁，这时候线程 2 就获取不到了。然后线程 1 再去获取 resource2 的监视器锁，可以获取到。然后线程 1 释放了对 resource1、resource2 的监视器锁的占用，线程 2 获取到就可以执行了。这样就**破坏了破坏循环等待条件**，因此避免了死锁。
