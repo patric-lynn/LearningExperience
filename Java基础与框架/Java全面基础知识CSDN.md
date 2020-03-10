@@ -1,6 +1,6 @@
 ## Java技术栈知识汇总
 
-### Java基础知识
+### Java基础语法
 
 **新冠肺炎疫情让我们的2020充满挑战。不过一年之计在于春，随着三月春日的来临，各大厂实习生招聘也已经开始啦，是时候翻开新的一页啦，快来一起温习下Java吧！**
 
@@ -21,21 +21,21 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 - 核心知识点
 
 - - Java基本语法
-    - Java的类加载机制
-    - Java虚拟机：JVM内存模型和结构,GC原理,性能调优
-    - 泛型
-    - 集合体系
-    - 异常体系
-    - IO体系
-    - 多线程编程
-    - 反射
-    - Servlet
+        - Java的类加载机制
+        - Java虚拟机：JVM内存模型和结构,GC原理,性能调优
+        - 泛型
+        - 集合体系
+        - 异常体系
+        - IO体系
+        - 多线程编程
+        - 反射
+        - Servlet
 
 - 推荐书籍
 
 - - 《Java编程思想》
-    - 《Effective Java》
-    - 《深入理解Java虚拟机》
+        - 《Effective Java》
+        - 《深入理解Java虚拟机》
 
 1.2 Python等脚本语言
 
@@ -46,13 +46,13 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 - 核心知识点
 
 - - 常用的linux操作和运维命令
-    - Python爬虫
+        - Python爬虫
 
 - 推荐书籍
 
 - - 《linux与unix shell编程指南》
-    - [《鸟哥的Linux私房菜》](https://link.zhihu.com/?target=http%3A//linux.vbird.org/linux_basic/)
-    - 《Python编程 从入门到实践》
+        - [《鸟哥的Linux私房菜》](https://link.zhihu.com/?target=http%3A//linux.vbird.org/linux_basic/)
+        - 《Python编程 从入门到实践》
 
 1.3 SQL 语言
 
@@ -63,21 +63,21 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 - 核心知识点
 
 - - 区分DDL和DML
-    - 经典查询语句主要结构
-    - 表连接（内连接，左外连接，右外连接，全连接）
-    - 函数（普通函数，聚合函数）
-    - 索引
-    - 分区
+        - 经典查询语句主要结构
+        - 表连接（内连接，左外连接，右外连接，全连接）
+        - 函数（普通函数，聚合函数）
+        - 索引
+        - 分区
 
 - 适用场景
 
 - - 传统数据库，传统SQL：用于事务性数据操作，通常用于系统的业务库；
-    - 大数据场景下的NoSQL：用于数据分析，交互式查询，批量数据处理等。
+        - 大数据场景下的NoSQL：用于数据分析，交互式查询，批量数据处理等。
 
 - 推荐书籍
 
 - - MySQL：《高性能MySQL》
-    - Hive SQL：《Hive编程指南》
+        - Hive SQL：《Hive编程指南》
 
 ##### **2. 开发工具**
 
@@ -86,22 +86,22 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 - 核心知识点
 
 - - [配置](https://link.zhihu.com/?target=http%3A//www.cnblogs.com/zhangyinhua/p/7520823.html)良好代码风格模板，包括文件注释，类注释，方法注释，缩进换行等
-    - 安装使用必要的插件：代码规范检查插件(Alibaba Java Coding Guidelines)，源码潜在bug检查插件(pmd）,字节码潜在bug检查插件（findbugs）等
+        - 安装使用必要的插件：代码规范检查插件(Alibaba Java Coding Guidelines)，源码潜在bug检查插件(pmd）,字节码潜在bug检查插件（findbugs）等
 
 2.2 工程构建 MAVEN
 
 - 核心知识点
 
 - - maven 仓库
-    - maven pom.xml文件配置
-    - maven 构建的生命周期
-    - maven 插件
+        - maven pom.xml文件配置
+        - maven 构建的生命周期
+        - maven 插件
 
 - 能力要求
 
 - - 学会配置maven多级工程结构
-    - 能够解决工程构建中常常出现的jar包冲突等问题
-    - 熟练使用maven
+        - 能够解决工程构建中常常出现的jar包冲突等问题
+        - 熟练使用maven
 
 - 推荐书籍
 
@@ -124,13 +124,13 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 - 核心知识点
 
 - - Spring框架的模块组成
-    - IOC和AOP的设计思想和实现原理
-    - Bean的[作用域和生命周期](https://link.zhihu.com/?target=https%3A//www.cnblogs.com/zhanglei93/p/6231882.html)
+        - IOC和AOP的设计思想和实现原理
+        - Bean的[作用域和生命周期](https://link.zhihu.com/?target=https%3A//www.cnblogs.com/zhanglei93/p/6231882.html)
 
 - 参考说明
 
 - - 有条件地阅读spring核心模块的代码，debug Spring框架的启动和Bean服务的过程是比较好的理解spring原理的方式
-    - 最新的版本更新和参考文档可以直接浏览 [Spring官网](https://link.zhihu.com/?target=https%3A//spring.io/)
+        - 最新的版本更新和参考文档可以直接浏览 [Spring官网](https://link.zhihu.com/?target=https%3A//spring.io/)
 
 3.2 orm框架 mybatis/hibernate
 
@@ -141,8 +141,8 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 - 核心知识点
 
 - - 熟练配置使用mybatis，掌握mapper xml的写法
-    - 会使用mybatis-generator的mvn插件自动生成DAO层代码和xml配置
-    - 理解mybatis的[一、二级缓存](https://link.zhihu.com/?target=http%3A//blog.csdn.net/u010643307/article/details/70148723),了解sql session创建过程和sql执行过程
+        - 会使用mybatis-generator的mvn插件自动生成DAO层代码和xml配置
+        - 理解mybatis的[一、二级缓存](https://link.zhihu.com/?target=http%3A//blog.csdn.net/u010643307/article/details/70148723),了解sql session创建过程和sql执行过程
 
 - 推荐资料
 
@@ -153,8 +153,8 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 - 核心能力要求
 
 - - 熟练使用Junit/TestNG进行单元测试，接口测试
-    - 学会借助Mockito解决外部系统，模块依赖的mock测试
-    - 学会使用maven的surfire plugin和jacoco plugin等插件，度量测例的通过率，测试代码覆盖率等指标
+        - 学会借助Mockito解决外部系统，模块依赖的mock测试
+        - 学会使用maven的surfire plugin和jacoco plugin等插件，度量测例的通过率，测试代码覆盖率等指标
 
 ##### **4. 服务器中间件**
 
@@ -165,8 +165,8 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 - 核心知识点
 
 - - redis配置策略（持久化策略，替换算法等）
-    - redis的部署模式（standalone单机,sentinel哨兵,cluster集群），哨兵的本质是主从切换，cluster是真正的分布式部署可以线性扩展内存资源
-    - redis支持的数据结构
+        - redis的部署模式（standalone单机,sentinel哨兵,cluster集群），哨兵的本质是主从切换，cluster是真正的分布式部署可以线性扩展内存资源
+        - redis支持的数据结构
 
 - 适用场景
 
@@ -179,16 +179,16 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 - 核心知识
 
 - - [AMQP协议对应消息模型中的主要概念](https://link.zhihu.com/?target=https%3A//www.cnblogs.com/frankyou/p/5283539.html)
-    - 两种集群模式对比：[普通集群和镜像集群(HA)](https://link.zhihu.com/?target=https%3A//www.linuxidc.com/Linux/2017-10/147708.htm%3Fhmsr%3Dtoutiao.io)
-    - kafka
-    - 基于zk的分布式拓扑结构
-    - 理解kafka支持的消息的写入流程，写入模式，消息的存储模式，消息的消费方式等
-    - rabbitmq
+        - 两种集群模式对比：[普通集群和镜像集群(HA)](https://link.zhihu.com/?target=https%3A//www.linuxidc.com/Linux/2017-10/147708.htm%3Fhmsr%3Dtoutiao.io)
+        - kafka
+        - 基于zk的分布式拓扑结构
+        - 理解kafka支持的消息的写入流程，写入模式，消息的存储模式，消息的消费方式等
+        - rabbitmq
 
 - 适用场景
 
 - - 消息中间件一般适用于：系统之间需要高度解耦；异步传输数据（非阻塞）；保证数据传输过程中数据可以持久化，解决生产端和消费端能力不一致的问题，避免峰值数据对下游服务节点的冲击等
-    - 对比rabbitmq和kafka: rabbitmq主要适用数据可靠性，一致性要求比较高的场景；kafka主要适用数据吞吐量比较的场景，如日志数据的实时传输等
+        - 对比rabbitmq和kafka: rabbitmq主要适用数据可靠性，一致性要求比较高的场景；kafka主要适用数据吞吐量比较的场景，如日志数据的实时传输等
 
 4.3 分布式文件存储
 
@@ -235,23 +235,23 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 - 核心知识点
 
 - - 索引
-    - 事务与事务隔离级别
-    - 存储方法
-    - 触发器
-    - 不同关系型数据库的SQL差异
+        - 事务与事务隔离级别
+        - 存储方法
+        - 触发器
+        - 不同关系型数据库的SQL差异
 
 - 推荐书籍
 
 - - 《高性能MySQL》
-    - 《Oracle从入门到精通》
+        - 《Oracle从入门到精通》
 
 ##### **5. 大数据存储和计算框架等**
 
 - 核心能力要求
 
 - - 了解大数据体系整体的框架、组成
-    - 熟悉各种大数据存储，计算框架，查询引擎等主要的架构、功能和适用场景
-    - 能够在项目的架构过程中进行合理的大数据技术方案选型
+        - 熟悉各种大数据存储，计算框架，查询引擎等主要的架构、功能和适用场景
+        - 能够在项目的架构过程中进行合理的大数据技术方案选型
 
 ##### **6. 安全与日志**
 
@@ -263,7 +263,7 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 - 核心知识点：
 
 - - RBAC（基于角色的权限控制）模型
-    - 理解OAuth 2.0的设计思想和运行流程
+        - 理解OAuth 2.0的设计思想和运行流程
 
 6.2 安全相关
 
@@ -274,26 +274,26 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 - 核心知识点
 
 - - 水平权限和垂直权限漏洞，以及在程序开发中怎样避免
-    - SQL注入攻击（mybatis预编译可以避免）
-    - 常用的限流策略
-    - CSRF 攻击
-    - XSS 攻击
+        - SQL注入攻击（mybatis预编译可以避免）
+        - 常用的限流策略
+        - CSRF 攻击
+        - XSS 攻击
 
 6.3 日志相关
 
 - 核心知识点
 
 - - Log4j、Logback、SLF4J之间的关系，应用中不可直接使用日志系统（Log4j、Logback）中的API，而应依赖使用日志框架SLF4J中的API
-    - 日志的等级（error/warn/info/debug）
-    - 日志的保留时间
+        - 日志的等级（error/warn/info/debug）
+        - 日志的保留时间
 
 6.4 异常处理相关
 
 - 核心知识点
 
 - - 异常的分类，正确区分异常处理方式
-    - 异常处理原则
-    - 学会借助spring框架等，将异常转为对用户或者调用方更加友好的错误码和错误信息
+        - 异常处理原则
+        - 学会借助spring框架等，将异常转为对用户或者调用方更加友好的错误码和错误信息
 
 6.5 RestFul接口设计相关
 
@@ -310,78 +310,78 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 - 核心知识点
 
 - - 系统问题排查：学会使用w/uptime、top、df、netstat、iostat以及各种可视化监控工具排查本机的负载、磁盘、内存、网络等系统问题
-    - 应用问题排查：学会依据应用系统错误日志以及jps、jinfo、jstat、jstack、jmap以及各种可视化监控工具，排查应用系统问题
-    - 数据库问题排查：学会借助mysql慢查询日志、explain以及各种可视化工具排查mysql使用过程中的各种问题
-    - 网络问题排查：学会借助telnet、ping、wget、nc等工具排查网络问题
+        - 应用问题排查：学会依据应用系统错误日志以及jps、jinfo、jstat、jstack、jmap以及各种可视化监控工具，排查应用系统问题
+        - 数据库问题排查：学会借助mysql慢查询日志、explain以及各种可视化工具排查mysql使用过程中的各种问题
+        - 网络问题排查：学会借助telnet、ping、wget、nc等工具排查网络问题
 
 6.7 多线程编程
 
 - 核心知识点
 
 - - Java线程相关接口和类的实现和关系
-    - Java线程池
-    - 线程同步，锁等
+        - Java线程池
+        - 线程同步，锁等
 
 6.8 网络相关
 
 - 核心知识点
 
 - - 掌握http协议消息体划分、连接和通信过程
-    - 掌握http主要的返回状态码意义
-    - 掌握https协议的连接和通信过程
+        - 掌握http主要的返回状态码意义
+        - 掌握https协议的连接和通信过程
 
 6.9 设计原则和设计模式
 
 - 核心知识点
 
 - - 单例模式
-    - 策略模式
-    - 代理模式
-    - 观察者模式
-    - 装饰模式
-    - 适配器模式
-    - 组合模式
-    - 工厂模式
-    - 模板方法模式
-    - ...
-    - 单一职责原则
-    - 里氏替换原则
-    - 依赖倒置原则
-    - 接口隔离原则
-    - 迪米特法则
-    - 开闭原则
-    - 组合/聚合复用原则
-    - 七大设计原则
-    - 一些常用的设计模式
+        - 策略模式
+        - 代理模式
+        - 观察者模式
+        - 装饰模式
+        - 适配器模式
+        - 组合模式
+        - 工厂模式
+        - 模板方法模式
+        - ...
+        - 单一职责原则
+        - 里氏替换原则
+        - 依赖倒置原则
+        - 接口隔离原则
+        - 迪米特法则
+        - 开闭原则
+        - 组合/聚合复用原则
+        - 七大设计原则
+        - 一些常用的设计模式
 
 6.10 分布式系统设计相关
 
 - 核心知识点
 
 - - Quartz，基于数据库锁的抢占式分布式定时器
-    - 基于数据库
-    - 基于缓存
-    - 基于zookeeper
-    - 一致性理论
-    - 分布式事务解决方案
-    - 一致性模型
-    - CAP定理
-    - BASE 理论
-    - 强一致性
-    - 弱一致性
-    - 最终一致性
-    - eBay 事件队列方案
-    - TCC （Try-Confirm-Cancel）补偿模式
-    - 缓存数据最终一致性
-    - 强一致性（两段提交和三段提交模型, Paxos或者Raft算法）
-    - 最终一致性
-    - SOA
-    - 微服务
-    - Servless
-    - 分布式系统架构设计
-    - 分布式事务
-    - 分布式锁
-    - 分布式定时器
+        - 基于数据库
+        - 基于缓存
+        - 基于zookeeper
+        - 一致性理论
+        - 分布式事务解决方案
+        - 一致性模型
+        - CAP定理
+        - BASE 理论
+        - 强一致性
+        - 弱一致性
+        - 最终一致性
+        - eBay 事件队列方案
+        - TCC （Try-Confirm-Cancel）补偿模式
+        - 缓存数据最终一致性
+        - 强一致性（两段提交和三段提交模型, Paxos或者Raft算法）
+        - 最终一致性
+        - SOA
+        - 微服务
+        - Servless
+        - 分布式系统架构设计
+        - 分布式事务
+        - 分布式锁
+        - 分布式定时器
 
 - 
 
@@ -413,21 +413,21 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 ##### 面向对象五大原则
 
 - 单一职责原则SRP(Single Responsibility Principle)
-  类的功能要单一，不能包罗万象，跟杂货铺似的。
+    类的功能要单一，不能包罗万象，跟杂货铺似的。
 
 - 开放封闭原则OCP(Open－Close Principle)
-  一个模块对于拓展是开放的，对于修改是封闭的，想要增加功能热烈欢迎，想要修改，哼，一万个不乐意。
+    一个模块对于拓展是开放的，对于修改是封闭的，想要增加功能热烈欢迎，想要修改，哼，一万个不乐意。
 
 - 里式替换原则LSP(the Liskov Substitution Principle LSP)
-  子类可以替换父类出现在父类能够出现的任何地方。比如你能代表你爸去你姥姥家干活。哈哈~~
+    子类可以替换父类出现在父类能够出现的任何地方。比如你能代表你爸去你姥姥家干活。哈哈~~
 
 - 依赖倒置原则DIP(the Dependency Inversion Principle DIP)
-  高层次的模块不应该依赖于低层次的模块，他们都应该依赖于抽象。抽象不应该依赖于具体实现，具体实现应该依赖于抽象。就是你出国要说你是中国人，而不能说你是哪个村子的。比如说中国人是抽象的，下面有具体的xx省，xx市，xx县。你要依赖的抽象是中国人，而不是你是xx村的。
+    高层次的模块不应该依赖于低层次的模块，他们都应该依赖于抽象。抽象不应该依赖于具体实现，具体实现应该依赖于抽象。就是你出国要说你是中国人，而不能说你是哪个村子的。比如说中国人是抽象的，下面有具体的xx省，xx市，xx县。你要依赖的抽象是中国人，而不是你是xx村的。
 
 - 接口分离原则ISP(the Interface Segregation Principle ISP)
-  设计时采用多个与特定客户类有关的接口比采用一个通用的接口要好。就比如一个手机拥有打电话，看视频，玩游戏等功能，把这几个功能拆分成不同的接口，比在一个接口里要好的多。
+    设计时采用多个与特定客户类有关的接口比采用一个通用的接口要好。就比如一个手机拥有打电话，看视频，玩游戏等功能，把这几个功能拆分成不同的接口，比在一个接口里要好的多。
 
-  
+    
 
 #### JVM、JRE和JDK
 
@@ -611,6 +611,7 @@ for (声明语句 : 表达式) {
       			}
     		}
     }
+
 ##### **循环语句-while**
 
 基本格式
@@ -658,24 +659,24 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
 ![算术运算符](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvJUU3JUFFJTk3JUU2JTlDJUFGJUU4JUJGJTkwJUU3JUFFJTk3JUU3JUFDJUE2LnBuZw?x-oss-process=image/format,png)
 
 - 注意事项
-  - 1、/ 左右两端的类型需要一致；
-  - 2、%最后的符号和被模数相同；
-  - 3、前++；先+1，后运算 后++；先运算，后+1；
-  - 4、+：当String字符串与其他数据类型只能做连接运算；并且结果为String类型；
+    - 1、/ 左右两端的类型需要一致；
+    - 2、%最后的符号和被模数相同；
+    - 3、前++；先+1，后运算 后++；先运算，后+1；
+    - 4、+：当String字符串与其他数据类型只能做连接运算；并且结果为String类型；
 
 ##### 比较运算符（关系运算符）
 
 ![比较运算符2](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvJUU2JUFGJTk0JUU4JUJFJTgzJUU4JUJGJTkwJUU3JUFFJTk3JUU3JUFDJUE2Mi5wbmc?x-oss-process=image/format,png)
 
 - 注意事项
-  - 1、比较运算符的两端都是boolean类型，也就是说要么是true，要么是false；
-  - 2、比较运算符的"==“与”="的作用是不同的，使用的时候需要小心。
+    - 1、比较运算符的两端都是boolean类型，也就是说要么是true，要么是false；
+    - 2、比较运算符的"==“与”="的作用是不同的，使用的时候需要小心。
 
 ##### 赋值运算符
 
 - 基本的赋值运算符：=
 - 扩展的赋值运算符：+=,-=,*=,/=,%=
-  +=:	a+=20;相当于a = (a的数据类型)(a + 20);
+    +=:	a+=20;相当于a = (a的数据类型)(a + 20);
 
 ##### 逻辑运算符（符号的两端都是boolean类型）
 
@@ -700,8 +701,8 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
 ![三元运算符](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvJUU0JUI4JTg5JUU1JTg1JTgzJUU4JUJGJTkwJUU3JUFFJTk3JUU3JUFDJUE2LnBuZw?x-oss-process=image/format,png)
 
 - 注意事项
-  - 1、表达式1与表达式2的类型必须一致；
-  - 2、使用三元运算符的地方一定可以使用if…else代替，反之不一定成立；
+    - 1、表达式1与表达式2的类型必须一致；
+    - 2、使用三元运算符的地方一定可以使用if…else代替，反之不一定成立；
 
 ##### 运算符优先级
 
@@ -729,8 +730,8 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
 ##### 举例
 
 - Java 语言使用 final 关键字来定义一个常量
-  final int COUNT=10;
-  final float HEIGHT=10.2F;
+    final int COUNT=10;
+    final float HEIGHT=10.2F;
 
 ##### 注意事项
 
@@ -888,15 +889,15 @@ public class Variable{
 ![Java基本数据类型](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTUlOUYlQkElRTclQTElODAlRTglQUYlQUQlRTYlQjMlOTUvSmF2YSVFNSU5RiVCQSVFNiU5QyVBQyVFNiU5NSVCMCVFNiU4RCVBRSVFNyVCMSVCQiVFNSU5RSU4Qi5wbmc?x-oss-process=image/format,png)
 
 - 基本数据类型
-  - 数值型
-    - 整数类型(byte,short,int,long)
-    - 浮点类型(float,double)
-  - 字符型(char)
-  - 布尔型(boolean)
+    - 数值型
+        - 整数类型(byte,short,int,long)
+        - 浮点类型(float,double)
+    - 字符型(char)
+    - 布尔型(boolean)
 - 引用数据类型
-  - 类(class)
-  - 接口(interface)
-  - 数组([])
+    - 类(class)
+    - 接口(interface)
+    - 数组([])
 
 ##### 计算机存储单元
 
@@ -978,77 +979,77 @@ Constructor类	代表类的构造方法
 Class代表类的实体，在运行的Java应用程序中表示类和接口。在这个类中提供了很多有用的方法，这里对他们简单的分类介绍。
 
 - 获得类相关的方法
-  方法	用途
-  asSubclass(Class clazz)	把传递的类的对象转换成代表其子类的对象
-  Cast	把对象转换成代表类或是接口的对象
-  getClassLoader()	获得类的加载器
-  getClasses()	返回一个数组，数组中包含该类中所有公共类和接口类的对象
-  getDeclaredClasses()	返回一个数组，数组中包含该类中所有类和接口类的对象
-  forName(String className)	根据类名返回类的对象
-  getName()	获得类的完整路径名字
-  newInstance()	创建类的实例
-  getPackage()	获得类的包
-  getSimpleName()	获得类的名字
-  getSuperclass()	获得当前类继承的父类的名字
-  getInterfaces()	获得当前类实现的类或是接口
+    方法	用途
+    asSubclass(Class clazz)	把传递的类的对象转换成代表其子类的对象
+    Cast	把对象转换成代表类或是接口的对象
+    getClassLoader()	获得类的加载器
+    getClasses()	返回一个数组，数组中包含该类中所有公共类和接口类的对象
+    getDeclaredClasses()	返回一个数组，数组中包含该类中所有类和接口类的对象
+    forName(String className)	根据类名返回类的对象
+    getName()	获得类的完整路径名字
+    newInstance()	创建类的实例
+    getPackage()	获得类的包
+    getSimpleName()	获得类的名字
+    getSuperclass()	获得当前类继承的父类的名字
+    getInterfaces()	获得当前类实现的类或是接口
 - 获得类中属性相关的方法
-  方法	用途
-  getField(String name)	获得某个公有的属性对象
-  getFields()	获得所有公有的属性对象
-  getDeclaredField(String name)	获得某个属性对象
-  getDeclaredFields()	获得所有属性对象
+    方法	用途
+    getField(String name)	获得某个公有的属性对象
+    getFields()	获得所有公有的属性对象
+    getDeclaredField(String name)	获得某个属性对象
+    getDeclaredFields()	获得所有属性对象
 - 获得类中注解相关的方法
-  方法	用途
-  getAnnotation(Class annotationClass)	返回该类中与参数类型匹配的公有注解对象
-  getAnnotations()	返回该类所有的公有注解对象
-  getDeclaredAnnotation(Class annotationClass)	返回该类中与参数类型匹配的所有注解对象
-  getDeclaredAnnotations()	返回该类所有的注解对象
+    方法	用途
+    getAnnotation(Class annotationClass)	返回该类中与参数类型匹配的公有注解对象
+    getAnnotations()	返回该类所有的公有注解对象
+    getDeclaredAnnotation(Class annotationClass)	返回该类中与参数类型匹配的所有注解对象
+    getDeclaredAnnotations()	返回该类所有的注解对象
 - 获得类中构造器相关的方法
-  方法	用途
-  getConstructor(Class…<?> parameterTypes)	获得该类中与参数类型匹配的公有构造方法
-  getConstructors()	获得该类的所有公有构造方法
-  getDeclaredConstructor(Class…<?> parameterTypes)	获得该类中与参数类型匹配的构造方法
-  getDeclaredConstructors()	获得该类所有构造方法
+    方法	用途
+    getConstructor(Class…<?> parameterTypes)	获得该类中与参数类型匹配的公有构造方法
+    getConstructors()	获得该类的所有公有构造方法
+    getDeclaredConstructor(Class…<?> parameterTypes)	获得该类中与参数类型匹配的构造方法
+    getDeclaredConstructors()	获得该类所有构造方法
 - 获得类中方法相关的方法
-  方法	用途
-  getMethod(String name, Class…<?> parameterTypes)	获得该类某个公有的方法
-  getMethods()	获得该类所有公有的方法
-  getDeclaredMethod(String name, Class…<?> parameterTypes)	获得该类某个方法
-  getDeclaredMethods()	获得该类所有方法
+    方法	用途
+    getMethod(String name, Class…<?> parameterTypes)	获得该类某个公有的方法
+    getMethods()	获得该类所有公有的方法
+    getDeclaredMethod(String name, Class…<?> parameterTypes)	获得该类某个方法
+    getDeclaredMethods()	获得该类所有方法
 - 类中其他重要的方法
-  方法	用途
-  isAnnotation()	如果是注解类型则返回true
-  isAnnotationPresent(Class<? extends Annotation> annotationClass)	如果是指定类型注解类型则返回true
-  isAnonymousClass()	如果是匿名类则返回true
-  isArray()	如果是一个数组类则返回true
-  isEnum()	如果是枚举类则返回true
-  isInstance(Object obj)	如果obj是该类的实例则返回true
-  isInterface()	如果是接口类则返回true
-  isLocalClass()	如果是局部类则返回true
-  isMemberClass()	如果是内部类则返回true
+    方法	用途
+    isAnnotation()	如果是注解类型则返回true
+    isAnnotationPresent(Class<? extends Annotation> annotationClass)	如果是指定类型注解类型则返回true
+    isAnonymousClass()	如果是匿名类则返回true
+    isArray()	如果是一个数组类则返回true
+    isEnum()	如果是枚举类则返回true
+    isInstance(Object obj)	如果obj是该类的实例则返回true
+    isInterface()	如果是接口类则返回true
+    isLocalClass()	如果是局部类则返回true
+    isMemberClass()	如果是内部类则返回true
 
 ###### Field类
 
 - Field代表类的成员变量（成员变量也称为类的属性）。
 
-  方法	用途
-  equals(Object obj)	属性与obj相等则返回true
-  get(Object obj)	获得obj中对应的属性值
-  set(Object obj, Object value)	设置obj中对应属性值
+    方法	用途
+    equals(Object obj)	属性与obj相等则返回true
+    get(Object obj)	获得obj中对应的属性值
+    set(Object obj, Object value)	设置obj中对应属性值
 
 ###### Method类
 
 - 代表类的方法。
 
-  方法	用途
-  invoke(Object obj, Object… args)	传递object对象及参数调用该对象对应的方法
+    方法	用途
+    invoke(Object obj, Object… args)	传递object对象及参数调用该对象对应的方法
 
 ###### Constructor类
 
 - Constructor代表类的构造方法。
 
-  方法	用途
-  newInstance(Object… initargs)	根据传递的参数创建类的对象
+    方法	用途
+    newInstance(Object… initargs)	根据传递的参数创建类的对象
 
 **通过反射获取后三者，即私有属性，方法和构造方法时，需要进行暴力反射，设置setAccessible(true)**。否则会报错说无法获取私有属性，方法和构造方法
 
@@ -2117,17 +2118,7 @@ XML 应用于 Web 开发的许多方面，常用于简化数据的存储和传�
 
 ###### 配置文件栗子
 
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5">
-    <servlet>
-        <servlet-name>HelloMyServlet</servlet-name>
-        <servlet-class>com.jourwon.HelloMyServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>HelloMyServlet</servlet-name>
-        <url-pattern>/hello</url-pattern>
-    </servlet-mapping>
-</web-app>
+
 
 ##### XML 语法
 
@@ -2252,9 +2243,9 @@ b) 缺点：只能读，逐行后将释放资源。
 
 
 
-### Java集合框架
+### Java集合综述
 
-#### 1.Java集合基础概念
+#### Java集合基础概念
 
 ##### 1.简介
 
@@ -2639,7 +2630,7 @@ public static void main(String[] args) {
 
 
 
-#### 2.ArrayList(JDK1.8)源码解析
+#### ArrayList(JDK1.8)源码解析
 
 既然是看源码，那我们要怎么看一个类的源码呢？这里我推荐的方法是：
 
@@ -3147,7 +3138,7 @@ public <T> T[] toArray(T[] a) {
 
 
 
-#### 3.LinkedList(JDK1.8)源码解析
+#### LinkedList(JDK1.8)源码解析
 
 ##### 概述
 
@@ -3349,7 +3340,7 @@ void linkBefore(E e, Node<E> succ) {
 
 
 
-#### 4.HashMap(JDK1.8)源码解析
+#### HashMap(JDK1.8)源码解析
 
 ##### 简介
 
@@ -3599,7 +3590,7 @@ public static void main(String[] args) {
 }
 ```
 
-#### 5.LinkedHashMap(JDK1.8)源码解析
+#### LinkedHashMap(JDK1.8)源码解析
 
 ##### 概述
 
@@ -3879,7 +3870,7 @@ public class SimpleCacheTest {
 
 在测试代码中，设定缓存大小为3。在向缓存中插入10个键值对后，只有最后3个被保存下来了，其他的都被移除了。然后通过访问键值为7的节点，使得该节点被移到双向链表的最后位置。当我们再次插入一个键值对时，键值为7的节点就不会被移除。
 
-#### 6.TreeMap(JDK1.8)源码解析
+#### TreeMap(JDK1.8)源码解析
 
 ##### 简介
 
@@ -4108,4 +4099,245 @@ private void deleteEntry(Entry<K,V> p) {
 3. 如果最终被删除的节点是黑色的话，调用 fixAfterDeletion 方法进行修复
 
 上面说了 replacement 不为空时，deleteEntry 的执行逻辑。上面说的略微啰嗦，如果简单说的话，7个字即可总结：`找后继 -> 替换 -> 修复`。这三步中，最复杂的是修复操作。
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Java异常综述
+
+#### 异常概念与关键字
+
+##### Java异常简介
+
+Java异常是Java提供的一种识别及响应错误的一致性机制。
+Java异常机制可以使程序中异常处理代码和正常业务代码分离，保证程序代码更加优雅，并提高程序健壮性。在有效使用异常的情况下，异常能清晰的回答what, where, why这3个问题：异常类型回答了“什么”被抛出，异常堆栈跟踪回答了“在哪”抛出，异常信息回答了“为什么”会抛出。
+
+##### Java异常架构
+
+![image-20200309181306175](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200309181306175.png)
+
+1. ###### Throwable
+
+Throwable 是 Java 语言中所有**错误**与**异常**的超类。
+
+Throwable 包含两个子类：**Error**（错误）和 **Exception**（异常），它们通常用于指示发生了异常情况。
+
+Throwable 包含了其线程创建时线程执行堆栈的快照，它提供了 **printStackTrace() 等接口**用于获取堆栈跟踪数据等信息。
+
+2. ###### Error（错误）
+
+定义：Error 类及其子类。程序中无法处理的错误，表示运行应用程序中出现了**严重的错误**。
+
+特点：此类错误一般表示代码运行时 **JVM 出现问题**。通常有 Virtual MachineError（虚拟机运行错误）、NoClassDefFoundError（类定义错误）等。比如 OutOfMemoryError：内存不足错误；StackOverflowError：栈溢出错误。此类错误发生时，JVM 将终止线程。
+
+这些错误是**不受检异常**，非代码性错误。因此，当此类错误发生时，**应用程序不应该去处理此类错误**。按照Java惯例，我们是不应该实现任何新的Error子类的！
+
+3. ###### Exception（异常）
+
+程序**本身可以捕获并且可以处理的异常**。Exception 这种异常又分为两类：**运行时异常**和**编译时异常**。
+
+**运行时异常**
+
+定义：RuntimeException 类及其子类，表示 JVM 在运行期间可能出现的异常。
+
+特点：Java 编译器不会检查它。也就是说，当程序中可能出现这类异常时，倘若既"没有通过throws声明抛出它"，也"没有用try-catch语句捕获它"，还是会编译通过。比如**NullPointerException**空指针异常、**ArrayIndexOutBoundException**数组下标越界异常、**ClassCastException**类型转换异常、**ArithmeticExecption**算术异常。此类异常属于**不受检异常**，一般是由程序逻辑错误引起的，**在程序中可以选择捕获处理，也可以不处理**。虽然 Java 编译器不会检查运行时异常，但是我们**也可以通过 throws 进行声明抛出**，也可以通过 try-catch 对它进行捕获处理。如果产生运行时异常，则需要**通过修改代码来进行避免**。例如，若会发生除数为零的情况，则需要通过代码避免该情况的发生！RuntimeException 异常会由 Java 虚拟机**自动抛出并自动捕获**（就算我们没写异常捕获语句运行时**也会抛出错误**！！！），此类异常的出现绝大数情况是代码本身有问题应该从逻辑上去解决并改进代码。
+
+**编译时异常**
+
+定义: Exception 中除 RuntimeException 及其子类之外的异常。
+
+特点: Java 编译器会检查它。如果程序中出现此类异常，比如 **ClassNotFoundException**（没有找到指定的类异常），**IOException**（IO流异常），**要么通过throws进行声明抛出**，**要么通过try-catch进行捕获处理**，否则不能通过编译。在程序中，**通常不会自定义该类异常**，而是直接使用系统提供的异常类。该异常我们必须手动在代码里添加捕获语句来处理该异常。
+
+4. ###### 受检异常与非受检异常
+
+Java 的所有异常可以分为受检异常（checked exception）和非受检异常（unchecked exception）。
+
+**受检异常**
+
+编译器要求必须处理的异常。正确的程序在运行过程中，经常容易出现的、符合预期的异常情况。一旦发生此类异常，就必须采用某种方式进行处理。除 RuntimeException 及其子类外，其他的 Exception 异常都属于受检异常。编译器会检查此类异常，也就是说当编译器检查到应用中的某处可能会此类异常时，将会提示你处理本异常——要么使用try-catch捕获，**要么使用方法签名中用 throws 关键字抛出，否则编译不通过。**
+
+**非受检异常**
+
+编译器不会进行检查并且不要求必须处理的异常，也就说当程序中出现此类异常时，即使我们没有try-catch捕获它，也没有使用throws抛出该异常，编译也会正常通过。该类异常包括运行时异常（RuntimeException极其子类）和错误（Error）。
+
+##### Java异常关键字
+
+• try – 用于监听。将要被监听的代码(可能抛出异常的代码)放在try语句块之内，当try语句块内发生异常时，异常就被抛出。
+• catch – 用于捕获异常。catch用来捕获try语句块中发生的异常。
+• finally – finally语句块总是会被执行。它主要用于回收在try块里打开的物力资源(如数据库连接、网络连接和磁盘文件)。只有finally块，执行完成之后，才会回来执行try或者catch块中的return或者throw语句，如果finally中使用了return或者throw等终止方法的语句，则就不会跳回执行，直接停止。
+• throw – 用于抛出异常。
+• throws – 用在方法签名中，用于声明该方法可能抛出的异常。
+
+
+
+#### Java异常处理流程
+
+![image-20200309182750070](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200309182750070.png)
+
+Java 通过面向对象的方法进行异常处理，一旦方法抛出异常，系统自动根据该异常对象寻找合适异常处理器（Exception Handler）来处理该异常，把各种不同的异常进行分类，并提供了良好的接口。在 Java 中，每个异常都是一个对象，它是 Throwable 类或其子类的实例。当一个方法出现异常后**便抛出一个异常对象**，该对象中包含有异常信息，调用这个对象的方法可以捕获到这个异常并可以对其进行处理。Java 的异常处理是通过 5 个关键词来实现的：try、catch、throw、throws 和 finally。在Java应用中，异常的处理机制分为**声明异常**，**抛出异常**和**捕获异常**。
+
+##### 声明异常
+
+通常，应该捕获那些知道如何处理的异常，将不知道如何处理的异常继续传递下去。传递异常可以在方法签名处使用 throws 关键字声明可能会抛出的异常。
+
+注意
+
+- 非检查异常（Error、RuntimeException 或它们的子类）不可使用 throws 关键字来声明要抛出的异常。
+- 一个方法出现编译时异常，就需要 try-catch/ throws 处理，否则会导致编译错误。
+
+##### 抛出异常
+
+如果你觉得解决不了某些异常问题，且不需要调用者处理，那么你可以抛出异常。
+
+throw关键字作用是在方法内部抛出一个Throwable类型的异常。任何Java代码都可以通过throw语句抛出异常。
+
+##### 捕获异常
+
+程序通常在运行之前不报错，但是运行后可能会出现某些未知的错误，但是还不想直接抛出到上一级，那么就需要通过try…catch…的形式进行异常捕获，之后根据不同的异常情况来进行相应的处理。
+
+##### 如何选择异常类型
+
+可以根据下图来选择是捕获异常，声明异常还是抛出异常
+
+![image-20200309183047208](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200309183047208.png)
+
+#### 常见异常处理方式
+
+##### 直接抛出异常
+
+通常，应该捕获那些知道如何处理的异常，将不知道如何处理的异常继续传递下去。传递异常可以在方法签名处使用 throws 关键字声明可能会抛出的异常。
+
+```Java
+private static void readFile(String filePath) throws IOException {
+    File file = new File(filePath);
+    String result;
+    BufferedReader reader = new BufferedReader(new FileReader(file));
+    while((result = reader.readLine())!=null) {
+        System.out.println(result);
+    }
+    reader.close();
+}
+```
+
+##### 封装异常再抛出
+
+有时我们会从 catch 中抛出一个异常，目的是为了改变异常的类型。多用于在多系统集成时，当某个子系统故障，异常类型可能有多种，可以用统一的异常类型向外暴露，不需暴露太多内部异常细节。
+
+```Java
+private static void readFile(String filePath) throws MyException {    
+    try {
+        // code
+    } catch (IOException e) {
+        MyException ex = new MyException("read file failed.");
+        ex.initCause(e);
+        throw ex;
+    }
+}
+```
+
+##### 捕获异常
+
+在一个 try-catch 语句块中可以捕获多个异常类型，并对不同类型的异常做出不同的处理
+
+```Java
+private static void readFile(String filePath) {
+    try {
+        // code
+    } catch (FileNotFoundException e) {
+        // handle FileNotFoundException
+    } catch (IOException e){
+        // handle IOException
+    }
+}
+```
+
+##### 自定义异常
+
+习惯上，定义一个异常类应包含两个构造函数，一个无参构造函数和一个带有详细描述信息的构造函数（Throwable 的 toString 方法会打印这些详细信息，调试时很有用）
+
+```Java
+public class MyException extends Exception {
+    public MyException(){ }
+    public MyException(String msg){
+        super(msg);
+    }
+    // ...
+}
+```
+
+##### try-catch-finally
+
+当方法中发生异常，异常处之后的代码不会再执行，如果之前获取了一些本地资源需要释放，则需要在方法正常结束时和 catch 语句中都调用释放本地资源的代码，显得代码比较繁琐，finally 语句可以解决这个问题。
+
+```Java
+private static void readFile(String filePath) throws MyException {
+    File file = new File(filePath);
+    String result;
+    BufferedReader reader = null;
+    try {
+        reader = new BufferedReader(new FileReader(file));
+        while((result = reader.readLine())!=null) {
+            System.out.println(result);
+        }
+    } catch (IOException e) {
+        System.out.println("readFile method catch block.");
+        MyException ex = new MyException("read file failed.");
+        ex.initCause(e);
+        throw ex;
+    } finally {
+        System.out.println("readFile method finally block.");
+        if (null != reader) {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+
+调用该方法时，读取文件时若发生异常，代码会进入 catch 代码块，之后进入 finally 代码块；若读取文件时未发生异常，则会跳过 catch 代码块直接进入 finally 代码块。所以无论代码中是否发生异常，fianlly 中的代码都会执行。若 catch 代码块中包含 return 语句，finally 中的代码还会执行吗？将以上代码中的 catch 子句修改如下：
+
+```
+catch (IOException e) {
+    System.out.println("readFile method catch block.");
+    return;
+}
+```
+
+```
+readFile method catch block.
+readFile method finally block.
+```
+
+
+调用 readFile 方法，观察当 catch 子句中调用 return 语句时，finally 子句是否执行。可见，即使 catch 中包含了 return 语句，finally 子句依然会执行。若 finally 中也包含 return 语句，finally 中的 return 会覆盖前面的 return.
+
+##### try-with-resource
+
+上面例子中，finally 中的 close 方法也可能抛出 IOException, 从而覆盖了原始异常。JAVA 7 提供了更优雅的方式来实现资源的自动释放，自动释放的资源需要是实现了 AutoCloseable 接口的类。
+
+```Java
+private  static void tryWithResourceTest(){
+    try (Scanner scanner = new Scanner(new FileInputStream("c:/abc"),"UTF-8")){
+        // code
+    } catch (IOException e){
+        // handle exception
+    }
+}
+```
+
+
+try 代码块退出时，会自动调用 scanner.close 方法，和把 scanner.close 方法放在 finally 代码块中不同的是，若 scanner.close 抛出异常，则会被抑制，抛出的仍然为原始异常。被抑制的异常会由 addSusppressed 方法添加到原来的异常，如果想要获取被抑制的异常列表，可以调用 getSuppressed 方法来获取。
 
