@@ -1195,31 +1195,362 @@ execute方法执行逻辑有这样几种情况：
 - 先判断线程池中核心线程池所有的线程**是否都在执行任务**。如果不是，则新创建一个线程执行刚提交的任务，否则，核心线程池中所有的线程都在执行任务，则进入第2步；
 - 判断当前阻塞队列是否已满，如果未满，则将提交的任务**放置在阻塞队列**中；否则，则进入第3步；
 - 判断线程池中所有的线程是否都在执行任务，如果没有，则创建一个新的线程来执行任务，否则，则交给饱和策略进行处理
-    
+
+
+
+**线程池阻塞队列**
+
+**作用**：用来存储等待执行的任务
+
+**线程的公平访问队列**：指阻塞的线程可以按照阻塞的先后顺序访问队列，即先阻塞先访问线程。为了保证公平性，通常会降低吞吐量
+
+**常见阻塞队列**
+
+ArrayBlockingQueue：一个用数组实现的有界阻塞队列，按照先入先出(FIFO)的原则对元素进行排序。
+不保证线程公平访问队列，使用较少
+
+PriorityBlockingQueue：支持优先级的无界阻塞队列，使用较少
+
+LinkedBlockingQueue：一个用链表实现的有界阻塞队列，队列默认和最长长度为Integer.MAX_VALUE。
+队列按照先入先出的原则对元素进行排序，使用较多
+
+- 吞吐量通常要高于 ArrayBlockingQueue
+- Executors.newFixedThreadPool() 使用了这个队列
+
+SynchronousQueue：不储存元素(无容量)的阻塞队列，每个put操作必须等待一个take操作，
+否则不能继续添加元素。支持公平访问队列，常用于生产者，消费者模型，吞吐量较高，使用较多
+
+- 每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于阻塞状态
+- 吞吐量通常要高于 LinkedBlockingQueue
+- Executors.newCachedThreadPool使用了这个队列
+
+
+
+**线程池的饱和策略**
+
+**定义**：当队列和线程池都满了，说明线程池处于饱和状态，必须采取一种策略处理新提交的任务。
+
+**常见策略**
+
+AbortPolicy：中断策略，直接抛出异常
+
+CallerRunsPolicy：调用者运行策略，让调用者所在线程来运行策略
+
+DiscardOldestPolicy：舍弃最旧任务策略，丢弃队列中最旧的任务，然后重试任务的提交执行( execute() )
+
+DiscardPolicy：舍弃策略，不处理，直接丢弃
+
+
+
+###### 如何合理配置线程池参数？
+
+要想合理的配置线程池，就必须首先分析任务特性，可以从以下几个角度来进行分析：
+
+1. 任务的性质：CPU密集型任务，IO密集型任务和混合型任务。
+2. 任务的优先级：高，中和低。
+3. 任务的执行时间：长，中和短。
+4. 任务的依赖性：是否依赖其他系统资源，如数据库连接。
+
+​		任务性质不同的任务可以用不同规模的线程池分开处理。**CPU密集型任务配置尽可能少的线程数量**，如配置CPU个数+1的线程数的线程池。**IO密集型任务则由于需要等待IO操作**，线程并不是一直在执行任务，则配置尽可能多的线程，如配置两倍CPU个数+1。混合型的任务，如果可以拆分，则将其拆分成一个CPU密集型任务和一个IO密集型任务，只要这两个任务执行的时间相差不是太大，那么分解后执行的吞吐率要高于串行执行的吞吐率，如果这两个任务执行时间相差太大，则没必要进行分解。我们可以通过`Runtime.getRuntime().availableProcessors()`方法获得当前设备的CPU个数。
+
+​		优先级不同的任务可以使用优先级队列PriorityBlockingQueue来处理。它可以让优先级高的任务先得到执行，需要注意的是如果一直有优先级高的任务提交到队列里，那么优先级低的任务可能永远不能执行。执行时间不同的任务可以交给不同规模的线程池来处理，或者也可以使用优先级队列，让执行时间短的任务先执行。
+
+​		依赖数据库连接池的任务，因为线程提交SQL后需要等待数据库返回结果，如果等待的时间越长CPU空闲时间就越长，那么线程数应该设置越大，这样才能更好的利用CPU。并且，阻塞队列**最好是使用有界队列**，如果采用无界队列的话，一旦任务积压在阻塞队列中的话就会占用过多的内存资源，甚至会使得系统崩溃。
+
+当然具体合理线程池值大小，需要结合系统实际情况，在大量的尝试下比较才能得出，以上只是前人总结的规律。
+
+**最佳线程数目** = （（线程等待时间+线程CPU时间）/线程CPU时间 ）* CPU数目
+
+比如平均每个线程CPU运行时间为0.5s，而线程等待时间（非CPU运行时间，比如IO）为1.5s，CPU核心数为8，那么根据上面这个公式估算得到：((0.5+1.5)/0.5)*8=32。这个公式进一步转化为：
+
+**最佳线程数目 = （线程等待时间与线程CPU时间之比 + 1）* CPU数目**
+
+**可以得出一个结论**：
+线程等待时间所占比例越高，需要越多线程。线程CPU时间所占比例越高，需要越少线程。
+以上公式与之前的CPU和IO密集型任务设置线程数基本吻合。
 
 
 
 
 
+##### 2.Executors类创建四种常见线程池
+
+###### **线程池架构**
+
+Java里面线程池的顶级接口是Executor，Executor并不是一个线程
+
+池，而只是一个执行线程的工具。真正的线程池接口是ExecutorService。
+
+比较重要的几个类：
+
+| 类/接口                     | 描述                                                         |
+| --------------------------- | ------------------------------------------------------------ |
+| ExecutorService             | 真正的线程池接口                                             |
+| ScheduledExecutorService    | 能和Timer/TimerTask类似，解决那些需要任务重复执行的问题      |
+| ThreadPoolExecutor          | ExecutorService的默认实现                                    |
+| ScheduledThreadPoolExecutor | 继承ThreadPoolExecutor的ScheduledExecutorService接口实现，周期性任务调度的类实现 |
+
+要配置一个线程池是比较复杂的，尤其是对于线程池的原理不是很清楚的情况下，很有可能配置的线程池不是较优的，因此在Executors类里面提供了一些静态工厂，生成一些常用的线程池。
+
+Java通过**Executors工厂类提供四种线程池**，分别为：
+
+1. **newCachedThreadPool** ：创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，否则新建线程。（线程最大并发数不可控制）
+2. **newFixedThreadPool**：创建一个固定大小的线程池，可控制线程最大并发数，超出的线程会在队列中等待。
+3. **newScheduledThreadPool** ： 创建一个定时线程池，支持定时及周期性任务执行。
+4. **newSingleThreadExecutor** ：创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
+
+**我们先创建一个统一的线程任务，方便测试四种线程池**
+
+```
+public class MyRunnable implements Runnable {
+
+    @Override
+    public void run() {
+        System.out.println(Thread.currentThread().getName() + " is running...");
+    }
+
+}
+```
+
+###### newSingleThreadExecutor
+
+```
+public class SingleThreadExecutorTest {
+
+    public static void main(String[] args) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        MyRunnable myRunnable = new MyRunnable();
+        for (int i = 0; i < 5; i++) {
+            executorService.execute(myRunnable);
+        }
+
+        System.out.println("线程任务开始执行");
+        executorService.shutdown();
+    }
+
+}
+```
+
+输出结果
+
+```
+线程任务开始执行
+pool-1-thread-1 is running...
+pool-1-thread-1 is running...
+pool-1-thread-1 is running...
+pool-1-thread-1 is running...
+pool-1-thread-1 is running...
+```
+
+底层实现
+
+```
+public static ExecutorService newSingleThreadExecutor() {
+    return new FinalizableDelegatedExecutorService
+        (new ThreadPoolExecutor(1, 1,
+                                0L, TimeUnit.MILLISECONDS,
+                                new LinkedBlockingQueue<Runnable>()));
+}
+```
+
+从参数可以看出来，SingleThreadExecutor 相当于特殊的 FixedThreadPool，它的执行流程如下：
+
+1. 线程池中没有线程时，**新建一个线程执行任务**
+2. 有一个线程以后，**将任务加入阻塞队列**，不停的加
+3. 唯一的这一个线程**不停地去队列里取任务执行**
+
+**SingleThreadExecutor 用于串行执行任务的场景，每个任务必须按顺序执行，不需要并发执行**。
 
 
 
+###### newFixedThreadPool
+
+```
+public class FixedThreadPoolTest {
+
+    public static void main(String[] args) {
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        MyRunnable myRunnable = new MyRunnable();
+        for (int i = 0; i < 5; i++) {
+            executorService.execute(myRunnable);
+        }
+
+        System.out.println("线程任务开始执行");
+        executorService.shutdown();
+    }
+
+}
+```
+
+输出结果
+
+```
+线程任务开始执行
+pool-1-thread-1 is running...
+pool-1-thread-1 is running...
+pool-1-thread-2 is running...
+pool-1-thread-1 is running...
+pool-1-thread-2 is running...
+```
+
+底层实现
+
+```
+public static ExecutorService newFixedThreadPool(int nThreads) {
+    return new ThreadPoolExecutor(nThreads, nThreads,
+                                  0L, TimeUnit.MILLISECONDS,
+                                  new LinkedBlockingQueue<Runnable>());
+}
+```
+
+可以看到，FixedThreadPool 的**核心线程数和最大线程数都是指定值**，也就是说当线程池中的线程数超过核心线程数后，任务都会被放到阻塞队列中。此外 **keepAliveTime 为 0，也就是多余的空余线程会被立即终止**（由于这里没有多余线程，这个参数也没什么意义了）。而这里选用的**阻塞队列是 LinkedBlockingQueue**，使用的是默认容量 Integer.MAX_VALUE，相当于没有上限。
+
+因此这个线程池执行任务的流程如下：
+
+1. 线程数少于核心线程数，也就是设置的线程数时，新建线程执行任务
+2. 线程数等于核心线程数后，**将任务加入阻塞队列**
+3. 由于队列容量非常大，可以一直加
+4. 执行完任务的线程反复去队列中取任务执行
+
+**FixedThreadPool 用于负载比较重的服务器，为了资源的合理利用，需要限制当前线程数量**。
 
 
 
+###### newCachedThreadPool
+
+```
+public class CachedThreadPoolTest {
+
+    public static void main(String[] args) {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        MyRunnable myRunnable = new MyRunnable();
+        for (int i = 0; i < 5; i++) {
+            executorService.execute(myRunnable);
+        }
+
+        System.out.println("线程任务开始执行");
+        executorService.shutdown();
+    }
+
+}
+```
+
+输出结果
+
+```
+线程任务开始执行
+pool-1-thread-1 is running...
+pool-1-thread-4 is running...
+pool-1-thread-2 is running...
+pool-1-thread-5 is running...
+pool-1-thread-3 is running...
+```
+
+底层实现
+
+```
+public static ExecutorService newCachedThreadPool() {
+    return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+                                  60L, TimeUnit.SECONDS,
+                                  new SynchronousQueue<Runnable>());
+}
+```
+
+可以看到，CachedThreadPool **没有核心线程**，**非核心线程数无上限**，也就是全部使用外包，但是每个外包空闲的时间**只有 60 秒**，超过后就会被回收。
+
+CachedThreadPool 使用的队列是 **SynchronousQueue**，这个队列的作用就是**传递任务**，并不会保存。
+
+因此当提交任务的速度大于处理任务的速度时，**每次提交一个任务，就会创建一个线程**。极端情况下会创建过多的线程，**耗尽 CPU 和内存资源**。
+
+它的执行流程如下：
+
+1. 没有核心线程，直接向 SynchronousQueue 中提交任务
+2. 如果有空闲线程，**就去取出任务执行**；如果没有空闲线程，就新建一个
+3. 执行完任务的线程有 60 秒生存时间，如果在这个时间内**可以接到新任务，就可以继续活下去，否则就拜拜**
+4. 由于空闲 60 秒的线程会被终止，**长时间保持空闲的 CachedThreadPool 不会占用任何资源**。
+
+**CachedThreadPool 用于并发执行大量短期的小任务，或者是负载较轻的服务器**。
 
 
 
+###### newScheduledThreadPool
+
+```
+public class ScheduledThreadPoolTest {
+
+    public static void main(String[] args) {
+        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(3);
+        MyRunnable myRunnable = new MyRunnable();
+        for (int i = 0; i < 5; i++) {
+            
+            scheduledExecutorService.scheduleAtFixedRate(myRunnable, 1, 2, TimeUnit.SECONDS);
+        }
+
+        System.out.println("线程任务开始执行");
+    }
+
+}
+```
+
+输出结果
+
+```
+线程任务开始执行
+
+pool-1-thread-1 is running...
+pool-1-thread-2 is running...
+pool-1-thread-1 is running...
+pool-1-thread-3 is running...
+pool-1-thread-2 is running...
+
+pool-1-thread-1 is running...
+pool-1-thread-3 is running...
+pool-1-thread-2 is running...
+pool-1-thread-1 is running...
+pool-1-thread-3 is running...
+```
+
+底层实现
+
+```
+public ScheduledThreadPoolExecutor(int corePoolSize) {
+    super(corePoolSize, Integer.MAX_VALUE, 0, NANOSECONDS,
+          new DelayedWorkQueue());
+}
+```
+
+ScheduledThreadPoolExecutor 的执行流程如下：
+
+1. 添加一个任务
+2. 线程池中的线程从 DelayQueue 中取任务
+3. 然后执行任务
+
+具体执行任务的步骤也比较复杂：
+
+1. 线程**从 DelayQueue 中获取 time 大于等于当前时间的 ScheduledFutureTask**
+2. 执行完后修改这个 **task 的 time 为下次被执行的时间**
+3. 然后再把这个 task 放回队列中
+
+**ScheduledThreadPoolExecutor 用于需要多个后台线程执行周期任务，同时需要限制线程数量的场景**。
 
 
 
+###### Executors和ThreaPoolExecutor创建线程池的区别
+
+Executors 各个方法的弊端：
+
+1. newFixedThreadPool 和 newSingleThreadExecutor:
+    主要问题是堆积的请求处理队列可能会耗费非常大的内存，甚至 OOM。
+2. newCachedThreadPool 和 newScheduledThreadPool:
+    主要问题是线程数最大数是 Integer.MAX_VALUE，可能会创建数量非常多的线程，甚至 OOM。
+
+ThreaPoolExecutor
+
+1. 创建线程池方式只有一种，就是走它的构造函数，参数自己指定
 
 
 
-
-
-
-
+##### 3.线程池之ScheduledThreadPoolExecutor详解
 
 
 
