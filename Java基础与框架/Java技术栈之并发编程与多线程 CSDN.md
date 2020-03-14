@@ -1061,6 +1061,172 @@ Thread[线程 2,5,main]get resource2
 
 
 
+
+
+
+
+#### 线程池
+
+##### 1.线程池ThreadPoolExecutor详解
+
+###### 为什么要使用线程池
+
+在实际使用中，线程是很**占用系统资源**的，如果对线程管理不善很容易导致系统问题。因此，在大多数并发框架中都会使用线程池来管理线程，使用线程池管理线程主要有如下好处：
+
+- **降低资源消耗**。通过复用已存在的线程和降低线程关闭的次数来尽可能降低系统性能损耗；
+- **提升系统响应速度**。通过复用线程，省去创建线程的过程，因此整体上提升了系统的响应速度；
+- **提高线程的可管理性**。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，因此，需要使用线程池来管理线程。
+
+###### 线程池详解
+
+**线程池的创建**
+
+创建线程池主要是ThreadPoolExecutor类来完成，ThreadPoolExecutor的有许多重载的构造方法，通过参数最多的构造方法来理解创建线程池有哪些需要配置的参数。ThreadPoolExecutor的构造方法为：
+
+```Java
+ThreadPoolExecutor(int corePoolSize,
+                              int maximumPoolSize,
+                              long keepAliveTime,
+                              TimeUnit unit,
+                              BlockingQueue<Runnable> workQueue,
+                              ThreadFactory threadFactory,
+                              RejectedExecutionHandler handler)
+```
+
+下面对参数进行说明：
+
+- **corePoolSize**：表示**核心线程池的大小**。当提交一个任务时，如果当前核心线程池的线程个数没有达到corePoolSize，即使当前核心线程池有空闲的线程，也会创建新的线程来执行所提交的任务。如果当前核心线程池的线程个数已经达到了corePoolSize，则不再重新创建线程。如果调用了prestartCoreThread()或者 prestartAllCoreThreads()，线程池创建的时候**所有的核心线程都会被创建并且启动**。
+- **maximumPoolSize**：表示线程池**能创建线程的最大个数**。如果当阻塞队列已满时，并且当前线程池线程个数没有超过maximumPoolSize的话，就会创建新的线程来执行任务。
+- **keepAliveTime**：空闲线程存活时间。如果当前线程池的线程个数已经超过了corePoolSize，并且线程空闲时间超过了keepAliveTime的话，就会**将这些空闲线程销毁**，这样可以尽可能**降低系统资源消耗**。
+- **unit**：时间单位。为keepAliveTime指定时间单位。
+- **workQueue**：阻塞队列。用于保存任务的**阻塞队列**，关于阻塞队列可以看这篇文章。可以使用ArrayBlockingQueue, LinkedBlockingQueue, SynchronousQueue, PriorityBlockingQueue。
+- **threadFactory**：创建线程的**工厂类**。可以通过指定线程工厂为每个创建出来的线程设置更有意义的名字，如果出现并发问题，也方便查找问题原因。
+- **handler**：饱和策略。当线程池的阻塞队列已满和指定的线程都已经开启，说明当前线程池已经处于饱和状态了，那么就需要采用一种策略来处理这种情况。采用的策略有这几种：
+    - AbortPolicy： 直接拒绝所提交的任务，并抛出RejectedExecutionException异常；
+    - CallerRunsPolicy：只用调用者所在的线程来执行任务；
+    - DiscardPolicy：不处理直接丢弃掉任务；
+    - DiscardOldestPolicy：丢弃掉阻塞队列中存放时间最久的任务，执行当前任务
+        
+
+**线程池执行逻辑**
+
+通过ThreadPoolExecutor创建线程池后，提交任务后执行过程是怎样的，下面来通过源码来看一看。execute方法源码如下：
+
+```Java
+public void execute(Runnable command) {
+    if (command == null)
+        throw new NullPointerException();
+    /*
+     * Proceed in 3 steps:
+     *
+     * 1. If fewer than corePoolSize threads are running, try to
+     * start a new thread with the given command as its first
+     * task.  The call to addWorker atomically checks runState and
+     * workerCount, and so prevents false alarms that would add
+     * threads when it shouldn't, by returning false.
+     *
+     * 2. If a task can be successfully queued, then we still need
+     * to double-check whether we should have added a thread
+     * (because existing ones died since last checking) or that
+     * the pool shut down since entry into this method. So we
+     * recheck state and if necessary roll back the enqueuing if
+     * stopped, or start a new thread if there are none.
+     *
+     * 3. If we cannot queue task, then we try to add a new
+     * thread.  If it fails, we know we are shut down or saturated
+     * and so reject the task.
+     */
+    int c = ctl.get();
+	//如果线程池的线程个数少于corePoolSize则创建新线程执行当前任务
+    if (workerCountOf(c) < corePoolSize) {
+        if (addWorker(command, true))
+            return;
+        c = ctl.get();
+    }
+	//如果线程个数大于corePoolSize或者创建线程失败，则将任务存放在阻塞队列workQueue中
+    if (isRunning(c) && workQueue.offer(command)) {
+        int recheck = ctl.get();
+        if (! isRunning(recheck) && remove(command))
+            reject(command);
+        else if (workerCountOf(recheck) == 0)
+            addWorker(null, false);
+    }
+	//如果当前任务无法放进阻塞队列中，则创建新的线程来执行任务
+    else if (!addWorker(command, false))
+        reject(command);
+}
+```
+
+ThreadPoolExecutor的execute方法执行逻辑请见注释。下图为ThreadPoolExecutor的execute方法的执行示意图：
+
+![image-20200314132937966](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200314132937966.png)
+
+execute方法执行逻辑有这样几种情况：
+
+- 如果当前运行的线程少于corePoolSize，则会**创建新的线程**来执行新的任务；
+- 如果运行的线程个数等于或者大于corePoolSize，则会将提交的任务存放到**阻塞队列workQueue**中；
+- 如果当前workQueue队列已满的话，则会**创建新的线程来执行任务**；
+- 如果线程个数已经超过了maximumPoolSize，则会使用**饱和策略RejectedExecutionHandler**来进行处理。
+
+需要注意的是，线程池的设计思想就是使用了核心线程池corePoolSize，阻塞队列workQueue和线程池线程最大个数maximumPoolSize，这样的缓存策略来处理任务，实际上这样的设计思想在需要框架中都会使用。
+
+
+
+**线程池的关闭**
+
+关闭线程池，可以通过shutdown和shutdownNow这两个方法。它们的原理都是遍历线程池中所有的线程，然后依次中断线程。shutdown和shutdownNow还是有不一样的地方：
+
+- shutdownNow首先将线程池的状态设置为**STOP**，然后尝试停止所有的**正在执行和未执行任务**的线程，并返回等待执行任务的列表；
+- shutdown只是将线程池的状态设置为**SHUTDOWN**状态，然后中断所有**没有正在执行任务**的线程
+
+可以看出shutdown方法会将正在执行的任务继续执行完，而shutdownNow会直接中断正在执行的任务。调用了这两个方法的任意一个，isShutdown方法都会返回true，当所有的线程都关闭成功，才表示线程池成功关闭，这时调用isTerminated方法才会返回true。
+
+
+
+
+**线程池的工作原理**
+
+当一个并发任务提交给线程池，线程池分配线程去执行任务的过程如下图所示：
+
+![image-20200314133338847](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200314133338847.png)
+
+从图可以看出，线程池执行所提交的任务过程主要有这样几个阶段：
+
+- 先判断线程池中核心线程池所有的线程**是否都在执行任务**。如果不是，则新创建一个线程执行刚提交的任务，否则，核心线程池中所有的线程都在执行任务，则进入第2步；
+- 判断当前阻塞队列是否已满，如果未满，则将提交的任务**放置在阻塞队列**中；否则，则进入第3步；
+- 判断线程池中所有的线程是否都在执行任务，如果没有，则创建一个新的线程来执行任务，否则，则交给饱和策略进行处理
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #### Java并发关键字
 
 ##### Java并发关键字-synchronized
