@@ -1,4 +1,4 @@
-### Java虚拟机知识
+### Java虚拟机
 
 #### 1.走近Java虚拟机
 
@@ -246,6 +246,7 @@ long/double -> int/float -> short/char -> byte/boolean -> reference
 如果设置了-XX:FieldsAllocationStyle=0（默认是1），那么引用类型数据就会优先分配存储空间：
 
 reference -> long/double -> int/float -> short/char -> byte/boolean
+
 **结论**：
 
 分配策略总是按照字节大小由大到小的顺序排列，相同字节大小的放在一起。
@@ -471,7 +472,7 @@ Full GC：也叫 Major GC，**对整个堆进行回收，包括新生代和老�
 - Parallel Old收集器 (标记-整理算法)： 老年代并行收集器，吞吐量优先，Parallel Scavenge收集器的老年代版本；
 - CMS(Concurrent Mark Sweep)收集器（标记-清除算法）： 老年代并行收集器，以获取最短回收停顿时间为目标的收集器，具有高并发、低停顿的特点，追求最短GC回收停顿时间。
 - G1(Garbage First)收集器 (标记-整理算法)： Java堆并行收集器，G1收集器是JDK1.7提供的一个新收集器，G1收集器基于“标记-整理”算法实现，也就是说不会产生内存碎片。此外，G1收集器不同于之前的收集器的一个重要特点是：G1回收的范围是整个Java堆(包括新生代，老年代)，而前六种收集器回收的范围仅限于新生代或老年代。
-    
+  
 
 ##### 内存分配与回收策略
 
