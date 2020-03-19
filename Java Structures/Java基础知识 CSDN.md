@@ -1,4 +1,4 @@
-## Java技术栈知识汇总
+## Java基础知识汇总
 
 ### Java基础语法
 
@@ -18,66 +18,63 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 
 1.1 Java基本概念与语法
 
-- 核心知识点
-
-- - Java基本语法
-        - Java的类加载机制
-        - Java虚拟机：JVM内存模型和结构,GC原理,性能调优
-        - 泛型
-        - 集合体系
-        - 异常体系
-        - IO体系
-        - 多线程编程
-        - 反射
-        - Servlet
+- Java基本语法
+      - Java的类加载机制
+      - Java虚拟机：JVM内存模型和结构,GC原理,性能调优
+      - 泛型
+      - 集合体系
+      - 异常体系
+      - IO体系
+      - 多线程编程
+      - 反射
+      - Servlet
 
 - 推荐书籍
 
-- - 《Java编程思想》
-        - 《Effective Java》
-        - 《深入理解Java虚拟机》
+  《Java编程思想》
+  《Effective Java》
+  《深入理解Java虚拟机》
+
 
 1.2 Python等脚本语言
 
 - 介绍
 
-- - 此类脚本语言的意义在于辅助后端开发，包括系统运维，工具集成（借助管道、重定向），文本处理，数据计算等工作，提升后端工作效率
+  此类脚本语言的意义在于辅助后端开发，包括系统运维，工具集成（借助管道、重定向），文本处理，数据计算等工作，提升后端工作效率
 
 - 核心知识点
 
-- - 常用的linux操作和运维命令
-        - Python爬虫
+  常用的linux操作和运维命令
+
+  Python爬虫
 
 - 推荐书籍
-
-- - 《linux与unix shell编程指南》
-        - [《鸟哥的Linux私房菜》](https://link.zhihu.com/?target=http%3A//linux.vbird.org/linux_basic/)
-        - 《Python编程 从入门到实践》
 
 1.3 SQL 语言
 
 - 介绍
 
-- - 通用于传统关系型数据库和大数据场景的结构化查询模型语言。传统数据库方面要精通mysql的sql语法；大数据场景主要掌握Hive SQL（Impala和Spark SQL等均在兼容Hive SQL）
+  通用于传统关系型数据库和大数据场景的结构化查询模型语言。传统数据库方面要精通mysql的sql语法；大数据场景主要掌握Hive SQL（Impala和Spark SQL等均在兼容Hive SQL）
 
 - 核心知识点
 
-- - 区分DDL和DML
-        - 经典查询语句主要结构
-        - 表连接（内连接，左外连接，右外连接，全连接）
-        - 函数（普通函数，聚合函数）
-        - 索引
-        - 分区
+  区分DDL和DML
+      - 经典查询语句主要结构
+      - 表连接（内连接，左外连接，右外连接，全连接）
+      - 函数（普通函数，聚合函数）
+      - 索引
+      - 分区
 
 - 适用场景
 
-- - 传统数据库，传统SQL：用于事务性数据操作，通常用于系统的业务库；
-        - 大数据场景下的NoSQL：用于数据分析，交互式查询，批量数据处理等。
+  传统数据库，传统SQL：用于事务性数据操作，通常用于系统的业务库；
+  大数据场景下的NoSQL：用于数据分析，交互式查询，批量数据处理等。
 
 - 推荐书籍
 
-- - MySQL：《高性能MySQL》
-        - Hive SQL：《Hive编程指南》
+  MySQL：《高性能MySQL》
+  Hive SQL：《Hive编程指南》
+
 
 ##### **2. 开发工具**
 
@@ -523,10 +520,10 @@ Java标识符大小写敏感，长度无限制
 **,**     逗号在变量声明中，区分变量说明的各个变量。在for控制语句中，用来将圆括号内的语句连接起来
 
 **;** 	分号 用来终止一个语句
-**{}**   花括号、大括号 用来包括自动初始化的数组的值，也用来定义程序块、类、方法以及局部范围
-**[]**    方括号、中括号 用来声明数组的类型，也用来表示撤消对数组值的引用
+**{}**   花括号、大括号 用来包括**自动初始化的数组的值，**也用来**定义程序块、类、方法以及局部范围**
+**[]**    方括号、中括号 用来**声明数组的类型**，也用来表示撤消对数组值的引用
 **.**     原点 用来将软件包的名字与它的子包或类分隔。也用来将引用变量与变量或方法分隔
-**()**    圆括号 在定义和调用方法时用来容纳参数表。在控制语句或强制类型转换组成的表达式中用来表示执行或计算的优先权
+**()**    圆括号 在定义和调用方法时用来**容纳参数表**。在控制语句或强制类型转换组成的表达式中用来**表示执行或计算的优先权**
 
 ##### **注意事项**
 
@@ -539,7 +536,7 @@ Java标识符大小写敏感，长度无限制
 
 ##### **定义**
 
-转义字符是一种特殊的字符常量。转义字符以反斜线""开头，后跟一个或几个字符。转义字符具有特定的含义，不同于字符原有的意义，故称“转义”字符。
+转义字符是一种特殊的字符常量。转义字符以**反斜线"\\"开头**，后跟一个或几个字符。转义字符具有特定的含义，不同于字符原有的意义，故称“转义”字符。
 
 ##### **常见转义字符表**
 
@@ -560,7 +557,7 @@ Java标识符大小写敏感，长度无限制
 
 ##### **分支结构-if**
 
-```
+```Java
 if(条件表达式){
 执行的代码块；
 }
@@ -589,37 +586,39 @@ else{
 
 ##### **循环结构-for**
 
-```
+```Java
 for(初始化语句;判断条件语句;控制条件语句) {
 循环体语句;
 }
 ```
 
-##### **循环结构-foreach**
+##### **循环结构-foreach（只可访问不可修改删除）**
 
 for (声明语句 : 表达式) {
 　 //代码句子
 }
 
-    public class Test {
-       public static void main(String args[]) {
-            int [] numbers = {10, 20, 30, 40, 50};
-       			for ( int x : numbers ) {
-            	System.out.print( x );
-            	System.out.print(",");
-        		}
-        	 System.out.print();
-        	 String [] names = {"James", "Larry", "Tom", "Lacy"};
-        	 for ( String name : names ) {
-              System.out.print( name );
-              System.out.print(",");
-      			}
+```Java
+public class Test {
+   public static void main(String args[]) {
+        int [] numbers = {10, 20, 30, 40, 50};
+   			for ( int x : numbers ) {
+        	System.out.print( x );
+        	System.out.print(",");
     		}
-    }
+    	 System.out.print();
+    	 String [] names = {"James", "Larry", "Tom", "Lacy"};
+    	 for ( String name : names ) {
+          System.out.print( name );
+          System.out.print(",");
+  			}
+		}
+}
+```
 
 ##### **循环语句-while**
 
-```
+```Java
 基本格式
 while(判断条件语句) {
 循环体语句;
@@ -635,7 +634,7 @@ while(判断条件语句) {
 
 ##### **循环语句-do…while**
 
-```
+```Java
 基本格式
 do {
 循环体语句;
@@ -655,9 +654,9 @@ do {
 
 Java语言中提供了3种跳转语句，分别是break语句、continue语句和return语句。
 
-break的作用：跳出单层循环
+break的作用：跳出**单层循环**
 
-continue的作用：结束一次循环，继续下一次的循环
+continue的作用：**结束一次循环**，继续**下一次的循环**
 
 return的作用：可以从一个方法返回，并把控制权交给调用它的语句。直接结束整个方法，从而结束循环。
 
@@ -673,14 +672,14 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
     - 1、/ 左右两端的类型需要一致；
     - 2、%最后的符号和被模数相同；
     - 3、前++；先+1，后运算 后++；先运算，后+1；
-    - 4、+：当String字符串与其他数据类型只能做连接运算；并且结果为String类型；
+    - 4、+：**当String字符串与其他数据类型只能做连接运算；并且结果为String类型；**
 
 ##### 比较运算符（关系运算符）
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152332471.png" alt="image-20200310152332471" style="zoom:50%;" />
 
 - 注意事项
-    - 1、比较运算符的两端都是boolean类型，也就是说要么是true，要么是false；
+    - 1、比较运算符的**两端都是boolean类型**，也就是说要么是true，要么是false；
     - 2、比较运算符的"==“与”="的作用是不同的，使用的时候需要小心。
 
 ##### 赋值运算符
@@ -696,8 +695,8 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
 注意事项
 
 1、& 与 &&以及|与||的区别：
-&：左边无论真假，右边都会进行运算；
-&&：如果左边为假，则右边不进行运算；
+&：左边无论真假，**右边都会进行运算**；
+&&：如果左边为**假**，**则右边不进行运算**；
 | 与 || 的区别同上；在使用的时候建议使用&&和||；
 2、（^）与或（|）的不同之处是：当左右都为true时，结果为false。
 
@@ -710,8 +709,8 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152445704.png" alt="image-20200310152445704" style="zoom:50%;" />
 
 - 注意事项
-    - 1、表达式1与表达式2的类型必须一致；
-    - 2、使用三元运算符的地方一定可以使用if…else代替，反之不一定成立；
+    - 1、表达式1与表达式2的**类型必须一致**；
+    - 2、使用三元运算符的地方**一定可以使用if…else代替，反之不一定成立**；
 
 ##### 运算符优先级
 
@@ -760,26 +759,26 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
 
 ###### ①类变量(静态变量)：独立于方法之外的变量，用 static 修饰。
 
-1.类变量也称为静态变量，在类中以static关键字声明，但必须在方法构造方法和语句块之外。无论一个类创建了多少个对象，类**只拥有类变量的一份拷贝**。
-2.静态变量除了被声明为常量外**很少使用**。常量是指声明为public/private，final和static类型的变量。常量初始化后不可改变。
-3.静态变量储存在**静态存储区**。经常被声明为常量，**很少单独使用static声明变量**。
-4.静态变量在**第一次**被访问时创建，在**程序结束时销毁**。
-5.与实例变量具有相似的可见性。但为了对类的使用者可见，大多数静态变量声明为public类型。
-6.默认值和实例变量相似。数值型变量默认值是0，布尔型默认值是false，引用类型默认值是null。变量的值可以在声明的时候指定，也可以在构造方法中指定。此外，静态变量还可以在静态语句块中初始化。
-7.静态变量可以通过：**ClassName.VariableName的方式访问**。（反射）
-8.类变量被声明为public static final类型时，**类变量名称一般建议使用大写字母**。如果静态变量不是public和final类型，其命名方式与实例变量以及局部变量的命名方式一致。
+1. 类变量也称为静态变量，在类中以static关键字声明，但必须在方法构造方法和语句块之外。无论一个类创建了多少个对象，类**只拥有类变量的一份拷贝**。
+2. 静态变量除了被声明为常量外**很少使用**。常量是指声明为public/private，final和static类型的变量。常量初始化后不可改变。
+3. 静态变量储存在**静态存储区**。经常被声明为常量，**很少单独使用static声明变量**。
+4. 静态变量在**第一次**被访问时创建，在**程序结束时销毁**。
+5. 与实例变量具有相似的可见性。但为了对类的使用者可见，大多数静态变量**声明为public类型**。
+6. 默认值和实例变量相似。数值型变量默认值是0，布尔型默认值是false，引用类型默认值是null。变量的值可以在声明的时候指定，也可以在构造方法中指定。此外，静态变量**还可以在静态语句块中初始化**。
+7. 静态变量可以通过：**ClassName.VariableName的方式访问**。（反射）
+8. 类变量被声明为public static final类型时，**类变量名称一般建议使用大写字母**。如果静态变量不是public和final类型，其命名方式与实例变量以及局部变量的命名方式一致。
 
 ###### ②实例变量(非静态变量)：独立于方法之外的变量，不过没有 static 修饰。
 
-1.实例变量**声明在一个类中**，但在方法、构造方法和语句块之外；
-2.当一个对象被实例化之后，每个实例变量的值就跟着确定；
-3.实例变量在对象创建的时候创建，在**对象被销毁的时候销毁**；
-4.实例变量的值**应该至少被一个方法、构造方法或者语句块引用**，使得外部能够通过这些方式获取实例变量信息；
-5.实例变量可以声明在使用前或者使用后；
-6.访问修饰符可以修饰实例变量；
-7.实例变量对于类中的方法、构造方法或者语句块是**可见**的。一般情况下应该把**实例变量设为私有**。通过使用访问修饰符可以使实例变量对子类可见；
-8.实例变量具有默认值。数值型变量的默认值是0，布尔型变量的默认值是false，引用类型变量的默认值是null。变量的值可以在声明时指定，也可以在构造方法中指定；
-9.实例变量可以直接通过**变量名访问**。但在静态方法以及其他类中，就应该使用完全限定名:ObejectReference.VariableName。
+1. 实例变量**声明在一个类中**，但在方法、构造方法和语句块之外；
+2. 当一个对象被实例化之后，每个实例变量的值就跟着确定；
+3. 实例变量在对象创建的时候创建，在**对象被销毁的时候销毁**；
+4. 实例变量的值**应该至少被一个方法、构造方法或者语句块引用**，使得外部能够通过这些方式获取实例变量信息；
+5. 实例变量可以**声明在使用前或者使用后**；
+6. 访问修饰符可以修饰实例变量；
+7. 实例变量对于类中的方法、构造方法或者语句块是**可见**的。一般情况下应该把**实例变量设为私有**。通过使用访问修饰符可以使实例变量对子类可见；
+8. 实例变量具有默认值。数值型变量的默认值是0，布尔型变量的默认值是false，引用类型变量的默认值是null。变量的值可以在声明时指定，也可以在构造方法中指定；
+9. 实例变量可以直接通过**变量名访问**。但在静态方法以及其他类中，就应该使用完全限定名:ObejectReference.VariableName。
 
 ###### **③类变量和实例变量的区别**
 
@@ -873,7 +872,7 @@ byte,short,int,long,float,double,char,boolean  12484821
 注意：格式是固定的，记住格式，以不变应万变
 举例
 
-```
+```Java
 public class Variable{
     // 类变量
     static int allClicks=0;    
@@ -953,9 +952,9 @@ Java反射机制是在运行状态中，对于任意一个类，都能够知道�
 
 ##### 用途
 
-通过反射，Java 代码可以发现有关已加载类的字段，方法和构造函数的信息，并可以在安全限制内对这些字段，方法和构造函数进行操作。
+​		通过反射，Java 代码可以发现有关已加载类的字段，方法和构造函数的信息，并可以在安全限制内对这些字段，方法和构造函数进行操作。
 
-很多人都认为反射在实际Java中开发应用中并不广泛，其实不然。当我们在使用 IDE（如 IDEA/Eclipse）时，当我们输入一个对象或者类并调用它的属性和方法时，一按 (“.”)点号，编译器就会自动列出她的属性或方法，这里就会用到反射。**反射最重要的用途就是开发各种通用框架。**很多框架（比如 Spring）都是配置化的（比如Spring 通过 XML 配置模式装载 Bean），为了保证框架的通用性，他们可能根据配置文件加载不同的对象或类，调用不同的方法，这个时候就必须用到反射——**运行时动态加载需要加载的对象**。对于框架开发人员来说，反射作用非常大，它是各种容器实现的核心。而对于一般的开发者来说，不深入框架开发反射用的就会少一点，不过了解一下框架的底层机制有助于丰富自己的编程思想，也是很有益的。Java反射框架提供以下功能：
+​		很多人都认为反射在实际Java中开发应用中并不广泛，其实不然。当我们在使用 IDE（如 IDEA/Eclipse）时，当我们输入一个对象或者类并调用它的属性和方法时，一按 (“.”)点号，编译器就会自动列出她的属性或方法，这里就会用到反射。**反射最重要的用途就是开发各种通用框架。**很多框架（比如 Spring）都是配置化的（比如Spring 通过 XML 配置模式装载 Bean），为了保证框架的通用性，他们可能根据配置文件加载不同的对象或类，调用不同的方法，这个时候就必须用到反射——**运行时动态加载需要加载的对象**。对于框架开发人员来说，反射作用非常大，它是各种容器实现的核心。而对于一般的开发者来说，不深入框架开发反射用的就会少一点，不过了解一下框架的底层机制有助于丰富自己的编程思想，也是很有益的。Java反射框架提供以下功能：
 
 - 在运行时判定任意一个对象所属的类
 - 在运行时构造任意一个**类的对象**
@@ -2075,9 +2074,7 @@ for (Student stu : students) {
 }
 ```
 
-会抛出ConcurrentModificationException异常。
-
-​		Iterator是工作在一个独立的线程中，并且拥有一个 **mutex 锁**。 Iterator被创建之后会建立**一个指向原来对象的单链索引表**，当原来的对象数量发生变化时，这个索引表的内容不会同步改变，所以当索引指针往后移动的时候就找不到要迭代的对象，所以按照 fail-fast 原则 Iterator 会马上抛出java.util.ConcurrentModificationException异常。**所以 Iterator 在工作的时候是不允许被迭代的对象被改变的**。但你可以使用 **Iterator 本身的方法remove()**来删除对象，Iterator.remove() 方法**会在删除当前迭代对象的同时维护索引的一致性**。
+会抛出ConcurrentModificationException异常。Iterator是**工作在一个独立的线程中**，并且拥有一个 **mutex 锁**。 Iterator被创建之后会建立**一个指向原来对象的单链索引表**，当原来的对象数量发生变化时，这个索引表的内容不会同步改变，所以当索引指针往后移动的时候就找不到要迭代的对象，所以按照 fail-fast 原则 Iterator 会马上抛出java.util.ConcurrentModificationException异常。**所以 Iterator 在工作的时候是不允许被迭代的对象被改变的**。但你可以使用 **Iterator 本身的方法remove()**来删除对象，Iterator.remove() 方法**会在删除当前迭代对象的同时维护索引的一致性**。
 
 ##### 总结
 
@@ -2146,7 +2143,7 @@ XML 应用于 Web 开发的许多方面，常用于简化数据的存储和传�
 
 ###### 存放数据栗子
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <persons>
     <person id="p001">
@@ -2160,7 +2157,7 @@ XML 应用于 Web 开发的许多方面，常用于简化数据的存储和传�
 
 ###### 配置文件栗子
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5">
     <servlet>
@@ -2363,23 +2360,25 @@ Iterator接口，用于**遍历集合元素的接口**。
 
 使用迭代器遍历集合元素
 
-    public static void main(String[] args) {
-        List<String> list1 = new ArrayList<>();
-        list1.add("abc0");
-        list1.add("abc1");
-        list1.add("abc2");
-    // while循环方式遍历
-    Iterator it1 = list1.iterator();
-    while (it1.hasNext()) {
-        System.out.println(it1.next());
-    	}
-    // for循环方式遍历
-    for (Iterator it2 = list1.iterator(); it2.hasNext(); ) {
-        System.out.println(it2.next());
-    	}
-    }
+```java
+public static void main(String[] args) {
+    List<String> list1 = new ArrayList<>();
+    list1.add("abc0");
+    list1.add("abc1");
+    list1.add("abc2");
+// while循环方式遍历
+Iterator it1 = list1.iterator();
+while (it1.hasNext()) {
+    System.out.println(it1.next());
+	}
+// for循环方式遍历
+for (Iterator it2 = list1.iterator(); it2.hasNext(); ) {
+    System.out.println(it2.next());
+	}
+}
+```
 
-​		**使用Iterator迭代器进行删除集合元素，则不会出现并发修改异常**。因为：在执行remove操作时，同样先执行checkForComodification()，然后会执行ArrayList的remove()方法，该方法会将modCount值加1，这里我们将expectedModCount=modCount，使之保持统一。
+​		**使用Iterator迭代器进行删除集合元素，则不会出现并发修改异常**。因为：在执行remove操作时，同样先执行checkForComodification()，然后会执行**ArrayList的remove()方法**，该方法会将modCount值加1，这里我们将expectedModCount=modCount，使之保持统一。
 
 ##### 4.ListIterator接口
 
@@ -2401,7 +2400,7 @@ E					  **next()** 返回列表中的下一个元素和光标的位置向后推�
 int				   **nextIndex()** 返回调用 next()后返回的元素索引。
 E					  **previous()** 返回列表中的上一个元素和光标的位置向前移动。
 int					**previousIndex()** 返回调用previous() 后返回的元素索引 。
-void				 remove() 删除列表中调用next()或previous()的返回最后一个元素。
+void				 remove() **删除列表中调用next()或previous()的返回最后一个元素**。
 void				 set(E e) 用指定元素替换列表中调用next()或previous()的返回最后一个元素。
 
 
@@ -2447,7 +2446,7 @@ Set：无序(存入和取出顺序有可能不一致)，不可以存储重复元
 
 **遍历时操作元素**
 
-```
+```java
 /**
   * Description: for循环遍历
   * 输出结果：
@@ -2492,11 +2491,11 @@ Set：无序(存入和取出顺序有可能不一致)，不可以存储重复元
    }
 ```
 
-使用迭代器遍历删除时，能够避免方法二中出现的问题。这是因为：在ArrayList中，modCount是指集合的修改次数，当进行add或者delete时，modCount会+1；expectedModCount是指集合的迭代器的版本号，初始值是modCount，但是当集合进行add或者delete操作时，modCount会+1，而expectedModCount不会改变，所以方法二中会抛出异常。但是it.remove操作时，会同步expectedModCount的值，把modCount的值赋予expectedModCount。所以不会抛出异常。
+使用迭代器遍历删除时，能够避免方法二中出现的问题。这是因为：在ArrayList中，modCount是指集合的修改次数，当进行add或者delete时，modCount会+1；expectedModCount是指集合的迭代器的版本号，初始值是modCount，但是当集合进行add或者delete操作时，modCount会+1，而expectedModCount不会改变，所以方法二中会抛出异常。**但是it.remove操作时，会同步expectedModCount的值**，把modCount的值赋予expectedModCount。所以不会抛出异常。
 
 **测试方法**
 
-```
+```java
 public static void main(String[] args) {
     List<String> arrayList = new ArrayList<String>();
     arrayList.add("a");
@@ -2515,6 +2514,7 @@ public static void main(String[] args) {
 
 
 总结：如果想正确的循环遍历删除（增加）元素，需要使用方法三，也就是迭代器遍历删除（增加）的方法。
+
 
 
 ###### Set集合
@@ -2539,6 +2539,8 @@ hashCode()与equals()的相关规定：
 
 **总结：**
 HashSet是一个通用功能的Set，而LinkedHashSet 提供元素插入顺序保证，TreeSet是一个SortedSet实现，由Comparator 或者 Comparable指定的元素顺序存储元素。
+
+
 
 ##### 6.Map接口(双列集合)
 
@@ -2569,7 +2571,7 @@ Collections：集合工具类，方便对集合的操作。这个类不需要创
 
 静态方法：
 
-```
+```java
 Collections.sort(list);//list集合进行元素的自然顺序排序。
 Collections.sort(list,new ComparatorByLen());//按指定的比较器方法排序。
 class ComparatorByLen implements Comparator<String>{
@@ -2592,9 +2594,10 @@ Map synchronizedMap(map);
 
 **Collection 和 Collections的区别**
 
-  Collections是个java.util下的类，是针对集合类的一个工具类,提供一系列静态方法,实现对集合的**查找、排序、替换、线程安全化**（将非同步的集合转换成同步的）等操作。
+  Collections是个**java.util下的类**，是针对集合类的一个工具类,提供一系列静态方法,实现对集合的**查找、排序、替换、线程安全化**（将非同步的集合转换成同步的）等操作。
 
-  Collection是个java.util下的接口，它是各种集合结构的父接口，继承于它的接口主要有Set和List,提供了关于集合的一些操作,如插入、删除、判断一个元素是否其成员、遍历等。
+  Collection是个**java.util下的接口**，它是**各种集合结构的父接口**，继承于它的接口主要有Set和List,提供了关于集合的一些操作,如插入、删除、判断一个元素是否其成员、遍历等。
+
 
 
 ##### 8.数组工具类 Arrays
@@ -2603,7 +2606,7 @@ Map synchronizedMap(map);
 
 **数组 -> 集合：asList方法，将数组转换成list集合。**
 
-```
+```java
 String[] arr ={"abc","kk","qq"};
 List<String> list =Arrays.asList(arr);//将arr数组转成list集合。
 ```
@@ -2611,7 +2614,7 @@ List<String> list =Arrays.asList(arr);//将arr数组转成list集合。
 
 将数组转换成集合，有什么好处呢？用aslist方法，将数组变成集合；
 
-- 可以通过list集合中的方法来操作数组中的元素：isEmpty()、contains、indexOf、set；
+- 可以通过list集合中的方法来操作数组中的元素：**isEmpty()、contains、indexOf、set**；
 
 
 - 注意（局限性）：数组是固定长度，不可以使用集合对象增加或者删除等，会改变数组长度的功能方法。比如add、remove、clear。（会报不支持操作异常UnsupportedOperationException）；
@@ -2635,24 +2638,27 @@ List<String> list =Arrays.asList(arr);//将arr数组转成list集合。
 
 **用基本数据类型的数组转换ArrayList，ArrayList的size有问题**
 
-    public static void main(String[] args) {
-        int[] arr1 = { 1, 2, 3, 4, 5 };
-        List<int[]> intList = Arrays.asList(arr1);
-        // intList size: 1
-        System.out.println(String.format("intList size: %s", intList.size()));
-    Integer[] arr2 = { 1, 2, 3, 4, 5 };
-    List<Integer> integerList = Arrays.asList(arr2);
-    // integerList size: 5
-    System.out.println(String.format("integerList size：%s", integerList.size()));
-    }
+```java
+public static void main(String[] args) {
+    int[] arr1 = { 1, 2, 3, 4, 5 };
+    List<int[]> intList = Arrays.asList(arr1);
+    // intList size: 1
+    System.out.println(String.format("intList size: %s", intList.size()));
+  
+		Integer[] arr2 = { 1, 2, 3, 4, 5 };
+		List<Integer> integerList = Arrays.asList(arr2);
+		// integerList size: 5
+		System.out.println(String.format("integerList size：%s", integerList.size()));
+}
+```
 
-asList方法接受的参数是一个泛型的变长参数，我们知道基本数据类型是无法泛型化的，也就是说基本类型是无法作为asList方法的参数的， 要想作为泛型参数就必须使用其所对应的包装类型。但是这个这个实例中为什么没有出错呢？因为该实例是将int 类型的数组当做其参数，而在Java中数组是一个对象，它是可以泛型化的。所以该例子是不会产生错误的。既然例子是将整个int 类型的数组当做泛型参数，那么经过asList转换就只有一个int 的列表了.
+asList方法接受的参数是一个泛型的变长参数，我们知道**基本数据类型是无法泛型化的**，也就是说基本类型是无法作为asList方法的参数的， 要想作为泛型参数就必须使用其所对应的包装类型。但是这个这个实例中为什么没有出错呢？因为该实例是**将int 类型的数组当做其参数**，而在Java中**数组是一个对象**，它是**可以泛型化的**。所以该例子是不会产生错误的。既然例子是将整个int 类型的数组当做泛型参数，那么经过asList转换就只有一个int 的列表了.
 
-**结论：**在使用asList()时尽量不要将基本数据类型数组转List. 
+**结论：**在使用asList()时**尽量不要将基本数据类型数组转List**. 
 
 **asList转换得到的ArrayList不是java.util.ArrayList**
 
-```
+```java
 public static void main(String[] args) {
     String[] arr = {"abc", "kk", "qq"};
     List<String> list = Arrays.asList(arr);
@@ -2667,7 +2673,7 @@ public static void main(String[] args) {
 
 **正确操作**
 
-```
+```java
 public static void main(String[] args) {
     String[] arr = {"abc", "kk", "qq"};
 	// 使用new ArrayList包裹一层
@@ -2678,7 +2684,7 @@ public static void main(String[] args) {
 
 ##### 9.如何选用集合?
 
-主要根据集合的特点来选用，比如我们需要根据键值获取到元素值时就选用Map接口下的集合，需要排序时选择TreeMap,不需要排序时就选择HashMap,需要保证线程安全就选用ConcurrentHashMap.当我们只需要存放元素值时，就选择实现Collection接口的集合，需要保证元素唯一时选择实现Set接口的集合比如TreeSet或HashSet，不需要就选择实现List接口的比如ArrayList或LinkedList，然后再根据实现这些接口的集合的特点来选用。
+主要根据集合的特点来选用，比如我们需要根据键值获取到元素值时就选用Map接口下的集合，需要排序时选择TreeMap,**不需要排序时就选择HashMap**,需要**保证线程安全就选用ConcurrentHashMap**.当我们只需要存放元素值时，就选择实现Collection接口的集合，需要保证元素唯一时选择实现**Set接口的集合比如TreeSet或HashSet**，不需要就选择实现**List接口的比如ArrayList或LinkedList**，然后再根据实现这些接口的集合的特点来选用。
 
 
 
@@ -2704,19 +2710,19 @@ public static void main(String[] args) {
 
 ##### 1.简介
 
-ArrayList 是 Java 集合框架中 List 接口的一个实现类。底层是数组，相当于动态数组。与 Java 中的数组相比，它的容量能动态增长。
+ArrayList 是 Java 集合框架中 List 接口的一个实现类。底层是数组，**相当于动态数组**。与 Java 中的数组相比，它的**容量能动态增长**。
 
 ArrayList是Vector的翻版，区别在于ArrayList是**线程不安全**的，而Vector则是**线程安全**的。但是Vector是一个较老的集合，具有很多缺点，不建议使用，这里我们就不对其进行分析了。
 
 ArrayList 可以说是我们使用最多的 List 集合，它有以下特点：
 
 - 它是基于数组实现的List类
-- 可以动态地调整容量
-- 有序的（元素输出顺序与输入顺序一致）
-- 元素可以为 null
-- 不同步，非线程安全，效率高
+- **可以动态地调整容量**
+- **有序的**（元素输出顺序与输入顺序一致）
+- **元素可以为 null**
+- **不同步，非线程安全，效率高**
 - 查询快，增删慢
-- 占用空间更小，对比 LinkedList，不用占用额外空间维护链表结构
+- **占用空间更小，对比 LinkedList，不用占用额外空间维护链表结构**
 
 ArrayList 为什么有这些优点呢？我们通过源码来分析分析。在阅读源码前先来看看ArrayList继承关系。
 ![ArrayList继承关系图](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvdXJXb24vaW1hZ2UvbWFzdGVyL0phdmElRTklOUIlODYlRTUlOTAlODglRTYlQkElOTAlRTclQTAlODElRTglQUYlQTYlRTglQTclQTMlRTQlQjklOEJBcnJheUxpc3QvQXJyYXlMaXN0JUU3JUJCJUE3JUU2JTg5JUJGJUU1JTg1JUIzJUU3JUIzJUJCJUU1JTlCJUJFLnBuZw)
@@ -2725,7 +2731,7 @@ ArrayList 为什么有这些优点呢？我们通过源码来分析分析。在�
 
 ##### 2.成员变量
 
-```
+```java
 // 序列号
 private static final long serialVersionUID = 8683452581122892189L;
 // 数组初始容量为 10
@@ -2744,7 +2750,7 @@ private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
 ##### 3.构造方法
 
-```
+```java
 //默认构造方法，初始为空数组。
 //只有插入一条数据后才会扩展为10，而实际上默认是空的
  public ArrayList() {
@@ -2785,7 +2791,7 @@ public ArrayList(Collection<? extends E> c) {
 
 ##### 4.内部类
 
-```
+```java
 (1)private class Itr implements Iterator<E>  
 (2)private class ListItr extends Itr implements ListIterator<E>  
 (3)private class SubList extends AbstractList<E> implements RandomAccess  
@@ -2801,7 +2807,7 @@ ArrayList有四个内部类，其中的Itr是实现了Iterator接口，同时重
 
 增和删是`ArrayList`最重要的部分，这部分代码需要我们细细研究
 
-```
+```java
 //添加一个特定的元素到list的末尾
 public boolean add(E e) {
     //先确保elementData数组的长度足够，size是数组中数据的个数，因为要添加一个元素，所以size+1，先判断size+1的这个个数数组能否放得下，在这个方法中去判断数组长度是否够用
@@ -2868,7 +2874,7 @@ public boolean addAll(int index, Collection<? extends E> c) {
 
 **数组容量调整**
 
-```
+```java
 //确保内部容量够用
 private void ensureCapacityInternal(int minCapacity) {
     ensureExplicitCapacity(calculateCapacity(elementData, minCapacity));
@@ -2941,7 +2947,7 @@ private static int hugeCapacity(int minCapacity) {
 
 我们这里使用ensureCapacity()方法测试
 
-```
+```java
 public class EnsureCapacityTest {
 	public static void main(String[] args) {
         ArrayList<Object> list = new ArrayList<Object>();
@@ -2976,7 +2982,7 @@ public class EnsureCapacityTest {
 
 ###### remove()方法
 
-```
+```java
 //根据索引删除指定位置的元素
 public E remove(int index) {
     //检查index的合理性
@@ -3088,7 +3094,7 @@ public void clear() {
 
 ###### get()方法
 
-```
+```java
 public E get(int index) {
     // 检验索引是否合法
     rangeCheck(index);
@@ -3104,7 +3110,7 @@ private void rangeCheck(int index) {
 
 ###### set()方法
 
-```
+```java
 //设定指定下标索引的元素值
 public E set(int index, E element) {
     // 检验索引是否合法
@@ -3120,7 +3126,7 @@ public E set(int index, E element) {
 
 ###### indexOf()方法
 
-```
+```java
 // 从首开始查找数组里面是否存在指定元素
 public int indexOf(Object o) {
     // 查找的元素为空
@@ -3168,7 +3174,7 @@ public boolean contains(Object o) {
 
 ###### toArray()方法
 
-```
+```java
 /**
      以正确的顺序返回一个包含此列表中所有元素的数组（从第一个到最后一个元素）; 返回的数组的运行时类型是指定数组的运行时类型。 
      */
@@ -3196,13 +3202,13 @@ public <T> T[] toArray(T[] a) {
 
 ##### 概述
 
-LinkedList 是 Java 集合框架中一个重要的实现，其底层采用的双向链表结构。和 ArrayList 一样，LinkedList 也支持空值和重复值。由于 LinkedList 基于链表实现，存储元素过程中，无需像 ArrayList 那样进行扩容。但有得必有失，LinkedList 存储元素的节点需要额外的空间存储前驱和后继的引用。另一方面，LinkedList 在链表头部和尾部插入效率比较高，但在指定位置进行插入时，效率一般。原因是，在指定位置插入需要定位到该位置处的节点，此操作的时间复杂度为`O(N)`。最后，LinkedList 是非线程安全的集合类，并发环境下，多个线程同时操作 LinkedList，会引发不可预知的错误。
+​		LinkedList 是 Java 集合框架中一个重要的实现，其底层采用的**双向链表结构**。和 ArrayList 一样，LinkedList 也支持空值和重复值。由于 LinkedList 基于链表实现，存储元素过程中，无需像 ArrayList 那样进行扩容。但有得必有失，LinkedList 存储元素的节点需要额外的空间存储前驱和后继的引用。另一方面，LinkedList 在链表头部和尾部插入效率比较高，但在**指定位置进行插入时，效率一般**。原因是，在指定位置插入需要定位到该位置处的节点，此操作的时间复杂度为`O(N)`。最后，LinkedList 是非线程安全的集合类，并发环境下，多个线程同时操作 LinkedList，**会引发不可预知的错误**。
 
 ##### 继承体系
 
 LinkedList 的继承体系较为复杂，继承自 AbstractSequentialList，同时又实现了 List 和 Deque 接口。LinkedList 继承自 AbstractSequentialList，AbstractSequentialList 又是什么呢？从实现上，AbstractSequentialList 提供了一套基于顺序访问的接口。通过继承此类，子类仅需实现部分代码即可拥有完整的一套访问某种序列表（比如链表）的接口。深入源码，AbstractSequentialList 提供的方法基本上都是通过 ListIterator 实现的，比如：
 
-```
+```java
 public E get(int index) {
     try {
         return listIterator(index).next();
@@ -3225,9 +3231,9 @@ public abstract ListIterator<E> listIterator(int index);
 
 所以只要继承类实现了 listIterator 方法，它不需要再额外实现什么即可使用。对于随机访问集合类一般建议继承 AbstractList 而不是 AbstractSequentialList。LinkedList 和其父类一样，也是基于顺序访问。所以 LinkedList 继承了 AbstractSequentialList，但 LinkedList 并没有直接使用父类的方法，而是重新实现了一套的方法。
 
-另外，LinkedList 还实现了 Deque (double ended queue)，Deque 又继承自 Queue 接口。这样 LinkedList 就具备了队列的功能。比如，我们可以这样使用：
+另外，LinkedList **还实现了 Deque (double ended queue)，Deque 又继承自 Queue 接口**。这样 LinkedList 就具备了队列的功能。比如，我们可以这样使用：
 
-```
+```java
 Queue<T> queue = new LinkedList<>();
 ```
 
@@ -3398,7 +3404,7 @@ void linkBefore(E e, Node<E> succ) {
 
 ##### 简介
 
-在JDK1.8之前，HashMap采用数组+链表实现，即使用链表处理冲突，同一hash值的节点都存储在一个链表里。但是当位于一个桶中的元素较多，即hash值相等的元素较多时，通过key值依次查找的效率较低。而JDK1.8中，为了解决hash碰撞过于频繁的问题，HashMap采用数组+链表+红黑树实现，当链表长度超过阈值（8）时，将链表(查询时间复杂度为O(n))转换为红黑树(时间复杂度为O(lg n))，极大的提高了查询效率。以下没有特别说明的均为JDK1.8中的HashMap。
+​		在JDK1.8之前，HashMap采用数组+链表实现，即使用链表处理冲突，同一hash值的节点都存储在一个链表里。但是当位于一个桶中的元素较多，即hash值相等的元素较多时，通过key值依次查找的效率较低。而JDK1.8中，为了解决hash碰撞过于频繁的问题，HashMap采用**数组+链表+红黑树实现**，当链表长度超过阈值（8）时，将链表(查询时间复杂度为O(n))转换为红黑树(时间复杂度为O(lg n))，极大的提高了查询效率。以下没有特别说明的均为JDK1.8中的HashMap。
 
 ##### 特点
 
@@ -3417,11 +3423,11 @@ HashMap 可以说是我们使用最多的 Map 集合，它有以下特点：
 
 JDK1.8之前采用的是拉链法。拉链法：将链表和数组相结合。也就是说创建一个链表数组，数组中每一格就是一个链表。若遇到哈希冲突，则将冲突的值加到链表中即可。
 
-![image-20200305231409179](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200305231409179.png)
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200305231409179.png" alt="image-20200305231409179" style="zoom:50%;" />
 
 **JDK1.8之后**
 
-相比于之前的版本，jdk1.8在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时，将链表转化为红黑树，以减少搜索时间。
+相比于之前的版本，jdk1.8在解决哈希冲突时有了较大的变化，当**链表长度大于阈值（默认为8）时**，数组初始化容量**默认为16**，将链表转化为红黑树，以减少搜索时间。
 
 ![image-20200305231352753](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200305231352753.png)
 
@@ -3534,7 +3540,7 @@ JDK 1.8 HashMap 的 hash 方法源码:
 
 JDK 1.8 的 hash方法 相比于 JDK 1.7 hash 方法更加简化，但是原理不变。
 
-```
+```java
 // 取key的hashCode值、高位运算、取模运算
 // 在JDK1.8的实现中，优化了高位运算的算法，
 // 通过hashCode()的高16位异或低16位实现的：(h = k.hashCode()) ^ (h >>> 16)，
@@ -3550,7 +3556,7 @@ static final int hash(Object key) {
 
 （2）在putVal源码中，通过(n-1)&hash获取该对象的键在hashmap中的位置。（其中hash的值就是（1）中获得的值）其中n表示的是hash桶数组的长度，并且该长度为2的n次方，这样(n-1)&hash就等价于hash%n。因为&运算的效率高于%运算。
 
-```
+```java
 final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
                 boolean evict) {
     ...
@@ -3581,7 +3587,7 @@ putVal方法执行流程图
 
 说明：HashMap同样并没有直接提供getNode接口给用户调用，而是提供的get方法，而get方法就是通过getNode来取得元素的。
 
-```
+```java
 public V get(Object key) {
     Node<k,v> e;
     return (e = getNode(hash(key), key)) == null ? null : e.value;
@@ -3643,6 +3649,8 @@ public static void main(String[] args) {
     }
 }
 ```
+
+
 
 #### LinkedHashMap(JDK1.8)源码解析
 
@@ -3923,6 +3931,8 @@ public class SimpleCacheTest {
 ```
 
 在测试代码中，设定缓存大小为3。在向缓存中插入10个键值对后，只有最后3个被保存下来了，其他的都被移除了。然后通过访问键值为7的节点，使得该节点被移到双向链表的最后位置。当我们再次插入一个键值对时，键值为7的节点就不会被移除。
+
+
 
 #### TreeMap(JDK1.8)源码解析
 
@@ -4432,7 +4442,7 @@ try 代码块退出时，会自动调用 scanner.close 方法，和把 scanner.c
 
 当我们的虚拟机在运行一个java程序的时候，它可以采用两种方式来运行这个java程序：
 
-采用解释器的形式，也就是说，在运行.class运行的时候，解释器一边把.class文件翻译成本地机器码，一边执行。显然这种一边解释翻译一边执行发方式，可以使我们立即启动和执行程序，省去编译的时间。不过由于需要一遍解释翻译，会让程序的执行速度比较慢。 采用JIT编译器的方式：注意，JIT编译器是把.class文件翻译成本地机器码，而javac编译器是把.java源文件编译成.class文件。如果采用JIT编译器的方式则是在启动运行一个程序的时候，先把.class文件全部翻译成本地机器码，然后再来执行，显然，这种方式在执行的时候由于不用对.clasa文件进行翻译，所以执行的速度会比较快。当然，代价就是我们需要花销一定的时间来把字节码翻译成本地机器码。这样，程序在启动的时候，会有更多的延迟。 这两种方式可以说是各有优势，虚拟机(特指HotSpot虚拟机)在执行的时候，一般会采用两种方式结合的策略。
+采用解释器的形式，也就是说，在运行.class运行的时候，**解释器一边把.class文件翻译成本地机器码，一边执行**。显然这种一边解释翻译一边执行发方式，可以**使我们立即启动和执行程序，省去编译的时间**。不过由于需要一遍解释翻译，会让程序的**执行速度比较慢**。 采用JIT编译器的方式：注意，JIT编译器是把.class文件翻译成本地机器码，而javac编译器是把.java源文件编译成.class文件。如果采用JIT编译器的方式则是在启动运行一个程序的时候，先把.class文件全部翻译成本地机器码，然后再来执行，显然，这种方式在执行的时候**由于不用对.clasa文件进行翻译，所以执行的速度会比较快**。当然，代价就是我们需要花销一定的时间来把字节码翻译成本地机器码。这样，程序在启动的时候，会有更多的延迟。 这两种方式可以说是各有优势，虚拟机(特指HotSpot虚拟机)在执行的时候，一般会采用两种方式结合的策略。
 
 也就是说，在程序执行的时候，有些代码采用解释器的方式，有些代码采用编译器，称之为即时编译。一般我们会对热点代码采用编译器的方式。
 
@@ -4459,7 +4469,7 @@ JVM包含两个子系统和两个组件，两个子系统为Class loader(类装�
 
 **Java 虚拟机在执行 Java 程序的过程中会把它所管理的内存区域划分为若干个不同的数据区域**。这些区域都有各自的用途，以及创建和销毁的时间，有些区域随着虚拟机进程的启动而存在，有些区域则是依赖线程的启动和结束而建立和销毁。Java 虚拟机所管理的内存被划分为如下几个区域：
 
-![image-20200306125440890](file:///Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200306125440890.png?lastModify=1584461517)
+<img src="file:///Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200306125440890.png?lastModify=1584461517" alt="image-20200306125440890" style="zoom:50%;" />
 
 ![image-20200306125516358](file:///Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200306125516358.png?lastModify=1584461517)
 
@@ -4468,17 +4478,24 @@ JVM包含两个子系统和两个组件，两个子系统为Class loader(类装�
 程序计数器是一块较小的内存区域，可以看做是**当前线程所执行的字节码的行号指示器**。在虚拟机的概念模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成。「**属于线程私有的内存区域**」
 
 - 当前线程所执行的字节码行号指示器。
+
 - 每个线程都有一个自己的PC计数器。
+
 - 线程私有的，生命周期与线程相同，随JVM启动而生，JVM关闭而死。
+
 - 线程执行Java方法时，记录其正在执行的虚拟机字节码指令地址。
+
 - 线程执行Native方法时，计数器记录为空(Undefined)。
+
 - 唯一在Java虚拟机规范中没有规定任何OutOfMemoryError情况区域。
+
+    
 
 ###### 2.Java虚拟机栈（线程私有）
 
 线程私有内存空间，它的生命周期**和线程相同**。线程执行期间，每个方法被执行时，都会创建一个**栈帧（Stack Frame）用于存储局部变量表、操作栈、动态链接、方法出口等信息**。每个方法从被调用到执行完成的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。「属于线程私有的内存区域」。下面依次解释栈帧里的四种组成元素的具体结构和功能：
 
-**局部变量表*
+**局部变量表**
 
 局部变量表是 Java 虚拟机栈的一部分，是一组变量值的存储空间，用于存储**方法参数和局部变量**。 在 Class 文件的方法表的 Code 属性的 max_locals 指定了该方法所需局部变量表的**最大容量**。
 
@@ -4526,11 +4543,15 @@ Class文件的常量池中存在有大量的符号引用，字节码中的方法
 
 注意：在Java虚拟机规范中，对这个区域规定了两种异常。 其一：如果当前线程请求的栈深度大于虚拟机栈所允许的深度，将会抛出 StackOverflowError 异常（在虚拟机栈不允许动态扩展的情况下）； 其二：如果扩展时无法申请到足够的内存空间，就会抛出 OutOfMemoryError 异常。
 
+
+
 ###### 3.本地方法栈（线程私有）
 
 本地方法栈和Java虚拟机栈发挥的作用非常相似，主要区别是Java虚拟机栈执行的是Java方法服务，而本地方法栈执行Native方法服务(通常用C编写)。
 
 有些虚拟机发行版本(譬如Sun HotSpot虚拟机)直接将本地方法栈和Java虚拟机栈合二为一。与虚拟机栈一样，本地方法栈也会抛出StackOverflowError和OutOfMemoryError异常。
+
+
 
 ###### 4.Java堆（全局共享）
 
@@ -4542,6 +4563,8 @@ Java 堆是 GC 回收的主要区域，因此很多时候也被称为 **GC 堆**
 
 简要归纳：新的对象分配是首先放在**年轻代 (Young Generation) 的Eden区**，Survivor区作为Eden区和Old区的缓冲，在Survivor区的对象经历若干次收集仍然存活的，就会被转移到老年代Old中。 从内存回收的角度看，线程共享的 Java 堆可能划分出多个线程**私有的分配缓冲区**（Thread Local Allocation Buffer，TLAB）。「属于线程共享的内存区域」
 
+
+
 ###### 5.方法区（全局共享）
 
 方法区和Java堆一样，为多个线程共享，它用于存储类信息、常量、静态常量和即时编译后的代码等数据。Non-Heap（非堆）「属于线程共享的内存区域」
@@ -4551,13 +4574,22 @@ Java 堆是 GC 回收的主要区域，因此很多时候也被称为 **GC 堆**
 运行时常量池是方法区的一部分。Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息就是常量池（Constant Pool Table），用于存放编译期生成的各种字面常量和符号引用，这部分内容会在类加载后进入方法区的运行时常量池。
 
 - HotSpot虚拟机中，将方法区称为“永久代”，本质上两者并不等价，仅仅是因为HotSpot虚拟机把GC分代收集扩展至方法区。
+
 - JDK 7的HotSpot中，已经将原本存放于永久代中的字符串常量池移出。
+
 - 根据虚拟机规范的规定，当方法区无法满足内存分配需求时，将会抛出OutOfMemoryError异常。当常量池无法再申请到内存时也会抛出OutOfMemoryError异常。
+
 - JDK 8的HotSpot中，已经将永久代废除，用元数据实现了方法区。元空间与永久代之间最大的区别在于：元空间并不在虚拟机中，而是使用本地内存。理论上取决于32位/64位系统可虚拟的内存大小。可见也不是无限制的，需要配置参数。
+
+    
 
 ###### 6.直接内存
 
 直接内存（Direct Memory）并不是虚拟机运行时数据区的一部分，也不是 Java 虚拟机规范中定义的内存区域。Java 中的 NIO 可以使用 Native 函数直接分配堆外内存，通常直接内存的速度会优于Java堆内存，然后通过一个存储在 Java 堆中的 DiectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景显著提高性能，对于读写频繁、性能要求高的场景，可以考虑使用直接内存，因为避免了在 Java 堆和 Native 堆中来回复制数据。直接内存不受 Java 堆大小的限制。
+
+
+
+
 
 ##### HotSpot虚拟机对象探秘
 
@@ -4575,9 +4607,13 @@ Java 堆是 GC 回收的主要区域，因此很多时候也被称为 **GC 堆**
 
 虚拟机遇到一条new指令时，先检查常量池是否已经加载相应的类，如果没有，必须先执行相应的类加载。类加载通过后，接下来分配内存。若Java堆中内存是绝对规整的，使用“指针碰撞“方式分配内存；如果不是规整的，就从空闲列表中分配，叫做”空闲列表“方式。划分内存时还需要考虑一个问题-并发，也有两种方式: CAS同步处理，或者本地线程分配缓冲(Thread Local Allocation Buffer, TLAB)。然后内存空间初始化操作，接着是做一些必要的对象设置(元信息、哈希码…)，最后执行<init>方法。
 
+
+
 ###### 1.判断对象对应的类是否加载、链接、初始化
 
 虚拟机接收到一条new指令时，首先会去检查这个指定的参数是否能在常量池中定位到一个类的符号引用，并且检查这个符号引用代表的类是否已被类加载器加载、链接和初始化过。如果没有则先执行相应的类加载过程。
+
+
 
 ###### 2.为对象分配内存
 
@@ -4588,11 +4624,13 @@ Java 堆是 GC 回收的主要区域，因此很多时候也被称为 **GC 堆**
 
 选择哪种分配方式是由 Java 堆是否规整来决定的，而 Java 堆是否规整又由所采用的垃圾收集器是否带有压缩整理功能决定。 ![image-20200306133742019](file:///Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200306133742019.png?lastModify=1584461517)
 
+
+
 ###### 3.处理并发安全问题
 
 对象的创建在虚拟机中是一个非常频繁的行为，哪怕只是修改一个指针所指向的位置，在并发情况下也是不安全的，可能出现正在给对象 A 分配内存，指针还没来得及修改，对象 B 又同时使用了原来的指针来分配内存的情况。解决这个问题有两种方案：
 
-- 对分配内存空间的动作进行同步处理（采用 CAS + 失败重试来保障更新操作的原子性）；
+- 对分配内存空间的动作进行**同步处理**（采用 CAS + 失败重试来保障更新操作的原子性）；
 - 把内存分配的动作按照线程划分在不同的空间之中进行，即每个线程在 Java 堆中预先分配一小块内存，称为本地线程分配缓冲（Thread Local Allocation Buffer, TLAB）。哪个线程要分配内存，就在哪个线程的 TLAB 上分配。只有 TLAB 用完并分配新的 TLAB 时，才需要同步锁。通过-XX:+/-UserTLAB参数来设定虚拟机是否使用TLAB。
 
 ![image-20200306133910751](file:///Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200306133910751.png?lastModify=1584461517)
@@ -4601,13 +4639,21 @@ Java 堆是 GC 回收的主要区域，因此很多时候也被称为 **GC 堆**
 
 内存分配完后，虚拟机要将分配到的内存空间初始化为零值（不包括对象头）。如果使用了 TLAB，这一步会提前到 TLAB 分配时进行。这一步保证了对象的实例字段在 Java 代码中可以不赋初始值就直接使用。
 
+
+
 ###### 5.设置对象的对象头
 
 接下来设置对象头（Object Header）信息，包括对象的所属类、对象的HashCode和对象的GC分代年龄等数据存储在对象的对象头中。
 
+
+
 ###### 6.执行init方法进行初始化
 
 执行init方法，初始化对象的成员变量、调用类的构造方法，这样一个对象就被创建了出来。
+
+
+
+
 
 ##### 对象的内存布局
 
@@ -4620,6 +4666,8 @@ HotSpot虚拟机中，对象在内存中存储的布局可以分为三块区域�
 Mark Word（运行时数据）：用于存储对象自身运行时的数据，如哈希码（hashCode）、GC分带年龄、线程持有的锁、偏向线程ID 等信息。在32位系统占4字节，在64位系统中占8字节；
 
 HotSpot虚拟机对象头Mark Word在其他状态（轻量级锁定、重量级锁定、GC标记、可偏向）下对象的存储内容如下表所示： ![image-20200306134319415](file:///Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200306134319415.png?lastModify=1584461517)
+
+
 
 ###### 实例数据
 
@@ -4635,18 +4683,24 @@ reference -> long/double -> int/float -> short/char -> byte/boolean
 
 分配策略总是按照字节大小由大到小的顺序排列，相同字节大小的放在一起。
 
+
+
 ###### **对齐填充**
 
 无特殊含义，不是必须存在的，仅作为占位符。
 
 HotSpot虚拟机要求每个对象的起始地址必须是8字节的整数倍，也就是对象的大小必须是8字节的整数倍。而对象头部分正好是8字节的倍数（32位为1倍，64位为2倍），因此，当对象实例数据部分没有对齐的时候，就需要通过对齐填充来补全。
 
+
+
+
+
 ##### 对象的访问定位
 
 Java程序需要通过 JVM 栈上的引用访问堆中的具体对象。对象的访问方式取决于 JVM 虚拟机的实现。目前主流的访问方式有 句柄 和 直接指针 两种方式。
 
-- 指针： 指向对象，代表一个对象在内存中的起始地址。
-- 句柄： 可以理解为指向指针的指针，维护着对象的指针。句柄不直接指向对象，而是指向对象的指针（句柄不发生变化，指向固定内存地址），再由对象的指针指向对象的真实内存地址。
+- 指针： 指向对象，代表一个**对象在内存中的起始地址**。
+- 句柄： 可以理解为指向指针的指针，**维护着对象的指针**。句柄不直接指向对象，而是指向对象的指针（句柄不发生变化，指向固定内存地址），再由对象的指针指向对象的真实内存地址。
 
 ###### 句柄访问
 
@@ -4678,6 +4732,8 @@ Java程序需要通过 JVM 栈上的引用访问堆中的具体对象。对象�
 
 经过半个多世纪的发展，目前内存的动态分配与内存回收技术已经相当成熟，一切看起来都进入了"自动化"时代，那为什么我们还要去了解GC和内存分配？答案很简单：当需要排查各种内存溢出、内存泄漏问题时，当垃圾收集成为系统达到更高并发量的瓶颈时，我们就需要对这些"自动化"的技术实施必要的监控和调节。
 
+
+
 ##### 对象状态监控
 
 垃圾收集器在做垃圾回收的时候，首先需要判定的就是哪些内存是需要被回收的，哪些对象是「存活」的，是不可以被回收的；哪些对象已经「死掉」了，需要被回收。
@@ -4694,6 +4750,8 @@ Java 堆 中每个具体对象（不是引用）都有一个引用计数器。�
 
 难以检测出对象之间的循环引用。同时，引用计数器增加了程序执行的开销。所以Java语言并没有选择这种算法进行垃圾回收。
 
+
+
 ###### 可达性分析算法
 
 可达性分析算法又叫根搜索算法，该算法的基本思想就是通过一系列称为「GC Roots」的对象作为起始点，从这些起始点开始往下搜索，搜索所走过的路径称为引用链，当一个对象到 GC Roots 对象之间没有任何引用链的时候（不可达），证明该对象是不可用的，于是就会被判定为可回收对象。
@@ -4709,6 +4767,8 @@ Java 堆 中每个具体对象（不是引用）都有一个引用计数器。�
 
 JVM中用到的所有现代GC算法在回收前都会先找出所有仍存活的对象。可达性分析算法是从离散数学中的图论引入的，程序把所有的引用关系看作一张图。
 
+
+
 ###### 再谈引用
 
 无论是通过引用计数器还是通过可达性分析来判断对象是否可以被回收都设计到「引用」的概念。在 Java 中，根据引用关系的强弱不一样，将引用类型划为强引用（Strong Reference）、软引用（Soft Reference）、弱引用（Weak Reference）和虚引用（Phantom Reference）。
@@ -4721,6 +4781,8 @@ JVM中用到的所有现代GC算法在回收前都会先找出所有仍存活的
 
 **虚引用**：是最弱的一种引用关系，一个对象是否有虚引用的存在完全不影响对象的生存时间，也无法通过虚引用来获取一个对象的实例。一个对象使用虚引用的唯一目的是为了在被垃圾收集器回收时收到一个系统通知。在 Java 中使用 PhantomReference 类来实现。
 
+
+
 ###### 生存还是死亡
 
 一个对象是否应该在垃圾回收器在GC时回收，至少要经历**两次标记过程**。
@@ -4728,6 +4790,8 @@ JVM中用到的所有现代GC算法在回收前都会先找出所有仍存活的
 **第一次标记**：如果对象在进行可达性分析后被判定为不可达对象，那么它将被第一次标记并且进行一次筛选。筛选的条件是此对象是否有必要执行 finalize() 方法。对象没有覆盖 finalize() 方法或者该对象的 finalize() 方法曾经被虚拟机调用过，则判定为没必要执行。
 
 **finalize()第二次标记**：如果被判定为有必要执行 finalize() 方法，那么这个对象会被放置到一个 F-Queue 队列中，并在稍后由虚拟机自动创建的、低优先级的 Finalizer 线程去执行该对象的 finalize() 方法。但是虚拟机并不承诺会等待该方法结束，这样做是因为，如果一个对象的 finalize() 方法比较耗时或者发生了死循环，就可能导致 F-Queue 队列中的其他对象永远处于等待状态，甚至导致整个内存回收系统崩溃。finalize() 方法是对象逃脱死亡命运的最后一次机会，如果对象要在 finalize() 中挽救自己，只要重新与 GC Roots 引用链关联上就可以了。这样在第二次标记时它将被移除「即将回收」的集合，如果对象在这个时候还没有逃脱，那么它基本上就真的被回收了。
+
+
 
 ###### 回收方法区
 
@@ -4742,6 +4806,7 @@ JVM中用到的所有现代GC算法在回收前都会先找出所有仍存活的
 - 该类的所有实例已经被回收；
 - 加载该类的 ClassLoader 已经被回收；
 - 该类的 Class 对象没有被引用，无法再任何地方通过反射访问该类的方法。
+
 
 
 ##### 垃圾收集算法
@@ -4763,6 +4828,8 @@ JVM中用到的所有现代GC算法在回收前都会先找出所有仍存活的
 
 ![image-20200307100342383](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200307100342383-4461689.png)
 
+
+
 ###### 复制算法
 
 为了解决标记-清除算法的效率不高的问题，产生了复制算法。它把内存空间划为两个相等的区域，每次只使用其中一个区域。垃圾收集时，遍历当前使用的区域，把存活对象复制到另外一个区域中，最后将当前使用的区域的可回收的对象进行回收。
@@ -4777,6 +4844,8 @@ JVM中用到的所有现代GC算法在回收前都会先找出所有仍存活的
 
 现在的商业虚拟机都采用这种算法来**回收新生代**，在 IBM 的研究中新生代中的对象 **98% 都是「朝生夕死」**，所以并不需要按照 1:1 的比例来划分空间，而是将内存分为一块**较大的 Eden 空间和两块较小的 Survivor 空间**，每次使用 Eden 和其中一块 Survivor。当回收时，将 Eden 和 Survivor 中还存活的对象一次性复制到另一块 Survivor 空间上，最后清理掉 Eden 和刚才用过的 Survivor 空间。 HotSpot 默认 Eden 和 Survivor 的大小比例是 8:1，也就是每次新生代中可用的内存为整个新生代容量的 90%（80%+10%），只有 10% 会被浪费。当然，98% 的对象可回收只是一般场景下的数据，我们没办法保证每次回收后都只有不多于 10% 的对象存活，当 Survivor 空间不够用时，需要依赖其它内存（这里指老年代）进行分配担保。如果另外一块 Survivor 空间没有足够空间存放上一次新生代收集下来存活的对象时，这些对象将直接通过分配担保机制进入老年代。
 
+
+
 ###### 标记-整理算法
 
 在新生代中可以使用复制算法，但是在老年代就不能选择复制算法了，因为老年代的对象存活率会较高，这样会有较多的复制操作，导致效率变低。标记-清除算法可以应用在老年代中，但是它效率不高，在内存回收后容易产生大量内存碎片。因此就出现了一种标记-整理算法（Mark-Compact）算法，与标记-整理算法不同的是，在标记可回收的对象后将所有存活的对象压缩到内存的一端，使他们紧凑的排列在一起，然后对端边界以外的内存进行回收。回收后，已用和未用的内存都各自一边。
@@ -4788,6 +4857,8 @@ JVM中用到的所有现代GC算法在回收前都会先找出所有仍存活的
 ![image-20200307101709817](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200307101709817-4461689.png)
 
 ![image-20200307101719762](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200307101719762-4461689.png)
+
+
 
 ###### 分代收集算法
 
@@ -4841,9 +4912,13 @@ JDK8堆内存一般是划分为年轻代和老年代，不同年代 根据自身
 Minor GC：新生代垃圾收集。**对新生代进行回收**，不会影响到年老代。因为新生代的 Java 对象大多死亡频繁，所以 Minor GC 非常频繁，一般在这里使用速度快、效率高的算法，使垃圾回收能尽快完成。
 Full GC：也叫 Major GC，**对整个堆进行回收，包括新生代和老年代**（JDK8 取消永久代）。由于Full GC需要对整个堆进行回收，所以比Minor GC要慢，因此应该尽可能减少Full GC的次数。它的收集频率较低，耗时较长。
 
+
+
 ###### 垃圾收集算法小结
 
 ![image-20200307103944731](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200307103944731-4461689.png)
+
+
 
 ##### 垃圾收集器
 
@@ -4857,20 +4932,26 @@ Full GC：也叫 Major GC，**对整个堆进行回收，包括新生代和老�
 - CMS(Concurrent Mark Sweep)收集器（标记-清除算法）： 老年代并行收集器，以获取最短回收停顿时间为目标的收集器，具有高并发、低停顿的特点，追求最短GC回收停顿时间。
 - G1(Garbage First)收集器 (标记-整理算法)： Java堆并行收集器，G1收集器是JDK1.7提供的一个新收集器，G1收集器基于“标记-整理”算法实现，也就是说不会产生内存碎片。此外，G1收集器不同于之前的收集器的一个重要特点是：G1回收的范围是整个Java堆(包括新生代，老年代)，而前六种收集器回收的范围仅限于新生代或老年代。
 
+
+
 ##### 内存分配与回收策略
 
 所谓自动内存管理，最终要解决的也就是内存分配和内存回收两个问题。前面我们介绍了内存回收，这里我们再来聊聊内存分配。
 
 对象的内存分配通常是在 Java 堆上分配（随着虚拟机优化技术的诞生，某些场景下也会在栈上分配，后面会详细介绍），对象主要分配在新生代的 Eden 区，如果启动了本地线程缓冲，将按照线程优先在 TLAB 上分配。少数情况下也会直接在老年代上分配。总的来说分配规则不是百分百固定的，其细节取决于哪一种垃圾收集器组合以及虚拟机相关参数有关，但是虚拟机对于内存的分配还是会遵循以下几种「普世」规则：
 
+
+
 ###### **对象优先在 Eden 区分配**
 
-多数情况，对象都在新生代 Eden 区分配。当 Eden 区分配没有足够的空间进行分配时，虚拟机将会发起一次 Minor GC。如果本次 GC 后还是没有足够的空间，则将启用分配担保机制在老年代中分配内存。
+多数情况，对象都在新生代 Eden 区分配。当 Eden 区分配没有足够的空间进行分配时，虚拟机**将会发起一次 Minor GC**。如果本次 GC 后还是没有足够的空间，则将启用**分配担保机制在老年代中分配内存**。
 
 这里我们提到 Minor GC，如果你仔细观察过 GC 日常，通常我们还能从日志中发现 Major GC/Full GC。
 
 - Minor GC 是指发生在新生代的 GC，因为 Java 对象大多都是朝生夕死，所有 Minor GC 非常频繁，一般回收速度也非常快；
 - Major GC/Full GC 是指发生在老年代的 GC，出现了 Major GC 通常会伴随至少一次 Minor GC。Major GC 的速度通常会比 Minor GC 慢 10 倍以上。
+
+
 
 ###### 大对象直接进入老年代
 
@@ -4878,13 +4959,19 @@ Full GC：也叫 Major GC，**对整个堆进行回收，包括新生代和老�
 
 前面我们介绍过新生代使用的是标记-清除算法来处理垃圾回收的，如果大对象直接在新生代分配就会导致 Eden 区和两个 Survivor 区之间发生大量的内存复制。因此对于大对象都会直接在老年代进行分配。
 
+
+
 ###### 长期存活对象将进入老年代
 
 虚拟机采用**分代收集的思想**来管理内存，那么内存回收时就必须判断哪些对象应该放在新生代，哪些对象应该放在老年代。因此虚拟机给每个对象定义了一个对象年龄的计数器，如果对象在 Eden 区出生，并且能够被 Survivor 容纳，将被移动到 Survivor 空间中，这时设置对象年龄为 1。对象在 Survivor 区中每「熬过」一次 Minor GC 年龄就加 1，当年龄达到一定程度（默认 15） 就会被晋升到老年代。
 
+
+
 ###### 动态对象年龄判定
 
 为了更好的适应不同程序的内存情况，虚拟机并不是永远要求对象的年龄必需达到某个固定的值（比如前面说的 15）才会被晋升到老年代，而是会去动态的判断对象年龄。如果在 Survivor 区中相同年龄所有对象大小的总和大于 Survivor 空间的一半，年龄大于等于该年龄的对象就可以直接进入老年代。
+
+
 
 ###### 空间分配担保
 

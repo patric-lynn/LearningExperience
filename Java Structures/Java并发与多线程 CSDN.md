@@ -1,4 +1,4 @@
-### Java技术栈之并发编程 CSDN
+### Java并发与多线程 CSDN
 
 #### 并发编程基本概念
 
@@ -175,14 +175,18 @@ Found 1 deadlock.
 
 ##### 1.Java内存模型
 
+
+
 ###### Java内存模型（JMM）的介绍
 
-什么是线程安全？在<<深入理解Java虚拟机>>中看到的定义。原文如下：
+**什么是线程安全？**在<<深入理解Java虚拟机>>中看到的定义。原文如下：
 		当多个线程访问同一个对象时，如果不用考虑这些线程在运行时环境下的**调度和交替运行**，也不需要进行额外的同步，或者在调用方进行**任何其他的协调操作**，调用这个对象的行为都**可以获取正确的结果**，那这个对象是**线程安全的**。
 
 ​		关于定义的理解是一个仁者见仁智者见智的事情。出现线程安全的问题一般是因为**主内存和工作内存数据不一致性和重排序**导致的，而解决线程安全的问题最重要的就是理解这两种问题是怎么来的，那么，理解它们的核心在于理解Java内存模型（JMM）。
 
 ​		在多线程条件下，多个线程肯定会相互协作完成一件事情，一般来说就会涉及到多个线程间相互通信告知彼此的状态以及当前的执行结果等，另外，为了性能优化，还会涉及到**编译器指令重排序**和**处理器指令重排序**。下面会一一来聊聊这些知识。
+
+
 
 ###### 内存模型抽象结构
 
@@ -204,6 +208,8 @@ Found 1 deadlock.
 
 ​		从横向去看看，线程A和线程B就好像通过共享变量在进行隐式通信。这其中有个意思的问题，如果线程A更新后数据并没有及时写回到主存，而此时线程B读到的是过期的数据，这就出现了“**脏读**”现象。可以通过同步机制（控制不同线程间操作发生的相对顺序）来解决或者通过volatile关键字使得每次volatile变量都能够强制刷新到主存，从而对每个线程都是可见的。
 
+
+
 ###### 主内存与工作内存
 
 处理器上的寄存器的读写的速度比内存快几个数量级，为了解决这种速度矛盾，在它们之间加入了高速缓存。
@@ -213,6 +219,8 @@ Found 1 deadlock.
 ![image-20200310211610094](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310211610094.png)
 
 所有的变量都存储在主内存中，每个线程还有自己的工作内存，工作内存存储在高速缓存或者寄存器中，保存了该线程使用的变量的主内存副本拷贝。线程只能直接操作工作内存中的变量，不同线程之间的变量值传递需要通过主内存来完成。
+
+
 
 ###### 内存间交互操作
 
@@ -229,6 +237,8 @@ Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互
 - store（存储）：作用于工作内存的变量，它把工作内存中一个变量的值传送给主内存中以便随后的write操作使用；
 - write（操作）：作用于主内存的变量，它把store操作从工作内存中得到的变量的值放入主内存的变量中。
 
+
+
 ###### 内存模型三大特性
 
 1. 原子性
@@ -237,7 +247,7 @@ Java 内存模型保证了 read、load、use、assign、store、write、lock 和
 
 有一个错误认识就是，int 等原子性的类型在多线程环境中不会出现线程安全问题。前面的线程不安全示例代码中，cnt 属于 int 类型变量，1000 个线程对它进行自增操作之后，得到的值为 997 而不是 1000。
 
-如果让volatile保证原子性，必须符合以下两条规则：
+**如果让volatile保证原子性，必须符合以下两条规则：**
 
 ​		**运算结果并不依赖于变量的当前值，或者能够确保只有一个线程修改变量的值；**
 
@@ -245,7 +255,7 @@ Java 内存模型保证了 read、load、use、assign、store、write、lock 和
 
 2. 可见性
 
-可见性指当一个线程修改了共享变量的值，其它线程能够立即得知这个修改。Java 内存模型是通过在变量修改后将新值同步回主内存，在变量读取前从主内存刷新变量值来实现可见性的。
+可见性指当一个线程修改了共享变量的值，其它线程能够**立即得知这个修改**。Java 内存模型是通过在变量修改后将新值同步回主内存，在变量读取前从主内存刷新变量值来实现可见性的。
 
 主要有三种实现可见性的方式：
 
@@ -256,11 +266,11 @@ Java 内存模型保证了 read、load、use、assign、store、write、lock 和
 
 3. 有序性
 
-有序性是指：在本线程内观察，所有操作都是有序的。在一个线程观察另一个线程，所有操作都是无序的，无序是因为发生了指令重排序。在 Java 内存模型中，允许编译器和处理器对指令进行重排序，重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。
+有序性是指：在本线程内观察，所有操作都是有序的。在一个线程观察另一个线程，所有操作都是无序的，无序是因为发生了指令重排序。在 Java 内存模型中，**允许编译器和处理器对指令进行重排序**，重排序过程不会影响到单线程程序的执行，**却会影响到多线程并发执行的正确性**。
 
-- volatile 关键字通过添加内存屏障的方式来禁止指令重排，即重排序时不能把后面的指令放到内存屏障之前。
+- volatile 关键字通过添加**内存屏障的方式**来**禁止指令重排**，即重排序时不能把后面的指令放到内存屏障之前。
 
-- synchronized 关键字同样可以保证有序性，它保证每个时刻只有一个线程执行同步代码，相当于是让线程顺序执行同步代码。
+- synchronized 关键字**同样可以保证有序性**，它保证每个时刻只有一个线程执行同步代码，相当于是让线程顺序执行同步代码。
 
     **总结**
 
@@ -270,11 +280,15 @@ Java 内存模型保证了 read、load、use、assign、store、write、lock 和
 
 ​		**final：具有可见性**
 
+
+
 ###### 内存屏障
 
 我们都知道，为了性能优化，JMM在不改变正确语义的前提下，会允许编译器和处理器对指令序列进行重排序，那如果想阻止重排序要怎么办了？答案是可以添加内存屏障。JMM内存屏障分为四类
 
 ![image-20200310212928858](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310212928858.png)
+
+
 
 ###### 先行发生原则
 
@@ -284,7 +298,7 @@ Java 内存模型保证了 read、load、use、assign、store、write、lock 和
 
 2. 管程锁定规则：一个 unlock 操作先行发生于后面对同一个锁的 lock 操作。
 3. volatile 变量规则：对一个 volatile 变量的**写操作先行发生于**后面对这个变量的读操作。
-4. 线程启动规则：Thread 对象的 start() 方法调用先行发生于此线程的每一个动作。
+4. 线程启动规则：Thread 对象的 start() 方法调用**先行发生于此线程的每一个动作**。
 
 5. 线程加入规则：Thread 对象的结束先行发生于 join() 方法返回。
 6. 线程中断规则：对线程 interrupt() 方法的调用先行发生于被中断线程的代码检测到中断事件的发生，可以通过 interrupted() 方法检测到是否有中断发生。
@@ -300,6 +314,7 @@ Java 内存模型保证了 read、load、use、assign、store、write、lock 和
 现在的CPU一般采用流水线来执行指令。一个指令的执行被分成：取指、译码、访存、执行、写回、等若干个阶段。然后，多条指令可以同时存在于流水线中，同时被执行。
 
 指令流水线并不是串行的，并不会因为一个耗时很长的指令在“执行”阶段呆很长时间，而导致后续的指令都卡在“执行”之前的阶段上。我们编写的程序都要经过优化后（**编译器和处理器会对我们的程序进行优化以提高运行效率**）才会被运行，优化分为很多种，其中有一种优化叫做重排序，**重排序需要遵守as-if-serial规则和happens-before规则**，不能说你想怎么排就怎么排，如果那样岂不是乱了套。**重排序的目的是为了性能**。
+
 
 
 ###### 重排序分类
@@ -351,9 +366,10 @@ flag为标志位，表示a有没有被写入，当A线程执行 writer 方法，
 上面三种情况，只要重排序两个操作的执行顺序，程序的执行结果将会被改变。前面提到过，编译器和处理器可能会对操作做重排序。编译器和处理器在重排序时，会遵守数据依赖性，编译器和处理器不会改变存在数据依赖关系的两个操作的执行顺序。注意，这里所说的数据依赖性仅针对**单个处理器中执行的指令序列**和**单个线程中执行的操作**，不同处理器之间和不同线程之间的**数据依赖性不被编译器和处理器考虑**。如果两个操作访问同一个变量，且这两个操作中有一个为写操作，此时这两个操作之间就存在数据依赖性。所以有数据依赖性的语句不能进行重排序。
 
 
+
 ##### 3.as-if-serial规则和happens-before规则
 
-###### as-if-serial规则
+###### as-if-serial规则（单线程间）
 
 as-if-serial语义的意思指：不管怎么重排序（编译器和处理器为了提高并行度），（单线程）程序的执行结果不能被改变。编译器，runtime 和处理器都必须遵守as-if-serial语义。
 
@@ -367,13 +383,13 @@ double area = pi * r * r; //C
 
 A和C之间存在数据依赖关系，同时B和C之间也存在数据依赖关系。因此在最终执行的指令序列中，**C不能被重排序到A和B的前面**（C排到A和B的前面，程序的结果将会被改变）。**但A和B之间没有数据依赖关系，编译器和处理器可以重排序A和B之间的执行顺序**。as-if-serial语义把**单线程程序保护了起来**，遵守as-if-serial语义的编译器，runtime 和处理器共同让编写单线程程序的程序员产生了一个幻觉：单线程程序是按程序的顺序来执行的**。**as-if-serial语义使程序员无需担心重排序会干扰他们，也无需担心内存可见性问题。
 
-###### happens-before规则
+###### happens-before规则（跨线程间）
 
 上面的内容讲述了重排序原则，一会是编译器重排序一会是处理器重排序，如果让程序员再去了解这些底层的实现以及具体规则，那么程序员的负担就太重了，严重影响了并发编程的效率。因此，JMM为程序员在上层提供了六条规则，这样我们就可以根据规则去推论跨线程的内存可见性问题，而不用再去理解底层重排序的规则。
 
 **happens-before定义**
 
-happens-before的概念最初由Leslie Lamport在其一篇影响深远的论文（《Time，Clocks and the Ordering of Events in a Distributed System》）中提出，有兴趣的可以google一下。JSR-133使用happens-before的概念来指定两个操作之间的执行顺序。由于这两个操作可以在一个线程之内，也可以是在不同线程之间。因此，JMM可以通过happens-before关系向程序员提供跨线程的内存可见性保证（如果A线程的写操作a与B线程的读操作b之间存在happens-before关系，尽管a操作和b操作在不同的线程中执行，但JMM向程序员保证a操作将对b操作可见）。具体的定义为：
+happens-before的概念最初由Leslie Lamport在其一篇影响深远的论文（《Time，Clocks and the Ordering of Events in a Distributed System》）中提出，有兴趣的可以google一下。JSR-133使用happens-before的概念来指定两个操作之间的执行顺序。由于这两个操作可以在一个线程之内，也可以是在不同线程之间。因此，JMM可以通过happens-before关系向程序员提供跨线程的内存可见性保证（**如果A线程的写操作a与B线程的读操作b之间存在happens-before关系，尽管a操作和b操作在不同的线程中执行，但JMM向程序员保证a操作将对b操作可见**）。具体的定义为：
 
 1）如果一个操作happens-before另一个操作，那么第一个操作的执行结果将对第二个操作可见，而且第一个操作的执行顺序排在第二个操作之前。
 
@@ -477,8 +493,7 @@ JMM是语言级的内存模型，在我的理解中JMM处于中间层，包含�
 
 
 
-
-#### 进程和线程
+#### 进程和线程的区别
 
 一个 Java 程序的运行是 main 线程和多个其他线程同时运行。
 
@@ -524,14 +539,14 @@ JMM是语言级的内存模型，在我的理解中JMM处于中间层，包含�
 
 ###### 3.堆和方法区
 
-堆和方法区是所有线程共享的资源，其中堆是进程中最大的一块内存，主要用于存放新创建的对象 (所有对象都在这里分配内存)，方法区主要用于存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。
+堆和方法区是**所有线程共享的资源**，其中堆是**进程中最大的一块内存**，主要用于**存放新创建的对象** (所有对象都在这里分配内存)，方法区主要用于存放**已被加载的类信息、常量、静态变量、即时编译器编译后的代码等数据**。
 
 
 ###### 4.多进程和多线程区别
 
-多进程：操作系统中同时运行的多个程序
+多进程：操作系统中同时运行的**多个程序**
 
-多线程：在同一个进程中同时运行的多个任务
+多线程：在同一个进程中同时运行的**多个任务**
 
 举个例子，多线程下载软件，可以同时运行多个线程，但是通过程序运行的结果发现，每一次结果都不一致。 因为多线程存在一个特性：**随机性**。造成的原因：CPU在瞬间不断切换去处理各个线程而导致的，可以理解成多个线程在抢CPU资源。
 
@@ -551,19 +566,19 @@ Java支持多线程，当Java程序执行main方法的时候，就是在执行�
 
 
 
-#### 线程概念
+#### 线程
 
 ##### 1.创建线程的四种方式
 
 创建线程的四种方式
 
-1. 继承Thread类（缺点：单继承）
+1. 继承Thread类（**缺点：单继承**）
 
     - 定义一个Thread类的子类，重写run方法，将相关逻辑实现，run()方法就是线程要执行的业务逻辑方法
 
     - 创建自定义的线程子类对象
 
-    - 调用子类实例的star()方法来启动线程
+    - 调用子类实例的start()方法来启动线程
 
         ```Java
         public class MyThread extends Thread {
@@ -587,10 +602,10 @@ Java支持多线程，当Java程序执行main方法的时候，就是在执行�
         Thread-0 run()方法正在执行...
         ```
 
-2. 实现Runnable接口（用的最多）
+2. 实现Runnable接口（**用的最多**）
 
-    - 定义Runnable接口实现类MyRunnable，并重写run()方法
-    - 创建MyRunnable实例myRunnable，以myRunnable作为target创建Thead对象，**该Thread对象才是真正的线程对象**
+    - 定义Runnable接口实现类MyRunnable，并**重写run()方法**
+    - 创建MyRunnable实例myRunnable，以myRunnable作为target创建Thread对象，**该Thread对象才是真正的线程对象**
     - 调用线程对象的start()方法
 
     ```Java
@@ -605,7 +620,7 @@ Java支持多线程，当Java程序执行main方法的时候，就是在执行�
     
         public static void main(String[] args) {
             MyRunnable myRunnable = new MyRunnable();
-            Thread thread = new Thread(myRunnable);
+            Thread thread = new Thread(myRunnable); //注意此处需要使用线程构造器初始化一个runnable
             thread.start();
             System.out.println(Thread.currentThread().getName() + " main()方法执行完成");
         }
@@ -705,17 +720,17 @@ Java 线程在运行的生命周期中的指定时刻只可能处于下面 6 种
 
 ​		由上图可以看出：线程创建之后它将处于 **NEW（新建）** 状态，调用 `start()` 方法后开始运行，线程这时候处于 **READY（可运行）** 状态。可运行状态的线程获得了 CPU 时间片（timeslice）后就处于 **RUNNING（运行）** 状态。（操作系统隐藏 Java 虚拟机（JVM）中的 RUNNABLE 和 RUNNING 状态，它只能看到 RUNNABLE 状态，所以 Java 系统一般将这两个状态统称为 **RUNNABLE（运行中）** 状态 ）
 
-​		当线程执行 **wait()**方法之后，线程进入 **WAITING（等待）**状态。进入等待状态的线程需要依靠其他线程的通知才能够返回到运行状态，而 TIME_WAITING(超时等待) 状态相当于在等待状态的基础上增加了超时限制，比如通过 sleep（long millis）方法或 wait（long millis）方法可以将 Java 线程置于 TIMED WAITING 状态。当超时时间到达后 Java 线程将会返回到 RUNNABLE 状态。当线程调用同步方法时，在没有获取到锁的情况下，线程将会进入到 BLOCKED（阻塞） 状态。线程在执行 Runnable 的run()方法之后将会进入到 TERMINATED（终止） 状态。
+​		当线程执行 **wait()**方法之后，线程进入 **WAITING（等待）**状态。进入等待状态的线程需要**依靠其他线程的通知**才能够返回到运行状态，而 **TIME_WAITING(超时等待)** 状态相当于**在等待状态的基础上增加了超时限制**，比如通过 **sleep（long millis）方法或 wait（long millis）**方法可以将 Java 线程置于 TIMED WAITING 状态。当超时时间到达后 Java 线程将**会返回到 RUNNABLE 状态**。**当线程调用同步方法时，在没有获取到锁的情况下，线程将会进入到 BLOCKED（阻塞） 状态。**线程在执行 Runnable 的run()方法之后**将会进入到 TERMINATED（终止） 状态**。
 
 ##### 3.线程状态的基本操作
 
-除了新建一个线程外，线程在生命周期内还有需要进行一些基本操作，而这些操作会成为线程间一种通信方式，比如使用中断（interrupted）方式通知实现线程间的交互等等，下面就将具体说说这些操作。
+除了新建一个线程外，线程在生命周期内还有需要进行一些基本操作，而这些操作会成为线程间一种通信方式，比如使用中断（interrupted）方式**通知实现线程间的交互**等等，下面就将具体说说这些操作。
 
 ###### interrupted
 
-中断可以理解为线程的一个标志位，它表示了一个运行中的线程是否被其他线程进行了中断操作。中断好比其他线程对该线程打了一个招呼。其他线程可以调用该线程的interrupt()方法对其进行中断操作，同时该线程可以调用
-isInterrupted()来感知其他线程对其自身的中断操作，从而做出响应。另外，同样可以调用Thread的静态方法
-interrupted()对当前线程进行中断操作，该方法会清除中断标志位。**需要注意的是，当抛出InterruptedException时候，会清除中断标志位，也就是说在调用isInterrupted会返回false**。
+中断可以理解为**线程的一个标志位**，它表示了一个运行中的线程**是否被其他线程进行了中断操作**。中断好比其他线程对该线程打了一个招呼。其他线程**可以调用该线程的interrupt()方法对其进行中断操作**，同时该线程可以调用
+isInterrupted()来感知其他线程对其自身的中断操作，从而做出响应。另外，同样可以**调用Thread的静态方法**
+**interrupted()对当前线程进行中断操作**，该方法会清除中断标志位。需要注意的是，当抛出InterruptedException时候，会**清除中断标志位**，也就是说在调用isInterrupted会**返回false**。
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310175903926.png" alt="image-20200310175903926" style="zoom:50%;" />
 
 ```Java
@@ -892,7 +907,7 @@ main 函数所在的线程就是一个用户线程啊，main 函数启动的同�
 - setDaemon(true)必须在start()方法前执行，否则会抛出 IllegalThreadStateException 异常
 - 在守护线程中产生的新线程也是守护线程
 - 不是所有的任务都可以分配给守护线程来执行，比如读写操作或者计算逻辑
-- 守护 (Daemon) 线程中不能依靠 finally 块的内容来确保执行关闭或清理资源的逻辑。因为我们上面也说过了一旦所有用户线程都结束运行，守护线程会随 JVM 一起结束工作，所以守护 (Daemon) 线程中的 finally 语句块可能无法被执行。
+- 守护 (Daemon) 线程中**不能依靠 finally 块的内容来确保执行关闭或清理资源的逻辑**。因为我们上面也说过了一旦所有用户线程都结束运行，守护线程会随 JVM 一起结束工作，所以守护 (Daemon) 线程中的 finally 语句块**可能无法被执行**。
 
 ###### 守护线程详解
 
@@ -933,7 +948,7 @@ finally block
 i am alive
 ```
 
-上面的例子中daemodThread run()方法中是一个while死循环，会一直打印,但是当main线程结束后daemonThread就会退出所以不会出现死循环的情况。main线程先睡眠800ms保证daemonThread能够拥有一次时间片的机会，也就是说可以正常执行一次打印“i am alive”操作和一次finally块中"finally block"操作。紧接着main 线程结束后，daemonThread退出，这个时候只打印了"i am alive"并没有打印finnal块中的。因此，这里需要注意的是**守护线程在退出的时候并不会执行finnaly块中的代码，所以守护 (Daemon) 线程中不能依靠 finally 块的内容来确保执行关闭或清理资源的逻辑**
+上面的例子中daemodThread run()方法中是一个while死循环，会一直打印,但是当main线程结束后daemonThread就会退出所以不会出现死循环的情况。**main线程先睡眠800ms保证daemonThread能够拥有一次时间片的机会**，也就是说可以正常执行一次打印“i am alive”操作和一次finally块中"finally block"操作。紧接着main 线程结束后，daemonThread退出，**这个时候只打印了"i am alive"并没有打印finally块中的**。因此，这里需要注意的是**守护线程在退出的时候并不会执行finnaly块中的代码，所以守护 (Daemon) 线程中不能依靠 finally 块的内容来确保执行关闭或清理资源的逻辑**
 
 线程可以通过setDaemon(true)的方法将线程设置为守护线程。并且需要注意的是设置守护线程要先于start()方法，否则会报
 
@@ -1106,7 +1121,7 @@ ThreadPoolExecutor(int corePoolSize,
     - CallerRunsPolicy：只用调用者所在的线程来执行任务；
     - DiscardPolicy：不处理直接丢弃掉任务；
     - DiscardOldestPolicy：丢弃掉阻塞队列中存放时间最久的任务，执行当前任务
-        
+      
 
 **线程池执行逻辑**
 
@@ -1179,8 +1194,7 @@ execute方法执行逻辑有这样几种情况：
 - shutdownNow首先将线程池的状态设置为**STOP**，然后尝试停止所有的**正在执行和未执行任务**的线程，并返回等待执行任务的列表；
 - shutdown只是将线程池的状态设置为**SHUTDOWN**状态，然后中断所有**没有正在执行任务**的线程
 
-可以看出shutdown方法会将正在执行的任务继续执行完，而shutdownNow会直接中断正在执行的任务。调用了这两个方法的任意一个，isShutdown方法都会返回true，当所有的线程都关闭成功，才表示线程池成功关闭，这时调用isTerminated方法才会返回true。
-
+可以看出shutdown方法**会将正在执行的任务继续执行完**，而shutdownNow会**直接中断正在执行的任务**。调用了这两个方法的任意一个，**isShutdown方法都会返回true**，当所有的线程都关闭成功，才表示线程池成功关闭，这时调用isTerminated方法才会返回true。
 
 
 
@@ -1202,27 +1216,26 @@ execute方法执行逻辑有这样几种情况：
 
 **作用**：用来存储等待执行的任务
 
-**线程的公平访问队列**：指阻塞的线程可以按照阻塞的先后顺序访问队列，即先阻塞先访问线程。为了保证公平性，通常会降低吞吐量
+**线程的公平访问队列**：指阻塞的线程可以按照阻塞的**先后顺序访问队列**，即先阻塞先访问线程。为了保证公平性，通常会降低吞吐量
 
 **常见阻塞队列**
 
-ArrayBlockingQueue：一个用数组实现的有界阻塞队列，按照先入先出(FIFO)的原则对元素进行排序。
-不保证线程公平访问队列，使用较少
+ArrayBlockingQueue：一个用数组实现的**有界阻塞队列**，按照**先入先出(FIFO)**的原则对元素进行排序。**不保证**线程公平访问队列，**使用较少**
 
-PriorityBlockingQueue：支持优先级的无界阻塞队列，使用较少
+PriorityBlockingQueue：支持**优先级的无界阻塞队列**，使用较少
 
-LinkedBlockingQueue：一个用链表实现的有界阻塞队列，队列默认和最长长度为Integer.MAX_VALUE。
-队列按照先入先出的原则对元素进行排序，使用较多
+LinkedBlockingQueue：一个用**链表实现的有界阻塞队列**，队列默认和最长长度为**Integer.MAX_VALUE**。
+队列按照先入先出的原则对元素进行排序，**使用较多**
 
-- 吞吐量通常要高于 ArrayBlockingQueue
-- Executors.newFixedThreadPool() 使用了这个队列
+- 吞吐量通常要**高于** ArrayBlockingQueue
+- Executors.**newFixedThreadPool()** 使用了这个队列
 
-SynchronousQueue：不储存元素(无容量)的阻塞队列，每个put操作必须等待一个take操作，
-否则不能继续添加元素。支持公平访问队列，常用于生产者，消费者模型，吞吐量较高，使用较多
+SynchronousQueue：**不储存元素(无容量)的阻塞队列**，每个put操作必须等待一个take操作，
+否则不能继续添加元素。支持**公平访问队列**，常用于**生产者，消费者模型**，吞吐量较高，使用较多
 
-- 每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于阻塞状态
-- 吞吐量通常要高于 LinkedBlockingQueue
-- Executors.newCachedThreadPool使用了这个队列
+- 每个插入操作必须等到另一个线程调用**移除操作**，否则插入操作一直处于**阻塞状态**
+- 吞吐量通常要**高于** LinkedBlockingQueue
+- Executors.**newCachedThreadPool**使用了这个队列
 
 
 
@@ -1251,11 +1264,13 @@ DiscardPolicy：舍弃策略，不处理，直接丢弃
 3. 任务的执行时间：长，中和短。
 4. 任务的依赖性：是否依赖其他系统资源，如数据库连接。
 
-​		任务性质不同的任务可以用不同规模的线程池分开处理。**CPU密集型任务配置尽可能少的线程数量**，如配置CPU个数+1的线程数的线程池。**IO密集型任务则由于需要等待IO操作**，线程并不是一直在执行任务，则配置尽可能多的线程，如配置两倍CPU个数+1。混合型的任务，如果可以拆分，则将其拆分成一个CPU密集型任务和一个IO密集型任务，只要这两个任务执行的时间相差不是太大，那么分解后执行的吞吐率要高于串行执行的吞吐率，如果这两个任务执行时间相差太大，则没必要进行分解。我们可以通过`Runtime.getRuntime().availableProcessors()`方法获得当前设备的CPU个数。
+​		任务性质不同的任务可以用不同规模的线程池分开处理。**CPU密集型任务配置尽可能少的线程数量**，如配置CPU个数+1的线程数的线程池。**IO密集型任务则由于需要等待IO操作**，线程并不是一直在执行任务，则配置尽可能多的线程，如配置两倍CPU个数+1。混合型的任务，如果可以拆分，则将其拆分成一个CPU密集型任务和一个IO密集型任务，只要这两个任务执行的时间相差不是太大，那么分解后执行的吞吐率要高于串行执行的吞吐率，如果这两个任务执行时间相差太大，则没必要进行分解。
 
-​		优先级不同的任务可以使用优先级队列PriorityBlockingQueue来处理。它可以让优先级高的任务先得到执行，需要注意的是如果一直有优先级高的任务提交到队列里，那么优先级低的任务可能永远不能执行。执行时间不同的任务可以交给不同规模的线程池来处理，或者也可以使用优先级队列，让执行时间短的任务先执行。
+​		我们可以通过`Runtime.getRuntime().availableProcessors()`方法获得当前设备的CPU个数。
 
-​		依赖数据库连接池的任务，因为线程提交SQL后需要等待数据库返回结果，如果等待的时间越长CPU空闲时间就越长，那么线程数应该设置越大，这样才能更好的利用CPU。并且，阻塞队列**最好是使用有界队列**，如果采用无界队列的话，一旦任务积压在阻塞队列中的话就会占用过多的内存资源，甚至会使得系统崩溃。
+​		优先级不同的任务可以使用优先级队列PriorityBlockingQueue来处理。它可以**让优先级高的任务先得到执行**，需要注意的是如果一直有优先级高的任务提交到队列里，那么优先级低的任务可能永远不能执行。执行时间不同的任务可以交给不同规模的线程池来处理，或者也可以使用优先级队列，让执行时间短的任务先执行。
+
+​		依赖数据库连接池的任务，因为线程提交SQL后需要等待数据库返回结果，如果等待的时间越长CPU空闲时间就越长，那么线程数应该设置越大，这样才能更好的利用CPU。并且，阻塞队列**最好是使用有界队列**，如果采用无界队列的话，一旦任务积压在阻塞队列中的话就会**占用过多的内存资源**，甚至会使得系统崩溃。
 
 当然具体合理线程池值大小，需要结合系统实际情况，在大量的尝试下比较才能得出，以上只是前人总结的规律。
 
@@ -1294,14 +1309,14 @@ Java里面线程池的顶级接口是Executor，Executor并不是一个线程
 
 Java通过**Executors工厂类提供四种线程池**，分别为：
 
-1. **newCachedThreadPool** ：创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，否则新建线程。（线程最大并发数不可控制）
-2. **newFixedThreadPool**：创建一个固定大小的线程池，可控制线程最大并发数，超出的线程会在队列中等待。
-3. **newScheduledThreadPool** ： 创建一个定时线程池，支持定时及周期性任务执行。
-4. **newSingleThreadExecutor** ：创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
+1. **newCachedThreadPool** ：创建一个**可缓存线程池**，如果线程池长度超过处理需要，**可灵活回收空闲线程**，若无可回收，否则新建线程。（线程最大并发数**不可控制**）
+2. **newFixedThreadPool**：创建一个**固定大小的线程池**，可控制线程**最大并发数**，超出的线程会在队列中等待。
+3. **newScheduledThreadPool** ： 创建一个**定时线程池**，支持定时及周期性任务执行。
+4. **newSingleThreadExecutor** ：创建一个**单线程化的线程池**，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
 
 **我们先创建一个统一的线程任务，方便测试四种线程池**
 
-```
+```Java
 public class MyRunnable implements Runnable {
 
     @Override
@@ -1314,7 +1329,7 @@ public class MyRunnable implements Runnable {
 
 ###### newSingleThreadExecutor
 
-```
+```Java
 public class SingleThreadExecutorTest {
 
     public static void main(String[] args) {
@@ -1333,7 +1348,7 @@ public class SingleThreadExecutorTest {
 
 输出结果
 
-```
+```Java
 线程任务开始执行
 pool-1-thread-1 is running...
 pool-1-thread-1 is running...
@@ -1344,7 +1359,7 @@ pool-1-thread-1 is running...
 
 底层实现
 
-```
+```Java
 public static ExecutorService newSingleThreadExecutor() {
     return new FinalizableDelegatedExecutorService
         (new ThreadPoolExecutor(1, 1,
@@ -1365,7 +1380,7 @@ public static ExecutorService newSingleThreadExecutor() {
 
 ###### newFixedThreadPool
 
-```
+```Java
 public class FixedThreadPoolTest {
 
     public static void main(String[] args) {
@@ -1384,7 +1399,7 @@ public class FixedThreadPoolTest {
 
 输出结果
 
-```
+```Java
 线程任务开始执行
 pool-1-thread-1 is running...
 pool-1-thread-1 is running...
@@ -1395,7 +1410,7 @@ pool-1-thread-2 is running...
 
 底层实现
 
-```
+```Java
 public static ExecutorService newFixedThreadPool(int nThreads) {
     return new ThreadPoolExecutor(nThreads, nThreads,
                                   0L, TimeUnit.MILLISECONDS,
@@ -1418,7 +1433,7 @@ public static ExecutorService newFixedThreadPool(int nThreads) {
 
 ###### newCachedThreadPool
 
-```
+```Java
 public class CachedThreadPoolTest {
 
     public static void main(String[] args) {
@@ -1437,7 +1452,7 @@ public class CachedThreadPoolTest {
 
 输出结果
 
-```
+```Java
 线程任务开始执行
 pool-1-thread-1 is running...
 pool-1-thread-4 is running...
@@ -1448,7 +1463,7 @@ pool-1-thread-3 is running...
 
 底层实现
 
-```
+```Java
 public static ExecutorService newCachedThreadPool() {
     return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
                                   60L, TimeUnit.SECONDS,
@@ -1475,7 +1490,7 @@ CachedThreadPool 使用的队列是 **SynchronousQueue**，这个队列的作用
 
 ###### newScheduledThreadPool
 
-```
+```Java
 public class ScheduledThreadPoolTest {
 
     public static void main(String[] args) {
@@ -1494,7 +1509,7 @@ public class ScheduledThreadPoolTest {
 
 输出结果
 
-```
+```Java
 线程任务开始执行
 
 pool-1-thread-1 is running...
@@ -1512,7 +1527,7 @@ pool-1-thread-3 is running...
 
 底层实现
 
-```
+```Java
 public ScheduledThreadPoolExecutor(int corePoolSize) {
     super(corePoolSize, Integer.MAX_VALUE, 0, NANOSECONDS,
           new DelayedWorkQueue());
@@ -1540,19 +1555,19 @@ ScheduledThreadPoolExecutor 的执行流程如下：
 Executors 各个方法的弊端：
 
 1. newFixedThreadPool 和 newSingleThreadExecutor:
-    主要问题是堆积的请求处理队列可能会耗费非常大的内存，甚至 OOM。
+    主要问题是**堆积的请求处理队列可能会耗费非常大的内存**，甚至 OOM。
 2. newCachedThreadPool 和 newScheduledThreadPool:
-    主要问题是线程数最大数是 Integer.MAX_VALUE，可能会创建数量非常多的线程，甚至 OOM。
+    主要问题是**线程数最大数是 Integer.MAX_VALUE**，可能会创建数量非常多的线程，甚至 OOM。
 
 ThreaPoolExecutor
 
-1. 创建线程池方式只有一种，就是走它的构造函数，参数自己指定
+1. 创建线程池方式只有一种，就是**走它的构造函数**，参数自己指定
 
 
 
 ##### 3.线程池之ScheduledThreadPoolExecutor详解
 
-- ScheduledThreadPoolExecutor可以用来在给定延时后执行异步任务或者周期性执行任务，相对于任务调度的Timer来说，其功能更加强大，Timer只能使用一个后台线程执行任务，而ScheduledThreadPoolExecutor则可以通过构造函数来指定后台线程的个数。
+- ScheduledThreadPoolExecutor可以用来在**给定延时后执行异步任务或者周期性执行任务**，相对于任务调度的Timer来说，其功能更加强大，Timer只能使用一个后台线程执行任务，而ScheduledThreadPoolExecutor则可以通过构造函数来指定后台线程的个数。
 
 1. ScheduledThreadPoolExecutor继承了`ThreadPoolExecutor`，也就是说ScheduledThreadPoolExecutor拥有execute()和submit()提交异步任务的基础功能。ScheduledThreadPoolExecutor类实现了`ScheduledExecutorService`，该接口定义了ScheduledThreadPoolExecutor能够延时执行任务和周期执行任务的功能；
 2. ScheduledThreadPoolExecutor也两个重要的内部类：**DelayedWorkQueue**和**ScheduledFutureTask**。可以看出DelayedWorkQueue实现了BlockingQueue接口，也就是一个阻塞队列，ScheduledFutureTask则是继承了FutureTask类，也表示该类用于返回异步任务的结果。这两个关键类，下面会具体详细来看。
@@ -1561,7 +1576,7 @@ ThreaPoolExecutor
 
 ScheduledThreadPoolExecutor有如下几个构造方法：
 
-```
+```Java
 public ScheduledThreadPoolExecutor(int corePoolSize) {
     super(corePoolSize, Integer.MAX_VALUE, 0, NANOSECONDS,
           new DelayedWorkQueue());
@@ -1587,13 +1602,13 @@ public ScheduledThreadPoolExecutor(int corePoolSize,
 }
 ```
 
-可以看出由于ScheduledThreadPoolExecutor继承了ThreadPoolExecutor，它的构造方法实际上是调用了ThreadPoolExecutor，理解ThreadPoolExecutor构造方法的几个参数的意义后，理解这就很容易了。可以看出，ScheduledThreadPoolExecutor的核心线程池的线程个数为**指定的corePoolSize**，当核心线程池的线程个数达到corePoolSize后，就会将任务提交给有界阻塞队列**DelayedWorkQueue**，对DelayedWorkQueue在下面进行详细介绍，线程池允许最大的线程个数为Integer.MAX_VALUE，也就是说理论上这是一个大小无界的线程池。
+​		可以看出由于ScheduledThreadPoolExecutor继承了ThreadPoolExecutor，它的构造方法实际上是调用了ThreadPoolExecutor，理解ThreadPoolExecutor构造方法的几个参数的意义后，理解这就很容易了。可以看出，ScheduledThreadPoolExecutor的核心线程池的线程个数为**指定的corePoolSize**，当核心线程池的线程个数达到corePoolSize后，就会将任务提交给有界阻塞队列**DelayedWorkQueue**，对DelayedWorkQueue在下面进行详细介绍，线程池允许最大的线程个数为Integer.MAX_VALUE，也就是说理论上这是一个大小无界的线程池。
 
 ###### 特有方法
 
 ScheduledThreadPoolExecutor实现了`ScheduledExecutorService`接口，该接口定义了**可延时执行异步任务和可周期执行异步任务的特有功能**，相应的方法分别为：
 
-```
+```Java
 public ScheduledFuture<?> schedule(Runnable command,
                                        long delay, TimeUnit unit);
 public <V> ScheduledFuture<V> schedule(Callable<V> callable,
@@ -1612,7 +1627,7 @@ public ScheduledFuture<?> scheduleWithFixedDelay(Runnable command,
 
 ScheduledThreadPoolExecutor最大的特色是能够**周期性执行异步任务**，当调用`schedule,scheduleAtFixedRate和scheduleWithFixedDelay方法`时，实际上是将提交的任务转换成的**ScheduledFutureTask**类，从源码就可以看出。以schedule方法为例：
 
-```
+```Java
 public ScheduledFuture<?> schedule(Runnable command,
                                    long delay,
                                    TimeUnit unit) {
@@ -1628,7 +1643,7 @@ public ScheduledFuture<?> schedule(Runnable command,
 
 可以看出，通过`decorateTask`会将传入的Runnable转换成`ScheduledFutureTask`类。**线程池最大作用是将任务和线程进行解耦**，线程主要是任务的执行者，而任务也就是现在所说的**ScheduledFutureTask**。紧接着，会想到任何线程执行任务，总会调用`run()`方法。为了保证ScheduledThreadPoolExecutor能够延时执行任务以及能够周期性执行任务，ScheduledFutureTask重写了run方法：
 
-```
+```Java
 public void run() {
     boolean periodic = isPeriodic();
     if (!canRunInCurrentRunState(periodic))
@@ -1660,7 +1675,7 @@ DelayedWorkQueue是一个优先级队列，它可以保证每次出队的任务�
 
 > DelayedWorkQueue的数据结构
 
-```
+```Java
 private static final int INITIAL_CAPACITY = 16;
 private RunnableScheduledFuture<?>[] queue =
     new RunnableScheduledFuture<?>[INITIAL_CAPACITY];
@@ -1676,7 +1691,7 @@ private int size = 0;
 
 现在我们对ScheduledThreadPoolExecutor的两个内部类ScheduledFutueTask和DelayedWorkQueue进行了了解，实际上这也是线程池工作流程中最重要的两个关键因素：**任务以及阻塞队列**。现在我们来看下ScheduledThreadPoolExecutor提交一个任务后，整体的执行过程。以ScheduledThreadPoolExecutor的schedule方法为例，具体源码为：
 
-```
+```Java
 public ScheduledFuture<?> schedule(Runnable command,
                                    long delay,
                                    TimeUnit unit) {
@@ -1694,7 +1709,7 @@ public ScheduledFuture<?> schedule(Runnable command,
 
 方法很容易理解，为了满足ScheduledThreadPoolExecutor能够延时执行任务和能周期执行任务的特性，会先将实现Runnable接口的类转换成ScheduledFutureTask。然后会调用`delayedExecute`方法进行执行任务，这个方法也是关键方法，来看下源码：
 
-```
+```Java
 private void delayedExecute(RunnableScheduledFuture<?> task) {
     if (isShutdown())
 		
@@ -1715,7 +1730,7 @@ private void delayedExecute(RunnableScheduledFuture<?> task) {
 
 `delayedExecute`方法的主要逻辑请看注释，可以看出该方法的重要逻辑会是在`ensurePrestart()`方法中，它的源码为：
 
-```
+```Java
 void ensurePrestart() {
     int wc = workerCountOf(ctl.get());
     if (wc < corePoolSize)
@@ -1751,7 +1766,7 @@ void ensurePrestart() {
 
 在Executors框架体系中，**FutureTask用来表示可获取结果的异步任务**。FutureTask实现了Future接口，FutureTask提供了**启动和取消异步任务**，查询异步任务是否计算结束以及获取最终的异步任务的结果的一些常用的方法。通过`get()`方法来获取异步任务的结果，但是**会阻塞当前线程直至异步任务执行结束**。一旦任务执行结束，任务不能重新启动或取消，除非调用`runAndReset()`方法。在FutureTask的源码中为其定义了这些状态：
 
-```
+```Java
 private static final int NEW          = 0;
 private static final int COMPLETING   = 1;
 private static final int NORMAL       = 2;
@@ -1804,7 +1819,7 @@ FutureTask除了实现Future接口外，还**实现了Runnable接口**。因此�
 
 **对象锁（monitor）机制**
 
-使用synchronized进行同步，其关键就是必须要对对象的监视器monitor进行获取，当线程获取monitor后才能继续往下执行，否则就只能等待。而这个获取的过程是互斥的，即同一时刻只有一个线程能够获取到monitor。上面的demo中在执行完同步代码块之后紧接着再会去执行一个静态同步方法，而这个方法锁的对象依然就这个类对象，那么这个正在执行的线程还需要获取该锁吗？答案是不必的，从上图中就可以看出来，执行静态同步方法的时候就只有一条monitorexit指令，并没有monitorenter获取锁的指令。这就是锁的重入性，即在同一锁程中，线程不需要再次获取同一把锁。synchronized先天具有重入性。每个对象拥有一个计数器，当线程获取该对象锁后，计数器就会加一，释放锁后就会将计数器减一。
+使用synchronized进行同步，其关键就是必须要**对对象的监视器monitor进行获取**，当线程获取monitor后才能继续往下执行，否则就只能等待。而这个**获取的过程是互斥**的，即同一时刻只有一个线程能够获取到monitor。上面的demo中在执行完同步代码块之后紧接着再会去执行一个静态同步方法，而这个方法锁的对象依然就这个类对象，那么这个**正在执行的线程还需要获取该锁吗？答案是不必的**，从上图中就可以看出来，执行静态同步方法的时候就只有一条monitorexit指令，并没有monitorenter获取锁的指令。这就是**锁的重入性**，即在同一锁程中，线程不需要再次获取同一把锁。**synchronized先天具有重入性**。每个对象拥有一个计数器，当线程获取该对象锁后，计数器就会加一，释放锁后就会将计数器减一。
 
 
 
@@ -1815,16 +1830,16 @@ FutureTask除了实现Future接口外，还**实现了Runnable接口**。因此�
 
 volatile是怎样实现的？比如一个很简单的Java代码：
 
-```
+```Java
 instance = new Instancce() //instance是volatile变量
 ```
 
-在生成汇编代码时会在volatile修饰的共享变量进行写操作的时候会多出Lock前缀的指令（具体的大家可以使用一些工具去看一下，这里我就只把结果说出来）。我们想这个Lock指令肯定有神奇的地方，那么Lock前缀的指令在多核处理器下会发现什么事情了？主要有这两个方面的影响：
+在生成汇编代码时会在volatile修饰的共享变量进行写操作的时候会多出**Lock前缀的指令**（具体的大家可以使用一些工具去看一下，这里我就只把结果说出来）。我们想这个Lock指令肯定有神奇的地方，那么Lock前缀的指令在多核处理器下会发现什么事情了？主要有这两个方面的影响：
 
-- 将当前处理器缓存行的数据写回系统内存；
-- 这个写回内存的操作会使得其他CPU里缓存了该内存地址的数据无效
+- 将当前处理器**缓存行的数据写回系统内存**；
+- 这个写回内存的操作会使得其他CPU里**缓存了该内存地址的数据无效.**
 
-为了提高处理速度，处理器不直接和内存进行通信，而是先将系统内存的数据读到内部缓存（L1，L2或其他）后再进行操作，但操作完不知道何时会写到内存。如果对声明了volatile的变量进行写操作，JVM就会向处理器发送一条Lock前缀的指令，将这个变量所在缓存行的数据写回到系统内存。但是，就算写回到内存，如果其他处理器缓存的值还是旧的，再执行计算操作就会有问题。所以，在多处理器下，为了保证各个处理器的缓存是一致的，就会实现缓存一致性协议，每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置成无效状态，当处理器对这个数据进行修改操作的时候，会重新从系统内存中把数据读到处理器缓存里。因此，经过分析我们可以得出如下结论：
+​       为了提高处理速度，处理器不直接和内存进行通信，而是先将系统内存的数据**读到内部缓存**（L1，L2或其他）后再进行操作，但操作完**不知道何时会写到内存**。如果对声明了volatile的变量进行写操作，JVM就会向处理器发送一条**Lock前缀的指令**，将这个变量所在缓存行的**数据写回到系统内存**。但是，就算写回到内存，如果其他处理器缓存的值还是旧的，再执行计算操作就会有问题。所以，在多处理器下，为了保证各个处理器的缓存是一致的，就会实现**缓存一致性协议**，每个处理器通过**嗅探在总线上传播的数据来检查自己缓存的值是不是过期了**，当处理器发现自己缓存行**对应的内存地址被修改**，就会将当前处理器的**缓存行设置成无效状态**，当处理器对这个数据进行修改操作的时候，会重新**从系统内存中把数据读到处理器缓存里**。因此，经过分析我们可以得出如下结论：
 
 - Lock前缀的指令会引起处理器缓存写回内存；
 - 一个处理器的缓存回写到内存会导致其他处理器的缓存失效；
@@ -1833,15 +1848,16 @@ instance = new Instancce() //instance是volatile变量
 这样针对volatile变量通过这样的机制就使得每个线程都能获得该变量的最新值。
 
 
+
 ##### Java并发关键字-final
 
 在Java中变量，可以分为成员变量以及方法局部变量。因此也是按照这种方式依次来说，以避免漏掉任何一个死角。
 
 ###### **final成员变量**
 
-通常每个类中的成员变量可以分为类变量（static修饰的变量）以及实例变量。针对这两种类型的变量赋初值的时机是不同的，类变量可以在声明变量的时候直接赋初值或者在静态代码块中给类变量赋初值。而实例变量可以在声明变量的时候给实例变量赋初值，在非静态初始化块中以及构造器中赋初值。类变量有两个时机赋初值，而实例变量则可以有三个时机赋初值。当final变量未初始化时系统不会进行隐式初始化，会出现报错。
+通常每个类中的成员变量可以分为**类变量**（static修饰的变量）以及**实例变量**。针对这两种类型的变量赋初值的时机是不同的，类变量可以在声明变量的时候直接赋初值或者在静态代码块中给类变量赋初值。而实例变量可以在声明变量的时候给实例变量赋初值，在非静态初始化块中以及构造器中赋初值。类变量有两个时机赋初值，而实例变量则可以有三个时机赋初值。当final变量未初始化时系统**不会进行隐式初始化**，会出现报错。
 
 ###### final局部变量
 
-final局部变量由程序员进行显式初始化，如果final局部变量已经进行了初始化则后面就不能再次进行更改，如果final变量未进行初始化，可以进行赋值，**当且仅有一次**赋值，一旦赋值之后再次赋值就会出错。
+final局部变量由程序员**进行显式初始化**，如果final局部变量已经进行了初始化则后面**就不能再次进行更改**，如果final变量**未进行初始化，可以进行赋值**，**当且仅有一次**赋值，一旦赋值之后**再次赋值就会出错**。
 
