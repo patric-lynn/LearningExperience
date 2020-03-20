@@ -10,17 +10,22 @@
 - **批次**：为了提高效率， 消息会分批次写入 Kafka，批次就代指的是**一组消息**。
 - **主题**：消息的种类称为**主题（Topic）**,可以说一个主题代表了一类消息。相当于是对消息进行分类。**主题就像是数据库中的表**。
 - **分区**：主题可以被分为**若干个分区**（partition），同一个主题中的**分区可以不在一个机器上**，有可能会部署在多个机器上，由此来**实现 kafka 的伸缩性**，单一主题中的分区有序，但是**无法保证主题中所有的分区有序**。
+- **段**：Segment 被译为段，将 Partition 进一步细分为若干个 segment，每个 segment 文件的大小相等。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320105637521.png" alt="image-20200320105637521" style="zoom:50%;" />
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320105637521.png" alt="image-20200320105637521" style="zoom:30%;" />
 
 - **生产者**： 向**主题发布消息的客户端应用程序**称为生产者（Producer），生产者用于持续不断的向某个主题发送消息。
 - **消费者**：**订阅主题消息的客户端程序称为消费者**（Consumer），消费者用于处理生产者产生的消息。
 - **消费者群组**：生产者与消费者的关系就如同餐厅中的厨师和顾客之间的关系一样，一个厨师对应多个顾客，也就是**一个生产者对应多个消费者**，消费者群组（Consumer Group）指的就是由**一个或多个消费者组成的群体**。
-    <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320105624144.png" alt="image-20200320105624144" style="zoom:50%;" />
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320133330411.png" alt="image-20200320133330411" style="zoom:40%;" />
 
 - **偏移量**：偏移量（Consumer Offset）是一种元数据，它是一个**不断递增的整数值**，用来记录消费者发生**重平衡时的位置**，以便用来恢复数据。
-- **broker**: 一个独立的 Kafka 服务器就被称为 broker，**broker 接收来自生产者的消息**，为消息设置**偏移量**，并提交消息到磁盘保存。
-- **broker 集群**：broker 是集群的组成部分，broker 集群由**一个或多个 broker 组成**，每个集群都有一个 broker 同时充当了集群控制器的角色（自动从集群的活跃成员中选举出来）。
+- **broker**: 一个独立的 Kafka 服务器就被称为 broker，**broker 接收来自生产者的消息**，为消息设置**偏移量**，并提交消息到**磁盘保存**。broker **为消费者提供服务**，对**读取分区的请求作出响应**，返回已经提交到磁盘上的消息。
+- **broker 集群**：broker 是集群的组成部分，broker 集群由**一个或多个 broker 组成**，每个集群都有一个 broker 同时充当了**集群控制器**的角色（自动从集群的**活跃成员中选举出来**）。每个集群中的成员都有可能充当 Leader，Leader 负责管理工作，包括将**分区分配给 broker 和监控 broker**。集群中，一个分区从属于一个 Leader，但是一个分区可以分配给多个 broker（非Leader），这时候会发生分区复制。这种复制的机制为分区提供了**消息冗余**，如果一个 broker 失效，那么其他活跃用户会**重新选举一个 Leader 接管**。
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320134314463.png" alt="image-20200320134314463" style="zoom:40%;" />
+
 - **副本**：Kafka 中消息的备份又叫做**副本（Replica）**，副本的数量是可以配置的，Kafka 定义了两类副本：领导者副本（Leader Replica） 和 追随者副本（Follower Replica），前者**对外提供服务**，后者只是**被动跟随**。
 - **重平衡**：Rebalance。消费者组内某个消费者实例**挂掉**后，其他消费者实例**自动重新分配订阅主题分区**的过程。Rebalance 是 Kafka 消费者端**实现高可用的重要手段**。
 
@@ -34,7 +39,7 @@
 - **容错性**： 允许集群中的节点失败，某个节点宕机，Kafka 集群能够正常工作。
 - **高并发**： 支持**数千个客户端同时读写**。
 
-**kafka高效原理**：Kafka 实现了**零拷贝原理**来快速移动数据，避免了内核之间的切换。Kafka 可以将数据记录分批发送，**从生产者到文件系统（Kafka 主题日志）到消费者**，可以**端到端的查看**这些批次的数据。批处理能够进行更有效的**数据压缩并减少 I/O 延迟**，Kafka 采取**顺序写入磁盘**的方式，避免了随机磁盘寻址的浪费。总结一下其实就是四个要点
+**kafka高效原理**：Kafka 实现了**零拷贝原理**来快速移动数据，避免了内核之间的切换。Kafka 可以将数据记录分批发送，**从生产者到文件系统（Kafka 主题日志）到消费者**，可以**端到端的查看**这些批次的数据。批处理能够进行更有效的**数据压缩并减少 I/O 延迟**，Kafka 采取**顺序写入磁盘**的方式，避免了随机磁盘寻址的浪费。总结一下其实就是四个要点：
 
 - **顺序读写**
 - **零拷贝**
@@ -63,9 +68,9 @@ Kafka 的消息队列一般分为两种模式：**点对点模式和发布订阅
 
 ###### 5.Kafka 系统架构
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320111105441.png" alt="image-20200320111105441" style="zoom:50%;" />
-
 ​		Kafka通过Zookeeper**管理集群配置**，**选举leader**，以及在Consumer Group发生变化时进行**rebalance**。Producer使用**push模式将消息发布到broker**，Consumer使用**pull模式从broker订阅并消费**消息。一个典型的 Kafka 集群中包含：
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320111105441.png" alt="image-20200320111105441" style="zoom:30%;" />
 
 - **若干Producer**（可以是web前端产生的**Page View**，或者是**服务器日志**，**系统CPU**、Memory等）
 - **若干broker**（Kafka支持**水平扩展**，一般broker**数量越多，集群吞吐率越高**）
@@ -82,4 +87,14 @@ Kafka 有四个核心API，它们分别是
 - **Streams API**，它允许应用程序作为**流处理器**，从一个或多个主题中**消费输入流并为其生成输出流**，有效的**将输入流转换为输出流**。
 - **Connector API**，它允许构建和运行将 Kafka 主题**连接到现有应用程序或数据系统**的可用生产者和消费者。例如，关系数据库的连接器可能会捕获对表的所有更改。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320112109908.png" alt="image-20200320112109908" style="zoom:50%;" />
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320112109908.png" alt="image-20200320112109908" style="zoom:30%;" />
+
+
+
+#### 2.kafka原理解析
+
+##### 1.Producer生产者
+
+在 Kafka 中，我们把**产生消息的那一方称为生产者**，比如我们经常回去淘宝购物，你打开淘宝的那一刻，你的登陆信息，登陆次数都会**作为消息传输到 Kafka 后台**，当你浏览购物的时候，你的浏览信息，你的搜索指数，你的购物爱好都会作为一个个消息传递给 Kafka 后台，然后淘宝会根据你的爱好做智能推荐，致使你的钱包从来都禁不住诱惑，那么这些生产者产生的消息是怎么传到 Kafka 应用程序的呢？发送过程是怎么样的呢？尽管消息的产生非常简单，但是消息的发送过程还是比较复杂的，如图
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvaW5jeHVhbi9Kb2luY3h1YW4uZ2l0aHViLmlvL21hc3Rlci9pbWFnZS9rYWZrYS1wcm9kdWNlci8wMS5wbmc.png" alt="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvaW5jeHVhbi9Kb2luY3h1YW4uZ2l0aHViLmlvL21hc3Rlci9pbWFnZS9rYWZrYS1wcm9kdWNlci8wMS5wbmc" style="zoom:45%;" />
+

@@ -572,141 +572,143 @@ Java支持多线程，当Java程序执行main方法的时候，就是在执行�
 
 创建线程的四种方式
 
-1. 继承Thread类（**缺点：单继承**）
+###### 1.继承Thread类（**缺点：单继承**）
 
-    - 定义一个Thread类的子类，重写run方法，将相关逻辑实现，run()方法就是线程要执行的业务逻辑方法
+- 定义一个Thread类的子类，重写run方法，将相关逻辑实现，run()方法就是线程要执行的业务逻辑方法
 
-    - 创建自定义的线程子类对象
+- 创建自定义的线程子类对象
 
-    - 调用子类实例的start()方法来启动线程
-
-        ```Java
-        public class MyThread extends Thread {
-        
-            @Override
-            public void run() {
-                System.out.println(Thread.currentThread().getName() + " run()方法正在执行...");
-            }
-        }
-        public class TheadTest {
-        
-            public static void main(String[] args) {
-                MyThread myThread = new MyThread(); 	
-                myThread.start();
-                System.out.println(Thread.currentThread().getName() + " main()方法执行结束");
-            }
-        }
-        
-        运行结果：
-        main main()方法执行结束
-        Thread-0 run()方法正在执行...
-        ```
-
-2. 实现Runnable接口（**用的最多**）
-
-    - 定义Runnable接口实现类MyRunnable，并**重写run()方法**
-    - 创建MyRunnable实例myRunnable，以myRunnable作为target创建Thread对象，**该Thread对象才是真正的线程对象**
-    - 调用线程对象的start()方法
+- 调用子类实例的start()方法来启动线程
 
     ```Java
-    public class MyRunnable implements Runnable {
+    public class MyThread extends Thread {
     
         @Override
         public void run() {
-            System.out.println(Thread.currentThread().getName() + " run()方法执行中...");
+            System.out.println(Thread.currentThread().getName() + " run()方法正在执行...");
         }
     }
-    public class RunnableTest {
+    public class TheadTest {
     
         public static void main(String[] args) {
-            MyRunnable myRunnable = new MyRunnable();
-            Thread thread = new Thread(myRunnable); //注意此处需要使用线程构造器初始化一个runnable
-            thread.start();
-            System.out.println(Thread.currentThread().getName() + " main()方法执行完成");
+            MyThread myThread = new MyThread(); 	
+            myThread.start();
+            System.out.println(Thread.currentThread().getName() + " main()方法执行结束");
         }
     }
     
-    执行结果：
-    main main()方法执行完成
-    Thread-0 run()方法执行中...
+    运行结果：
+    main main()方法执行结束
+    Thread-0 run()方法正在执行...
     ```
 
-3. 使用Callable和Future创建线程
+###### 2.实现Runnable接口（**用的最多**）
 
-    - 创建实现Callable接口的类myCallable
-    - 以myCallable为参数创建FutureTask对象
-    - 将FutureTask作为参数创建Thread对象
-    - 调用线程对象的start()方法
+- 定义Runnable接口实现类MyRunnable，并**重写run()方法**
+- 创建MyRunnable实例myRunnable，以myRunnable作为target创建Thread对象，**该Thread对象才是真正的线程对象**
+- 调用线程对象的start()方法
 
-    ```Java
-    public class MyCallable implements Callable<Integer> {
-    
-        @Override
-        public Integer call() {
-            System.out.println(Thread.currentThread().getName() + " call()方法执行中...");
-            return 1;
-        }
+```Java
+public class MyRunnable implements Runnable {
+
+    @Override
+    public void run() {
+        System.out.println(Thread.currentThread().getName() + " run()方法执行中...");
     }
-    public class CallableTest {
-    
-        public static void main(String[] args) {
-            FutureTask<Integer> futureTask = new FutureTask<Integer>(new MyCallable());
-            Thread thread = new Thread(futureTask);
-            thread.start();
-    
-            try {
-                Thread.sleep(1000);
-                System.out.println("返回结果 " + futureTask.get());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            System.out.println(Thread.currentThread().getName() + " main()方法执行完成");
-        }
+}
+public class RunnableTest {
+
+    public static void main(String[] args) {
+        MyRunnable myRunnable = new MyRunnable();
+        Thread thread = new Thread(myRunnable); //注意此处需要使用线程构造器初始化一个runnable
+        thread.start();
+        System.out.println(Thread.currentThread().getName() + " main()方法执行完成");
     }
-    
-    执行结果
-    Thread-0 call()方法执行中...
-    返回结果 1
-    main main()方法执行完成
-    ```
+}
 
-4. 使用Executor框架创建线程池
+执行结果：
+main main()方法执行完成
+Thread-0 run()方法执行中...
+```
 
-    Executors提供了一系列工厂方法用于创先线程池，返回的线程池都实现了ExecutorService接口。
+###### 3.使用Callable和Future创建线程
 
-    主要有newFixedThreadPool，newCachedThreadPool，newSingleThreadExecutor，newScheduledThreadPool，后续详细介绍这四种线程池
+- 创建实现Callable接口的类myCallable
+- 以myCallable为参数创建FutureTask对象
+- 将FutureTask作为参数创建Thread对象
+- 调用线程对象的start()方法
 
-    ```Java
-    public class MyRunnable implements Runnable {
-    
-        @Override
-        public void run() {
-            System.out.println(Thread.currentThread().getName() + " run()方法执行中...");
-        }
+```Java
+public class MyCallable implements Callable<Integer> {
+
+    @Override
+    public Integer call() {
+        System.out.println(Thread.currentThread().getName() + " call()方法执行中...");
+        return 1;
     }
-    public class SingleThreadExecutorTest {
-    
-        public static void main(String[] args) {
-            ExecutorService executorService = Executors.newSingleThreadExecutor();
-            MyRunnable runnableTest = new MyRunnable();
-            for (int i = 0; i < 5; i++) {
-                executorService.execute(runnableTest);
-            }
-            System.out.println("线程任务开始执行");
-            executorService.shutdown();
+}
+public class CallableTest {
+
+    public static void main(String[] args) {
+        FutureTask<Integer> futureTask = new FutureTask<Integer>(new MyCallable());
+        Thread thread = new Thread(futureTask);
+        thread.start();
+
+        try {
+            Thread.sleep(1000);
+            System.out.println("返回结果 " + futureTask.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
+        System.out.println(Thread.currentThread().getName() + " main()方法执行完成");
     }
-    
-    执行结果：
-    线程任务开始执行
-    pool-1-thread-1 is running...
-    pool-1-thread-1 is running...
-    pool-1-thread-1 is running...
-    pool-1-thread-1 is running...
-    pool-1-thread-1 is running...
-    ```
+}
+
+执行结果
+Thread-0 call()方法执行中...
+返回结果 1
+main main()方法执行完成
+```
+
+###### 4.使用Executor框架创建线程池
+
+Executors提供了一系列工厂方法用于创先线程池，返回的线程池都实现了ExecutorService接口。
+
+主要有newFixedThreadPool，newCachedThreadPool，newSingleThreadExecutor，newScheduledThreadPool，后续详细介绍这四种线程池
+
+```Java
+public class MyRunnable implements Runnable {
+
+    @Override
+    public void run() {
+        System.out.println(Thread.currentThread().getName() + " run()方法执行中...");
+    }
+}
+public class SingleThreadExecutorTest {
+
+    public static void main(String[] args) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        MyRunnable runnableTest = new MyRunnable();
+        for (int i = 0; i < 5; i++) {
+            executorService.execute(runnableTest);
+        }
+        System.out.println("线程任务开始执行");
+        executorService.shutdown();
+    }
+}
+
+执行结果：
+线程任务开始执行
+pool-1-thread-1 is running...
+pool-1-thread-1 is running...
+pool-1-thread-1 is running...
+pool-1-thread-1 is running...
+pool-1-thread-1 is running...
+```
+
+
 
 ##### 2.线程的状态和生命周期
 
@@ -721,6 +723,8 @@ Java 线程在运行的生命周期中的指定时刻只可能处于下面 6 种
 ​		由上图可以看出：线程创建之后它将处于 **NEW（新建）** 状态，调用 `start()` 方法后开始运行，线程这时候处于 **READY（可运行）** 状态。可运行状态的线程获得了 CPU 时间片（timeslice）后就处于 **RUNNING（运行）** 状态。（操作系统隐藏 Java 虚拟机（JVM）中的 RUNNABLE 和 RUNNING 状态，它只能看到 RUNNABLE 状态，所以 Java 系统一般将这两个状态统称为 **RUNNABLE（运行中）** 状态 ）
 
 ​		当线程执行 **wait()**方法之后，线程进入 **WAITING（等待）**状态。进入等待状态的线程需要**依靠其他线程的通知**才能够返回到运行状态，而 **TIME_WAITING(超时等待)** 状态相当于**在等待状态的基础上增加了超时限制**，比如通过 **sleep（long millis）方法或 wait（long millis）**方法可以将 Java 线程置于 TIMED WAITING 状态。当超时时间到达后 Java 线程将**会返回到 RUNNABLE 状态**。**当线程调用同步方法时，在没有获取到锁的情况下，线程将会进入到 BLOCKED（阻塞） 状态。**线程在执行 Runnable 的run()方法之后**将会进入到 TERMINATED（终止） 状态**。
+
+
 
 ##### 3.线程状态的基本操作
 
@@ -861,6 +865,7 @@ public static native void yield()这是一个**静态方法**，一旦执行，�
 另外需要注意的是，**sleep()和yield()方法，同样都是当前线程会交出处理器资源**，而它们不同的是，**sleep()交出来的时间片其他线程都可以去竞争**，也就是说都有机会获得当前线程让出的时间片。**而yield()方法只允许与当前线程具有相同优先级的线程能够获得释放出来的CPU时间片**。
 
 
+
 ##### 4.进程的优先级
 
 理论上来说系统会根据优先级来决定首先使哪个线程进入运行状态。当 CPU 比较闲的时候，设置线程优先级几乎不会有任何作用，而且很多操作系统**压根不会理会你设置的线程优先级**，所以不要让业务过度依赖于线程的优先级。
@@ -888,6 +893,8 @@ public final void setPriority(int newPriority) {
     }
 }
 ```
+
+
 
 ##### 5.守护线程和用户线程
 
@@ -958,6 +965,8 @@ Exception in thread "main" java.lang.IllegalThreadStateException
 
 
 但是该线程还是会执行，只不过会当做正常的用户线程执行。
+
+
 
 ##### 6.线程死锁
 
