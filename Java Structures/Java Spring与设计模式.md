@@ -608,11 +608,17 @@ Spring 提供了一种使用 ControllerAdvice 处理异常的非常有用的方�
 
 总体来说设计模式分为三大类：
 
-**创建型模式**，共五种：工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式。
+##### **1.创建型模式**
 
-**结构型模式**，共七种：适配器模式、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式。
+​	共五种：**单例模式、工厂方法模式、抽象工厂模式、建造者模式、原型模式**。
 
-**行为型模式**，共十一种：策略模式、模板方法模式、观察者模式、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式。
+##### **2.结构型模式**
+
+​	共七种：**适配器模式、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式**。
+
+##### **3.行为型模式**
+
+​	共十一种：**策略模式、模板方法模式、观察者模式、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式**。
 
 其实还有两类：**并发型模式和线程池模式**。用一个图片来整体描述一下：
 
@@ -658,27 +664,255 @@ Spring 提供了一种使用 ControllerAdvice 处理异常的非常有用的方�
 
 #### 3.具体设计模式
 
-##### 1.创建型模式
+​		从这一节开始，我们详细介绍Java中23种设计模式的概念，应用场景等情况，并结合他们的特点及设计模式的原则进行分析。 
 
-​	从这一块开始，我们详细介绍Java中23种设计模式的概念，应用场景等情况，并结合他们的特点及设计模式的原则进行分析。 
+##### 1.单例模式
 
-###### **0.简单工厂模式**
+​		单例对象（Singleton）是一种常用的设计模式。在Java应用中，单例对象能保证在一个JVM中，**该对象只有一个实例存在**。这样的模式有几个好处：
 
-​		首先，简单工厂模式不属于23种设计模式，简单工厂一般分为：**普通简单工厂、多方法简单工厂、静态方法简单工厂**。简单工厂模式模式分为三种：
+-   某些类创建比较频繁，对于一些**大型的对象**，这是一笔**很大的系统开销**。
+-   **省去了new操作符**，降低了系统内存的使用频率，**减轻GC压力**。
+-   有些类如交易所的**核心交易引擎**，控制着交易流程，如果该类可以创建多个的话，系统完全乱了。（就像一个军队出现了多个司令员同时指挥，肯定会乱成一团），所以只有使用单例模式，才能保证核心交易服务器独立控制整个流程。
+
+###### **1.单例模式特点**
+
+-   单例类只能有**一个实例**。
+-   单例类必须**自己创建自己的唯一实例**。
+-   单例类必须**给所有其他对象提供这一实例**。
+
+   单例模式确保**某个类只有一个实例**，而且自行实例化并**向整个系统提供这个实例**。
+
+###### **2.懒汉式单例**
+
+```Java
+//懒汉式单例类.在第一次调用的时候实例化自己   
+public class Singleton {
+    // 构造方法私有化
+    private Singleton() {
+    }
+    private static Singleton single = null;
+    // 静态工厂方法
+    public static Singleton getInstance() {
+        if (single == null) {
+            single = new Singleton();
+        }
+        return single;
+    }
+}
+```
+
+​		Singleton通过将**构造方法限定为private**避免了类在**外部被实例化**，在同一个虚拟机范围内，Singleton的**唯一实例只能通过getInstance()方法访问**。事实上，通过Java反射机制**是能够实例化构造方法为private的类的**，那基本上会使所有的Java单例实现失效。此问题在此处不做讨论，**姑且掩耳盗铃地认为反射机制不存在**。
+​		但是以上懒汉式单例的实现**没有考虑线程安全问题，它是线程不安全的**，并发环境下很可能**出现多个Singleton实例**，要实现线程安全，有以下三种方式，都是对getInstance这个方法改造，保证了懒汉式单例的线程安全:
+
+​		**2.1 在getInstance方法上加同步**
+
+```java
+public static synchronized  Singleton getInstance() {
+        if (single == null) {
+            single = new Singleton();
+        }
+        return single;
+}
+```
+
+​		**2.2 双重检查锁定**
+​		可以使用“双重检查加锁”的方式来实现，就可以**既实现线程安全**，**又能够使性能不受很大的影响**。那么什么是“双重检查加锁”机制呢？
+​		所谓“**双重检查加锁**”机制，指的是：并不是每次进入getInstance方法都需要同步，而是先不同步，进入方法后，**先检查实例是否存在**，如果不存在**才进行下面的同步块**，这是**第一重检查** ；进入同步块过后，**再次检查实例是否存在**，如果不存在，就在**同步的情况下**创建一个实例，这是**第二重检查**。这样 一来，就**只需要同步一次**了，从而减少了**多次在同步情况下进行判断所浪费的时间**。
+​		“双重检查加锁”机制的实现**会使用关键字volatile**，它的意思是：**被volatile修饰的变量的值，将不会被本地线程缓存，所有对该变量的读写都是直接操作共享内存，从而确保多个线程能正确的处理该变量**。注意：在java1.4及以前版本中，很多JVM对于volatile关键字的实现的问题，会导致“双重检查加锁”的失败，因此“双重检查加锁”机制**只能用在java5及以上的版本**。
+
+```Java
+public class Singleton {
+  //注意此处的volatile关键字，指明了instance为同步对象；
+    private volatile static Singleton instance = null;
+    private Singleton(){}
+    public static Singleton getInstance(){
+        //先检查实例是否存在，如果不存在才进入下面的同步块
+        if(instance == null){
+            //利用同步块而不是同步方法，线程安全的创建实例
+            synchronized (Singleton.class) {
+                //再次检查实例是否存在，如果不存在才真正的创建实例
+                if(instance == null){
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+```
+
+​		这种实现方式既可以实现线程安全地创建实例，而又不会对性能造成太大的影响。它只是第一次创建实例的时候同步，以后就不需要同步了，从而加快了运行速度。
+​		提示：由于volatile关键字**可能会屏蔽掉虚拟机中一些必要的代码优化**，所以运行效率并不是很高。因此一般建议，没有特别的需要，不要使用。也就是说，虽然可以使用“双重检查加锁”机制**来实现线程安全的单例**，但并不建议大量采用，可以根据情况来选用。
+
+​		**2.3 静态(类级)内部类**
+
+```Java
+public class Singleton {
+
+    private Singleton(){}
+    /**
+     *    类级的内部类，也就是静态的成员式内部类，该内部类的实例与外部类的实例
+     *    没有绑定关系，而且只有被调用到时才会装载，从而实现了延迟加载。
+     */
+    private static class SingletonHolder{
+        /**
+         * 静态初始化器，由JVM来保证线程安全
+         */
+        private static Singleton instance = new Singleton();
+    }
+
+    public static Singleton getInstance(){
+        return SingletonHolder.instance;
+    }
+}
+```
+
+​		这种方式比上面1、2都好一些，既实现了线程安全，又**避免了同步带来的性能影响**。当getInstance方法第一次被调用的时候，它**第一次读取 SingletonHolder.instance**，导致SingletonHolder类得到**初始化**；而这个类在装载并被初始化的时候，会**初始化它的静态域**，从而创建Singleton的实例，由于是静态的域，因此**只会在虚拟机装载类的时候初始化一次**，并**由虚拟机来保证它的线程安全性**。
+
+​		这个模式的优势在于，**getInstance方法并没有被同步**，并且只是**执行一个域的访问**，因此延迟初始化并**没有增加任何访问成本**。
+
+###### **3.饿汉式单例**
+
+```Java
+//饿汉式单例类.在类初始化时，已经自行实例化   
+public class EagerSingleton {
+        private static EagerSingleton instance = new EagerSingleton();
+        /**
+         * 构造方法私有化
+         */
+        private EagerSingleton(){}
+        /**
+         * 静态工厂方法
+         */
+        public static EagerSingleton getInstance(){
+            return instance;
+        }
+}
+```
+
+饿汉式在类创建的同时就已经创建好一个静态的对象供系统使用，以后不再改变，所以天生是线程安全的。
+
+###### 4.饿汉式和懒汉式单例的区别
+
+​		从名字上来说，饿汉就是类一旦加载，就把单例初始化完成，保证getInstance的时候，单例是已经存在的了；而懒汉比较懒，只有当调用getInstance的时候，才回去初始化这个单例。另外从以下两点再区分以下这两种方式：
+
+​		**4.1线程安全**：
+​		饿汉式**天生就是线程安全的**，可以直接用于多线程而不会出现问题，
+​		懒汉式本身是非线程安全的，为了实现线程安全有三种写法，这三种实现在资源加载和性能方面有些区别。
+
+​		**4.2资源加载和性能**：
+​		饿汉式在类创建的同时就实例化一个静态对象出来，不管之后会不会使用这个单例，都会占据一定的内存，但是相应的，在第一次调用时速度也会更快，因为其资源已经初始化完成，而懒汉式顾名思义，会延迟加载，在第一次使用该单例的时候才会实例化对象出来，第一次调用时要做初始化，如果要做的工作比较多，性能上会有些延迟，之后就和饿汉式一样了。
+​		**至于懒汉式的三种实现方式又有些区别：**
+ 		第1种，在方法调用上加了同步，虽然线程安全了，但是每次都要同步，**会影响性能**，毕竟99%的情况下是不需要同步的；
+​		第2种，在getInstance中**做了两次null检查**，确保了只有第一次调用单例的时候才会做同步，这样也是线程安全的，同时**避免了每次都同步的性能损耗**；
+​		第3种，保证初始化instance时只有一个线程，所以也是线程安全的，**同时没有性能损耗**，一般倾向于使用这一种。
+
+​		**4.3什么是线程安全**？
+​		如果你的代码所在的进程中**有多个线程在同时运行**，而这些线程可能会同时运行这段代码。如果每次运行结果和单线程运行的结果是一样的，而且其他的变量的值也和预期的是一样的，就是线程安全的。
+​		或者说：一个类或者程序所提供的接口对于线程来说是原子操作，或者多个线程之间的切换不会导致该接口的执行**结果存在二义性**,也就是说我们**不用考虑同步的问题**，那就是线程安全的。
+
+###### 5.利用枚举来实现单例（推荐）
+
+​	用枚举来实现单例非常简单，只需要编写一个**包含单个元素的枚举类型**即可。
+
+```Java
+public enum Singleton {
+    /**
+     * 定义一个枚举的元素，它就代表了Singleton的一个实例。
+     */
+
+    uniqueInstance;
+    /**
+     * 单例可以有自己的操作
+     */
+    public void singletonOperation(){
+        //功能处理
+    }
+}
+```
+
+　相关测试代码：
+
+```Java
+public enum SingletonEnum {
+    INSTANCE01, INSTANCE02;// 定义枚举的两个类型
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+}
+public class Test {
+    public static void main(String[] args) {
+            SingletonEnum instance01=SingletonEnum.INSTANCE01;
+            instance01.setName("tanggao");
+            System.out.println(instance01.getName());
+
+            SingletonEnum instance02=SingletonEnum.INSTANCE01;
+            System.out.println(instance02.getName());
+
+            SingletonEnum instance03=SingletonEnum.INSTANCE02;
+            instance03.setName("zsy");
+            System.out.println(instance03.getName());
+
+            SingletonEnum instance04=SingletonEnum.INSTANCE02;
+            instance04.setName("zsy1");
+            System.out.println(instance04.getName());
+            System.out.println(instance03.hashCode()+"\t"+instance04.hashCode());
+            System.out.println(instance03==instance04);
+
+    }
+}
+//运行结果:
+tanggao
+tanggao
+zsy
+zsy1
+3346521 3346521
+true
+```
+
+​		使用枚举来实现单实例控制会更加简洁，而且**无偿地提供了序列化机制**，并由JVM从根本上提供保障，**绝对防止多次实例化**，是**更简洁、高效、安全的实现单例的方式**。
+
+
+
+##### 2.工厂模式
+
+​		在面向对象编程中, 最通常的方法是**一个new操作符产生一个对象实例**,new操作符就是用来**构造对象实例的**。但是在一些情况下, new操作符直接生成对象会带来一些问题。举例来说, 许多类型对象的创造需要一系列的步骤: 
+
+-   你可能需要**计算或取得对象的初始设置**; 
+-   选择**生成哪个子对象实例**; 
+-   或在生成你需要的对象之前**必须先生成一些辅助功能的对象**。
+
+​       在这些情况,新对象的建立就是一个“过程”，不仅是一个操作，像一部大机器中的一个齿轮传动。模式的问题：你如何能**轻松方便地构造对象实例**，而**不必关心构造对象实例的细节和复杂过程**呢？解决方案：建立一个工厂来创建对象。
+
+###### 1.工厂模式分类与特点
+
+​		假如还没有工业革命，如果一个客户要一款车,一般的做法是客户去打造一款车，然后拿来用，这显示很低效。工厂模式主要是**为创建对象提供过渡接口**，以便将创建对象的**具体过程屏蔽隔离起来**，达到提高**灵活性**的目的。工厂模式在《Java与模式》中分为三类：
+
+-   **简单工厂模式**（Simple Factory）：用户不用去创建宝马车。因为有一个工厂来帮他想要的车，比如想要宝马车，工厂就创建这个系列的车。即**工厂可以创建同一系列产品**。
+-   **工厂方法模式**（Factory Method）：为了满足客户，车系列越来越多，**一个工厂无法创建所有的车系列**。于是由**单独分出来多个具体的工厂**。每个具体工厂创建一种系列。即**具体工厂类只能创建一个具体产品**。
+-   **抽象工厂模式**（Abstract Factory）：随着客户要求越来越高，对车进行分类，分为**商务车和运动车两个族**。
+
+​        这三种模式从上到下**逐步抽象**，并且**更具一般性**。也可将工厂模式分为两类：**工厂方法模式（Factory Method）与抽象工厂模式（Abstract Factory）**。将简单工厂模式（Simple Factory）看为工厂方法模式的一种特例，两者归为一类。这两种分类方式皆可。
+
+###### **2.简单工厂模式**
+
+​		首先，简单工厂模式又称**静态工厂方法模式**，定义**一个用于创建对象的接口**。先来看看它的组成：
+
+1.   **工厂类角色**：这是本模式的核心，含有一定的**商业逻辑和判断逻辑**。在java中它往往由**一个具体类**实现。
+2.   **抽象产品角色**：它一般是具体产品**继承的父类或者实现的接口**。在java中**由接口或者抽象类来实现**。
+3.   **具体产品角色**：工厂类所创建的**对象就是此角色的实例**。在java中由一个具体类实现。
+
+​        简单工厂一般分为：**普通简单工厂、多方法简单工厂、静态方法简单工厂**三种模式：
 
 -   **普通简单工厂**。就是建立一个工厂类，对实现了**同一接口**的**一些类进行实例**的创建。
--   **多个方法简单工厂**。是对普通工厂方法模式的改进，在普通工厂方法模式中，如果传递的字符串出错，则不能正确创建对象，而多个工厂方法模式是**提供多个工厂方法**，**分别创建对象**。
--   **静态方法简单工厂**。将上面的多个工厂方法模式里的方法置为静态的，不需要创建实例，直接调用即可。
 
-​        总体来说，简单工厂模式适合：凡是出现了**大量的产品需要创建**，并且具有**共同的接口**时，可以通过工厂方法模式进行创建。在以上的三种模式中，第一种如果传入的字符串有误，不能正确创建对象，第三种相对于第二种，**不需要实例化工厂类**，所以，大多数情况下，我们会选用第三种——**静态工厂方法模式**。
-
-###### 1.工厂方法模式（Factory Method）
-
-​		简单工厂模式有一个问题就是，类的创建依赖工厂类，也就是说，如果想要拓展程序，必须对**工厂类**进行修改，这**违背了闭包原则**，所以，从设计角度考虑，有一定的问题，如何解决？就用到**工厂方法模式**，创建一个**工厂接口**和创建**多个工厂实现类**，这样一旦需要增加新的功能，直接**增加新的工厂类**就可以了，不需要修改之前的代码。
-
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200410234421858.png" alt="image-20200410234421858" style="zoom:50%;" />
-
-​		
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200411010340530.png" alt="image-20200411010340530" style="zoom:40%;" />
 
 ```Java
 //举例如下：（我们举一个发送邮件和短信的例子）
@@ -726,5 +960,305 @@ public class FactoryTest {
 //输出：this is sms sender!
 ```
 
-​		这个模式的好处就是，如果你现在想增加一个功能：发及时信息，则只需做一个实现类，实现Sender接口，同时做一个工厂类，实现Provider接口，就OK了，无需去改动现成的代码。这样做，拓展性较好！
+-   **多个方法简单工厂**。是对普通工厂方法模式的改进，在普通工厂方法模式中，如果传递的字符串出错，则不能正确创建对象，而多个工厂方法模式是**提供多个工厂方法**，**分别创建对象**。
+
+    <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200411011051494.png" alt="image-20200411011051494" style="zoom:40%;" />
+
+```Java
+//将上面的代码做下修改，改动下SendFactory类就行，如下：
+public class SendFactory {
+	
+	public Sender produceMail(){
+		return new MailSender();
+	}
+	
+	public Sender produceSms(){
+		return new SmsSender();
+	}
+}
+//测试
+public class FactoryTest {
+ 
+	public static void main(String[] args) {
+		SendFactory factory = new SendFactory();
+		Sender sender = factory.produceMail();
+		sender.Send();
+	}
+}
+```
+
+-   **静态方法简单工厂**。将上面的多个工厂方法模式里的**方法置为静态的**，不需要创建实例，直接调用即可。
+
+```java
+public class SendFactory {
+	
+	public static Sender produceMail(){
+		return new MailSender();
+	}
+	
+	public static Sender produceSms(){
+		return new SmsSender();
+	}
+}
+//测试
+public class FactoryTest {
+ 
+	public static void main(String[] args) {	
+		Sender sender = SendFactory.produceMail();
+		sender.Send();
+	}
+}
+```
+
+​        总体来说，简单工厂模式适合：凡是出现了**大量的产品需要创建**，并且具有**共同的接口**时，可以通过工厂方法模式进行创建。在以上的三种模式中，**第一种如果传入的字符串有误，不能正确创建对象**，第三种相对于第二种，**不需要实例化工厂类**，所以，大多数情况下，我们会选用第三种——**静态工厂方法模式**。
+
+
+
+###### 3.工厂方法模式
+
+​		简单工厂模式有一个问题就是，类的创建依赖工厂类，也就是说，如果想要拓展程序，必须对**工厂类**进行修改，这**违背了闭包原则**，所以，从设计角度考虑，有一定的问题，如何解决？就用到**工厂方法模式**，创建一个**工厂接口**和创建**多个工厂实现类**，这样一旦需要增加新的功能，直接**增加新的工厂类**就可以了，不需要修改之前的代码。
+
+​		工厂方法模式去掉了简单工厂模式中工厂方法的**静态属性**，使得**它可以被子类继承**。这样在简单工厂模式里集中在工厂方法上的压力可以由工厂方法模式里**不同的工厂子类来分担**。工厂方法模式的结构，来看下它的组成：
+
+1.  **抽象工厂角色**： 这是工厂方法模式的**核心**，它与应用程序无关。是具体工厂角色**必须实现的接口或者必须继承的父类**。在java中它由**抽象类或者接口**来实现。
+2.  **具体工厂角色**：它**含有和具体业务逻辑有关的代码**。由应用程序调用以创建对应的具体产品的对象。
+3.  **抽象产品角色**：它是具体产品**继承的父类或者是实现的接口**。在java中一般有抽象类或者接口来实现。
+4.  **具体产品角色**：具体工厂角色**所创建的对象就是此角色的实例**。在java中由具体的类来实现。		
+
+```Java
+/**
+ * 抽象产品角色
+ * @author Administrator
+ *
+ */
+abstract class Car {
+    abstract void drive();
+}
+/**
+ * 具体产品类
+ * @author Administrator
+ *
+ */
+public class bmwCar extends Car {
+
+    @Override
+    public void drive() {
+        System.out.println("驾驶宝马车......");
+    }
+}
+/**
+ * 具体产品类
+ * @author Administrator
+ *
+ */
+public class benzCar extends Car {
+    @Override
+    public void drive() {
+        System.out.println("驾驶奔驰车......");
+    }
+}
+
+
+/**
+ * 抽象工厂角色 用來生产车
+ * @author Administrator
+ *
+ */
+public interface abstractFactory {
+    public Car driveFactory();
+
+}
+/**
+ * 具体工厂角色
+ * 创建奔驰车对象
+ */
+public class benzCarFactory implements abstractFactory {
+    @Override
+    public  Car driveFactory() {
+        return new benzCar();
+    }
+}
+/**
+ * 具体工厂角色
+ * 创建宝马车对象
+ */
+public class bmwCarFactory implements abstractFactory {
+    @Override
+    public Car driveFactory() {
+        return new bmwCar();
+    }
+}
+
+
+//客户
+public class Client {
+    private static Car benzcar,bmwcar;
+    private static abstractFactory benzcarfactory,bmwcarfactory;
+    public static void main(String[] args) throws Exception {
+        //告诉(工厂) 要奔驰车
+        benzcarfactory=new benzCarFactory();
+        benzcar=benzcarfactory.driveFactory();
+        //可以开车了
+        benzcar.drive();
+        System.out.println("-------------------");
+        bmwcarfactory=new bmwCarFactory();
+        bmwcar=bmwcarfactory.driveFactory();
+        bmwcar.drive();
+    }
+}
+```
+
+​		这个模式的好处就是，如果你现在想增加一个功能：发及时信息，则**只需做一个实现类**，实现Sender接口，同时**做一个工厂类**，实现Provider接口，就OK了，无需去改动现成的代码。这样做，拓展性较好！
+
+​		工厂方法模式**使用继承自抽象工厂角色**的多个子类来**代替简单工厂模式中的“上帝类”**。正如上面所说，这样便分担了对象承受的压力；而且这样使得结构变得灵活起来——当有新的产品产生时，只要按照抽象产品角色来生成具体的实现类，那么就可以被客户使用，而不必去修改任何已有的代码。可以看出工厂角色的结构也是**符合开闭原则**的！
+​		然而也可以看出工厂方法的加入，**使得对象的数量成倍增长**。当产品种类非常多时，会出现**大量的与之对应的工厂对象**，这不是我们所希望的。如果不能避免这种情况，可以考虑使用**简单工厂模式与工厂方法模式相结合**的方式来减少工厂类：**即对于产品树上类似的种类（一般是树的叶子中互为兄弟的）使用简单工厂模式来实现**。
+
+
+
+###### 4.抽象工厂模式
+
+​		抽象工厂需要**创建一些列产品族**，着重点在于"创建哪些"产品上，也就是说，如果你开发，你的主要任务是划分**不同差异的产品线**，并且尽量保持**每条产品线接口一致**，从而可以**从同一个抽象工厂继承**。工厂方法模式和抽象工厂模式不好分清楚，他们的区别如下：
+
+```Java
+/* 工厂方法模式：*/
+一个抽象产品类，可以派生出多个具体产品类。   
+一个抽象工厂类，可以派生出多个具体工厂类。   
+每个具体工厂类只能创建一个具体产品类的实例。
+
+/* 抽象工厂模式：*/
+多个抽象产品类，每个抽象产品类可以派生出多个具体产品类。   
+一个抽象工厂类，可以派生出多个具体工厂类。   
+每个具体工厂类可以创建多个具体产品类的实例，也就是创建的是一个产品线下的多个产品。   
+
+/* 区别：*/
+工厂方法模式只有一个抽象产品类，而抽象工厂模式有多个。   
+工厂方法模式的具体工厂类只能创建一个具体产品类的实例，而抽象工厂模式可以创建多个。
+工厂方法创建 "一种" 产品，他的着重点在于"怎么创建"，也就是说如果你开发，你的大量代码很可能围绕着这种产品的构造，初始化这些细节上面。也因为如此，类似的产品之间有很多可以复用的特征，所以会和模版方法相随。
+```
+
+​		**产品族**：不同产品等级结构中，功能相关联的产品组成的家族。还是让我们用一个例子来形象地说明一下吧。BenzSportsCar和BmwSportsCar 就是**一个产品族**。他们都可以放到跑车家族中，因此功能有所关联。同理BmwBussinessCar和BenzBussinessCar也是一个产品族。
+​		回到抽象工厂模式的话题上。可以说，抽象工厂模式和工厂方法模式的区别就在于**需要创建对象的复杂程度**上。而且抽象工厂模式是三个里面**最为抽象、最具一般性**的。抽象工厂模式的用意为：给客户端提供一个接口，可以创建多个产品族中的产品对象，而且使用抽象工厂模式还要满足以下条件：
+
+1.   系统中有**多个产品族**，而系统一次只可能消费其中一族产品。
+2.   同属于同一个产品族的产品一起使用。
+
+​        以下是抽象工厂模式的实现实例：
+
+```Java
+// 抽象工厂类  定义不同的产品之间的标准，商务车
+public interface ICarA {
+    public void drive();
+}
+// 抽象工厂类  定义不同的产品之间的标准 跑车族
+public interface ICarB {
+    public void drive();
+}
+
+//具体产品类
+public class productAHongqi implements ICarA {
+    @Override
+    public void drive() {
+        System.out.println("开商务族--红旗车");
+    }
+}
+//具体工厂类
+public class productABmw implements ICarA {
+    @Override
+    public void drive() {
+         System.out.println("开商务族--宝马车 ..."); 
+    }
+}
+
+//具体产品类
+public class producSporttBAudi implements ICarB {
+    @Override
+    public void drive() {
+        System.out.println("开跑车族--奥迪车...");
+    }
+}
+//具体工厂类
+public class productSportBBenz implements ICarB {
+    @Override
+    public void drive() {
+         System.out.println("开跑车族--奔驰车 ..."); 
+    }
+}
+
+
+/**
+ * 抽象工厂类 创建跑车族跑车
+ * @author Administrator
+ *
+ */
+public abstract class abstractoryFactory1 {
+    abstract ICarB getProductBBenz();
+    abstract ICarB getProductBAudi();
+}
+/**
+ * 抽象工厂类  创建商务族跑车
+ * @author Administrator
+ *
+ */
+public abstract class abstractoryFactory2 {
+    abstract ICarA getProductABmw();
+    abstract ICarA getProductBHongqi();
+}
+
+
+/**
+ * 具体工厂类 跑车族
+ * @author Administrator
+ *
+ */
+public class Factory1 extends abstractoryFactory1 {
+
+    @Override
+    ICarB getProductBBenz() {
+        return new productSportBBenz();
+    }
+
+    @Override
+    ICarB getProductBAudi() {
+        return new producSporttBAudi();
+    }
+}
+/**
+ * 具体工厂类
+ * 商务族
+ * @author Administrator
+ *
+ */
+public class Factory2 extends abstractoryFactory2 {
+    @Override
+    ICarA getProductABmw() {
+        return new productABmw();
+    }
+
+    @Override
+    ICarA getProductBHongqi() {
+        return new productAHongqi();
+    }
+}
+
+
+public class Client {
+    public static void main(String[] args) {
+        //工厂一制造的产品族车
+        abstractoryFactory1 factory1 = new Factory1(); 
+        ICarB productsportAbenz = factory1.getProductBBenz(); 
+        ICarB productsportBaudi = factory1.getProductBAudi(); 
+
+        productsportAbenz.drive(); 
+        productsportBaudi.drive(); 
+        //工厂二制造的产品族车
+        abstractoryFactory2 factory2 = new Factory2(); 
+        ICarA productAbmw = factory2.getProductABmw(); 
+        ICarA productBhongqi = factory2.getProductBHongqi(); 
+        productAbmw.drive(); 
+        productBhongqi.drive(); 
+    }
+}
+```
+
+
 
