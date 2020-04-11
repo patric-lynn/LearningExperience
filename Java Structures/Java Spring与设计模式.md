@@ -890,7 +890,7 @@ true
 
 ​       在这些情况,新对象的建立就是一个“过程”，不仅是一个操作，像一部大机器中的一个齿轮传动。模式的问题：你如何能**轻松方便地构造对象实例**，而**不必关心构造对象实例的细节和复杂过程**呢？解决方案：建立一个工厂来创建对象。
 
-###### 1.工厂模式分类与特点
+###### 1.工厂模式定义与分类
 
 ​		假如还没有工业革命，如果一个客户要一款车,一般的做法是客户去打造一款车，然后拿来用，这显示很低效。工厂模式主要是**为创建对象提供过渡接口**，以便将创建对象的**具体过程屏蔽隔离起来**，达到提高**灵活性**的目的。工厂模式在《Java与模式》中分为三类：
 
@@ -1422,4 +1422,550 @@ public class Client {
 
 
 ###### 3.建造模式使用场景
+
+​		假设有一个电子杂志系统，定期地向用户的电子邮件信箱发送电子杂志。用户可以通过网页订阅电子杂志，也可以通过网页结束订阅。当客户开始订阅 时，系统发送一个电子邮件表示欢迎，当客户结束订阅时，系统发送一个电子邮件表示欢送。本例子就是这个系统负责发送“欢迎”和“欢送”邮件的模块。在本例中，产品类就是发给某个客户的“欢迎”和“欢送”邮件，如下图所示。
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160124163938147.png" alt="系统类图" style="zoom:70%;" />
+
+​		虽然在这个例子里面各个产品类均有一个共同的接口，但这仅仅是本例特有的，并不代表建造模式的特点。建造模式可以**应用到具有完全不同接口的产品类**上。大多数情况下是不知道最终构建出来的产品是什么样的，所以在标准的建造模式里面，一般是不需要对产品定义抽象接口的，因为最终构造的产品千差万别，给这些产品定义公共接口几乎是没有意义的。下图所示就是这个系统的类图。
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160124164002522.png" alt="系统类图" style="zoom:90%;" />
+
+​		这个系统含有客户端（Client）、导演者（Director）、抽象建造者（Builder）、具体建造者（WelcomeBuilder和GoodbyeBuilder）、产品（WelcomeMessage和GoodbyeMessage）等角色。
+
+​		**源代码**
+
+```Java
+//抽象类AutoMessage源代码，send()操作仅仅是示意性的，并没有给出任何发送电子邮件的代码。
+public abstract class AutoMessage {
+    //收件人地址
+ private String to;
+    //发件人地址
+ private String from;
+    //标题
+ private String subject;
+    //内容
+ private String body;
+    //发送日期
+ private Date sendDate;
+    public void send(){
+        System.out.println("收件人地址：" + to);
+        System.out.println("发件人地址：" + from);
+        System.out.println("标题：" + subject);
+        System.out.println("内容：" + body);
+        System.out.println("发送日期：" + sendDate);
+    }
+    public String getTo() {
+        return to;
+    }
+    public void setTo(String to) {
+        this.to = to;
+    }
+    public String getFrom() {
+        return from;
+    }
+    public void setFrom(String from) {
+        this.from = from;
+    }
+    public String getSubject() {
+        return subject;
+    }
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+    public String getBody() {
+        return body;
+    }
+    public void setBody(String body) {
+        this.body = body;
+    }
+    public Date getSendDate() {
+        return sendDate;
+    }
+    public void setSendDate(Date sendDate) {
+        this.sendDate = sendDate;
+    }
+}
+
+//具体产品类WelcomeMessage
+public class WelcomeMessage extends AutoMessage {
+    /**
+     * 构造子
+     */
+    public WelcomeMessage(){
+        System.out.println("发送欢迎信息");
+    }
+}
+
+//具体产品类GoodbyeMessage
+public class GoodbyeMessage extends AutoMessage{
+    /**
+     * 构造子
+     */
+    public GoodbyeMessage(){
+        System.out.println("发送欢送信息");
+    }
+}
+
+//抽象建造者类
+public abstract class Builder {
+    protected AutoMessage msg;
+    //标题零件的建造方法
+ public abstract void buildSubject();
+    //内容零件的建造方法
+ public abstract void buildBody();
+    //收件人零件的建造方法
+ public void buildTo(String to){
+        msg.setTo(to);
+    }
+    //发件人零件的建造方法
+ public void buildFrom(String from){
+        msg.setFrom(from);
+    }
+    //发送时间零件的建造方法
+ public void buildSendDate(){
+        msg.setSendDate(new Date());
+    }
+    /**
+     * 邮件产品完成后，用此方法发送邮件
+     * 此方法相当于产品返还方法
+     */
+    public void sendMessage(){
+        msg.send();
+    }
+}
+
+//具体建造者WelcomeBuilder
+public class WelcomeBuilder extends Builder {
+    public WelcomeBuilder(){
+        msg = new WelcomeMessage();
+    }
+    @Override
+    public void buildBody() {
+        // TODO Auto-generated method stub
+ 　　　　msg.setBody("欢迎内容");
+    }
+
+    @Override
+    public void buildSubject() {
+        // TODO Auto-generated method stub
+ 　　　　msg.setSubject("欢迎标题");
+    }
+}
+
+//具体建造者GoodbyeBuilder
+public class GoodbyeBuilder extends Builder {
+
+    public GoodbyeBuilder(){
+        msg = new GoodbyeMessage();
+    }
+    @Override
+    public void buildBody() {
+        // TODO Auto-generated method stub
+ 　　　　msg.setBody("欢送内容");
+    }
+
+    @Override
+    public void buildSubject() {
+        // TODO Auto-generated method stub
+ 　　　　msg.setSubject("欢送标题");
+    }
+}
+
+//导演者Director，这个类提供一个construct()方法，此方法调用建造者的建造方法，包括buildTo()、 buildFrom()、buildSubject()、buildBody()、buildSendDate()等，从而一部分一部分地建造出产品对 象，既AutoMessage对象。
+public class Director {
+    Builder builder;
+    /**
+     * 构造子
+     */
+    public Director(Builder builder){
+        this.builder = builder;
+    }
+    /**
+     * 产品构造方法，负责调用各零件的建造方法
+     */
+    public void construct(String toAddress , String fromAddress){
+        this.builder.buildTo(toAddress);
+        this.builder.buildFrom(fromAddress);
+        this.builder.buildSubject();
+        this.builder.buildBody();
+        this.builder.buildSendDate();
+        this.builder.sendMessage();
+    }
+}
+
+//客户端Client
+public class Client {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+ 　　　　Builder builder = new WelcomeBuilder();
+        Director director = new Director(builder);
+        director.construct("toAddress@45126184@qq.com", "fromAddress@110.com");
+    }
+}
+```
+
+
+
+###### 4.**使用建造模式构建复杂对象**
+
+​		考虑这样一个实际应用，要创建一个保险合同的对象，里面很多属性的值都有约束，要求创建出来的对象是满足这些约束规则的。约束规则比如：保险合同通常情况下可以和个人签订，也可以和某个公司签订，但是一份保险合同不能同时与个人和公司签订。这个对象里有很多类似这样的约束，采用建造模式来构建复杂的对象，通常会对建造模式进行一定的简化，因为目标明确，就是创建某个复杂对象，因此做适当简化会使程序更简洁。大致简化如下：
+​		● 由于是用Builder模式**来创建某个对象**，因此就**没有必要再定义一个Builder接口**，直接提供一个具体的建造者类就可以了。
+​		● 对于创建一个复杂的对象，可能会有很**多种不同的选择和步骤**，干脆**去掉“导演者”**，把导演者的功能和Client的功能合并起来，也就是说,Client这个时候就相当于导演者，它来指导构建器类去构建需要的复杂对象。
+
+​		**保险合同类**
+
+```java
+/**
+ * 保险合同对象
+ */
+public class InsuranceContract {
+    // 保险合同编号
+    private String contractId;
+    /**
+     * 被保险人员的名称，同一份保险合同，要么跟人员签订，要么跟公司签订 也就是说，“被保险人员”和“被保险公司”这两个属性，不可能同时有值
+     */
+    private String personName;
+    // 被保险公司的名称
+    private String companyName;
+    // 保险开始生效日期
+    private long beginDate;
+    // 保险失效日期，一定会大于保险开始生效日期
+    private long endDate;
+    // 其他数据
+    private String otherData;
+
+    // 私有构造方法
+    private InsuranceContract(ConcreteBuilder builder) {
+        this.contractId = builder.contractId;
+        this.personName = builder.personName;
+        this.companyName = builder.companyName;
+        this.beginDate = builder.beginDate;
+        this.endDate = builder.endDate;
+        this.otherData = builder.otherData;
+    }
+
+    /**
+     * 保险合同的一些操作
+     */
+    public void someOperation() {
+        System.out.println("当前正在操作的保险合同编号为【" + this.contractId + "】");
+        if(personName!=null){
+            System.out.println("被保险人名称:"+personName);
+        }
+        if(companyName!=null){
+            System.out.println("被保险公司名称:"+companyName);
+        }
+    }
+  
+    //具体构建者角色
+    public static class ConcreteBuilder {
+        private String contractId;
+        private String personName;
+        private String companyName;
+        private long beginDate;
+        private long endDate;
+        private String otherData;
+
+        /**
+         * 构造方法，传入必须要有的参数
+         * 
+         * @param contractId
+         *            保险合同编号
+         * @param beginDate
+         *            保险合同开始生效日期
+         * @param endDate
+         *            保险合同失效日期
+         */
+        public ConcreteBuilder(String contractId, long beginDate, long endDate) {
+            this.contractId = contractId;
+            this.beginDate = beginDate;
+            this.endDate = endDate;
+        }
+
+        // 建造方法 建造被保险人员的名称
+        public ConcreteBuilder setPersonName(String personName) {
+            this.personName = personName;
+            return this;
+        }
+
+        // 建造方法  建造被保险公司的名称
+        public ConcreteBuilder setCompanyName(String companyName) {
+            this.companyName = companyName;
+            return this;
+        }
+
+        // 建造方法  建造其他数据
+        public ConcreteBuilder setOtherData(String otherData) {
+            this.otherData = otherData;
+            return this;
+        }
+
+        /**
+         * 构建真正的对象并返回
+         * 
+         * @return 构建的保险合同对象
+         */
+        public InsuranceContract build() {
+            if (contractId == null || contractId.trim().length() == 0) {
+                throw new IllegalArgumentException("合同编号不能为空");
+            }
+            boolean signPerson = (personName != null && personName.trim().length() > 0);
+            boolean signCompany = (companyName != null && companyName.trim().length() > 0);
+            if (signPerson && signCompany) {
+                throw new IllegalArgumentException("一份保险合同不能同时与个人和公司签订");
+            }
+            if (signPerson == false && signCompany == false) {
+                throw new IllegalArgumentException("一份保险合同不能没有签订对象");
+            }
+            if (beginDate <= 0) {
+                throw new IllegalArgumentException("一份保险合同必须有开始生效的日期");
+            }
+            if (endDate <= 0) {
+                throw new IllegalArgumentException("一份保险合同必须有失效的日期");
+            }
+            if (endDate < beginDate) {
+                throw new IllegalArgumentException("一份保险合同的失效日期必须大于生效日期");
+            }
+            return new InsuranceContract(this);
+        }
+    }
+}
+```
+
+​		**客户端**
+
+```java 
+public class Client {
+
+    public static void main(String[] args) {
+        // 创建构建器对象
+        InsuranceContract.ConcreteBuilder builder = new InsuranceContract.ConcreteBuilder("9527", 123L, 456L);
+        // 设置需要的数据，然后返回保险合同对象
+        InsuranceContract contract = builder.setPersonName("小明").setOtherData("test").build();
+        // 操作保险合同对象的方法
+        contract.someOperation();
+    }
+}
+```
+
+　　在本例中将具体建造者合并到了产品对象中，并将产品对象的**构造函数私有化**，防止客户端不使用构建器来构建产品对象，而是直接去使用new来构建产品对象所导致的问题。另外，这个构建器的功能就是为了创建被构建的对象，完全可以不用单独一个类。
+
+
+
+##### 4.原型模式
+
+​		原型模式虽然是创建型的模式，但是**与工程模式没有关系**，从名字即可看出，该模式的思想就是**将一个对象作为原型**，对其进行复制、克隆，**产生一个和原对象类似的新对象**。
+
+###### **1.原型模式定义**
+
+​		原型模式属于**对象的创建模式**。通过给出一个原型对象来指明所有创建的对象的类型，然后用复制这个原型对象的办法创建出更多同类型的对象。简言之：就是复制粘贴。这就是选型模式的用意。在Java中，复制对象是通过clone()实现的，原型类代码如下：
+
+```Java
+public class Prototype implements Cloneable {  
+  
+    public Object clone() throws CloneNotSupportedException {  
+        Prototype proto = (Prototype) super.clone();  
+        return proto;  
+    }  
+}  
+```
+
+###### 2.原型模式结构
+
+​		原型模式主要用于**对象的复制**，它的核心是就是类图中的**原型类Prototype**。Prototype类需要具备以下两个条件：
+
+-   **实现Cloneable接口**。在java语言有一个Cloneable接口，它的作用只有一个，就是在**运行时通知虚拟机可以安全地在实现了此接口的类上使用clone方法**。在java虚拟机中，只有实现了这个接口的类才可以被拷贝，否则在运行时会抛出 CloneNotSupportedException异常。
+-   **重写Object类中的clone方法**。Java中，所有类的父类都是 Object类，Object类中有一个clone方法，**作用是返回对象的一个拷贝，但是其作用域protected类型的，一般的类无法调用**，因此，Prototype类需要将clone方法的作用域修改为public类型。
+
+###### 3.浅度克隆和深度克隆
+
+​		首先需要了解对象深、浅复制的概念：
+
+-   **浅复制**：将一个对象复制后，基本数据类型的**变量都会重新创建**，而引用类型，指向的还是**原对象所指向的**。
+-   **深复制**：将一个对象复制后，不论是基本数据类型还有引用类型，都是**重新创建的**。简单来说，就是**深复制进行了完全彻底的复制，而浅复制不彻底。**
+
+​		**浅度克隆**
+​		只负责克隆**按值传递的数据**（比如基本数据类型、String类型），而**不复制它所引用的对象**。换言之，所有的对其他对象的引用都仍然指向原来的对象。
+
+```Java
+public class Person1  implements Cloneable{
+
+    //基本数据类型
+    private int age;
+    //String引用类型
+    private String name;
+
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Person1 clone() {
+        Person1 person =null;
+        try {
+             person = (Person1) super.clone();
+            return person;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+}
+
+public class Client {
+    public static void main(String[] args) {
+        Person1 p1=new Person1();
+        p1.setName("汤高");
+        p1.setAge(20);
+
+//      Person p2=p1;//地址相同  只是把引用给了p2 指向同一个地址
+//      System.out.println(p1==p2);//true
+        Person1 p2=p1.clone();
+        //拷贝  地址不同了 指向不同的地址
+        System.out.println("前后地址相同吗:  "+(p2==p1));
+        System.out.println("输出p1:" +p1.getName()+"\t"+p1.getAge());
+        System.out.println("输出p2:" +p2.getName()+"\t"+p2.getAge());
+
+        //修改拷贝后的对象的属性值
+        p2.setName("周思远");
+        p2.setAge(19);
+        System.out.println("输出p1:" +p1.getName()+"\t"+p1.getAge());
+        System.out.println("输出p2:" +p2.getName()+"\t"+p2.getAge());
+
+    }
+}
+
+//运行结果:
+前后地址相同吗: false
+输出p1:汤高 20
+输出p2:汤高 20
+输出p1:汤高 20
+输出p2:周思远 19
+```
+
+​		通过上述测试可知对于基本类型和String类型的数据前后都是指向不同的地址空间,改变一个不会影响其他的对象。但是如果包含引用类型比如对象、数组、集合等,就**只会克隆引用**，结果指向**同一个引用地址**：
+
+```Java
+public class Person2  implements Cloneable{
+
+    //基本数据类型
+    private int age;
+    //String引用类型
+    private String name;
+    //引用类型
+    private List<String> friends=new ArrayList<String>();
+    //对象
+    private School school;
+
+    public School getSchool() {
+        return school;
+    }
+    public void setSchool(School school) {
+        this.school = school;
+    }
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<String> getFriends() {
+        return friends;
+    }
+    public void setFriends(List<String> friends) {
+        this.friends = friends;
+    }
+
+
+    public Person2 clone() {
+        Person2 person =null;
+        try {
+             person = (Person2) super.clone();
+            return person;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+}
+
+
+
+public class Client2 {
+    public static void main(String[] args) {
+        Person2 p1=new Person2();
+
+        List<String> friends=new ArrayList<String>();
+        friends.add("汤小高");
+        friends.add("周小思");
+        p1.setFriends(friends);
+
+        Person2 p2=p1.clone();
+        System.out.println(p1.getFriends());
+        System.out.println(p2.getFriends());
+
+        friends.add("TSY");
+        p1.setFriends(friends);
+        System.out.println(p1.getFriends());
+        System.out.println(p2.getFriends());
+
+        School school=new School();
+        school.setName("清华");
+
+    }
+}
+
+//结果：
+[汤小高, 周小思]
+[汤小高, 周小思]
+[汤小高, 周小思, TSY]
+[汤小高, 周小思, TSY]
+
+public class Client3 {
+    public static void main(String[] args) {
+        Person2 p1=new Person2();
+
+        School school=new School();
+        school.setName("清华");
+        p1.setSchool(school);
+
+        Person2 p2=p1.clone();
+
+        System.out.println(p1.getSchool()==p2.getSchool());
+        System.out.println(p1.getSchool());
+        System.out.println(p2.getSchool());
+        school.setName("北大");
+        p1.setSchool(school);
+
+        System.out.println(p1.getSchool());//北大
+        System.out.println(p2.getSchool());//北大
+    }
+}
+
+//结果：
+true
+学校名: 清华
+学校名: 清华
+学校名: 北大
+学校名: 北大
+```
 
