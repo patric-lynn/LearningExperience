@@ -666,15 +666,21 @@ Spring 提供了一种使用 ControllerAdvice 处理异常的非常有用的方�
 
 ​		从这一节开始，我们详细介绍Java中23种设计模式的概念，应用场景等情况，并结合他们的特点及设计模式的原则进行分析。 
 
+##### 四类创建型模式
+
 ##### 1.单例模式
 
-​		单例对象（Singleton）是一种常用的设计模式。在Java应用中，单例对象能保证在一个JVM中，**该对象只有一个实例存在**。这样的模式有几个好处：
+​		**单例对象（Singleton）是一种常用的设计模式。**
+
+###### **1.单例模式概念**
+
+​		在Java应用中，单例对象能保证在一个JVM中，**该对象只有一个实例存在**。这样的模式有几个好处：
 
 -   某些类创建比较频繁，对于一些**大型的对象**，这是一笔**很大的系统开销**。
 -   **省去了new操作符**，降低了系统内存的使用频率，**减轻GC压力**。
 -   有些类如交易所的**核心交易引擎**，控制着交易流程，如果该类可以创建多个的话，系统完全乱了。（就像一个军队出现了多个司令员同时指挥，肯定会乱成一团），所以只有使用单例模式，才能保证核心交易服务器独立控制整个流程。
 
-###### **1.单例模式特点**
+​       **单例模式特点:**
 
 -   单例类只能有**一个实例**。
 -   单例类必须**自己创建自己的唯一实例**。
@@ -1764,7 +1770,6 @@ public class Client {
 
 ```Java
 public class Prototype implements Cloneable {  
-  
     public Object clone() throws CloneNotSupportedException {  
         Prototype proto = (Prototype) super.clone();  
         return proto;  
@@ -1774,19 +1779,27 @@ public class Prototype implements Cloneable {
 
 ###### 2.原型模式结构
 
-​		原型模式主要用于**对象的复制**，它的核心是就是类图中的**原型类Prototype**。Prototype类需要具备以下两个条件：
+​		原型模式主要用于**对象的复制**，它的核心是就是类图中的**原型类Prototype**。
+
+​		Prototype类需要具备**以下两个条件**：
 
 -   **实现Cloneable接口**。在java语言有一个Cloneable接口，它的作用只有一个，就是在**运行时通知虚拟机可以安全地在实现了此接口的类上使用clone方法**。在java虚拟机中，只有实现了这个接口的类才可以被拷贝，否则在运行时会抛出 CloneNotSupportedException异常。
 -   **重写Object类中的clone方法**。Java中，所有类的父类都是 Object类，Object类中有一个clone方法，**作用是返回对象的一个拷贝，但是其作用域protected类型的，一般的类无法调用**，因此，Prototype类需要将clone方法的作用域修改为public类型。
 
-###### 3.浅度克隆和深度克隆
+###### 3.浅复制与深复制
 
 ​		首先需要了解对象深、浅复制的概念：
 
 -   **浅复制**：将一个对象复制后，基本数据类型的**变量都会重新创建**，而引用类型，指向的还是**原对象所指向的**。
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200412180848269.png" alt="image-20200412180848269" style="zoom:40%;" />
+
 -   **深复制**：将一个对象复制后，不论是基本数据类型还有引用类型，都是**重新创建的**。简单来说，就是**深复制进行了完全彻底的复制，而浅复制不彻底。**
 
-​		**浅度克隆**
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200412180825788.png" alt="image-20200412180825788" style="zoom:40%;" />
+
+###### **4.浅度克隆**
+
 ​		只负责克隆**按值传递的数据**（比如基本数据类型、String类型），而**不复制它所引用的对象**。换言之，所有的对其他对象的引用都仍然指向原来的对象。
 
 ```Java
@@ -1829,8 +1842,9 @@ public class Client {
         p1.setName("汤高");
         p1.setAge(20);
 
-//      Person p2=p1;//地址相同  只是把引用给了p2 指向同一个地址
-//      System.out.println(p1==p2);//true
+        Person p2=p1;//地址相同  只是把引用给了p2 指向同一个地址
+        System.out.println(p1==p2);//true
+      
         Person1 p2=p1.clone();
         //拷贝  地址不同了 指向不同的地址
         System.out.println("前后地址相同吗:  "+(p2==p1));
@@ -1847,6 +1861,7 @@ public class Client {
 }
 
 //运行结果:
+true
 前后地址相同吗: false
 输出p1:汤高 20
 输出p2:汤高 20
@@ -1854,7 +1869,7 @@ public class Client {
 输出p2:周思远 19
 ```
 
-​		通过上述测试可知对于基本类型和String类型的数据前后都是指向不同的地址空间,改变一个不会影响其他的对象。但是如果包含引用类型比如对象、数组、集合等,就**只会克隆引用**，结果指向**同一个引用地址**：
+​		通过上述测试可知对于基本类型和String类型的数据前后都是**指向不同的地址空间**,改变一个不会影响其他的对象。但是如果包含引用类型比如对象、数组、集合等,就**只会克隆引用**，结果指向**同一个引用地址**：
 
 ```Java
 public class Person2  implements Cloneable{
@@ -1908,8 +1923,6 @@ public class Person2  implements Cloneable{
 
 }
 
-
-
 public class Client2 {
     public static void main(String[] args) {
         Person2 p1=new Person2();
@@ -1928,9 +1941,6 @@ public class Client2 {
         System.out.println(p1.getFriends());
         System.out.println(p2.getFriends());
 
-        School school=new School();
-        school.setName("清华");
-
     }
 }
 
@@ -1943,11 +1953,11 @@ public class Client2 {
 public class Client3 {
     public static void main(String[] args) {
         Person2 p1=new Person2();
-
+				//修改学校名
         School school=new School();
         school.setName("清华");
         p1.setSchool(school);
-
+				//克隆一个对象
         Person2 p2=p1.clone();
 
         System.out.println(p1.getSchool()==p2.getSchool());
@@ -1969,3 +1979,427 @@ true
 学校名: 北大
 ```
 
+###### **5.深度克隆**
+
+​		除了浅度克隆要克隆的值外，还**负责克隆引用类型的数据**。那些引用其他对象的变量将指向被复制过的新对象，而不再是原有的那些被引用的对象。换言之，深度克隆把要复制的对象所引用的**对象都复制了一遍**，而这种对被引用到的对象的复制叫做间接复制。
+​		深度克隆要深入到多少层，是一个不易确定的问题。在决定以深度克隆的方式复制一个对象的时候，必须决定对间接复制的对象时采取浅度克隆还是继续采用深度克隆。因此，在采取深度克隆时，**需要决定多深才算深**。此外，在深度克隆的过程中，很可能会**出现循环引用的问题，必须小心处理**。
+
+```Java
+//要实现深度克隆 必须修改clone()方法
+public class Person2  implements Cloneable{
+
+    //基本数据类型
+    private int age;
+    //String引用类型
+    private String name;
+    //引用类型
+    private List<String> friends=new ArrayList<String>();
+    //对象
+    private School school;
+
+    public School getSchool() {
+        return school;
+    }
+    public void setSchool(School school) {
+        this.school = school;
+    }
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<String> getFriends() {
+        return friends;
+    }
+    public void setFriends(List<String> friends) {
+        this.friends = friends;
+    }
+   //修改后的clone方法
+    public Person2 clone() {
+        try {
+            Person2 person = (Person2) super.clone();
+            if(this.getFriends()!=null){
+                List<String> friends=new ArrayList<String>();
+                for(String friend:this.getFriends()){
+                    friends.add(friend);
+                }
+                person.setFriends(friends);
+            }
+
+            if(this.getSchool()!=null){
+                 School school=new School();
+                 school.setName(this.getSchool().getName());
+                 person.setSchool(school);
+
+            }
+            return person;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+}
+
+//测试类同上
+  
+//Client2结果：
+[汤小高, 周小思]
+[汤小高, 周小思]
+[汤小高, 周小思, TSY]
+  
+//Client3结果：
+false
+学校名: 清华
+学校名: 清华
+学校名: 北大
+学校名: 清华
+```
+
+
+
+##### 结构模式
+
+##### 5.适配器模式
+
+ 		适配器模式将某个类的**接口转换成客户端期望的另一个接口表示**，目的是消除由于**接口不匹配所造成的类的兼容性问题**。主要分为三类：**类的适配器模式**、**对象的适配器模式**、**接口的适配器模式**。
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413005609200.png" alt="image-20200413005609200" style="zoom:30%;" />
+
+###### 1.适配器模式的概念
+
+　	**1.适配器模式概念与作用**
+
+​		适配器模式把一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作。即Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以在一起工作。例如220V充电接口转110V接口。
+
+​		**2.适配器模式中的角色**
+
+-   **目标接口**（Target）：客户所期待的接口。目标可以是具体的或抽象的类，也可以是接口。
+-   **需要适配的类**（Adaptee）：需要适配的类或适配者类。
+-   **适配器**（Adapter）：通过**包装一个需要适配的类或对象或方法**，把原接口转换成目标接口。
+
+​        **3.适配器模式的使用场景**
+
+-   **类的适配器模式**：当希望将**一个类**转换成满足**另一个新接口**的类时，可以使用类的适配器模式，创建一个新类，继承原有的类，实现新的接口即可。
+-   **对象的适配器模式**：当希望将**一个对象**转换成满足**另一个新接口的对象**时，可以创建一个Wrapper类，持有原类的一个实例，在Wrapper类的方法中，调用实例的方法就行。
+-   **接口的适配器模式**：当**不希望实现一个接口中所有的方法时**，可以创建**一个抽象类Wrapper**，实现所有方法，我们写别的类的时候，继承抽象类即可。
+
+​        **4.适配器模式的优点**
+
+-   **更好的复用性**：系统需要使用现有的类，而此类的接口不符合系统的需要。那么通过适配器模式就可以让这些功能得到更好的复用。
+-   **更好的扩展性**：在实现适配器功能的时候，可以**调用自己开发的功能**，从而自然地扩展系统的功能。
+
+​       **5.适配器模式的缺点**
+
+　　过多的使用适配器，会让系统非常零乱，不易整体进行把握。比如，明明看到调用的是A接口，其实内部被适配成了B接口的实现，一个系统如果太多出现这种情况，无异于一场灾难。因此如果不是很有必要，可以不使用适配器，而是**直接对系统进行重构**。
+
+
+
+
+
+###### 2.类的适配器模式
+
+​		核心思想就是：有一个Source类，拥有一个方法，待适配，目标接口是Targetable，通过Adapter类，将Source的功能扩展到Targetable里.
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413002146674.png" alt="image-20200413002146674" style="zoom:40%;" />
+
+```Java
+//目标接口，或称为标准接口 
+public interface Target {
+    //普通功能
+    public void request();
+}
+
+//已存在的、具有特殊功能、但不符合我们既有的标准接口的类  
+public class Adaptee {
+    public void specificRequest() {
+        System.out.println("被适配类...我是两孔插座  具有特殊功能");
+    }
+}
+
+//适配器类，继承了被适配类，同时实现标准接口
+public class Adapter extends Adaptee implements Target  {
+    @Override
+    public void request() {
+        System.out.println("我是适配器类 我能适配任何两孔插座 让它正常工作");
+        this.specificRequest();
+    }
+ }
+
+
+public class Client {
+    public static void main(String[] args) {
+         Target adapter = new Adapter(); 
+         //通过适配器调用特殊功能
+         adapter.request();  
+    }
+}
+```
+
+
+
+
+
+###### 3.对象的适配器模式
+
+​		基本思路和类的适配器模式相同，只是将Adapter类作修改，这次不继承Source类，而是持有Source类的实例，以达到解决兼容性的问题。（采用对象组合方式实现）
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160128161731671.jpeg" alt="这里写图片描述" style="zoom:80%;" />
+
+```Java
+//目标接口，或称为标准接口 
+public interface Target {
+    //普通功能
+    public void request();
+}
+
+//已存在的、具有特殊功能、但不符合我们既有的标准接口的类  
+public class Adaptee {
+    public void specificRequest() {
+        System.out.println("被适配类...我是两孔插座  具有特殊功能");
+    }
+} 
+
+//适配器类，直接关联被适配类，同时实现标准接口  
+class Adapter implements Target {
+    // 直接关联被适配类
+    private Adaptee adaptee;
+
+    // 可以通过构造函数传入具体需要适配的被适配类对象
+    public Adapter(Adaptee adaptee) {
+        this.adaptee = adaptee;
+    }
+
+    public void request() {
+        // 这里是使用委托的方式完成特殊功能
+        System.out.println("我是适配器类 我能适配任何两孔插座 让它正常工作");
+        this.adaptee.specificRequest();
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        //使用特殊功能类，即适配类，  
+        // 需要先创建一个被适配类的对象作为参数  
+        Target adapter = new Adapter(new Adaptee());  
+        adapter.request();  
+    }
+}
+```
+
+​		从类图中我们知道需要修改的只不过就是 **Adapter 类的内部结构**，即 Adapter 自身必须**先拥有一个被适配类的对象**，再把具体的特殊功能**委托给这个对象来实现**。使用对象适配器模式，可以使得 Adapter 类（适配类）根据传入的 Adaptee 对象达到适配**多个不同被适配类的功能**，当然，此时我们可以为多个被适配类提取出一个接口或抽象类。这样看起来的话，似乎对象适配器模式更加灵活一点。
+
+​		**类适配器和对象适配器的权衡**
+
+　　● 类适配器使用**对象继承的方式**，是静态的定义方式；而对象适配器使用**对象组合的方式**，是动态组合的方式。对于类适配器，仅仅引入了一个对象，并**不需要额外的引用来间接得到Adaptee**。对于对象适配器，需要**额外的引用来间接得到Adaptee**。
+
+　　● 对于对象适配器，一个适配器可以**把多种不同的源适配到同一个目标**。换言之，同一个适配器可以把**源类和它的子类**都适配到目标接口。因为对象适配器采用的是对象组合的关系，只要对象类型正确，是不是子类都无所谓。
+
+​		建议尽量使用**对象适配器**的实现方式，多用**合成/聚合**、少用**继承**。当然，具体问题具体分析，根据需要来选用实现方式，最适合的才是最好的。
+
+
+
+###### 4.接口的适配器模式
+
+​		第三种适配器模式是**接口的适配器模式**，接口的适配器是这样的：有时我们写的一个**接口中有多个抽象方法**，当我们写该接口的实现类时，必须实现该接口的所有方法，这明显有时比较浪费，因为并不是所有的方法都是我们需要的，有时只需要某一些，此处为了解决这个问题，我们引入了接口的适配器模式，借助于**一个抽象类**，该抽象类实现了该接口，实现了所有的方法，而我们不和原始的接口打交道，只和该抽象类取得联系，所以我们写一个类，**继承该抽象类，重写我们需要的方法**就行。看一下类图：
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413003209779.png" alt="image-20200413003209779" style="zoom:35%;" />
+
+​		这个很好理解，在实际开发中，我们也常会遇到这种接口中定义了太多的方法，以致于有时我们在一些实现类中并不是都需要。
+
+```Java
+public interface Sourceable {  
+      
+    public void method1();  
+    public void method2();  
+}  
+public abstract class Wrapper2 implements Sourceable{  
+      
+    public void method1(){}  
+    public void method2(){}  
+}  
+public class SourceSub1 extends Wrapper2 {  
+    public void method1(){  
+        System.out.println("the sourceable interface's first Sub1!");  
+    }  
+}  
+public class SourceSub2 extends Wrapper2 {  
+    public void method2(){  
+        System.out.println("the sourceable interface's second Sub2!");  
+    }  
+}  
+public class WrapperTest {  
+  
+    public static void main(String[] args) {  
+        Sourceable source1 = new SourceSub1();  
+        Sourceable source2 = new SourceSub2();  
+          
+        source1.method1();  
+        source1.method2();  
+        source2.method1();  
+        source2.method2();  
+    }  
+}  
+
+//测试输出：
+the sourceable interface's first Sub1!
+the sourceable interface's second Sub2!
+```
+
+
+
+###### 5.**缺省适配模式**
+
+　　缺省适配(Default Adapter)模式为一个接口**提供缺省实现**，这样子类型可以从这个缺省实现进行扩展，而不必从原有接口进行扩展。作为适配器模式的一个特例，缺省是适配模式在JAVA语言中有着特殊的应用。就是一个抽象类对功能接口的所有功能做空实现，然后子类继承这个抽象类，这样就可以对部分功能进行实现或拓展了。
+
+​		**功能接口**
+
+```java
+/**
+ * 功能接口 谈恋爱后具备如下功能
+ *  牵手
+ *  接吻
+ *  看电影
+ *  情侣晚餐
+ *  回家见父母
+ */
+public interface Love {
+    //牵手  该功能是恋爱后经常会有的波
+    public void hand();
+
+    //接吻
+    public void kiss();
+
+    //看电影
+    public void movie();
+
+    //情侣晚餐
+    public void have();
+
+    //回家见父母
+    public void backHome();
+
+    //女朋友是谁
+    public String getGirlFriend();
+
+}
+```
+
+​		**缺省适配类**
+
+```java
+/**
+ * 抽象类  
+ * 交往类  实现恋爱接口
+ *  哈哈 交往多了自然就谈爱了吗 嘻嘻嘻!
+ *  但是交往毕竟不是谈恋爱  虽然它具有了谈恋爱的雏形 但是毕竟不是
+ *  所以对谈恋爱的所有功能做了空实现 只有架子
+ *  相当于没有 但是未来可能会有 
+ * @author Administrator
+ *
+ */
+public abstract class Communication implements Love {
+    //全是空实现  
+    @Override
+    public void hand() {}
+
+    @Override
+    public void kiss() {}
+
+    @Override
+    public void movie() {}
+
+    @Override
+    public void have() {}
+
+    @Override
+    public void backHome() {}
+
+    @Override
+    public String getGirlFriend() {
+        return null;
+    }
+
+}
+```
+
+具体实现
+
+```Java
+/**
+ * 具体的类 boy 继承了交往Communication抽象类 
+ * 本类已经从交往慢慢恋爱了  所以它已经具备了谈恋爱接口
+ * 的所有功能  但是有些功能他每天不可能天天都调用
+ * 比如 看电影 情侣晚餐 回家见父母等等 
+ * (因为分隔两地,不能天天见面 但是他们一见面就和过年一样高兴
+ * 他们就可以调用恋爱中的一些功能
+ * 比如他们 可以看电影 共进晚餐
+ * )
+ * 
+ * @author Administrator
+ *
+ */
+
+public class boy extends Communication {
+        //看电影
+        public void movie(){
+            System.out.println("我们一起看电影 哈哈");
+        }
+
+        //情侣晚餐
+        public void have(){
+            System.out.println("我们一起吃晚餐 哈哈");
+        }
+
+        //女朋友是谁
+        public String getGirlFriend(){
+            return "周思远";
+        }
+}
+```
+
+客户端：
+
+```Java
+public class Client {
+    public static void main(String[] args) {
+
+        Love tanggao=new boy();
+        tanggao.movie();
+        tanggao.have();
+
+        System.out.println("女朋友是 :"+tanggao.getGirlFriend());
+    }
+}
+
+//结果:
+我们一起看电影 哈哈
+我们一起吃晚餐 哈哈
+女朋友是 :周思远
+```
+
+​		在很多情况下，必须让**一个具体类实现某一个接口**，但是这个类又用不到接口所规定的所有的方法。通常的处理方法是，这个具体类要实现所有的方法，那些有用的方法要有实现，那些**没有用的方法也要有空的、平庸的实现**。这些空的方法是一种浪费，有时也是一种混乱。除非看过这些空方法的代码，程序员可能会以为这些方法不是空的。即便他知道其中有一些方法是空的，也不一定知道哪些方法是空的，哪些方法不是空的，除非看过这些方法的源代码或是文档。
+
+　	缺省适配模式可以很好的处理这一情况。可以设计**一个抽象的适配器类实现接口**，此抽象类要给接口所要求的每一种方法都提供一个空的方法。就像具体帮助类boy一样,他只实现某一部分功能,因为他只用到了某一部分功能而已，如果以后要用，再实现。但是今天他不用，就没必要该功能了！
+
+​		适配器模式的用意是要改变源的接口，以便于目标接口相容。缺省适配的用意稍有不同，它是为了方便建立一个不平庸的适配器类而提供的一种平庸实现。在任何时候，如果不准备实现一个接口的所有方法时，就可以使用“缺省适配模式”制造一个抽象类，给出所有方法的平庸的具体实现。这样，从这个抽象类再继承下去的子类就不必实现所有的方法了
+
+
+
+##### 6.装饰模式
+
+​		顾名思义，装饰模式就是给**一个对象增加一些新的功能**，而且是动态的，要求装饰对象和被装饰对象实现同一个接口，装饰对象持有被装饰对象的实例，关系图如下：
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/e1b8b6a3-0150-31ae-8f77-7c3d888b6f80.jpg" alt="img" style="zoom:75%;" />
+
+​		Source类是被装饰类，Decorator类是一个装饰类，可以为Source类动态的添加一些功能.
+
+###### 1.装饰模式的概念
