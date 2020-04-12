@@ -2403,3 +2403,81 @@ public class Client {
 ​		Source类是被装饰类，Decorator类是一个装饰类，可以为Source类动态的添加一些功能.
 
 ###### 1.装饰模式的概念
+
+-   **装饰模式(Decorator)的定义**：又名包装(Wrapper)模式，装饰模式以对客户端透明的方式扩展对象的功能，是继承关系的一个替代方案。
+-   装饰模式以对客户端透明的方式**动态的给一个对象附加上更多的责任**。换言之客户端并不会觉的对象在装饰前和装饰后有什么区别。
+-   装饰模式可以在不创造更多的子类的模式下，**将对象的功能加以扩展**。
+
+**2.装饰模式的结构**
+
+​		装饰模式的**类图**如下：
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160129181831723.png" alt="装饰模式类图" style="zoom:70%;" />
+
+​		**装饰模式中的角色有：**
+
+​	● **抽象构件(Component)角色**：给出一个抽象接口，以规范准备接收附加责任的对象。
+
+ 	● **具体构件(ConcreteComponent)角色**：定义一个**将要接收附加责任的类**。
+
+​	● **装饰(Decorator)角色**：持有一个**构件(Component)对象的实例**，并定义一个与抽象构件接口一致的接口。
+
+​	● **具体装饰(ConcreteDecorator)角色**：负责**给构件对象“贴上”附加的责任**。
+
+​		**源代码**
+
+```java
+//抽象构件角色
+public interface Component {
+
+    public void sampleOperation();
+
+}
+
+//具体构件角色
+public class ConcreteComponent implements Component {
+
+    @Override
+    public void sampleOperation() {
+        // 写相关的业务代码    }
+}
+
+//装饰角色
+public class Decorator implements Component{
+    private Component component;
+
+    public Decorator(Component component){
+        this.component = component;
+    }
+
+    @Override
+    public void sampleOperation() {
+        // 委派给构件        
+    component.sampleOperation();
+    }
+}
+
+//具体装饰角色
+public class ConcreteDecoratorA extends Decorator {
+
+    public ConcreteDecoratorA(Component component) {
+        super(component);
+    }
+
+    @Override
+    public void sampleOperation() {
+　　　　　super.sampleOperation();
+        // 写相关的业务代码    }
+}
+public class ConcreteDecoratorB extends Decorator {
+
+    public ConcreteDecoratorB(Component component) {
+        super(component);
+    }
+
+    @Override
+    public void sampleOperation() {
+　　　　  super.sampleOperation();
+        // 写相关的业务代码    }
+}
+```
