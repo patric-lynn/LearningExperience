@@ -1,4 +1,4 @@
-### Spring经典面试问题
+### Spring基础知识
 
 #### Spring概述
 
@@ -397,7 +397,7 @@ AOP 的工作重心在于如何将增强编织目标对象的连接点上, 这�
 
 
 
-### SpringBoot经典面试问题
+### SpringBoot知识集合
 
 #### 概述
 
@@ -2066,7 +2066,7 @@ false
 
 
 
-##### 结构模式
+##### 七类结构模式
 
 ##### 5.适配器模式
 
@@ -2408,7 +2408,27 @@ public class Client {
 -   装饰模式以对客户端透明的方式**动态的给一个对象附加上更多的责任**。换言之客户端并不会觉的对象在装饰前和装饰后有什么区别。
 -   装饰模式可以在不创造更多的子类的模式下，**将对象的功能加以扩展**。
 
-**2.装饰模式的结构**
+**装饰模式的特点：**
+
+-   装饰对象和真实对象具有**相同的接口**，这样客户端对象就可以以真实对象的**相同的方式**和装饰对象交互。
+-   装饰对象包含**一个真实对象的引用(reference)**.
+-   装饰对象接受所有来自客户端的请求，它把这些请求**转发给真实的对象**。
+-   装饰对象可以在**转发这些请求以前或者以后增加一些附加的功能**。这样就能确保在运行时，不用修改给定对象结构就可以在外部增加附加的功能。在面向对象的程序设计中，通常是**使用继承的关系来扩展给定类的功能**。
+
+**装饰模式与类继承的区别**
+
+-   装饰模式是**一种动态行为**，对已经存在类进行随意组合，而类的继承是一种**静态的行为**，一个类定义成什么样的，该类的对象便具有什么样的功能，无法动态的改变。
+-   装饰模式**扩展的是对象的功能**，不需要增加类的数量，而类继承**扩展的是类的功能**，在继承的关系中，如果我们想增加一个对象的功能，我们只能通过继承关系，在子类中增加方法。
+-   装饰模式是在不改变原类文件和使用继承的情况下，动态的扩展一个对象的功能，它是通过创建一个包装对象，也就是装饰来包裹真是的对象。
+
+**装饰模式的使用场景**
+
+-   需要**扩展一个类的功能**。
+-   **动态的为一个对象增加功能，而且还能动态撤销**。（继承不能做到这一点，继承的功能是静态的，不能动态增删。）缺点：产生过多**相似的对象，不易排错**！
+
+
+
+###### **2.装饰模式的结构**
 
 ​		装饰模式的**类图**如下：
 
@@ -2481,3 +2501,1323 @@ public class ConcreteDecoratorB extends Decorator {
         // 写相关的业务代码    }
 }
 ```
+
+###### **3.具体案列**
+
+​		本例中抽象构建角色由**Programmer程序员接口扮演**，具体构件角色由**类汤高扮演**， 他实现了程序员具有的功能，装饰构件由 **类Derector扮演** 它必须也实现抽象构件接口，具体装饰构件角色由 **类Hacker(黑客)** 和**类 SoftwareAchitect(架构师)扮演**，具体程序员汤高有编程能力,可以给他赋予更多能力 每赋予一种能力,他就多一个技能 这是通过装饰构件实现的
+
+```java
+/**
+ * 抽象构件角色
+ *  程序员接口   程序员具有编程的能力
+ * @author Administrator
+ *
+ */
+public interface Programmer {
+    //编程
+    public void programme();
+}
+/**
+ * 具体构件角色  
+ *  汤高是一个具体的程序员  
+ * 那么他就具有编程能力
+ * @author Administrator
+ *
+ */
+public class 汤高 implements Programmer {
+
+    @Override
+    public void programme() {
+        System.out.println("我是一个程序员, 我能编程");
+    }
+
+}
+/**
+ * 装饰角色
+ *  
+ * @author Administrator
+ *
+ */
+public class Derector implements Programmer{
+    private Programmer programmer;
+
+    public Derector(Programmer programmer) {
+        this.programmer = programmer;
+    }
+
+    @Override
+    public void programme() {
+        programmer.programme();
+        //附加的责任或者功能
+    }
+}
+/**
+ * 　具体装饰角色 1 
+ *  黑客类   他具有附加的功能  他能入侵别人的电脑
+ * @author Administrator
+ *
+ */
+public class Hacker extends Derector {
+
+    public Hacker(Programmer programmer) {
+        super(programmer);
+    }
+
+    @Override
+    public void programme() {
+        super.programme();
+        //附加的责任或者功能
+        System.out.println("我具有黑客的技能   我能入侵别人的电脑");
+    }
+
+}
+/**
+ * 　具体装饰角色2  
+ *  软件架构师类   他具有附加的功能  能设计总个网站或系统的骨
+ * @author Administrator
+ *
+ */
+public class SoftwareArchitect extends Derector {
+
+    public SoftwareArchitect(Programmer programmer) {
+        super(programmer);
+    }
+
+    @Override
+    public void programme() {
+        super.programme();
+        //附加的责任或者功能
+        System.out.println("我具有架构师的技能  我能设计总个网站或系统的骨架");
+    }
+}
+//客户端
+public class Client {
+
+    public static void main(String[] args) {
+        //创建构件对象   汤高 ->他是一个具体的程序员 
+        //但是现在他只有编程能力  那怎么行
+        //必须赋予他更大的能力  不然怎么赚大钱!
+        //所以 上帝给他装饰了一番  瞬间提神了他的B格
+        Programmer programmer=new 汤高();
+
+        //装饰类登场  屌丝  我来装饰你  让你具有更大的能力 
+        Derector hacker=new Hacker(programmer);
+        //这下汤高这个屌丝程序员就具有黑客的技能包了
+        //这下就没有谁敢叫他屌丝了吧  哈哈  不然分分钟让你电脑崩溃
+        System.out.println("第一次装饰");
+        hacker.programme();
+
+        //程序员还不满足  他还要更多的技能  因为他要逆袭
+        //所以上帝再给他装饰了一下 
+        //在他具有黑客技能的基础上另外赋予了他架构师的功能
+        System.out.println("--------------第二次装饰");
+        Derector  achitect=new SoftwareArchitect(hacker);
+
+        achitect.programme();
+        //也可以一步装饰两个技能 因为他们有共同的父类抽象构件接口 Programmer
+        System.out.println("------------一步装饰两个技能");
+        Derector achitect1=new SoftwareArchitect(   new  Hacker(new 汤高() ) );
+        achitect1.programme();
+    }
+
+}
+
+//结果：
+第一次装饰
+我是一个程序员, 我能编程
+我具有黑客的技能 我能入侵别人的电脑
+————–第二次装饰
+我是一个程序员, 我能编程
+我具有黑客的技能 我能入侵别人的电脑
+我具有架构师的技能 我能设计总个网站或系统的骨架
+————一步装饰两个技能
+我是一个程序员, 我能编程
+我具有黑客的技能 我能入侵别人的电脑
+我具有架构师的技能 我能设计总个网站或系统的骨架
+```
+
+
+
+###### 4.装饰模式、适配器模式、代理模式区别
+
+-   **适配器模式**：一个适配允许通常因为接口不兼容而不能在一起工作的类工作在一起，做法是将类自己的接口包裹在一个已存在的类中。适配器的**特点在于兼容**，从代码上的特点来说，适配类与原有的类**具有相同的接口**，并且**持有新的目标对象**。
+
+-   **装饰器模式**：原有的不能满足现有的需求，对**原有的进行增强**。装饰器模式特点在于增强，他的特点是**被装饰类和所有的装饰类必须实现同一个接口**，而且必须持有被装饰的对象，可以无限装饰。
+-   **代理模式**，同一个类而去调用另一个类的方法，**不对这个方法进行直接操作**。代理模式的特点在于**隔离**，隔离调用类和被调用类的关系，**通过一个代理类去调用**。
+
+
+
+##### 7.代理模式
+
+​		其实每个模式名称就表明了该模式的作用，代理模式就是**多一个代理类**出来，**替原对象进行一些操作**，比如我们在租房子的时候会去找中介，为什么呢？因为你对该地区房屋的信息掌握的不够全面，希望找一个更熟悉的人去帮你做，此处的代理就是这个意思。再如我们有的时候打官司，需要请律师，因为律师在法律方面有专长，可以替我们进行操作，表达我们的想法。先来看看关系图：
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413155027434.png" alt="image-20200413155027434" style="zoom:40%;" />
+
+###### 1.代理模式的特点
+
+​		代理模式是**对象的结构模式**。代理模式**给某一个对象提供一个代理对象**，并由代理对象控制对原对象的引用
+
+
+
+**代理模式的应用场景**
+
+如果已有的方法在使用的时候需要对原有的方法进行改进，此时有两种办法：
+
+1、修改原有的方法来适应。这样违反了“对扩展开放，对修改关闭”的原则。
+
+2、就是采用一个代理类调用原有的方法，且对产生的结果进行控制。这种方法就是代理模式。
+
+使用代理模式，可以将功能划分的更加清晰，有助于后期维护！
+
+
+
+###### 2.静态代理
+
+在代理模式中的角色：
+
+-   **抽象主题角色**：声明了**目标对象和代理对象的共同接口**，这样一来在任何可以使用目标对象的地方都可以使用代理对象。
+-   **真实主题角色**：定义了**代理对象所代表的目标对象**。
+-   **代理主题角色**：代理对象内部**含有目标对象的引用**，从而可以在任何时候操作目标对象；代理对象提供一个与目标对象相同的接口，以便**可以在任何时候替代目标对象**。代理对象通常在客户端调用传递给目标对象之前或之后，执行某个操作，而不是单纯地将调用传递给目标对象。它可以增加一些真实主题里面没有的功能。
+
+​        生活中的例子：过年加班比较忙，没空去买火车票，这时可以打个电话到附近的票务中心，叫他们帮你买张回家的火车票，当然这会附加额外的劳务费。但要清楚票务中心自己并不卖票，只有火车站才真正卖票，票务中心卖给你的票其实是通过火车站实现的。这个例子，你就是“客户”，票务中心就是“代理角色”，火车站是“真实角色”，卖票称为“**抽象角色**”！
+
+​		**静态代理**
+
+-   **优点**：对真实对象进行封装，**不会修改目标类的代码**。
+-   **缺点**：1.多个不同类型目标对象需要代理时，就**需要建立多个代理类**，造成类的膨胀
+    	        2.**代码的冗余**
+    	        3.**编译期加入，不够灵活**
+
+```Java
+//抽象角色：声明真实对象和代理对象的共同接口；
+public interface  TicketManager { 
+    /**
+     * 售票
+     */
+    public  void  soldTicket();
+    /**
+     * 改签
+     */
+    public void changeTicket();
+    /**
+     * 退票
+     */
+    public void returnTicket();
+}   
+//真实主题角色
+public class TicketManagerImpl implements TicketManager {
+
+    @Override
+    public void soldTicket() {
+        //checkIdentity();
+        System.out.println("售票");
+    }
+
+    @Override
+    public void changeTicket(){
+        //checkIdentity();
+        System.out.println("改签");
+    }
+
+    @Override
+    public void returnTicket() {
+        //checkIdentity();
+        System.out.println("退票");
+    }
+
+    /**
+     * 身份验证
+     */
+    public void checkIdentity(){
+        System.out.println("身份验证");
+    }
+}
+//代理主题角色（添加了身份验证功能）
+public class StaticProxyTicketManager implements TicketManager {
+    TicketManager ticketManager;//目标对象的引用
+
+    public StaticProxyTicketManager(TicketManager ticketManager) {
+        this.ticketManager = ticketManager;
+    }
+
+    @Override
+    public void soldTicket() {
+        checkIdentity();
+        ticketManager.soldTicket();
+    }
+
+    @Override
+    public void changeTicket() {
+        checkIdentity();
+        ticketManager.changeTicket();
+    }
+
+    @Override
+    public void returnTicket() {
+        checkIdentity();
+        ticketManager.changeTicket();
+    }
+    /**
+     * 身份验证
+     */
+    public void checkIdentity(){
+        System.out.println("身份验证--------------");
+    }
+
+}
+//第二个代理主题角色(添加了日志功能)
+//代理类  实现同一个接口
+public class LogProxy implements TicketManager {
+    TicketManager ticketManager;//目标类的引用
+  
+    public LogProxy(TicketManager ticketManager){
+        this.ticketManager=ticketManager;
+    }
+    @Override
+    public void soldTicket() {
+        ticketManager.soldTicket();
+        log();//后置增强
+    }
+
+    @Override
+    public void changeTicket() {
+        ticketManager.changeTicket();
+        log();
+    }
+
+    @Override
+    public void returnTicket() {
+        ticketManager.returnTicket();
+        log();
+
+    }
+    //增强
+    private void log() {
+        System.out.println("日志...");
+
+    }
+
+}
+//客户端
+public class Test {
+    public static void main(String[] args) {
+        //装饰模式   new TicketManagerImpl()  真实的目标对象
+        //TicketManager tm=new StaticProxyTicketManager(new TicketManagerImpl());
+        TicketManager tm=new LogProxy(new StaticProxyTicketManager(new TicketManagerImpl()));
+
+        tm.soldTicket();
+        tm.changeTicket();
+        tm.returnTicket();
+    }
+}
+//结果：
+身份验证————–
+售票
+日志…
+身份验证————–
+改签
+日志…
+身份验证————–
+改签
+日志…
+```
+
+
+​		从上面例子可以看出 **客户端通过代理来购票** 而代理实际上不能卖票给客户，他实际上是通过**目标对象卖票给客户的**，也就是说他是通过真实主题的目标对象实现给客户端卖票的功能，他只是一个中介，但我们可以在它里面增加一些功能，比如**身份验证**或者**宣传打广告**等其他的功能。静态代理类：在程序运行前，代理类的.class文件就已经存在了，已确定被代理的对象
+
+
+
+###### 3.动态代理
+
+​		**动态代理（Dynamic Proxy）**：相比静态代理，动态代理**具有更强的灵活性**，因为它不用在我们设计实现的时候就指定某一个代理类来代理哪一个被代理对象，我们可以**把这种指定延迟到程序运行时由JVM来实现**。所谓代理，就是需要代理类和被代理类有**相同的对外接口或者说成服务**，所以代理类一般都必须实现了所有被代理类已实现的接口，因为接口就是**制定了一系列对外服务的标准**。
+
+**1.JDK实现动态代理**
+
+​		正因为动态代理有这样灵活的特性，所以我们在设计动态代理类（DynamicProxy）时**不用显式地让它实现与真实主题类（RealSubject）相同的接口（interface）**，而是把这种实现推迟到运行时。
+
+​		为了能让DynamicProxy类能够在运行时才去实现**RealSubject类**已实现的一系列接口并执行接口中相关的方法操作，需要让 DynamicProxy类**实现JDK自带的java.lang.reflect.InvocationHandler接口**，该接口中的**invoke() 方法能够让DynamicProxy实例在运行时调用被代理类的“对外服务”**，即调用被代理类需要对外实现的所有接口中的方法，也就是完成对真实方法的调 用，Java帮助文档中**称这些真实方法为处理程序**。
+
+​		按照上面所述，我们肯定**必须先把被代理类RealSubject已实现的所有interface都加载到JVM中**，不然JVM怎么能够找到这些方法呢？明白了这个道理，那么我们就可以**创建一个被代理类的实例**，获得该实例的类加载器ClassLoader。所谓的类加载器ClassLoader，就是具有某个类的类定义，即类的内部相关结构（包括继承树、方法区等等）。更重要的是，动态代理模式**可以使得我们在不改变原来已有的代码结构的情况下，对原来的“真实方法”进行扩展、增强其功能**，并且可以达到**控制被代理对象的行为的目的**。请详看下面代码中的DynamicProxy类，其中必须实现的invoke()方法**在调用被代理类的真实方法的前后都可进行一定的特殊操作**。这是动态代理最明显的优点。类图如下：
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160328211321804.png" alt="这里写图片描述" style="zoom:70%;" />
+
+```Java
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+public class DynamicProxyTicketManager implements InvocationHandler {
+    private Object targetObject;
+    /**
+     * 目标的初始化方法，根据目标生成代理类
+     * 
+     * @param targetObject
+     * @return
+     */
+    public Object newProxyInstance(Object targetObject) {
+        this.targetObject = targetObject;
+        // 第一个参数，目标对象 的装载器
+        // 第二个参数，目标接口已实现的所有接口，而这些是动态代理类要实现的接口列表
+        // 第三个参数， 调用实现了InvocationHandler的对象生成动态代理实例，当你一调用代理，代理就会调用InvocationHandler的invoke方法
+        return Proxy.newProxyInstance(targetObject.getClass().getClassLoader(), targetObject.getClass().getInterfaces(),
+                this);
+    }
+
+    /**
+     * 反射，这样你可以在不知道具体的类的情况下，根据配置的参数去调用一个类的方法。在灵活编程的时候非常有用。
+     */
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+
+        // 检查
+        checkIdentity();
+        Object ret = null;
+        try {
+            // 调用目标方法
+            ret = method.invoke(targetObject, args);
+            // 执行成功，打印成功信息
+            log();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 失败时，打印失败信息
+            System.out.println("error-->>" + method.getName());
+            throw e;
+        }
+        return ret;
+    }
+
+    /**
+     * 身份验证
+     */
+    public void checkIdentity(){
+        System.out.println("身份验证--------------");
+    }
+    public void log(){
+        System.out.println("日志..." );
+    }
+
+}
+```
+
+客户端
+
+```Java
+public class Test {
+    public static void main(String[] args) {
+        DynamicProxyTicketManager dynamicProxyTicketManager=new DynamicProxyTicketManager();
+        TicketManager tm=(TicketManager) dynamicProxyTicketManager.newProxyInstance(new TicketManagerImpl());
+
+        tm.soldTicket();
+        tm.changeTicket();
+        tm.returnTicket();
+    }
+}
+```
+
+**优点：**
+
+-   一个动态代理类更加简单了，可以**解决创建多个静态代理的麻烦**，避免不断的重复多余的代码
+-   调用目标代码时，会在方法“运行时”动态的加入，决定是什么类型，才调谁，灵活
+
+**缺点**：
+
+-   系统灵活了，但是相比而言，**效率降低了**，比静态代理慢一点
+-   动态代理比静态代理在代码的**可读性上差了一点**，不太容易理解
+-   JDK动态代理只能**对实现了接口的类进行代理**
+
+
+
+**2.Cglib实现动态代理**
+
+​		AOP的源码中用到了**两种动态代理来实现拦截切入功能**：**jdk动态代理和cglib动态代理**。
+
+​		两种方法同时存在，各有优劣。jdk动态代理是**由java内部的反射机制来实现**的 ，cglib动态代理**底层则是借助asm来实现的**。总的来说，反射机制在生成类的过程中比较高效，而asm在生成类之后的**相关执行过程中比较高效**（可以通过将asm生成的类进行缓存，这样解决asm生成类过程低效问题）。还有一点必须注意：jdk动态代理的应用前提，必须是**目标类基于统一的接口**。如果没有 上述前提，jdk动态代理不能应用。由此可以看出，jdk动态代理有一定的局限性，cglib这种**第三方类库实现的动态代理应用更加广泛**， 且在效率上更有优势。
+
+​		JDK的动态代理机制只能代理实现了接口的类，否则不能实现JDK的动态代理，cglib是针对类来实现代理的，他的原理是**对指定的目标类生成一个子类**，并覆盖其中方法实现增强，但因为**采用的是继承**，所以不能对final修饰的类进行代理。
+
+​		**介绍：**
+
+```Java
+CGLIB的核心类：
+net.sf.cglib.proxy.Enhancer – 主要的增强类
+net.sf.cglib.proxy.MethodInterceptor – 主要的方法拦截类，它是Callback接口的子接口，需要用户实现
+net.sf.cglib.proxy.MethodProxy – JDK的java.lang.reflect.Method类的代理类，可以方便的实现对源对象方法的调用,如使用：
+Object o = methodProxy.invokeSuper(proxy, args);//虽然第一个参数是被代理对象，也不会出现死循环的问题。
+net.sf.cglib.proxy.MethodInterceptor接口是最通用的回调（callback）类型，它经常被基于代理的AOP用来实现拦截（intercept）方法的调用。这个接口只定义了一个方法
+public Object intercept(Object object, java.lang.reflect.Method method,
+Object[] args, MethodProxy proxy) throws Throwable;
+第一个参数是代理对像，第二和第三个参数分别是拦截的方法和方法的参数。原来的方法可能通过使用java.lang.reflect.Method 对象的一般反射调用，或者使用 net.sf.cglib.proxy.MethodProxy对象调用。net.sf.cglib.proxy.MethodProxy通常被首选使 用，因为它更快
+```
+
+​		**源代码**：
+
+```Java
+public class CglibDynamicProxyTicketManager implements MethodInterceptor  {
+    private Object targetObject;//目标对象
+    /** 
+     * 创建代理对象 
+     *  
+     * @param targetObject 
+     * @return 
+     */  
+    public Object getInstance(Object targetObject) {  
+        this.targetObject = targetObject;  
+        Enhancer enhancer = new Enhancer();  // 用这个类来创建代理对象(被代理类的子类)： 并设置父类；设置回调；
+        enhancer.setSuperclass(this.targetObject.getClass()); // 设置被代理类作为其父类的代理目标
+        // 回调方法  
+        enhancer.setCallback(this);  // 设置回调--当这个代理对象的方法被调用时 回调方法intercept()会被执行
+        // 创建代理对象  
+        return enhancer.create();  
+    }  
+
+    @Override
+    //回调方法
+    // methodProxy 代理的类的方法
+    /**
+     * methodProxy 会调用父类(目标对象)的被代理的方法,比如soldTicket方法等
+     */
+    public Object intercept(Object obj, Method method, Object[] args,  
+            MethodProxy methodProxy) throws Throwable {
+        Object result = null;
+        checkIdentity();//前置增强
+        result=methodProxy.invokeSuper(obj, args); //调用新生成的cglib的代理对象 所属的父类的被代理的方法
+         log();//后置增强
+        return result;
+    }
+
+    /**
+     * 身份验证
+     */
+    public void checkIdentity(){
+        System.out.println("身份验证--------------");
+    }
+    public void log(){
+        System.out.println("日志..." );
+    }
+
+
+}
+```
+
+客户端
+
+```Java
+public class Test {
+    public static void main(String[] args) {
+        CglibDynamicProxyTicketManager cglibdynamicProxyTicketManager=new CglibDynamicProxyTicketManager();
+        //生成代理对象
+        TicketManager tm=(TicketManager) cglibdynamicProxyTicketManager.getInstance(new TicketManagerImpl());
+
+        tm.soldTicket();//当调用代理对象的被代理对象的方法时  会自动回调 代理类中的Intercept()方法
+        tm.changeTicket();
+        tm.returnTicket();
+    }
+}
+//结果同上
+```
+
+
+
+##### 8.外观模式（Facade）
+
+​		外观模式（Facade）是为了解决**类与类之家的依赖关系的**，像spring一样，可以将类和类之间的关系配置到配置文件中，而外观模式就是将他们的**关系放在一个Facade类中**，降低了类类之间的耦合度，该模式中没有涉及到接口，看下类图：（我们以一个计算机的启动过程为例）
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/eebe2103-6ced-35f2-8664-3a2e8a557f81.jpg" alt="img" style="zoom:75%;" />
+
+```java
+public class Computer {  
+    private CPU cpu;  
+    private Memory memory;  
+    private Disk disk;  
+      
+    public Computer(){  
+        cpu = new CPU();  
+        memory = new Memory();  
+        disk = new Disk();  
+    }  
+      
+    public void startup(){  
+        System.out.println("start the computer!");  
+        cpu.startup();  
+        memory.startup();  
+        disk.startup();  
+        System.out.println("start computer finished!");  
+    }  
+      
+    public void shutdown(){  
+        System.out.println("begin to close the computer!");  
+        cpu.shutdown();  
+        memory.shutdown();  
+        disk.shutdown();  
+        System.out.println("computer closed!");  
+    }  
+}  
+```
+
+​		如果我们没有Computer类，那么，CPU、Memory、Disk他们之间将会相互持有实例，产生关系，这样会造成严重的依赖，修改一个类，可能会带来其他类的修改，这不是我们想要看到的，有了Computer类，他们之间的关系被放在了Computer类里，这样就起到了解耦的作用.
+
+###### 1.外观模式的概念
+
+​		Facade（外观）模式为子系统中的各类（或结构与方法）提供一个简明一致的界面，隐藏子系统的复杂性，使子系统更加容易使用。
+
+​		**结构**
+
+-   **门面(Facade)角色** ：客户端可以调用这个角色的方法。此角色知晓相关的（一个或者多个）子系统的功能和责任。在正常情况下，本角色会将所有从客户端发来的请求委派到相应的子系统去。
+-   **子系统(SubSystem)角色** ：可以同时有一个或者多个子系统。每个子系统都不是一个单独的类，而**是一个类的集合**（如上面的子系统就是由SystemA、SystemB、 SystemC三个类组合而成）。每个子系统都可以被客户端直接调用，或者被门面角色调用。子系统并不知道门面的存在，对于子系统而言，门面仅仅是另外一 个客户端而已。
+
+​        **特点**
+
+-   外观模式为复杂子系统提供了**一个简单接口**，并不为子系统添加新的功能和行为。
+-   外观模式实现了子系统与客户之间的**松耦合关系**。
+-   外观模式没有封装子系统的类，只是**提供了简单的接口**。 如果应用需要，它并不限制客户使用子系统类。因此可以再系统易用性与通用性之间选择。
+-   外观模式注重的是**简化接口**，它更多的时候是从架构的层次去看整个系统，而并非单个类的层次。
+
+###### 2.外观模式案例
+
+```Java
+//子系统(SubSystem)角色
+public class SystemA {
+    public void doA(){
+        System.out.println("子系统A的功能");
+    }
+}
+//子系统(SubSystem)角色
+public class SystemB {
+    public void doB(){
+        System.out.println("子系统B的功能");
+    }
+}
+//子系统(SubSystem)角色
+public class SystemC {
+    public void doC(){
+        System.out.println("子系统C的功能");
+    }
+}
+/**
+ * 门面(Facade)角色
+ * @author Administrator
+ *
+ */
+public class Facade {
+    private SystemA systemA;
+    private SystemB systemB;
+    private SystemC systemC;
+
+    Facade(){
+        systemA=new SystemA();
+        systemB=new SystemB();
+        systemC=new SystemC();
+    }
+    // 方法 满足客户端需要的功能
+    public void doAB(){
+        systemA.doA();
+        systemB.doB();
+    }
+    // 方法 满足客户端需要的功能
+    public void doABC(){
+        systemA.doA();
+        systemB.doB();
+        systemC.doC();
+    }
+
+}
+public class Client {
+
+    public static void main(String[] args) {
+        Facade f=new Facade();
+        System.out.println("客户1需要的两个子系统功能");
+        f.doAB();
+        System.out.println("----------------------");
+        System.out.println("客户2需要的三个子系统功能");
+        f.doABC();
+    }
+
+}
+//结果：
+客户1需要的两个子系统功能
+子系统A的功能
+子系统B的功能
+
+客户2需要的三个子系统功能
+子系统A的功能
+子系统B的功能
+子系统C的功能
+```
+
+##### 9.桥接模式（Bridge）
+
+​		桥接模式就是把事物和其具体实现分开，使他们可以各自独立的变化。桥接的用意是：**将抽象化与实现化解耦，使得二者可以独立变化**，像我们常用的JDBC桥DriverManager一样，JDBC进行连接数据库的时候，在各个数据库之间进行切换，**基本不需要动太多的代码，甚至丝毫不用动**，原因就是**JDBC提供统一接口**，每个数据库提供各自的实现，用一个叫做数据库驱动的程序来桥接就行了。我们来看看关系图：
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/35f0b172-b976-3757-bb51-c65d5c9ce68e.jpg" alt="img" style="zoom:67%;" />
+
+###### **1.桥接模式的定义**
+
+​		将**抽象部分与实现(行为)部分分离**，使它们都可以独立的变化。桥接模式的做法是把变化部分(实现)抽象出来，使变化部分与主类(抽象)分离开来，从而将**多个维度的变化彻底分离**。最后，提供一个管理类(如下面的引擎类)来组合不同维度上的变化，通过这种组合来满足业务的需要。
+
+​		**应用场景**
+
+-   如果你**不希望在抽象和实现部分采用固定的绑定关系**，可以采用桥接模式，来把抽象和实现部分分开，然后在程序运行期间来动态的设置抽象部分需要用到的具体的实现，还可以动态切换具体的实现。
+-   如果出现抽象部分和实现部分**都应该可以扩展的情况**，可以采用桥接模式，让抽象部分和实现部分可以独立的变化，从而可以灵活的进行单独扩展，而不是搅在一起，扩展一边会影响到另一边。
+-   如果希望实现**部分的修改**，不会对客户产生影响，可以采用桥接模式，客户是面向抽象的接口在运行，实现部分的修改，可以独立于抽象部分，也就不会对客户产生影响了，也可以说对客户是透明的。
+-   如果采用继承的实现方案，会**导致产生很多子类**，对于这种情况，可以考虑采用桥接模式，分析功能变化的原因，看看是否能分离成不同的纬度，然后通过桥接模式来分离它们，从而减少子类的数目。
+
+
+
+###### 2.桥接模式的案例
+
+​		本案例是实现汽车安装引擎的功能。汽车有两种 奔驰和宝马 他们安装的引擎不同实现有两种方法
+
+​		**1.传统方法**
+
+```Java
+public interface  Car {
+
+    public void installEngine200();
+
+    public void installEngine300();
+}
+
+
+public class Bmw implements Car {
+
+    @Override
+    public void installEngine200() {
+        System.out.println("Bmw车组装Engine200");
+    }
+
+    @Override
+    public void installEngine300() {
+        System.out.println("Bmw车组装Engine300");      
+    }
+}
+
+
+public class Benz implements Car {
+
+    @Override
+    public void installEngine200() {
+        System.out.println("Benz车组装Engine200");
+    }
+
+    @Override
+    public void installEngine300() {
+        System.out.println("Benz车组装Engine300");      
+    }
+}
+
+
+public class Client {
+
+    public static void main(String[] args) {
+        //奔驰车安装200引擎
+        Car benz=new Benz();
+        benz.installEngine200();
+        //宝马车安装300引擎
+        Car bwm=new Bwm();
+        bwm.installEngine300();
+    }
+}
+//运行结果：
+Benz车组装Engine200
+Bwm车组装Engine300
+```
+
+​		缺点: 只要在Car接口中增加一个引擎类型的方法 那么它的具体实现类中也得增加一个**空实现**(如果该车不需要这个引擎) 比如我再增加一个型号400的引擎 ,相应的奔驰和宝马中都得增加该方法 但是奔驰车不需要这种引擎 这样是不是造成了代码的冗余,所以这种方法不好拓展，这就要用到第二种方法 ：**桥接模式**
+
+​		**2.使用桥接模式**
+
+```java
+//Implementor : Engine 定义实现接口(也就是引擎接口)。
+//与实现(行为)部分
+public interface Engine {
+    public void addEngine();
+}
+//ConcreteImplementor : Engine200 ;Engine300 实现 引擎接口中方法。
+//具体实现接口
+public class Engine200 implements Engine {
+
+    @Override
+    public void addEngine() {
+        System.out.println("组装Engine200");
+    }
+
+}
+public class Engine300 implements Engine {
+
+    @Override
+    public void addEngine() {
+        System.out.println("组装Engine300");
+    }
+}
+//Abstraction : Car 定义抽象接口。
+//抽象部分
+public abstract class Car {
+    private Engine engine;// 持有一个实现部分对象，形成聚合关系
+
+
+    public Car(Engine engine) {
+        this.engine = engine;
+    }
+
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+    public abstract void install();
+}
+
+//RefinedAbstraction :Benz ;Bwm 扩展 Abstraction 类。
+public class Benz extends Car {
+    public Benz(Engine engine) {
+        super(engine);
+    }
+
+    @Override
+    public void install() {
+        System.out.println("Benz车安装");
+        this.getEngine().addEngine();
+    }
+}
+public class Bwm extends Car {
+
+    public Bwm(Engine engine) {
+        super(engine);
+    }
+    @Override
+    public void install() {
+        System.out.println("Bwm车安装");
+        this.getEngine().addEngine();
+    }
+}
+//测试代码
+public class Client {
+
+    public static void main(String[] args) {
+        //创建实现(行为)  ->Engine引擎
+        //第一种 引擎  
+        Engine engine200=new Engine200();
+        //第二种 引擎
+        Engine engine300=new Engine300();
+        //创建抽象    ->车
+        Car benz=new Benz(engine200);
+        benz.install();
+
+        Car bwm=new Bwm(engine300);
+        bwm.install();
+    }
+}
+//运行结果:
+Benz车安装
+组装Engine200
+Bwm车安装
+组装Engine300
+```
+
+
+
+##### 10.组合模式（Composite）
+
+​		组合模式有时又叫**部分-整体**模式在处理类似树形结构的问题时比较方便，看看关系图：
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413181627864.png" alt="image-20200413181627864" style="zoom:50%;" />
+
+​		**使用场景**：将多个**对象组合在一起进行操作**，常用于**表示树形结构中**，例如二叉树，数等。
+
+```java
+blic class TreeNode {  
+      
+    private String name;  
+    private TreeNode parent;  
+    private Vector<TreeNode> children = new Vector<TreeNode>();  
+      
+    public TreeNode(String name){  
+        this.name = name;  
+    }  
+  
+    public String getName() {  
+        return name;  
+    }  
+  
+    public void setName(String name) {  
+        this.name = name;  
+    }  
+  
+    public TreeNode getParent() {  
+        return parent;  
+    }  
+  
+    public void setParent(TreeNode parent) {  
+        this.parent = parent;  
+    }  
+      
+    //添加孩子节点  
+    public void add(TreeNode node){  
+        children.add(node);  
+    }  
+      
+    //删除孩子节点  
+    public void remove(TreeNode node){  
+        children.remove(node);  
+    }  
+      
+    //取得孩子节点  
+    public Enumeration<TreeNode> getChildren(){  
+        return children.elements();  
+    }  
+}  
+public class Tree {  
+  
+    TreeNode root = null;  
+  
+    public Tree(String name) {  
+        root = new TreeNode(name);  
+    }  
+  
+    public static void main(String[] args) {  
+        Tree tree = new Tree("A");  
+        TreeNode nodeB = new TreeNode("B");  
+        TreeNode nodeC = new TreeNode("C");  
+          
+        nodeB.add(nodeC);  
+        tree.root.add(nodeB);  
+        System.out.println("build the tree finished!");  
+    }  
+}  
+```
+
+
+
+##### **11.享元模式（Flyweight）**
+
+​		享元模式的主要目的是**实现对象的共享**，即共享池，当系统中对象多的时候可以减少内存的开销，**通常与工厂模式一起使用**。
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/f7aae0dd-b250-3829-bb07-49d87069bfbb.jpg" alt="img" style="zoom:70%;" />
+
+​		FlyWeightFactory负责创建和管理享元单元，当一个客户端请求时，工厂需要检查当前对象池中是否有符合条件的对象，如果有，就返回已经存在的对象，如果没有，则创建一个新对象，FlyWeight是超类。一提到共享池，我们很容易联想到Java里面的JDBC连接池，想想每个连接的特点，我们不难总结出：适用于作共享的一些个对象，他们有一些共有的属性，就拿数据库连接池来说，url、driverClassName、username、password及dbname，这些**属性对于每个连接来说都是一样的**，所以就适合用**享元模式来处理**，建一个工厂类，将上述类似属性作为内部数据，其它的作为外部数据，在方法调用时，当做参数传进来，这样就节省了空间，减少了实例的数量。
+
+​		通过**连接池的管理**，实现了数据库连接的共享，不需要每一次都重新创建连接，节省了数据库重新创建的开销，提升了系统的性能！
+
+```Java
+public class ConnectionPool {  
+      
+    private Vector<Connection> pool;  
+      
+    /*公有属性*/  
+    private String url = "jdbc:mysql://localhost:3306/test";  
+    private String username = "root";  
+    private String password = "root";  
+    private String driverClassName = "com.mysql.jdbc.Driver";  
+  
+    private int poolSize = 100;  
+    private static ConnectionPool instance = null;  
+    Connection conn = null;  
+  
+    /*构造方法，做一些初始化工作*/  
+    private ConnectionPool() {  
+        pool = new Vector<Connection>(poolSize);  
+  
+        for (int i = 0; i < poolSize; i++) {  
+            try {  
+                Class.forName(driverClassName);  
+                conn = DriverManager.getConnection(url, username, password);  
+                pool.add(conn);  
+            } catch (ClassNotFoundException e) {  
+                e.printStackTrace();  
+            } catch (SQLException e) {  
+                e.printStackTrace();  
+            }  
+        }  
+    }  
+  
+    /* 返回连接到连接池 */  
+    public synchronized void release() {  
+        pool.add(conn);  
+    }  
+  
+    /* 返回连接池中的一个数据库连接 */  
+    public synchronized Connection getConnection() {  
+        if (pool.size() > 0) {  
+            Connection conn = pool.get(0);  
+            pool.remove(conn);  
+            return conn;  
+        } else {  
+            return null;  
+        }  
+    }  
+}  
+```
+
+
+
+##### 四类关系模式
+
+​		先来张图，看看这11中模式的关系：
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413182208087.png" alt="image-20200413182208087" style="zoom:35%;" />
+
+​		第一类：通过父类与子类的关系进行实现。
+
+​		第二类：两个类之间。
+
+​		第三类：类的状态。
+
+​		第四类：通过中间类
+
+##### 12.父类与子类模式
+
+###### 1.策略模式
+
+​		策略模式定义了一系列算法，并将每个算法封装起来，使他们可以相互替换，且算法的变化不会影响到使用算法的客户。需要设计一个接口，为一系列实现类提供统一的方法，多个实现类实现该接口，设计一个抽象类（可有可无，属于辅助类），提供辅助函数，关系图如下：
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/2319a2c3-7ebd-3ee3-b389-1548074ea9c6.jpg" alt="img" style="zoom:75%;" />
+
+###### 2.模板方法模式（Template Method）
+
+​		解释一下模板方法模式，就是指：一个抽象类中，有一个主方法，再定义1...n个方法，可以是抽象的，也可以是实际的方法，定义一个类，继承该抽象类，重写抽象方法，通过调用抽象类，实现对子类的调用，先看个关系图：
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/c3d57775-ddf9-302b-9dfe-c65967518d3c.jpg" alt="img" style="zoom:75%;" />
+
+​		就是在AbstractCalculator类中定义一个主方法calculate，calculate()调用spilt()等，Plus和Minus分别继承AbstractCalculator类，通过对AbstractCalculator的调用实现对子类的调用
+
+
+
+##### 13.两个类之间的模式
+
+###### 1.观察者模式（Observer）
+
+​		包括这个模式在内的接下来的四个模式，都是类和类之间的关系，**不涉及到继承**，学的时候应该记得归纳。观察者模式很好理解，类似于**邮件订阅和RSS订阅**，当我们浏览一些博客或wiki时，经常会看到RSS图标，就这的意思是，当你订阅了该文章，如果后续有更新，会及时通知你。其实，简单来讲就一句话：当一个对象变化时，其它**依赖该对象的对象都会收到通知**，并且随着变化！对象之间是一种**一对多的关系**。先来看看关系图：
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/d588525c-fbad-3040-971c-69b2716c67a4.jpg" alt="img" style="zoom:75%;" />
+
+​		我解释下这些类的作用：MySubject类就是我们的主对象，Observer1和Observer2是依赖于MySubject的对象，当MySubject变化时，Observer1和Observer2必然变化。AbstractSubject类中定义着需要监控的对象列表，可以对其进行修改：**增加或删除被监控对象，且当MySubject变化时，负责通知在列表内存在的对象**。
+
+```Java
+//一个Observer接口：
+public interface Observer {  
+    public void update();  
+}  
+//两个实现类：
+public class Observer1 implements Observer {  
+  
+    @Override  
+    public void update() {  
+        System.out.println("observer1 has received!");  
+    }  
+}  
+public class Observer2 implements Observer {  
+  
+    @Override  
+    public void update() {  
+        System.out.println("observer2 has received!");  
+    }  
+  
+}  
+//Subject接口及实现类：
+public interface Subject {  
+      
+    /*增加观察者*/  
+    public void add(Observer observer);  
+      
+    /*删除观察者*/  
+    public void del(Observer observer);  
+      
+    /*通知所有的观察者*/  
+    public void notifyObservers();  
+      
+    /*自身的操作*/  
+    public void operation();  
+} 
+public abstract class AbstractSubject implements Subject {  
+  
+    private Vector<Observer> vector = new Vector<Observer>();  
+    @Override  
+    public void add(Observer observer) {  
+        vector.add(observer);  
+    }  
+  
+    @Override  
+    public void del(Observer observer) {  
+        vector.remove(observer);  
+    }  
+  
+    @Override  
+    public void notifyObservers() {  
+        Enumeration<Observer> enumo = vector.elements();  
+        while(enumo.hasMoreElements()){  
+            enumo.nextElement().update();  
+        }  
+    }  
+}  
+public class MySubject extends AbstractSubject {  
+  
+    @Override  
+    public void operation() {  
+        System.out.println("update self!");  
+        notifyObservers();  
+    }  
+  
+}  
+//测试类
+public class ObserverTest {  
+  
+    public static void main(String[] args) {  
+        Subject sub = new MySubject();  
+        sub.add(new Observer1());  
+        sub.add(new Observer2());  
+          
+        sub.operation();  
+    }  
+  
+}  
+//输出：
+
+update self!
+observer1 has received!
+observer2 has received!
+```
+
+
+
+###### **2.迭代子模式（Iterator）**
+
+​		顾名思义，迭代器模式就是顺序访问聚集中的对象，一般来说，集合中非常常见，如果对集合类比较熟悉的话，理解本模式会十分轻松。这句话包含两层意思：一是需要遍历的对象，即聚集对象，二是迭代器对象，用于对聚集对象进行遍历访问。
+
+​		**模拟一个迭代器：**
+
+```Java
+//两个接口
+public interface Collection {  
+      
+    public Iterator iterator();  
+      
+    /*取得集合元素*/  
+    public Object get(int i);  
+      
+    /*取得集合大小*/  
+    public int size();  
+}  
+public interface Iterator {  
+    //前移  
+    public Object previous();  
+      
+    //后移  
+    public Object next();  
+    public boolean hasNext();  
+      
+    //取得第一个元素  
+    public Object first();  
+}  
+
+//两个实现：
+public class MyCollection implements Collection {  
+  
+    public String string[] = {"A","B","C","D","E"};  
+    @Override  
+    public Iterator iterator() {  
+        return new MyIterator(this);  
+    }  
+  
+    @Override  
+    public Object get(int i) {  
+        return string[i];  
+    }  
+  
+    @Override  
+    public int size() {  
+        return string.length;  
+    }  
+}  
+public class MyIterator implements Iterator {  
+  
+    private Collection collection;  
+    private int pos = -1;  
+      
+    public MyIterator(Collection collection){  
+        this.collection = collection;  
+    }  
+      
+    @Override  
+    public Object previous() {  
+        if(pos > 0){  
+            pos--;  
+        }  
+        return collection.get(pos);  
+    }  
+  
+    @Override  
+    public Object next() {     
+        if(pos<collection.size()-1){  
+            pos++;  
+        }  
+        return collection.get(pos);  
+    }  
+  
+    @Override  
+    public boolean hasNext() {  
+        if(pos<collection.size()-1){  
+            return true;  
+        }else{  
+            return false;  
+        }  
+    }  
+  
+    @Override  
+    public Object first() {  
+        pos = 0;  
+        return collection.get(pos);  
+    }  
+  
+}  
+
+//测试类
+public class Test {  
+  
+    public static void main(String[] args) {  
+        Collection collection = new MyCollection();  
+        Iterator it = collection.iterator();  
+          
+        while(it.hasNext()){  
+            System.out.println(it.next());  
+        }  
+    }  
+}  
+//输出：
+A B C D E
+```
+
+​		此处我们貌似模拟了一个集合类的过程，感觉是不是很爽？其实JDK中各个类也都是这些基本的东西，加一些设计模式，再加一些优化放到一起的，只要我们把这些东西学会了，掌握好了，我们也可以写出自己的集合类，甚至框架！
+
+
+
+###### 3.责任链模式（Chain of Responsibility）
+
+​		接下来我们将要谈谈责任链模式，有多个对象，**每个对象持有对下一个对象的引用，这样就会形成一条链**，请求在这条链上传递，直到某一对象决定处理该请求。但是发出者并不清楚到底最终那个对象会处理该请求，所以，责任链模式可以实现，在隐瞒客户端的情况下，对系统进行动态的调整。先看看关系图： 
+
+ <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/729a82ce-0987-347c-a4f1-bf64dee59ddb.jpg" alt="img" style="zoom:75%;" />
+
+ 
+
+​		Abstracthandler类提供了**get和set方法**，方便MyHandle类设置和修改引用对象，MyHandle类是核心，实例化后生成一系列相互持有的对象，构成一条链。
+
+
+
+###### 4.命令模式（Command）
+
+​		命令模式很好理解，举个例子，司令员下令让士兵去干件事情，从整个事情的角度来考虑，司令员的作用是，发出口令，口令经过传递，传到了士兵耳朵里，士兵去执行。这个过程好在，三者相互解耦，任何一方都不用去依赖其他人，只需要做好自己的事儿就行，司令员要的是结果，不会去关注到底士兵是怎么实现的。
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/98cda4fc-00b1-300d-a25b-63229f0f1cbd.jpg" alt="img" style="zoom:75%;" />
+
+​		Invoker是**调用者**（司令员），Receiver是**被调用者**（士兵），MyCommand是命令，实现了Command接口，持有接收对象。
+
+​		命令模式的目的就是达到**命令的发出者和执行者之间解耦，实现请求和执行分开**，熟悉Struts的同学应该知道，Struts其实就是一种将请求和呈现分离的技术，其中必然涉及命令模式的思想！
+
+​		其实每个设计模式都是很重要的一种思想，看上去很熟，其实是因为我们在学到的东西中都有涉及，尽管有时我们并不知道，其实在Java本身的设计之中处处都有体现，**像AWT、JDBC、集合类、IO管道或者是Web框架**，里面设计模式无处不在。
+
+
+
+##### 14.类的状态模式
+
+###### **1.备忘录模式（Memento）**
+
+​		主要目的是**保存一个对象的某个状态**，以便在适当的时候恢复对象，个人觉得叫**备份模式**更形象些，通俗的讲下：假设有原始类A，A中有各种属性，A可以决定需要备份的属性，备忘录类B是用来存储A的一些内部状态，类C呢，就是一个用来存储备忘录的，且只能存储，不能修改等操作。做个图来分析一下：
+
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/853d5c5a-9b7b-3341-a72e-abd3cbc3c81f.jpg" alt="img" style="zoom:75%;" />
+
+​		Original类是原始类，里面有需要保存的属性value及创建一个备忘录类，用来保存value值。Memento类是备忘录类，Storage类是存储备忘录的类，持有Memento类的实例，该模式很好理解。
+
+```Java
+public class Original {  
+      
+    private String value;  
+      
+    public String getValue() {  
+        return value;  
+    }  
+  
+    public void setValue(String value) {  
+        this.value = value;  
+    }  
+  
+    public Original(String value) {  
+        this.value = value;  
+    }  
+  
+    public Memento createMemento(){  
+        return new Memento(value);  
+    }  
+      
+    public void restoreMemento(Memento memento){  
+        this.value = memento.getValue();  
+    }  
+}  
+public class Memento {  
+      
+    private String value;  
+  
+    public Memento(String value) {  
+        this.value = value;  
+    }  
+  
+    public String getValue() {  
+        return value;  
+    }  
+  
+    public void setValue(String value) {  
+        this.value = value;  
+    }  
+}  
+public class Storage {  
+      
+    private Memento memento;  
+      
+    public Storage(Memento memento) {  
+        this.memento = memento;  
+    }  
+  
+    public Memento getMemento() {  
+        return memento;  
+    }  
+  
+    public void setMemento(Memento memento) {  
+        this.memento = memento;  
+    }  
+}  
+public class Test {  
+  
+    public static void main(String[] args) {  
+          
+        // 创建原始类  
+        Original origi = new Original("egg");  
+  
+        // 创建备忘录  
+        Storage storage = new Storage(origi.createMemento());  
+  
+        // 修改原始类的状态  
+        System.out.println("初始化状态为：" + origi.getValue());  
+        origi.setValue("niu");  
+        System.out.println("修改后的状态为：" + origi.getValue());  
+  
+        // 回复原始类的状态  
+        origi.restoreMemento(storage.getMemento());  
+        System.out.println("恢复后的状态为：" + origi.getValue());  
+    }  
+}  
+//输出：
+初始化状态为：egg
+修改后的状态为：niu
+恢复后的状态为：egg
+```
+
+​		简单描述下：新建原始类时，value被初始化为egg，后经过修改，将value的值置为niu，最后倒数第二行进行恢复状态，结果成功恢复了。其实我觉得这个模式叫“备份-恢复”模式最形象。
+
+###### 2.状态模式（State）
+
+​		核心思想就是：**当对象的状态改变时，同时改变其行为**，很好理解！就拿QQ来说，有几种状态，在线、隐身、忙碌等，每个状态对应不同的操作，而且你的好友也能看到你的状态，所以，状态模式就两点：1、可以通过改变状态来获得不同的行为。2、你的好友能同时看到你的变化。看图：
+
+![img](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/006156d2-f41f-3019-a194-b872a59ca426.jpg)
+
+​		State类是个状态类，Context类可以实现切换.
