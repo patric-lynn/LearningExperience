@@ -6,9 +6,9 @@
 
 Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点，还努力摒弃了C++里难以理解的多继承、指针等概念，真正地实现了面向对象理论，因而具有功能强大和简单易用两个特征。
 
-除了基础语法之外，Java还有许多必须弄懂的特性：封装、继承、多态。此外还有泛型、反射等特性，很多框架的技术都依赖它们，比如 Spring 核心的 IOC 和 AOP，都用到了反射。而且 Java 自身的动态代理也是利用反射实现的。
+​		除了基础语法之外，Java还有许多必须弄懂的特性：**封装、继承、多态**。此外还有泛型、反射等特性，很多框架的技术都依赖它们，比如 Spring 核心的 IOC 和 AOP，都用到了反射。而且 Java 自身的动态代理也是利用反射实现的。
 
-此外 Java 还有一些标准库也非常常见，比如集合、I/O、并发，这些类型与功能丰富的库几乎在 Web 开发中无处不在，也是面试经常会被问到的，所以在自学 Java 后端之前，不妨先打好这些基础，另外 Java8 的一些新特性我们也要重点关注，比如 Lambda 表达式、集合和 Stream 流操作、全新的 Date API 等等。
+​		此外 Java 还有一些标准库也非常常见，比如集合、I/O、并发，这些类型与功能丰富的库几乎在 Web 开发中无处不在，也是面试经常会被问到的，所以在自学 Java 后端之前，不妨先打好这些基础，另外 Java8 的一些新特性我们也要重点关注，比如 Lambda 表达式、集合和 Stream 流操作、全新的 Date API 等等。
 
 
 
@@ -597,7 +597,7 @@ Java 是一门纯粹的面向对象编程语言，它吸收了C++的各种优点
 
 ##### **顺序结构**
 
-顺序结构是程序中最简单最基本的流程控制，没有特定的语法结构，按照代码的先后顺序，依次执行，程序中大多数的代码都是这样执行的
+​		顺序结构是程序中最简单最基本的流程控制，没有特定的语法结构，按照代码的先后顺序，依次执行，程序中大多数的代码都是这样执行的
 
 ##### **分支结构-if**
 
@@ -653,7 +653,7 @@ public class Test {
         	System.out.print(",");
     		}
     	 System.out.print();
-    	 String [] names = {"James", "Larry", "Tom", "Lacy"};
+    	 String[] names = {"James", "Larry", "Tom", "Lacy"};
     	 for ( String name : names ) {
           System.out.print( name );
           System.out.print(",");
@@ -806,7 +806,7 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
 
 ###### 1.类变量(静态变量)：独立于方法之外的变量，用 static 修饰。
 
-1. 类变量也称为静态变量，在类中以static关键字声明，但必须在方法构造方法和语句块之外。无论一个类创建了多少个对象，类**只拥有类变量的一份拷贝**。
+1. 类变量也称为静态变量，在类中以**static关键字**声明，但必须在方法构造方法和语句块之外。无论一个类创建了多少个对象，类**只拥有类变量的一份拷贝**。
 2. 静态变量除了被声明为常量外**很少使用**。常量是指声明为public/private，final和static类型的变量。常量初始化后不可改变。
 3. 静态变量储存在**静态存储区**。经常被声明为常量，**很少单独使用static声明变量**。
 4. 静态变量在**第一次**被访问时创建，在**程序结束时销毁**。
@@ -837,7 +837,7 @@ return的作用：可以从一个方法返回，并把控制权交给调用它�
 **存储位置**
 
 静态变量存储在方法区长中的静态区。
-成员变量存储在堆内存。
+成员变量存储在**堆内存**。
 
 **生命周期**
 
@@ -991,7 +991,7 @@ public class Variable{
 ​		当两种数据类型不兼容，或目标类型的取值范围小于源类型时，自动转换将无法进行，这时就需要进行强制类型转换。
 ​		**语法格式**
 ​		目标类型 变量名 = (目标类型) (被转换的数据);
-​		举例：int b = (byte)(a + b);
+​		举例：int b = (int) (a + b);
 ​		**注意**
 ​		如果超出了被赋值的数据类型的取值范围得到的结果会与你期望的结果不同不建议强制转换，因为会有精度的损失。
 
@@ -1001,7 +1001,7 @@ public class Variable{
 
 ##### 定义
 
-​	Java反射机制是在运行状态中，对于任意一个类，都能够知道这个类的**所有属性和方法**；对于任意一个对象，都能够调用它的任意方法和属性。这种动态获取信息以及动态调用对象方法的功能称为Java语言的**反射机制**。
+​		Java反射机制是在运行状态中，对于任意一个类，都能够知道这个类的**所有属性和方法**；对于任意一个对象，都能够调用它的任意方法和属性。这种动态获取信息以及动态调用对象方法的功能称为Java语言的**反射机制**。
 
 ##### 用途
 
@@ -1131,11 +1131,11 @@ Class代表**类的实体**，在运行的Java应用程序中表示**类和接�
 
 ##### 什么是注解
 
-​		注解也叫**元数据**，即一种描述数据的数据。例如我们常见的@Override和@Deprecated，注解是JDK1.5版本开始引入的一个特性，用于对代码进行说明，可以对包、类、接口、字段、方法参数、局部变量等进行注解。Annotation接口中有下面这句话来描述注解：**Annotation 是所有注解继承的公共接口**
+​		注解也叫**元数据**，即一种描述数据的数据。例如我们常见的**@Override**和@Deprecated，注解是JDK1.5版本开始引入的一个特性，用于对代码进行说明，可以对包、类、接口、字段、方法参数、局部变量等进行注解。Annotation接口中有下面这句话来描述注解：**Annotation 是所有注解继承的公共接口**
 
 ​		The common interface extended by all annotation types.注解的本质就是一个继承了 Annotation 接口的接口。有关这一点，你可以去反编译任意一个注解类得到结果。**一个注解准确意义上来说，只不过是一种特殊的注释而已，如果没有解析它的代码，它可能连注释都不如。**而解析一个类或者方法的注解往往有两种形式，一种是**编译期直接的扫描**，一种是**运行期反射**。反射的事情我们先不讨论，而编译器的扫描指的是编译器在对 Java 代码编译成字节码的过程中会检测到某个类或者方法被一些注解修饰，这时它就会对于这些注解进行某些处理。
 
-```
+```java
 @Override
 public String toString() {
     return "Hello Annotation";
@@ -1155,6 +1155,8 @@ public String toString() {
 ##### 注解的分类
 
 - Java自带的**标准注解**，包括@Override（标明重写某个方法）、@Deprecated（标明某个类或方法过时）和@SuppressWarnings（标明要忽略的警告），使用这些注解后编译器就会进行检查
+
+- 自定义注解，可以根据自己的需求定义注解
 
 - 元注解，元注解是用于**定义注解的注解**，包括@Retention（标明注解被保留的阶段）、@Target（标明注解使用的范围）、@Inherited（标明注解可继承）、@Documented（标明是否生成javadoc文档）
 
@@ -1203,72 +1205,6 @@ public String toString() {
 
     Repeatable使用场景：在需要对同一种注解多次使用时，往往需要借助@Repeatable。
 
-    下面举例说明一下，在生活中一个人往往是具有多种身份，如果我把每种身份当成一种注解该如何使用
-
-     **先声明一个Persons类用来包含所有的身份**
-
-    ```Java
-    @Target(ElementType.TYPE) 
-    @Retention(RetentionPolicy.RUNTIME)
-    public @interface Persons {
-    	Person[] value();
-    }
-    ```
-
-
-    这里@Target是声明Persons注解的作用范围，参数ElementType.Type代表可以给一个类进行注解。@Retention是注解的有效时间，RetentionPolicy.RUNTIME是指程序运行的时候。
-    
-    **Person注解**
-    
-    ```Java
-    @Repeatable(Persons.class)
-    public @interface Person{
-    	String role() default "";
-    }
-    ```
-
-
-    @Repeatable括号内的就相当于用来保存该注解内容的容器。
-    
-    **声明一个Man类，给该类加上一些身份**。
-    
-    ```Java
-    @Person(role="CEO")
-    @Person(role="husband")
-    @Person(role="father")
-    @Person(role="son")
-    public   class Man {
-    	String name="";
-    }
-    ```
-    
-    **在主方法中访问该注解。**
-    
-    ```Java
-    public static void main(String[] args) {
-        Annotation[] annotations = Man.class.getAnnotations();  
-        System.out.println(annotations.length);
-        Persons p1=(Persons) annotations[0];
-        for(Person t:p1.value()){
-        	System.out.println(t.role());
-        }
-    }
-    ```
-    
-    **运行结果**
-    
-    ```Java
-    1
-    CEO
-    husband
-    father
-    son
-    ```
-
-- 自定义注解，可以根据自己的需求定义注解
-
-
-
 ##### 注解的属性
 
 ​		注解的属性也叫做**成员变量**。注解只有成员变量，**没有方法**。注解的成员变量在注解的定义中以“无形参的方法”形式来声明，其方法名定义了该成员变量的名字，其返回值定义了该成员变量的类型。
@@ -1289,8 +1225,6 @@ String msg();
 public class Test {
 }
 ```
-
-
 
 ##### 快捷方式
 
@@ -1839,7 +1773,7 @@ public class Test {
 
 ##### 糖块十 、增强for循环
 
-增强for循环（for-each）相信大家都不陌生，日常开发经常会用到的，他会比for循环要少写很多代码，那么这个语法糖背后是如何实现的呢？
+​		增强for循环（for-each）相信大家都不陌生，日常开发经常会用到的，他会比for循环要少写很多代码，那么这个语法糖背后是如何实现的呢？
 
 ```java
 public static void main(String args[]) {
@@ -1968,9 +1902,9 @@ public static void main(String[] args) {
 
 ##### 糖块十二、Lambda表达式
 
-关于Labmda表达式，有人可能会有质疑，因为网上有人说他并不是语法糖。其实我想纠正下这个说法。Labmda表达式不是匿名内部类的语法糖，但是他也是一个语法糖。实现方式其实是依赖了几个JVM底层提供的Labmda相关api。
+​		关于Labmda表达式，有人可能会有质疑，因为网上有人说他并不是语法糖。其实我想纠正下这个说法。Labmda表达式不是匿名内部类的语法糖，但是他也是一个语法糖。实现方式其实是依赖了几个JVM底层提供的Labmda相关api。
 
-先来看一个简单的Labmda表达式。遍历一个list：
+​		先来看一个简单的Labmda表达式。遍历一个list：
 
 ```java
 public static void main(String[] args) {

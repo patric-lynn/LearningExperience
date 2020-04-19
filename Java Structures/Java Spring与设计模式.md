@@ -2,7 +2,7 @@
 
 #### Spring概述
 
-##### 什么是spring?
+##### 1.什么是spring?
 
 Spring是一个轻量级Java开发框架，最早有Rod Johnson创建，目的是为了解决企业级应用开发的业务逻辑层和其他各层的耦合问题。它是一个分层的JavaSE/JavaEE full-stack（一站式）轻量级开源框架，为开发Java应用程序提供全面的基础架构支持。Spring负责基础架构，因此Java开发者可以专注于应用程序的开发。
 
@@ -17,7 +17,7 @@ Spring可以做很多事情，它为企业级开发提供给了丰富的功能�
 - 基于切面和惯例进行声明式编程；
 - 通过切面和模板减少样板式代码。
 
-##### Spring有哪些应用场景
+##### 2.Spring有哪些应用场景
 
 应用场景：JavaEE企业应用开发，包括SSH、SSM等
 
@@ -27,7 +27,7 @@ Spring价值：
 - Spring提供一个一致的编程模型，使应用直接使用POJO开发，与运行环境隔离开来；
 - Spring推动应用设计风格向面向对象和面向接口开发转变，提高了代码的重用性和可测试性；
 
-##### Spring由哪些模块组成？
+##### 3.Spring由哪些模块组成？
 
 Spring 总共大约有 20 个模块， 由 1300 多个不同的文件构成。 而这些组件被分别整合在核心容器（Core Container） 、 AOP（Aspect Oriented Programming）和设备支持（Instrmentation） 、数据访问与集成（Data Access/Integeration） 、 Web、 消息（Messaging） 、 Test等 6 个模块中。 以下是 Spring 5 的模块结构图：
 
@@ -41,7 +41,7 @@ spring aop：提供了面向切面的编程实现，让你可以自定义拦截�
 spring Web：提供了针对 Web 开发的集成特性，例如文件上传，利用 servlet listeners 进行 ioc 容器初始化和针对 Web 的 ApplicationContext。
 spring test：主要为测试提供支持的，支持使用JUnit或TestNG对Spring组件进行单元测试和集成测试。
 
-##### Spring 框架中都用到了哪些设计模式？
+##### 4.Spring 框架中都用到了哪些设计模式？
 
 工厂模式：BeanFactory就是简单工厂模式的体现，用来创建对象的实例；
 单例模式：Bean默认为单例模式。
@@ -49,13 +49,13 @@ spring test：主要为测试提供支持的，支持使用JUnit或TestNG对Spri
 模板方法：用来解决代码重复的问题。比如. RestTemplate, JmsTemplate, JpaTemplate。
 观察者模式：定义对象键一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都会得到通知被制动更新，如Spring中listener的实现–ApplicationListener。
 
-##### 详细讲解一下核心容器（spring context应用上下文) 模块
+##### 5.详细讲解一下核心容器（spring context应用上下文) 模块
 
 这是基本的Spring模块，提供spring 框架的基础功能，BeanFactory 是 任何以spring为基础的应用的核心。Spring 框架建立在此模块之上，它使Spring成为一个容器。
 
 Bean 工厂是工厂模式的一个实现，提供了控制反转功能，用来把应用的配置和依赖从真正的应用代码中分离。最常用的就是org.springframework.beans.factory.xml.XmlBeanFactory ，它根据XML文件中的定义加载beans。该容器从XML 文件读取配置元数据并用它去创建一个完全配置的系统或应用。
 
-##### 使用 Spring 有哪些方式？
+##### 6.使用 Spring 有哪些方式？
 
 使用 Spring 有以下方式：
 
@@ -68,19 +68,19 @@ Bean 工厂是工厂模式的一个实现，提供了控制反转功能，用来
 
 #### Spring控制反转(IOC)
 
-##### 什么是Spring IOC 容器？
+##### 1.什么是Spring IOC 容器？
 
 控制反转即IoC (Inversion of Control)，它把传统上由程序代码直接操控的对象的调用权交给容器，通过容器来实现对象组件的装配和管理。所谓的“控制反转”概念就是对组件对象控制权的转移，从程序代码本身转移到了外部容器。
 
 Spring IOC 负责创建对象，管理对象（通过依赖注入（DI），装配对象，配置对象，并且管理这些对象的整个生命周期。
 
-##### 控制反转(IoC)有什么作用
+##### 2.控制反转(IoC)有什么作用
 
 - 管理对象的创建和依赖关系的维护。对象的创建并不是一件简单的事，在对象关系比较复杂时，如果依赖关系需要程序猿来维护的话，那是相当头疼的
 - 解耦，由容器去维护具体的对象
 - 托管了类的产生过程，比如我们需要在类的产生过程中做一些处理，最直接的例子就是代理，如果有容器程序可以把这部分处理交给容器，应用程序则无需去关心类是如何完成代理的
 
-##### BeanFactory 和 ApplicationContext有什么区别？
+##### 3.BeanFactory 和 ApplicationContext有什么区别？
 
 BeanFactory和ApplicationContext是Spring的两大核心接口，都可以当做Spring的容器。其中ApplicationContext是BeanFactory的子接口。
 
@@ -112,13 +112,13 @@ BeanFactory通常以编程的方式被创建，ApplicationContext还能以声明
 
 BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，但两者之间的区别是：BeanFactory需要手动注册，而ApplicationContext则是自动注册。
 
-##### 什么是Spring的依赖注入？
+##### 4.什么是Spring的依赖注入？
 
 控制反转IoC是一个很大的概念，可以用不同的方式来实现。其主要实现方式有两种：依赖注入和依赖查找
 
 依赖注入：相对于IoC而言，依赖注入(DI)更加准确地描述了IoC的设计理念。所谓依赖注入（Dependency Injection），即组件之间的依赖关系由容器在应用系统运行期来决定，也就是由容器动态地将某种依赖关系的目标对象实例注入到应用系统中的各个关联的组件之中。组件不做定位查询，只提供普通的Java方法让容器去决定依赖关系。
 
-##### 有哪些不同类型的依赖注入实现方式？
+##### 5.有哪些不同类型的依赖注入实现方式？
 
 依赖注入是时下最流行的IoC实现方式，依赖注入分为接口注入（Interface Injection），Setter方法注入（Setter Injection）和构造器注入（Constructor Injection）三种方式。其中接口注入由于在灵活性和易用性比较差，现在从Spring4开始已被废弃。
 
@@ -131,11 +131,11 @@ Setter方法注入：Setter方法注入是容器通过调用无参构造器或�
 
 #### Spring Beans
 
-##### 什么是Spring beans？
+##### 1.什么是Spring beans？
 
 Spring beans 是那些形成Spring应用的主干的java对象。它们被Spring IOC容器初始化，装配，和管理。这些beans通过容器中配置的元数据创建。比如，以XML文件中 的形式定义。
 
-##### 如何给Spring 容器提供配置元数据？Spring有几种配置方式
+##### 2.如何给Spring 容器提供配置元数据？Spring有几种配置方式
 
 这里有三种重要的方法给Spring 容器提供配置元数据。
 
@@ -143,7 +143,7 @@ Spring beans 是那些形成Spring应用的主干的java对象。它们被Spring
 - 基于注解的配置。
 - 基于java的配置。
 
-##### 解释Spring支持的几种bean的作用域
+##### 3.解释Spring支持的几种bean的作用域
 
 Spring框架支持以下五种bean的作用域：
 
@@ -153,7 +153,7 @@ Spring框架支持以下五种bean的作用域：
 - session：在一个HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。
 - global-session：在一个全局的HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。
 
-##### Spring框架中的单例bean是线程安全的吗？
+##### 4.Spring框架中的单例bean是线程安全的吗？
 
 不是，Spring框架中的单例bean**不是线程安全**的。
 
@@ -164,7 +164,7 @@ spring 中的 bean 默认是单例模式，spring 框架并没有对单例 bean 
 - 有状态就是有数据存储功能。
 - 无状态就是不会保存数据。
 
-##### Spring如何处理线程并发问题？
+##### 5.Spring如何处理线程并发问题？
 
 在一般情况下，只有无状态的Bean才可以在多线程环境下共享，在Spring中，绝大部分Bean都可以声明为singleton作用域，因为Spring对一些Bean中**非线程安全状态采用ThreadLocal进行处理**，解决线程安全问题。
 
@@ -172,15 +172,15 @@ ThreadLocal和线程同步机制都是为了**解决多线程中相同变量的�
 
 ThreadLocal会为每一个线程提供**一个独立的变量副本**，从而隔离了多个线程对数据的访问冲突。因为每一个线程都拥有自己的变量副本，从而也就没有必要对该变量进行同步了。ThreadLocal提供了线程安全的共享对象，在编写多线程代码时，可以把不安全的变量封装进ThreadLocal。
 
-##### 什么是bean装配？
+##### 6.什么是bean装配？
 
 装配，或bean 装配是指在Spring 容器中把bean组装到一起，前提是容器需要知道bean的依赖关系，如何通过依赖注入来把它们装配到一起。
 
-##### 什么是bean的自动装配？
+##### 7.什么是bean的自动装配？
 
 在Spring框架中，在配置文件中设定bean的依赖关系是一个很好的机制，Spring 容器能够自动装配相互合作的bean，这意味着容器不需要和配置，能通过Bean工厂自动处理bean之间的协作。这意味着 Spring可以通过向Bean Factory中注入的方式自动搞定bean之间的依赖关系。自动装配可以设置在每个bean上，也可以设定在特定的bean上。
 
-##### 解释不同方式的自动装配，spring 自动装配 bean 有哪些方式？
+##### 8.解释不同方式的自动装配，spring 自动装配 bean 有哪些方式？
 
 在spring中，对象无需自己查找或创建与其关联的其他对象，由容器负责把需要相互协作的对象引用赋予各个对象，使用autowire来配置自动装载模式。
 
@@ -196,7 +196,7 @@ ThreadLocal会为每一个线程提供**一个独立的变量副本**，从而�
 
 - autodetect：自动探测，如果有构造方法，通过 construct的方式自动装配，否则使用 byType的方式自动装配。
 
-##### 使用@Autowired注解自动装配的过程是怎样的？
+##### 9.使用@Autowired注解自动装配的过程是怎样的？
 
 使用@Autowired注解来自动装配指定的bean。在使用@Autowired注解之前需要在Spring配置文件进行配置，<context:annotation-config />。
 
@@ -208,7 +208,7 @@ ThreadLocal会为每一个线程提供**一个独立的变量副本**，从而�
 
 - 如果上述查找的结果为空，那么会抛出异常。解决方法时，使用required=false。
 
-##### 自动装配有哪些局限性？
+##### 10.自动装配有哪些局限性？
 
 自动装配的局限性是：
 
@@ -2686,7 +2686,7 @@ public class Client {
 -   **优点**：对真实对象进行封装，**不会修改目标类的代码**。
 -   **缺点**：1.多个不同类型目标对象需要代理时，就**需要建立多个代理类**，造成类的膨胀
     	        2.**代码的冗余**
-    	        3.**编译期加入，不够灵活**
+        	        3.**编译期加入，不够灵活**
 
 ```Java
 //抽象角色：声明真实对象和代理对象的共同接口；
