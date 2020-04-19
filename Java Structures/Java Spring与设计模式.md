@@ -222,7 +222,7 @@ ThreadLocal会为每一个线程提供**一个独立的变量副本**，从而�
 
 #### Spring注解
 
-##### @Component, @Controller, @Repository, @Service 有何区别？
+##### 1.@Component, @Controller, @Repository, @Service 有何区别？
 
 @Component：这将 java 类标记为 bean。它是任何 Spring 管理组件的通用构造型。spring 的组件扫描机制现在可以将其拾取并将其拉入应用程序环境中。
 
@@ -232,7 +232,7 @@ ThreadLocal会为每一个线程提供**一个独立的变量副本**，从而�
 
 @Repository：这个注解是具有**类似用途和功能的 @Component 注解的特化**。它为 DAO 提供了额外的好处。它将 DAO 导入 IoC 容器，并使未经检查的异常有资格转换为 Spring DataAccessException。
 
-##### @Required 注解有什么作用
+##### 2.@Required 注解有什么作用
 
 这个注解表明bean的属性必须在配置的时候设置，通过一个bean定义的显式的属性值或通过自动装配，若@Required注解的bean属性未被设置，容器将抛出BeanInitializationException。示例：
 
@@ -249,7 +249,7 @@ public class Employee {
 }
 ```
 
-##### @Autowired 注解有什么作用
+##### 3.@Autowired 注解有什么作用
 
 @Autowired默认是**按照类型装配注入**的，默认情况下**它要求依赖对象必须存在**（可以设置它required属性为false）。@Autowired 注解提供了更细粒度的控制，包括在何处以及如何完成自动装配。它的用法和@Required一样，修饰setter方法、构造器、属性或者具有任意名称和/或多个参数的PN方法。
 
@@ -266,7 +266,7 @@ public class Employee {
 }
 ```
 
-##### @Autowired和@Resource之间的区别
+##### 4.@Autowired和@Resource之间的区别
 
 @Autowired可用于：构造函数、成员变量、Setter方法
 
@@ -276,7 +276,7 @@ public class Employee {
 
 @Resource默认是按照名称来装配注入的，只有当找不到与名称匹配的bean才会按照类型来装配注入。
 
-##### @RequestMapping 注解有什么用？
+##### 5.@RequestMapping 注解有什么用？
 
 @RequestMapping 注解用于将特定 HTTP 请求方法映射到将处理相应请求的控制器中的特定类/方法。此注释可应用于两个级别：
 
@@ -287,30 +287,30 @@ public class Employee {
 
 #### Spring数据访问
 
-##### 解释对象/关系映射集成模块
+##### 1.解释对象/关系映射集成模块
 
 Spring 通过提供**ORM模块**，支持我们在直接JDBC之上使用一个对象/关系映射映射(ORM)工具，Spring 支持集成主流的ORM框架，如**Hiberate**，JDO和 **iBATIS，JPA**，TopLink，JDO，OJB 。Spring的事务管理同样支持以上所有ORM框架及JDBC。
 
-##### 在Spring框架中如何更有效地使用JDBC？
+##### 2.在Spring框架中如何更有效地使用JDBC？
 
 使用Spring JDBC 框架，资源管理和错误处理的代价都会被减轻。所以开发者只需写statements 和 queries从数据存取数据，JDBC也可以在Spring框架提供的模板类的帮助下更有效地被使用，这个模板叫JdbcTemplate
 
-##### 解释JDBC抽象和DAO模块
+##### 3.解释JDBC抽象和DAO模块
 
 通过使用JDBC抽象和DAO模块，保证数据库代码的简洁，并能避免数据库资源错误关闭导致的问题，它在各种不同的数据库的错误信息之上，提供了一个统一的异常访问层。它还利用Spring的AOP 模块给Spring应用中的对象提供事务管理服务。
 
-##### spring DAO 有什么用？
+##### 4.spring DAO 有什么用？
 
 Spring DAO（数据访问对象） 使得 JDBC，Hibernate 或 JDO 这样的数据访问技术更容易以一种统一的方式工作。这使得用户容易在持久性技术之间切换。它还允许您在编写代码时，无需考虑捕获每种技术不同的异常。
 
-##### 使用Spring通过什么方式访问Hibernate？
+##### 5.使用Spring通过什么方式访问Hibernate？
 
 在Spring中有两种方式访问Hibernate：
 
 - 使用 Hibernate 模板和回调进行控制反转
 - 扩展 HibernateDAOSupport 并应用 AOP 拦截器节点
 
-##### Spring支持的事务管理类型， spring 事务实现方式有哪些？
+##### 6.Spring支持的事务管理类型， spring 事务实现方式有哪些？
 
 Spring支持两种类型的事务管理：
 
@@ -318,11 +318,11 @@ Spring支持两种类型的事务管理：
 
 声明式事务管理：这意味着你可以将业务代码和事务管理分离，你只需用注解和XML配置来管理事务。
 
-##### Spring事务的实现方式和实现原理
+##### 7.Spring事务的实现方式和实现原理
 
 Spring事务的本质其实就是数据库对事务的支持，没有数据库的事务支持，spring是无法提供事务功能的。真正的数据库层的事务提交和回滚是通过binlog或者redo log实现的。
 
-##### 说一下 spring 的事务隔离？
+##### 8.说一下 spring 的事务隔离？
 
 spring 有五大隔离级别，默认值为 ISOLATION_DEFAULT（使用数据库的设置），其他四个隔离级别和数据库的隔离级别一致：
 
@@ -343,22 +343,24 @@ spring 有五大隔离级别，默认值为 ISOLATION_DEFAULT（使用数据库�
 
 **幻读** ：指同一个事务内多次查询返回的结果集不一样。比如同一个事务 A 第一次查询时候有 n 条记录，但是第二次同等条件下查询却有 n+1 条记录，这就好像产生了幻觉。发生幻读的原因也是另外一个事务新增或者删除或者修改了第一个事务结果集里面的数据，同一个记录的数据内容被修改了，所有数据行的记录就变多或者变少了。
 
-##### Spring框架的事务管理有哪些优点？
+##### 9.Spring框架的事务管理有哪些优点？
 
 为不同的事务API 如 JTA，JDBC，Hibernate，JPA 和JDO，提供一个不变的编程模式。
 为编程式事务管理提供了一套简单的API而不是一些复杂的事务API
 支持声明式事务管理。
 和Spring各种数据访问抽象层很好得集成。
 
+
+
 #### Spring面向切面编程(AOP)
 
-##### 什么是AOP
+##### 1.什么是AOP
 
 OOP(Object-Oriented Programming)面向对象编程，允许开发者定义纵向的关系，但并适用于定义横向的关系，导致了大量代码的重复，而不利于各个模块的重用。
 
 AOP(Aspect-Oriented Programming)，一般称为面向切面编程，作为面向对象的一种补充，用于将那些与业务无关，但却对多个对象产生影响的公共行为和逻辑，抽取并封装为一个可重用的模块，这个模块被命名为“切面”（Aspect），减少系统中的重复代码，降低了模块间的耦合度，同时提高了系统的可维护性。可用于权限认证、日志、事务处理等。
 
-##### Spring AOP里面的几个名词
+##### 2.Spring AOP里面的几个名词
 
 （1）切面（Aspect）：切面是通知和切点的结合。通知和切点共同定义了切面的全部内容。 在Spring AOP中，切面可以使用通用类（基于模式的风格） 或者在普通类中以 @AspectJ 注解来实现。
 
@@ -379,7 +381,7 @@ AOP(Aspect-Oriented Programming)，一般称为面向切面编程，作为面向
 **运行期**：切面在应用运行的某个时刻被织入。一般情况下，在织入切面时，AOP容器会为目标对象动态地创建一个代理对象。SpringAOP就是以这种方式织入切面。
 
 
-##### 什么是切面 Aspect？
+##### 3.什么是切面 Aspect？
 
 aspect 由 pointcount 和 advice 组成，切面是通知和切点的结合。 它既包含了横切逻辑的定义, 也包括了连接点的定义. Spring AOP 就是负责实施切面的框架, 它将切面所定义的横切逻辑编织到切面所指定的连接点中.
 AOP 的工作重心在于如何将增强编织目标对象的连接点上, 这里包含两个工作:
@@ -399,7 +401,7 @@ AOP 的工作重心在于如何将增强编织目标对象的连接点上, 这�
 
 ### SpringBoot知识集合
 
-#### 概述
+#### 1.定义与优缺点
 
 ##### 什么是 Spring Boot？
 
@@ -425,7 +427,7 @@ Spring Boot 主要有如下优点：
 
 @ComponentScan：Spring组件扫描。
 
-#### 配置
+#### 2.SpringBoot配置
 
 ##### 什么是 JavaConfig？
 
@@ -458,7 +460,7 @@ application (. yml 或者 . properties)： 由ApplicatonContext 加载，用于 
 
 为了在自定义端口上运行 Spring Boot 应用程序，您可以在application.properties 中指定端口。server.port = 8090
 
-#### 安全与监视器
+#### 3.安全与监视器
 
 ##### 如何实现 Spring Boot 应用程序的安全性？
 
@@ -476,7 +478,7 @@ Spring boot actuator 是 spring 启动框架中的重要功能之一。Spring bo
 
 Spring Boot 提供监视器端点以监控各个微服务的度量。这些端点对于获取有关应用程序的信息（如它们是否已启动）以及它们的组件（如数据库等）是否正常运行很有帮助。但是，使用监视器的一个主要缺点或困难是，我们必须单独打开应用程序的知识点以了解其状态或健康状况。想象一下涉及 50 个应用程序的微服务，管理员将不得不击中所有 50 个应用程序的执行终端。为了帮助我们处理这种情况，我们将使用位于的开源项目。 它建立在 Spring Boot Actuator 之上，它提供了一个 Web UI，使我们能够可视化多个应用程序的度量。
 
-#### 第三方项目整合
+#### 4.第三方项目整合
 
 ##### 什么是 WebSockets？
 
@@ -526,7 +528,7 @@ Swagger 广泛用于**可视化 API**，使用 Swagger UI 为前端开发人员�
 
 前后端分离开发日益流行，大部分情况下，我们都是通过 Spring Boot 做前后端分离开发，前后端分离一定会有接口文档，不然会前后端会深深陷入到扯皮中。一个比较笨的方法就是使用 word 或者 md 来维护接口文档，但是效率太低，接口一变，所有人手上的文档都得变。在 Spring Boot 中，这个问题常见的解决方案是 **Swagger** ，使用 Swagger 我们可以**快速生成一个接口文档网站**，接口一旦发生变化，文档就会自动更新，所有开发工程师访问这一个在线网站**就可以获取到最新的接口文档**，非常方便。
 
-#### 相关重要问题
+#### 5.相关重要问题
 
 ##### Spring Boot项目如何热部署？
 
