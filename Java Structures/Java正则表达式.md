@@ -8,9 +8,9 @@
 
 ​		正则表达式定义了字符串的模式。
 
-​		正则表达式可以用来搜索、编辑或处理文本。
+​		正则表达式可以用来**搜索、编辑或处理文本**。
 
-​		正则表达式并不仅限于某一种语言，但是在每种语言中有细微的差别。
+​		正则表达式并**不仅限于某一种语言**，但是在每种语言中有细微的差别。
 
 ​		**正则表达式实例**:	一个字符串其实就是一个简单的正则表达式，例如 **Hello World** 正则表达式匹配 "Hello World" 字符串。**.**（点号）也是一个正则表达式，它匹配任何一个字符如："a" 或 "1"。
 
@@ -176,7 +176,7 @@ Pattern p=Pattern.compile("\\w+");
 p.pattern();//返回 \w+ 
 ```
 
-​		pattern() 返回正则表达式的字符串形式,其实就是返回Pattern.complile(String regex)的regex参数 
+​		pattern() 返回正则表达式的字符串形式,其实就是返回**Pattern.complile(String regex)**的regex参数 
 
 ###### **1.Pattern.split(CharSequence input)**
 
@@ -234,7 +234,7 @@ StringpatternStr = pattern.pattern();//返回\?\*
 
 **3、Pattern compile(String regex, int flags)。**
 
-​    方法功能和compile(Stringregex)相同，不过增加了flag参数，flag参数用来控制正则表达式的匹配行为，可取值范围如下：
+​    方法功能和compile(Stringregex)相同，不过增加了flag参数，flag参数用来**控制正则表达式的匹配行为**，可取值范围如下：
 
 -   Pattern.CANON_EQ：启用**规范等价**。当且仅当两个字符的“正规分解(canonicaldecomposition)”都完全相同的情况下，才认定匹配。默认情况下，不考虑“规范相等性(canonical equivalence)”。
 -   Pattern.CASE_INSENSITIVE：启用**不区分大小写的匹配**。默认情况下，大小写不敏感的匹配只适用于US-ASCII字符集。这个标志能让表达式忽略大小写进行匹配，要想对Unicode字符进行大小不敏感的匹配，只要将UNICODE_CASE与这个标志合起来就行了。
@@ -249,7 +249,7 @@ StringpatternStr = pattern.pattern();//返回\?\*
 
 **5、String[] split(CharSequence input)。**
 
-   	 Pattern有一个split(CharSequenceinput)方法，用于**分隔字符串**，并**返回一个String[]**。此外String[]  split(CharSequence input, int limit)功能和String[] split(CharSequence input)相同，增加**参数limit目的在于要指定分割的段数**。
+   	 Pattern有一个split(CharSequence input)方法，用于**分隔字符串**，并**返回一个String[]**。此外String[]  split(CharSequence input, int limit)功能和String[] split(CharSequence input)相同，增加**参数limit目的在于要指定分割的段数**。
 
 **6、static boolean matches(String regex, CharSequenceinput)。**
 
