@@ -1838,7 +1838,7 @@ FutureTask除了实现Future接口外，还**实现了Runnable接口**。因此�
 
 ##### 2.Java并发关键字-volatile
 
-###### volatile实现原理
+###### volatile实现原理  ①禁止指令重排序②内存屏障（内存可见性）
 
 volatile是怎样实现的？比如一个很简单的Java代码：
 
