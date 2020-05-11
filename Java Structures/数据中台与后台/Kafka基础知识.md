@@ -894,11 +894,11 @@ Kafka 在创建分区的时候都要选举一个副本，这个选举出来的�
 
 ###### 1.安装 Java 环境
 
-先确保Linux 环境上是否有 Java 环境，使用 `java -version` 命令查看 Java 版本，推荐使用Jdk 1.8 。
+​		先确保Linux 环境上是否有 Java 环境，使用 `java -version` 命令查看 Java 版本，推荐使用Jdk 1.8 。
 
 ###### 2.安装 Zookeeper 环境
 
-Kafka 的底层**使用 Zookeeper 储存元数据**，确保**一致性**，所以安装 Kafka 前**需要先安装 Zookeeper**，Kafka 的**发行版自带了 Zookeeper** ，可以直接使用脚本来启动，不过**安装一个 Zookeeper 也不费劲**：
+​		Kafka 的底层**使用 Zookeeper 储存元数据**，确保**一致性**，所以安装 Kafka 前**需要先安装 Zookeeper**，Kafka 的**发行版自带了 Zookeeper** ，可以直接使用脚本来启动，不过**安装一个 Zookeeper 也不费劲**：
 
 **①Zookeeper 单机搭建**
 
@@ -914,13 +914,13 @@ Kafka 的底层**使用 Zookeeper 储存元数据**，确保**一致性**，所�
 
 **准备条件**
 
-准备条件：需要三个服务器，这里我使用了CentOS7 并安装了三个虚拟机，并为各自的虚拟机分配了`1GB`的内存，在每个 `/usr/local/` 下面新建 zookeeper 文件夹，把 zookeeper 的压缩包挪过来，解压，完成后会有 zookeeper-3.4.10 文件夹，进入到文件夹，新建两个文件夹，分别是 `data` 和`log`文件夹
+​		准备条件：需要三个服务器，这里我使用了CentOS7 并安装了三个虚拟机，并为各自的虚拟机分配了`1GB`的内存，在每个 `/usr/local/` 下面新建 zookeeper 文件夹，把 zookeeper 的压缩包挪过来，解压，完成后会有 zookeeper-3.4.10 文件夹，进入到文件夹，新建两个文件夹，分别是 `data` 和`log`文件夹
 
 > 注：上一节单机搭建中已经创建了一个data 文件夹，就不需要重新创建了，直接新建一个 log 文件夹，对另外两个新增的服务需要新建这两个文件夹。
 
 **设置集群**
 
-新建完成后，需要编辑 conf/zoo.cfg 文件，三个文件的内容如下
+​		新建完成后，需要编辑 conf/zoo.cfg 文件，三个文件的内容如下		
 
 ```Java
 tickTime=2000
