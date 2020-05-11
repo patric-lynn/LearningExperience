@@ -393,7 +393,7 @@ site-deploy 将生成的站点文档部署到特定的服务器上
 
 ##### 6.Maven常用操作
 
-###### 手动安装Maven依赖
+###### 1.手动安装Maven依赖
 
 在使用Maven的依赖Oracle的驱动包时，会出现依赖错误的情况，原因是版权原因，Oracle官方屏蔽了依赖，那么要在本地使用其数据驱动包，要怎么做呢？去Oracle官网下载依赖然后安装到本地仓库
 
@@ -411,16 +411,15 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 </dependency>
 ```
 
-###### 部署jar包到远程仓库
+###### 2.部署jar包到远程仓库
 
 部署jar包到远程仓库主要包括两个部分：远程仓库认证，部署jar包到远程仓库
 
-###### 构建多模块Maven项目
+###### 3.构建多模块Maven项目
 
-**dependencyManagement**
+​		**dependencyManagement**
 
-在项目开发过程中，有时一个项目下面包含了几个子模块，在多模块的情况，POM的配置应该要注意写什么呢？我们通过一个例子来说明下。
-有这样一个工程，里面有A模块、B模块和C模块，A模块需要引入junit和log4j库，配置如下：
+​		在项目开发过程中，有时一个项目下面包含了几个子模块，在多模块的情况，POM的配置应该要注意写什么呢？我们通过一个例子来说明下。有这样一个工程，里面有A模块、B模块和C模块，A模块需要引入junit和log4j库，配置如下：
 
 ```
 <dependency>
@@ -454,8 +453,6 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 
 ​		会发现A模块和B模块对junit和log4j库依赖的版本是不同的，出现这种情况是十分危险的，因为依赖不同版本的库可能会造成很多未知的风险。怎么解决不同模块之间对同一个库的依赖版本一样呢？Maven提供了优雅的解决办法，使用继承机制以及dependencyManagement元素来解决这个问题。 如果你在父模块中配置dependencies，那么所有的子模块都自动继承，不仅达到了依赖一致的目的，还省了大段的代码，但这样来做会存在问题的。比如B模块需要spring-aop模块，但是C模块不需要spring-aop模块，如果用dependencies在父类中统一配置，C模块中也会包含有spring-aop模块，不符合我们的要求。但是用dependencyManagement就没有这样的问题。dependencyManagement只会影响现有依赖的配置，但不会引入依赖。 这样我们在父模块中的配置可以更改为如下所示：
 
-会发现A模块和B模块对junit和log4j库依赖的版本是不同的，出现这种情况是十分危险的，因为依赖不同版本的库可能会造成很多未知的风险。怎么解决不同模块之间对同一个库的依赖版本一样呢？Maven提供了优雅的解决办法，使用继承机制以及dependencyManagement元素来解决这个问题。 如果你在父模块中配置dependencies，那么所有的子模块都自动继承，不仅达到了依赖一致的目的，还省了大段的代码，但这样来做会存在问题的。比如B模块需要spring-aop模块，但是C模块不需要spring-aop模块，如果用dependencies在父类中统一配置，C模块中也会包含有spring-aop模块，不符合我们的要求。但是用dependencyManagement就没有这样的问题。dependencyManagement只会影响现有依赖的配置，但不会引入依赖。 这样我们在父模块中的配置可以更改为如下所示：
-
 ```
 <!-- dependencyManagement只会影响现有依赖的配置，但不会引入依赖。 -->
 <dependencyManagement>
@@ -477,8 +474,6 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 
 这段配置不会给任何子模块引入依赖，如果某个子模块需要junit和log4j，只需要这样配置即可：
 
-这段配置不会给任何子模块引入依赖，如果某个子模块需要junit和log4j，只需要这样配置即可：
-
 ```
 <dependencies>
     <dependency>
@@ -494,11 +489,9 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 
 在多模块Maven项目中，使用dependencyManagement能够有效地帮我们维护依赖一致性。
 
-在多模块Maven项目中，使用dependencyManagement能够有效地帮我们维护依赖一致性。
+​		**pluginManagement**
 
-**pluginManagement**
-
-上面介绍了在多模块中对依赖库的管理，接下来介绍下对插件的管理。与dependencyManagement类似，我们可以使用pluginManagement元素管理插件。一个常见的用法就是我们希望项目所有模块的使用compiler插件的时候，都是用jdk1.8，以及指定Java源文件编码为UTF-8，这时可以在父模块的POM中如下配置pluginManagement：
+​		上面介绍了在多模块中对依赖库的管理，接下来介绍下对插件的管理。与dependencyManagement类似，我们可以使用pluginManagement元素管理插件。一个常见的用法就是我们希望项目所有模块的使用compiler插件的时候，都是用jdk1.8，以及指定Java源文件编码为UTF-8，这时可以在父模块的POM中如下配置pluginManagement：
 
 ```
 <build>
@@ -519,21 +512,19 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 </build>
 ```
 
-这段配置会被应用到所有子模块的compiler插件中，因为Maven内置了compiler插件与生命周期的绑定，因此子模块不需要任何maven-compiler-plugin的配置了。
+​		这段配置会被应用到所有子模块的compiler插件中，因为Maven内置了compiler插件与生命周期的绑定，因此子模块不需要任何maven-compiler-plugin的配置了。
+
+​		这段配置会被应用到所有子模块的compiler插件中，因为Maven内置了compiler插件与生命周期的绑定，因此子模块不需要任何maven-compiler-plugin的配置了。
 
 
 
-这段配置会被应用到所有子模块的compiler插件中，因为Maven内置了compiler插件与生命周期的绑定，因此子模块不需要任何maven-compiler-plugin的配置了。
-
-
-
-##### Maven常用命令
+###### 4.Maven常用命令
 
 ![image-20200310112640077](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310112640077.png)
 
 
 
-##### Maven常用插件
+###### 5.Maven常用插件
 
 Maven本质上是一个插件框架，它的核心并不执行任何具体的构建任务，所有这些任务都交给插件来完成。下面说几个常用的插件：
 
