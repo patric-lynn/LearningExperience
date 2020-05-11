@@ -2,24 +2,25 @@
 
 #### Maven简介
 
-##### 什么是Maven
+##### 1.什么是Maven
 
-在Java项目开发中，项目的编译、测试、打包等是比较繁琐的，属于重复劳动的工作，浪费人力和时间成本。以往开发项目时，程序员往往需要花较多的精力在引用jar包搭建项目环境上，跨部门甚至跨人员之间的项目结构都有可能不一样。Maven的仓库管理、依赖管理、继承和聚合等特性为项目的构建提供了一整套完善的解决方案。
+​		在Java项目开发中，项目的编译、测试、打包等是比较繁琐的，属于重复劳动的工作，浪费人力和时间成本。以往开发项目时，程序员往往需要花较多的精力在**引用jar包搭建项目环境**上，跨部门甚至跨人员之间的项目结构都有可能不一样。Maven的**仓库管理、依赖管理、继承和聚合**等特性为项目的构建提供了一整套完善的解决方案。
 
-Apache Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project’s build, reporting and documentation from a central piece of information.
-从官网的介绍中我们可以看到Apache Maven是一个项目管理工具，它基于项目对象模型(POM)的概念，通过一小段描述信息来管理项目的构建、报告和文档。
+​		Apache Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project’s build, reporting and documentation from a central piece of information.从官网的介绍中我们可以看到Apache Maven是一个**项目管理工具**，它基于项目对象模型(POM)的概念，通过一小段描述信息来管理项目的构建、报告和文档。
 
-##### Maven的作用
 
-Maven是跨平台的项目管理工具。主要服务于基于Java平台的项目构建，依赖管理和项目信息管理。
+
+##### 2.Maven的作用
+
+​		Maven是跨平台的项目管理工具。主要服务于基于Java平台的项目构建，依赖管理和项目信息管理。
 
 ###### 项目构建：
 
-项目构建包括清理，···，编译，测试，报告，打包，部署···等步骤
+​		项目构建包括清理，···，编译，测试，报告，打包，部署···等步骤
 
 ###### 理想的项目构建
 
-高度自动化，跨平台，可重用的组件，标准化
+​		高度自动化，跨平台，可重用的组件，标准化
 
 ###### 传统方式管理jar包依赖的问题：
 
@@ -35,7 +36,9 @@ Maven是跨平台的项目管理工具。主要服务于基于Java平台的项�
 - jar包不用再每个项目保存，只需要放在仓库即可
 - maven可以指定jar包的依赖范围
 
-##### Maven安装与配置
+
+
+##### 3.Maven安装与配置
 
 ###### Maven安装
 
@@ -113,7 +116,7 @@ Maven安装好之后默认配置了本地仓库，在%user%/.m2/respository目�
 </profile>
 ```
 
-##### Maven标准目录结构
+##### 4.Maven标准目录结构
 
 若要使用Maven，那么项目的目录结构必须符合Maven的规范，其目录结构如下：
 
@@ -133,19 +136,21 @@ project
 	pom.xml	
 ```
 
-##### Maven的几个核心概念
+
+
+##### 5.Maven的几个核心概念
 
 ###### POM
 
-POM(Project Object Model)项目对象模型，一个项目所有的配置都放在POM文件中：定义项目的类型、名字、管理依赖关系，定制插件的行为等等。Maven通过pom.xml文件来管理依赖和管理项目的构建生命周期，而项目构建的生命周期是依靠一个个的插件完成的。
+​		POM(Project Object Model)项目对象模型，一个项目所有的配置都放在POM文件中：定义项目的类型、名字、管理依赖关系，定制插件的行为等等。Maven通过pom.xml文件来管理依赖和管理项目的构建生命周期，而项目构建的生命周期是依靠一个个的插件完成的。
 
 ###### Maven仓库
 
-Maven管理资源的位置。仓库里面包含依赖（jar包）和插件（plug-in）。Maven仓库分为本地仓库和远程仓库，而远程仓库又包括私服和中央仓库。
+​		Maven管理资源的位置。仓库里面包含依赖（jar包）和插件（plug-in）。Maven仓库分为本地仓库和远程仓库，而远程仓库又包括私服和中央仓库。
 
 ###### 本地仓库
 
-用户自己电脑上的仓库，直接从本地获取。
+​		用户自己电脑上的仓库，直接从本地获取。
 
 ###### 远程仓库
 
@@ -159,7 +164,7 @@ Maven管理资源的位置。仓库里面包含依赖（jar包）和插件（plu
 
 ###### 坐标
 
-在Maven中，坐标是jar包的唯一标识，Maven通过坐标在仓库中找到项目所需的jar包。
+​		在Maven中，坐标是jar包的唯一标识，Maven通过坐标在仓库中找到项目所需的jar包。
 
 ```
 <dependency>
@@ -169,24 +174,25 @@ Maven管理资源的位置。仓库里面包含依赖（jar包）和插件（plu
 </dependency>
 ```
 
-
+```
 groupId：公司或组织域名倒序
 artifactId：模块名
 version：版本号
 packaging：项目的打包方式(pom/jar/war，默认jar)
 groupId、artifactId、versioin简称GAV(Maven坐标)，是用来唯一标识jar包的。
+```
 
-最新最全的Maven依赖项版本查询网站：http://mvnrepository.com/
+​		最新最全的Maven依赖项版本查询网站：http://mvnrepository.com/
 
 ###### Maven工程的坐标与仓库中路径的关系：
 
-Maven坐标和仓库对应的映射关系：
+​		Maven坐标和仓库对应的映射关系：
 
 ```
 [groupId][artifactId][version][artifactId]-[version].jar
 ```
 
-对应本地仓库目录：
+​		对应本地仓库目录：
 
 ```
 org\springframework\spring-core\4.3.4.RELEASE\spring-core-4.3.4.RELEASE.jar
@@ -194,14 +200,13 @@ org\springframework\spring-core\4.3.4.RELEASE\spring-core-4.3.4.RELEASE.jar
 
 ###### 依赖传递
 
-如果我们的项目引用了一个Jar包，而该Jar包又引用了其他Jar包，那么在默认情况下项目编译时，Maven会把直接引用和简洁引用的Jar包都下载到本地。
+​		如果我们的项目引用了一个Jar包，而该Jar包又引用了其他Jar包，那么在默认情况下项目编译时，Maven会把直接引用和简洁引用的Jar包都下载到本地。
 
-传递性依赖机制能够大大的简化依赖声明，而且大部分情况下我们只需要关心项目的直接依赖是什么，而不用考虑这些直接依赖会引入什么传递性依赖，但是当出现冲突了，则需要很清楚传递性依赖是从什么依赖路径引入的。
+​		传递性依赖机制能够大大的简化依赖声明，而且大部分情况下我们只需要关心项目的直接依赖是什么，而不用考虑这些直接依赖会引入什么传递性依赖，但是当出现冲突了，则需要很清楚传递性依赖是从什么依赖路径引入的。
 
 ###### 依赖冲突
 
-依赖的原则主要是为了解决模块之间jar包冲突问题。
-我们分两种情况说明一下：
+​		依赖的原则主要是为了解决模块之间jar包冲突问题。我们分两种情况说明一下：
 
 ​		**路径最短者优先**
 
@@ -386,7 +391,7 @@ site-deploy 将生成的站点文档部署到特定的服务器上
 
 
 
-##### Maven常用操作
+##### 6.Maven常用操作
 
 ###### 手动安装Maven依赖
 
