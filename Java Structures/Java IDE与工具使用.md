@@ -614,6 +614,12 @@ Maven区别对待Java代码和资源文件，maven-resources-plugin则用来处�
 
 #### IDEA使用与配置技巧
 
+参见博客:
+
+[Intellij IDEA 使用教程] https://www.jianshu.com/p/572772f84105?utm_source=oschina-app
+
+[IDEA常用配置和常用插件] https://blog.csdn.net/ThinkWon/article/details/101020481 
+
 ##### 常用插件
 
 Alibaba Java Coding Guidelines -阿里巴巴代码规范检查插件
