@@ -58,11 +58,13 @@ Log4j，Logback，Log4j2性能比较与日志门面SLF4J简介
 
 #### Apache Log4j2详解
 
-##### 简介
+##### 1.简介
 
 ​		Apache Log4j 2是对Log4j的升级，它比其前身Log4j 1.x提供了重大改进，并提供了Logback中可用的许多改进，同时修复了Logback架构中的一些问题。是目前最优秀的Java日志框架，没有之一。
 
-##### 特征
+
+
+##### 2.特征
 
 ###### API分离
 
@@ -88,11 +90,13 @@ Log4j，Logback，Log4j2性能比较与日志门面SLF4J简介
 
 ​		在稳态日志记录期间，Log4j 2 在独立应用程序中是无垃圾的，在Web应用程序中是低垃圾。这减少了垃圾收集器的压力，并且可以提供更好的响应性能。
 
-##### Log4j2调用
+
+
+##### 3.Log4j2调用
 
 ###### 引用依赖
 
-在一般项目中使用Log4j2至少需要引用log4j-api-2.x和log4j-core-2.x这两个jar包。
+​		在一般项目中使用Log4j2至少需要引用log4j-api-2.x和log4j-core-2.x这两个jar包。
 
 ```Java
 <dependency>
@@ -108,7 +112,7 @@ Log4j，Logback，Log4j2性能比较与日志门面SLF4J简介
 </dependency>
 ```
 
-在spring boot项目中使用Log4j2
+​		在spring boot项目中使用Log4j2
 
 ```Java
 <dependency>
@@ -130,11 +134,11 @@ Log4j，Logback，Log4j2性能比较与日志门面SLF4J简介
 </dependency>
 ```
 
-小编在使用中遇到一些坑，同时引入spring-boot-starter和spring-boot-starter-web依赖时，需要在spring-boot-starter中排除spring-boot-starter-logging依赖，因为spring-boot-starter-web依赖于spring-boot-starter，根据Maven依赖关系，在spring-boot-starter中排除spring-boot-starter-logging依赖才能排除成功。
+​		小编在使用中遇到一些坑，同时引入spring-boot-starter和spring-boot-starter-web依赖时，需要在spring-boot-starter中排除spring-boot-starter-logging依赖，因为spring-boot-starter-web依赖于spring-boot-starter，根据Maven依赖关系，在spring-boot-starter中排除spring-boot-starter-logging依赖才能排除成功。
 
 ###### 添加配置文件
 
-默认情况下，Log4j2在classpath下查找名为log4j2.xml的配置文件。你也可以使用Java启动命令指定配置文件的全路径。-Dlog4j.configurationFile=opt/demo/log4j2.xml，你还可以使用Java代码指定配置文件路径
+​		默认情况下，Log4j2在classpath下查找名为log4j2.xml的配置文件。你也可以使用Java启动命令指定配置文件的全路径。-Dlog4j.configurationFile=opt/demo/log4j2.xml，你还可以使用Java代码指定配置文件路径
 
 ```Java
 import org.apache.logging.log4j.LogManager;
@@ -151,46 +155,50 @@ public static void main(String[] args) {
 }
 ```
 
-##### 同步日志与异步日志
+
+
+##### 4.同步日志与异步日志
 
 ###### 同步日志
 
-所谓同步日志，即当输出日志时，必须等待日志输出语句执行完毕后，才能执行后面的业务逻辑语句。
+​		所谓同步日志，即当输出日志时，必须等待日志输出语句执行完毕后，才能执行后面的业务逻辑语句。
 
 ###### 混合同步和异步日志
 
-Log4j-2.9及更高版本在类路径上需要disruptor-3.3.4.jar或更高版本。在Log4j-2.9之前，需要disruptor-3.0.0.jar或更高版本。无需将系统属性“Log4jContextSelector”设置为任何值。
+​		Log4j-2.9及更高版本在类路径上需要disruptor-3.3.4.jar或更高版本。在Log4j-2.9之前，需要disruptor-3.0.0.jar或更高版本。无需将系统属性“Log4jContextSelector”设置为任何值。
 
-可以在配置中组合同步和异步记录器。这为您提供了更大的灵活性，但代价是性能略有下降（与使所有记录器异步相比）。使用<asyncRoot>或<asyncLogger> 配置元素指定需要异步的记录器。配置只能包含一个根记录器（<root> 或<asyncRoot>元素），但是可以组合异步和非异步记录器。例如，包含<asyncLogger>元素的配置文件也可以包含<root>和同步记录器的元素。
+​		可以在配置中**组合同步和异步记录器**。这为您提供了更大的灵活性，但代价是性能略有下降（与使所有记录器异步相比）。使用<asyncRoot>或<asyncLogger> 配置元素指定需要异步的记录器。配置只能包含一个根记录器（<root> 或<asyncRoot>元素），但是可以组合异步和非异步记录器。例如，包含<asyncLogger>元素的配置文件也可以包含<root>和同步记录器的元素。
 
-默认情况下，异步记录器不会将位置传递给I / O线程。如果您的某个布局或自定义过滤器需要位置信息，则需要在所有相关记录器的配置中设置“includeLocation = true”，包括根记录器。
+​		默认情况下，异步记录器不会将位置传递给I / O线程。如果您的某个布局或自定义过滤器需要位置信息，则需要在所有相关记录器的配置中设置“includeLocation = true”，包括根记录器。
 
-##### Log4j2配置文件详解
+
+
+##### 5.Log4j2配置文件详解
 
 ###### Configuration
 
-根节点，有status和monitorInterval等多个属性
+​		根节点，有status和monitorInterval等多个属性
 
-status的值有 “trace”, “debug”, “info”, “warn”, “error” and “fatal”，用于控制log4j2日志框架本身的日志级别，如果将stratus设置为较低的级别就会看到很多关于log4j2本身的日志，如加载log4j2配置文件的路径等信息
+​		status的值有 “trace”, “debug”, “info”, “warn”, “error” and “fatal”，用于控制log4j2日志框架本身的日志级别，如果将stratus设置为较低的级别就会看到很多关于log4j2本身的日志，如加载log4j2配置文件的路径等信息
 
-monitorInterval，含义是每隔多少秒重新读取配置文件，可以不重启应用的情况下修改配置
+​		monitorInterval，含义是每隔多少秒重新读取配置文件，可以不重启应用的情况下修改配置
 
 ###### Properties
 
-属性。使用来定义常量，以便在其他配置项中引用，该配置是可选的，例如定义日志的存放位置
+​		属性。使用来定义常量，以便在其他配置项中引用，该配置是可选的，例如定义日志的存放位置
 
 ###### Appenders
 
-Appenders是输出源，用于定义日志输出的地方。
-log4j2支持的输出源有很多，有控制台ConsoleAppender、文件FileAppender、AsyncAppender、RandomAccessFileAppender、RollingFileAppender、RollingRandomAccessFile 等
+​		Appenders是输出源，用于定义日志输出的地方。
+​		log4j2支持的输出源有很多，有控制台ConsoleAppender、文件FileAppender、AsyncAppender、RandomAccessFileAppender、RollingFileAppender、RollingRandomAccessFile 等
 
 ###### Filters
 
-Filters决定日志事件能否被输出。过滤条件有三个值：`ACCEPT(接受)`，`DENY(拒绝)`，`NEUTRAL(中立)`。
+​		Filters决定日志事件能否被输出。过滤条件有三个值：`ACCEPT(接受)`，`DENY(拒绝)`，`NEUTRAL(中立)`。
 
-ThresholdFilter
+​		**ThresholdFilter**
 
-输出warn级别一下的日志
+​		输出warn级别一下的日志
 
 ```
 <Filters>
@@ -202,7 +210,7 @@ ThresholdFilter
 ```
 
 
-只输出error级别以上的日志
+​		只输出error级别以上的日志
 
 ```
 <Filters>
@@ -210,9 +218,9 @@ ThresholdFilter
 </Filters>
 ```
 
-TimeFilter
+​		**TimeFilter**
 
-时间过滤器可用于将过滤器限制为仅当天的某个部分。
+​		时间过滤器可用于将过滤器限制为仅当天的某个部分。
 
 ```
 <Filters>
@@ -223,9 +231,9 @@ TimeFilter
 
 ###### PatternLayout
 
-用于指定输出日志的格式。
+​		用于指定输出日志的格式。
 
-PatternLayout：控制台或文件输出源（Console、File、RollingRandomAccessFile）都必须包含一个PatternLayout节点，用于指定输出文件的格式（如 日志输出的时间 文件 方法 行数 等格式），例如 pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} [%t] %-5level %logger{0} - %msg%n"
+​		PatternLayout：控制台或文件输出源（Console、File、RollingRandomAccessFile）都必须包含一个PatternLayout节点，用于指定输出文件的格式（如 日志输出的时间 文件 方法 行数 等格式），例如 pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} [%t] %-5level %logger{0} - %msg%n"
 
 ```
   %d 输出日志日期格式，如%d{yyyy-MM-dd HH:mm:ss,SSS}输出2012-11-02 14:34:02,123
@@ -244,30 +252,28 @@ PatternLayout：控制台或文件输出源（Console、File、RollingRandomAcce
 
 ###### Policy & Strategy
 
-`Policy`是用来控制日志文件何时(When)进行滚动的；`Strategy`是用来控制日志文件如何(How)进行滚动的。
-
-如果配置的是`RollingFile`或`RollingRandomAccessFile`，则必须配置一个`Policy`。
+​		`Policy`是用来控制日志文件何时(When)进行滚动的；`Strategy`是用来控制日志文件如何(How)进行滚动的。如果配置的是`RollingFile`或`RollingRandomAccessFile`，则必须配置一个`Policy`。
 
 ###### Loggers
 
-Loggers节点，常见的有两种：Root和Logger。
-`Root`节点用来指定项目的根日志，如果没有单独指定`Logger`，那么就会默认使用该Root日志输出
+​		Loggers节点，常见的有两种：Root和Logger。
+​		`Root`节点用来指定项目的根日志，如果没有单独指定`Logger`，那么就会默认使用该Root日志输出
 
 **Root**
 
-每个配置都必须有一个根记录器Root。如果未配置，则将使用**默认根LoggerConfig**，其级别为ERROR且附加了Console appender。根记录器和其他记录器之间的主要区别是：1.根记录器没有name属性。2.根记录器不支持additivity属性，因为它没有父级。
+​		每个配置都必须有一个根记录器Root。如果未配置，则将使用**默认根LoggerConfig**，其级别为ERROR且附加了Console appender。根记录器和其他记录器之间的主要区别是：1.根记录器没有name属性。2.根记录器不支持additivity属性，因为它没有父级。
 
 - level：日志输出级别，共有8个级别，按照从低到高为：All < Trace < Debug < Info < Warn < Error < Fatal < OFF
 - AppenderRef：Root的子节点，用来指定该日志输出到哪个Appender.
 
 **Logger**
 
-Logger节点用来单独指定日志的形式，比如要为指定包下的class指定不同的日志级别等。
+​		Logger节点用来单独指定日志的形式，比如要为指定包下的class指定不同的日志级别等。
 
-使用Logger元素必须有一个**name属性**，root logger不用name元属性
+​		使用Logger元素必须有一个**name属性**，root logger不用name元属性
 每个Logger可以使用TRACE，DEBUG，INFO，WARN，ERROR，ALL或OFF之一配置级别。如果未指定级别，则默认为ERROR。可以为additivity属性分配值true或false。如果省略该属性，则将使用默认值true。
 
-Logger还可以**配置一个或多个AppenderRef属**性。引用的每个appender将与指定的Logger关联。如果在Logger上配置了多个appender，则在处理日志记录事件时会调用每个appender。
+​		Logger还可以**配置一个或多个AppenderRef属**性。引用的每个appender将与指定的Logger关联。如果在Logger上配置了多个appender，则在处理日志记录事件时会调用每个appender。
 
 - name：用来指定该Logger所适用的类或者类所在的包全路径，继承自Root节点。一般是项目包名或者框架的包名，比如：com.jourwon，org.springframework
 
@@ -278,11 +284,9 @@ Logger还可以**配置一个或多个AppenderRef属**性。引用的每个appen
 
 ##### 日志重复打印问题
 
-如果Root中的日志包含了Logger中的日志信息，并且AppenderRef是一样的配置，则日志会打印两次。
+​		如果Root中的日志包含了Logger中的日志信息，并且AppenderRef是一样的配置，则日志会打印两次。
 
-这是log4j2继承机制问题，在Log4j2中，logger是**有继承关系**的，root是根节点，在log4j2中，有个additivity的属性，它是子Logger 是否继承 父Logger 的 **输出源（appender） 的属性**。具体说，默认情况下子Logger会继承父Logger的appender，也就是说子Logger会在父Logger的appender里输出。若是additivity设为false，则子Logger只会在自己的appender里输出，而不会在父Logger的appender里输出。
-
-要打破这种传递性，也非常简单，在logger中添加 additivity = “false”，如下所示：
+​		这是log4j2继承机制问题，在Log4j2中，logger是**有继承关系**的，root是根节点，在log4j2中，有个additivity的属性，它是子Logger 是否继承 父Logger 的 **输出源（appender） 的属性**。具体说，默认情况下子Logger会继承父Logger的appender，也就是说**子Logger会在父Logger的appender里输出**。若是additivity设为false，则子Logger只会在自己的appender里输出，而不会在父Logger的appender里输出。要打破这种传递性，也非常简单，在logger中添加 additivity = “false”，如下所示：
 
 ```Java
 <?xml version="1.0" encoding="UTF-8"?>
@@ -308,8 +312,8 @@ Logger还可以**配置一个或多个AppenderRef属**性。引用的每个appen
 
 ##### 使用Lombok工具简化创建Logger类
 
-lombok就是一个注解工具jar包，能帮助我们省略一繁杂的代码。
-使用Lombok后，@Slf4j注解生成了log日志常量，无需去声明一个log就可以在类中使用log记录日志。
+​		lombok就是一个注解工具jar包，能帮助我们省略一繁杂的代码。
+​		使用Lombok后，@Slf4j注解生成了log日志常量，无需去声明一个log就可以在类中使用log记录日志。
 
 ```Java
 @Slf4j
