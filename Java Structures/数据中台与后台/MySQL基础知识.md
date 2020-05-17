@@ -541,7 +541,245 @@ Extra: Using where
 
 
 
+##### 7.如何防止SQL注入
 
+**一、SQL注入简介**
+
+​		SQL注入是比较常见的**网络攻击方式之一**，它不是利用操作系统的BUG来实现攻击，而是针对程序员编程时的疏忽，通过SQL语句，实现**无帐号登录，甚至篡改数据库**。
+
+**二、SQL注入攻击的总体思路**
+
+1.寻找到SQL注入的位置
+
+2.判断服务器类型和后台数据库类型
+
+3.针对不通的服务器和数据库特点进行SQL注入攻击
+
+**三、SQL注入攻击实例**
+
+比如在一个登录界面，要求输入用户名和密码：
+
+可以这样输入实现免帐号登录：
+
+用户名： ‘or 1 = 1 –
+
+密 码：
+
+​		点登陆,如若没有做特殊处理,那么这个非法用户就很得意的登陆进去了.(当然现在的有些语言的数据库API已经处理了这些问题)
+
+这是为什么呢? 下面我们分析一下：
+
+从理论上说，后台认证程序中会有如下的SQL语句：
+
+String sql = "select * from user_table where username=
+
+' "+userName+" ' and password=' "+password+" '";
+
+当输入了上面的用户名和密码，上面的SQL语句变成：
+
+SELECT * FROM user_table WHERE username=
+
+'’or 1 = 1 -- and password='’
+
+分析SQL语句：
+
+条件后面username=”or 1=1 用户名等于 ” 或1=1 那么这个条件一定会成功；
+
+然后后面加两个-，这意味着注释，它将后面的语句注释，让他们不起作用，这样语句永远都能正确执行，用户轻易骗过系统，获取合法身份。
+
+这还是比较温柔的，如果是执行
+
+SELECT * FROM user_table WHERE
+
+username='' ;DROP DATABASE (DB Name) --' and password=''
+
+….其后果可想而知… 
+
+**四、应对方法**
+
+下面我针对JSP，说一下应对方法：
+
+**1.（简单又有效的方法）PreparedStatement**
+
+采用预编译语句集，它内置了处理SQL注入的能力，只要使用它的setXXX方法传值即可。
+
+使用好处：
+
+(1).代码的可读性和可维护性.
+
+(2).PreparedStatement尽最大可能提高性能.
+
+(3).最重要的一点是极大地提高了安全性.
+
+原理：
+
+sql注入只对sql语句的准备(编译)过程有破坏作用
+
+而PreparedStatement已经准备好了,执行阶段只是把输入串作为数据处理,
+
+而不再对sql语句进行解析,准备,因此也就避免了sql注入问题. 
+
+**2.使用正则表达式过滤传入的参数**
+
+要引入的包：
+
+import java.util.regex.*;
+
+正则表达式：
+
+private String CHECKSQL = “^(.+)\\sand\\s(.+)|(.+)\\sor(.+)\\s$”;
+
+判断是否匹配：
+
+Pattern.matches(CHECKSQL,targerStr);
+
+下面是具体的正则表达式：
+
+检测SQL meta-characters的正则表达式 ：
+
+/(\%27)|(\’)|(\-\-)|(\%23)|(#)/ix
+
+修正检测SQL meta-characters的正则表达式 ：/((\%3D)|(=))[^\n]*((\%27)|(\’)|(\-\-)|(\%3B)|(:))/i
+
+典型的SQL 注入攻击的正则表达式 ：/\w*((\%27)|(\’))((\%6F)|o|(\%4F))((\%72)|r|(\%52))/ix
+
+检测SQL注入，UNION查询关键字的正则表达式 ：/((\%27)|(\’))union/ix(\%27)|(\’)
+
+检测MS SQL Server SQL注入攻击的正则表达式：
+
+/exec(\s|\+)+(s|x)p\w+/ix
+
+等等…..
+
+ 
+
+**3.字符串过滤**
+
+比较通用的一个方法：
+
+（||之间的参数可以根据自己程序的需要添加）
+
+public static boolean sql_inj(String str){
+
+String inj_str = "'|and|exec|insert|select|delete|update|
+
+count|*|%|chr|mid|master|truncate|char|declare|;|or|-|+|,";
+
+String inj_stra[] = split(inj_str,"|");
+
+for (int i=0 ; i &lt; inj_stra.length ; i++ ){
+
+if (str.indexOf(inj_stra[i])&gt;=0){
+
+return true;
+
+}
+
+}
+
+return false;
+
+}
+
+ 
+
+**4.jsp中调用该函数检查是否包函非法字符**
+
+ 
+
+防止SQL从URL注入：
+
+sql_inj.java代码：
+
+package sql_inj;
+
+import java.net.*;
+
+import java.io.*;
+
+import java.sql.*;
+
+import java.text.*;
+
+import java.lang.String;
+
+public class sql_inj{
+
+public static boolean sql_inj(String str){
+
+String inj_str = "'|and|exec|insert|select|delete|update|
+
+count|*|%|chr|mid|master|truncate|char|declare|;|or|-|+|,";
+
+//这里的东西还可以自己添加
+
+String[] inj_stra=inj_str.split("\\|");
+
+for (int i=0 ; i &lt; inj_stra.length ; i++ ){
+
+if (str.indexOf(inj_stra[i])&gt;=0){
+
+return true;
+
+}
+
+}
+
+return false;
+
+}
+
+}
+
+ 
+
+**5.JSP页面判断代码：**
+
+ 
+
+使用javascript在客户端进行不安全字符屏蔽
+
+功能介绍：检查是否含有”‘”,”\\”,”/”
+
+参数说明：要检查的字符串
+
+返回值：0：是1：不是
+
+函数名是
+
+function check(a){
+
+return 1;
+
+fibdn = new Array (”‘” ,”\\”,”/”);
+
+i=fibdn.length;
+
+j=a.length;
+
+for (ii=0; ii＜i; ii++)
+
+{ for (jj=0; jj＜j; jj++)
+
+{ temp1=a.charAt(jj);
+
+temp2=fibdn[ii];
+
+if (tem’; p1==temp2)
+
+{ return 0; }
+
+}
+
+}
+
+return 1;
+
+}
+
+总的说来，防范一般的SQL注入只要在代码规范上下点功夫就可以了。
+
+凡涉及到执行的SQL中有变量时，用JDBC（或者其他数据持久层）提供的如：PreparedStatement就可以 ，切记不要用拼接字符串的方法就可以了。
 
 
 
