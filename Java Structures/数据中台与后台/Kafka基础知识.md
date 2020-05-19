@@ -98,7 +98,7 @@ Kafka 有四个核心API，它们分别是
 
 ##### 1.Producer 生产者
 
-在 Kafka 中，我们把**产生消息的那一方称为生产者**，比如我们经常回去淘宝购物，你打开淘宝的那一刻，你的登陆信息，登陆次数都会**作为消息传输到 Kafka 后台**，当你浏览购物的时候，你的浏览信息，你的搜索指数，你的购物爱好都会作为一个个消息传递给 Kafka 后台，然后淘宝会根据你的爱好做智能推荐，致使你的钱包从来都禁不住诱惑，那么这些生产者产生的消息是怎么传到 Kafka 应用程序的呢？发送过程是怎么样的呢？尽管消息的产生非常简单，但是消息的发送过程还是比较复杂的，如图
+​		在 Kafka 中，我们把**产生消息的那一方称为生产者**，比如我们经常回去淘宝购物，你打开淘宝的那一刻，你的登陆信息，登陆次数都会**作为消息传输到 Kafka 后台**，当你浏览购物的时候，你的浏览信息，你的搜索指数，你的购物爱好都会作为一个个消息传递给 Kafka 后台，然后淘宝会根据你的爱好做智能推荐，致使你的钱包从来都禁不住诱惑，那么这些生产者产生的消息是怎么传到 Kafka 应用程序的呢？发送过程是怎么样的呢？尽管消息的产生非常简单，但是消息的发送过程还是比较复杂的，如图
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvaW5jeHVhbi9Kb2luY3h1YW4uZ2l0aHViLmlvL21hc3Rlci9pbWFnZS9rYWZrYS1wcm9kdWNlci8wMS5wbmc.png" alt="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvaW5jeHVhbi9Kb2luY3h1YW4uZ2l0aHViLmlvL21hc3Rlci9pbWFnZS9rYWZrYS1wcm9kdWNlci8wMS5wbmc" style="zoom:45%;" />
 
 ​		我们从创建一个`ProducerRecord` 对象开始，**ProducerRecord 是 Kafka 中的一个核心类**，它代表了一组 Kafka 需要发送的 `key/value`键值对，它由记录要发送到的**主题名称（Topic Name）**，可选的**分区号（Partition Number）**以及可选的**键值对**构成。在发送 ProducerRecord 时，我们需要**将键值对对象由序列化器**转换为**字节数组**，这样它们才能够在网络上传输。然后**消息到达了分区器**。
