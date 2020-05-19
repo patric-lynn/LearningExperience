@@ -72,7 +72,7 @@ OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
 
 **配置本地仓库位置**
 
-Maven安装好之后默认配置了本地仓库，在%user%/.m2/respository目录，但是通常不会使用Maven的默认本地仓库，而是修改maven的本地仓库的地址，修改Maven目录的conf/settings.xml
+​		Maven安装好之后默认配置了本地仓库，在%user%/.m2/respository目录，但是通常不会使用Maven的默认本地仓库，而是修改maven的本地仓库的地址，修改Maven目录的conf/settings.xml
 
 ```
 <localRepository>C:\develop\Maven\apache-maven-3.6.0\respository</localRepository>
@@ -80,7 +80,7 @@ Maven安装好之后默认配置了本地仓库，在%user%/.m2/respository目�
 
 **配置阿里云镜像**
 
-为了更好的下载速度，我们会选用国内镜像，这里配置的是**阿里云镜像**，修改Maven目录的conf/settings.xml
+​		为了更好的下载速度，我们会选用国内镜像，这里配置的是**阿里云镜像**，修改Maven目录的conf/settings.xml
 
 ```
 <!-- 配置阿里云镜像 -->
@@ -98,7 +98,7 @@ Maven安装好之后默认配置了本地仓库，在%user%/.m2/respository目�
 
 **设置Maven工程的默认jdk**
 
-创建Maven项目的时候，默认编译的jdk版本是1.7，但是我们需要使用的是**jdk1.8版本**，所以需要修改Maven目录的conf/settings.xml
+​		创建Maven项目的时候，默认编译的jdk版本是1.7，但是我们需要使用的是**jdk1.8版本**，所以需要修改Maven目录的conf/settings.xml
 
 ```
 <!-- 配置maven编译jdk版本 -->
@@ -116,9 +116,11 @@ Maven安装好之后默认配置了本地仓库，在%user%/.m2/respository目�
 </profile>
 ```
 
+
+
 ##### 4.Maven标准目录结构
 
-若要使用Maven，那么项目的目录结构必须符合Maven的规范，其目录结构如下：
+​		若要使用Maven，那么项目的目录结构必须符合Maven的规范，其目录结构如下：
 
 ```
 project
@@ -184,7 +186,7 @@ groupId、artifactId、versioin简称GAV(Maven坐标)，是用来唯一标识jar
 
 ​		最新最全的Maven依赖项版本查询网站：http://mvnrepository.com/
 
-###### Maven工程的坐标与仓库中路径的关系：
+###### Maven工程的坐标与仓库中路径的关系
 
 ​		Maven坐标和仓库对应的映射关系：
 
@@ -253,7 +255,7 @@ org\springframework\spring-core\4.3.4.RELEASE\spring-core-4.3.4.RELEASE.jar
 
 ###### 依赖范围
 
-依赖范围就是控制依赖在不同阶段的作用。**不同的依赖会使用不同的classpath**，在Maven中依赖的域有这几个：import、provided、runtime、compile、system、test。默认取值为compile。
+​		依赖范围就是控制依赖在不同阶段的作用。**不同的依赖会使用不同的classpath**，在Maven中依赖的域有这几个：import、provided、runtime、compile、system、test。默认取值为compile。
 
 ![image-20200310111855570](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310111855570.png)
 
@@ -346,7 +348,7 @@ true：不可以向下传递
 
 ###### 生命周期
 
-Maven有三套相互独立的生命周期，请注意这里说的是“三套”，而且“相互独立”，初学者容易将Maven的生命周期看成一个整体，其实不然。这三套生命周期分别是：
+​		Maven有三套相互独立的生命周期，请注意这里说的是“三套”，而且“相互独立”，初学者容易将Maven的生命周期看成一个整体，其实不然。这三套生命周期分别是：
 
 **① Clean Lifecycle 在进行真正的构建之前进行一些清理工作。 **Clean生命周期一共包含了三个阶段：
 
@@ -395,15 +397,15 @@ site-deploy 将生成的站点文档部署到特定的服务器上
 
 ###### 1.手动安装Maven依赖
 
-在使用Maven的依赖Oracle的驱动包时，会出现依赖错误的情况，原因是版权原因，Oracle官方屏蔽了依赖，那么要在本地使用其数据驱动包，要怎么做呢？去Oracle官网下载依赖然后安装到本地仓库
+​		在使用Maven的依赖Oracle的驱动包时，会出现依赖错误的情况，原因是版权原因，Oracle官方屏蔽了依赖，那么要在本地使用其数据驱动包，要怎么做呢？去Oracle官网下载依赖然后安装到本地仓库
 
-```
+```Java
 mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1.0.2 -Dpackaging=jar -Dfile=E:\ojdbc7.jar
 ```
 
--Dfile为jar包的位置，执行完maven命令，然后再引入依赖
+​		-Dfile为jar包的位置，执行完maven命令，然后再引入依赖
 
-```
+```Java
 <dependency>
     <groupId>com.oracle</groupId>
     <artifactId>ojdbc7</artifactId>
@@ -413,7 +415,7 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 
 ###### 2.部署jar包到远程仓库
 
-部署jar包到远程仓库主要包括两个部分：远程仓库认证，部署jar包到远程仓库
+​		部署jar包到远程仓库主要包括两个部分：远程仓库认证，部署jar包到远程仓库
 
 ###### 3.构建多模块Maven项目
 
@@ -421,7 +423,7 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 
 ​		在项目开发过程中，有时一个项目下面包含了几个子模块，在多模块的情况，POM的配置应该要注意写什么呢？我们通过一个例子来说明下。有这样一个工程，里面有A模块、B模块和C模块，A模块需要引入junit和log4j库，配置如下：
 
-```
+```Java
 <dependency>
     <groupId>junit</groupId>
     <artifactid>junit</artifactId>
@@ -435,9 +437,9 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 ```
 
 
-此时B模块也需要引入这两个库，配置如下：
+​		此时B模块也需要引入这两个库，配置如下：
 
-```
+```Java
 <dependency>
     <groupId>junit</groupId>
     <artifactid>junit</artifactId>
@@ -453,7 +455,7 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 
 ​		会发现A模块和B模块对junit和log4j库依赖的版本是不同的，出现这种情况是十分危险的，因为依赖不同版本的库可能会造成很多未知的风险。怎么解决不同模块之间对同一个库的依赖版本一样呢？Maven提供了优雅的解决办法，使用继承机制以及dependencyManagement元素来解决这个问题。 如果你在父模块中配置dependencies，那么所有的子模块都自动继承，不仅达到了依赖一致的目的，还省了大段的代码，但这样来做会存在问题的。比如B模块需要spring-aop模块，但是C模块不需要spring-aop模块，如果用dependencies在父类中统一配置，C模块中也会包含有spring-aop模块，不符合我们的要求。但是用dependencyManagement就没有这样的问题。dependencyManagement只会影响现有依赖的配置，但不会引入依赖。 这样我们在父模块中的配置可以更改为如下所示：
 
-```
+```Java
 <!-- dependencyManagement只会影响现有依赖的配置，但不会引入依赖。 -->
 <dependencyManagement>
     <dependencies>
@@ -472,9 +474,9 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 </dependencyManagement>
 ```
 
-这段配置不会给任何子模块引入依赖，如果某个子模块需要junit和log4j，只需要这样配置即可：
+​		这段配置不会给任何子模块引入依赖，如果某个子模块需要junit和log4j，只需要这样配置即可：
 
-```
+```Java
 <dependencies>
     <dependency>
         <groupId>junit</groupId>
@@ -487,13 +489,13 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 </dependencies>
 ```
 
-在多模块Maven项目中，使用dependencyManagement能够有效地帮我们维护依赖一致性。
+​		在多模块Maven项目中，使用dependencyManagement能够有效地帮我们维护依赖一致性。
 
 ​		**pluginManagement**
 
 ​		上面介绍了在多模块中对依赖库的管理，接下来介绍下对插件的管理。与dependencyManagement类似，我们可以使用pluginManagement元素管理插件。一个常见的用法就是我们希望项目所有模块的使用compiler插件的时候，都是用jdk1.8，以及指定Java源文件编码为UTF-8，这时可以在父模块的POM中如下配置pluginManagement：
 
-```
+```Java
 <build>
     <pluginManagement>
         <plugins>
@@ -788,9 +790,9 @@ SVN是**集中式版本控制系统**，而Git是**分布式版本控制系统**
 
 ###### **1.工作区、暂存区、版本库、远程仓库**
 
-Git和其他版本控制系统如SVN的一个不同之处就是有暂存区的概念。
+​		Git和其他版本控制系统如SVN的一个不同之处就是有暂存区的概念。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310141625951.png" alt="image-20200310141625951" style="zoom:50%;" />
+<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310141625951.png" alt="image-20200310141625951" style="zoom:30%;" />
 
 **Workspace**： 工作区，就是你平时存放项目代码的地方
 
@@ -804,7 +806,7 @@ Git和其他版本控制系统如SVN的一个不同之处就是有暂存区的�
 
 ###### 2.分支
 
-​		每次的提交Git都把它们串成一条时间线，这条时间线就是一个分支。截止到目前，只有**一条时间线**，在Git里这个分支叫主分支，即master分支。HEAD指针严格来说不是指向提交，而是指向master，master才是指向提交的。一开始的时候，master分支是一条线，Git用master指向最新的提交，再用HEAD指向master，就能确定当前分支，以及当前分支的提交点：
+​		每次的提交Git都把它们**串成一条时间线**，这条时间线就是一个分支。截止到目前，只有**一条时间线**，在Git里这个分支叫主分支，即master分支。HEAD指针严格来说不是指向提交，而是指向master，master才是指向提交的。一开始的时候，master分支是一条线，Git用master指向最新的提交，再用HEAD指向master，就能确定当前分支，以及当前分支的提交点：
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310141752505.png" alt="image-20200310141752505" style="zoom:50%;" />
 
@@ -816,7 +818,7 @@ Git和其他版本控制系统如SVN的一个不同之处就是有暂存区的�
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310141917777.png" alt="image-20200310141917777" style="zoom:50%;" />
 
-​		假如我们在dev上的工作完成了，就可以把dev合并到master上。Git怎么合并呢？最简单的方法，就是直接把master指向dev的当前提交，就完成了合并：
+​		假如我们在dev上的工作完成了，就可以**把dev合并到master上**。Git怎么合并呢？最简单的方法，就是直接把master指向dev的当前提交，就完成了合并：
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310141957308.png" alt="image-20200310141957308" style="zoom:50%;" />
 
