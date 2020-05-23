@@ -1575,7 +1575,7 @@ public ScheduledFuture<?> scheduleWithFixedDelay(Runnable command,
 
 **可周期性执行的任务-ScheduledFutureTask**
 
-ScheduledThreadPoolExecutor最大的特色是能够**周期性执行异步任务**，当调用`schedule,scheduleAtFixedRate和scheduleWithFixedDelay方法`时，实际上是将提交的任务转换成的**ScheduledFutureTask**类，从源码就可以看出。以schedule方法为例：
+​		ScheduledThreadPoolExecutor最大的特色是能够**周期性执行异步任务**，当调用`schedule,scheduleAtFixedRate和scheduleWithFixedDelay方法`时，实际上是将提交的任务转换成的**ScheduledFutureTask**类，从源码就可以看出。以schedule方法为例：
 
 ```Java
 public ScheduledFuture<?> schedule(Runnable command,
@@ -1591,7 +1591,7 @@ public ScheduledFuture<?> schedule(Runnable command,
 }
 ```
 
-可以看出，通过`decorateTask`会将传入的Runnable转换成`ScheduledFutureTask`类。**线程池最大作用是将任务和线程进行解耦**，线程主要是任务的执行者，而任务也就是现在所说的**ScheduledFutureTask**。紧接着，会想到任何线程执行任务，总会调用`run()`方法。为了保证ScheduledThreadPoolExecutor能够延时执行任务以及能够周期性执行任务，ScheduledFutureTask重写了run方法：
+​		可以看出，通过`decorateTask`会将传入的Runnable转换成`ScheduledFutureTask`类。**线程池最大作用是将任务和线程进行解耦**，线程主要是任务的执行者，而任务也就是现在所说的**ScheduledFutureTask**。紧接着，会想到任何线程执行任务，总会调用`run()`方法。为了保证ScheduledThreadPoolExecutor能够延时执行任务以及能够周期性执行任务，ScheduledFutureTask重写了run方法：
 
 ```Java
 public void run() {
@@ -1609,21 +1609,21 @@ public void run() {
 }
 ```
 
-从源码可以很明显的看出，在重写的run方法中会先`if (!periodic)`判断当前任务是否是周期性任务，如果不是的话就直接调用`run()方法`；否则的话执行`setNextRunTime()`方法重设下一次任务执行的时间，并通过`reExecutePeriodic(outerTask)`方法将下一次待执行的任务放置到`DelayedWorkQueue`中。
+​		从源码可以很明显的看出，在重写的run方法中会先`if (!periodic)`判断当前任务是否是周期性任务，如果不是的话就直接调用`run()方法`；否则的话执行`setNextRunTime()`方法重设下一次任务执行的时间，并通过`reExecutePeriodic(outerTask)`方法将下一次待执行的任务放置到`DelayedWorkQueue`中。
 
-因此，可以得出结论：**`ScheduledFutureTask`最主要的功能是根据当前任务是否具有周期性，对异步任务进行进一步封装。如果不是周期性任务（调用schedule方法）则直接通过`run()`执行，若是周期性任务，则需要在每一次执行完后，重设下一次执行的时间，然后将下一次任务继续放入到阻塞队列中。**
+​		因此，可以得出结论：**`ScheduledFutureTask`最主要的功能是根据当前任务是否具有周期性，对异步任务进行进一步封装。如果不是周期性任务（调用schedule方法）则直接通过`run()`执行，若是周期性任务，则需要在每一次执行完后，重设下一次执行的时间，然后将下一次任务继续放入到阻塞队列中。**
 
 
 
 **3.DelayedWorkQueue**
 
-在ScheduledThreadPoolExecutor中还有另外的一个重要的类就是DelayedWorkQueue。为了实现其ScheduledThreadPoolExecutor能够延时执行异步任务以及能够周期执行任务，DelayedWorkQueue进行相应的封装。DelayedWorkQueue是一个基于堆的数据结构，类似于DelayQueue和PriorityQueue。在执行定时任务的时候，每个任务的执行时间都不同，所以DelayedWorkQueue的工作就是按照执行时间的升序来排列，执行时间距离当前时间越近的任务在队列的前面。
+​		在ScheduledThreadPoolExecutor中还有另外的一个重要的类就是DelayedWorkQueue。为了实现其ScheduledThreadPoolExecutor能够延时执行异步任务以及能够周期执行任务，DelayedWorkQueue进行相应的封装。DelayedWorkQueue是一个基于堆的数据结构，类似于DelayQueue和PriorityQueue。在执行定时任务的时候，每个任务的执行时间都不同，所以DelayedWorkQueue的工作就是按照执行时间的升序来排列，执行时间距离当前时间越近的任务在队列的前面。
 
 > 为什么要使用DelayedWorkQueue呢？
 
-定时任务执行时需要取出最近要执行的任务，所以任务在队列中每次出队时一定要是当前队列中执行时间最靠前的，所以自然要使用优先级队列。
+​		定时任务执行时需要取出最近要执行的任务，所以任务在队列中每次出队时一定要是当前队列中执行时间最靠前的，所以自然要使用优先级队列。
 
-DelayedWorkQueue是一个优先级队列，它可以保证每次出队的任务都是当前队列中执行时间最靠前的，由于它是基于堆结构的队列，堆结构在执行插入和删除操作时的最坏时间复杂度是 O(logN)。
+​		DelayedWorkQueue是一个优先级队列，它可以保证每次出队的任务都是当前队列中执行时间最靠前的，由于它是基于堆结构的队列，堆结构在执行插入和删除操作时的最坏时间复杂度是 O(logN)。
 
 > DelayedWorkQueue的数据结构
 
@@ -1635,13 +1635,13 @@ private final ReentrantLock lock = new ReentrantLock();
 private int size = 0;
 ```
 
-可以看出DelayedWorkQueue底层是采用数组构成的，很详细。关于DelayedWorkQueue我们可以得出这样的结论：**DelayedWorkQueue是基于堆的数据结构，按照时间顺序将每个任务进行排序，将待执行时间越近的任务放在在队列的队头位置，以便于最先进行执行**。
+​		可以看出DelayedWorkQueue底层是采用数组构成的，很详细。关于DelayedWorkQueue我们可以得出这样的结论：**DelayedWorkQueue是基于堆的数据结构，按照时间顺序将每个任务进行排序，将待执行时间越近的任务放在在队列的队头位置，以便于最先进行执行**。
 
 
 
 **4.ScheduledThreadPoolExecutor执行过程**
 
-现在我们对ScheduledThreadPoolExecutor的两个内部类ScheduledFutueTask和DelayedWorkQueue进行了了解，实际上这也是线程池工作流程中最重要的两个关键因素：**任务以及阻塞队列**。现在我们来看下ScheduledThreadPoolExecutor提交一个任务后，整体的执行过程。以ScheduledThreadPoolExecutor的schedule方法为例，具体源码为：
+​		现在我们对ScheduledThreadPoolExecutor的两个内部类ScheduledFutueTask和DelayedWorkQueue进行了了解，实际上这也是线程池工作流程中最重要的两个关键因素：**任务以及阻塞队列**。现在我们来看下ScheduledThreadPoolExecutor提交一个任务后，整体的执行过程。以ScheduledThreadPoolExecutor的schedule方法为例，具体源码为：
 
 ```Java
 public ScheduledFuture<?> schedule(Runnable command,
@@ -1659,7 +1659,7 @@ public ScheduledFuture<?> schedule(Runnable command,
 }
 ```
 
-方法很容易理解，为了满足ScheduledThreadPoolExecutor能够延时执行任务和能周期执行任务的特性，会先将实现Runnable接口的类转换成ScheduledFutureTask。然后会调用`delayedExecute`方法进行执行任务，这个方法也是关键方法，来看下源码：
+​		方法很容易理解，为了满足ScheduledThreadPoolExecutor能够延时执行任务和能周期执行任务的特性，会先将实现Runnable接口的类转换成ScheduledFutureTask。然后会调用`delayedExecute`方法进行执行任务，这个方法也是关键方法，来看下源码：
 
 ```Java
 private void delayedExecute(RunnableScheduledFuture<?> task) {
@@ -1740,7 +1740,7 @@ private static final int INTERRUPTED  = 6;
 
 > get方法
 
-当FutureTask处于未启动或已启动状态时，执行FutureTask.get()方法将导致调用线程阻塞。如果FutureTask处于已完成状态，调用FutureTask.get()方法将导致调用线程立即返回结果或者抛出异常
+​		当FutureTask处于未启动或已启动状态时，执行FutureTask.get()方法将导致调用线程阻塞。如果FutureTask处于已完成状态，调用FutureTask.get()方法将导致调用线程立即返回结果或者抛出异常
 
 > cancel方法
 
@@ -1756,7 +1756,7 @@ private static final int INTERRUPTED  = 6;
 
 ​		FutureTask除了实现Future接口外，还**实现了Runnable接口**。因此，FutureTask**可以交给Executor执行**，也可以由调用的线程直接执行（FutureTask.run()）。另外，FutureTask的获取也可以通过ExecutorService.submit()方法返回一个FutureTask对象，然后在通过FutureTask.get()或者FutureTask.cancel方法。
 
-**应用场景**：**当一个线程需要等待另一个线程把某个任务执行完后它才能继续执行，此时可以使用FutureTask**。假设有多个线程执行若干任务，每个任务最多只能被执行一次。当多个线程试图执行同一个任务时，只允许一个线程执行任务，其他线程需要等待这个任务执行完后才能继续执行。
+​		**应用场景**：**当一个线程需要等待另一个线程把某个任务执行完后它才能继续执行，此时可以使用FutureTask**。假设有多个线程执行若干任务，每个任务最多只能被执行一次。当多个线程试图执行同一个任务时，只允许一个线程执行任务，其他线程需要等待这个任务执行完后才能继续执行。
 
 
 
@@ -1779,7 +1779,7 @@ private static final int INTERRUPTED  = 6;
 
 **对象锁（monitor）机制**
 
-使用synchronized进行同步，其关键就是必须要**对对象的监视器monitor进行获取**，当线程获取monitor后才能继续往下执行，否则就只能等待。而这个**获取的过程是互斥**的，即同一时刻只有一个线程能够获取到monitor。上面的demo中在执行完同步代码块之后紧接着再会去执行一个静态同步方法，而这个方法锁的对象依然就这个类对象，那么这个**正在执行的线程还需要获取该锁吗？答案是不必的**，从上图中就可以看出来，执行静态同步方法的时候就只有一条monitorexit指令，并没有monitorenter获取锁的指令。这就是**锁的重入性**，即在同一锁程中，线程不需要再次获取同一把锁。**synchronized先天具有重入性**。每个对象拥有一个计数器，当线程获取该对象锁后，计数器就会加一，释放锁后就会将计数器减一。
+​		使用synchronized进行同步，其关键就是必须要**对对象的监视器monitor进行获取**，当线程获取monitor后才能继续往下执行，否则就只能等待。而这个**获取的过程是互斥**的，即同一时刻只有一个线程能够获取到monitor。上面的demo中在执行完同步代码块之后紧接着再会去执行一个静态同步方法，而这个方法锁的对象依然就这个类对象，那么这个**正在执行的线程还需要获取该锁吗？答案是不必的**，从上图中就可以看出来，执行静态同步方法的时候就只有一条monitorexit指令，并没有monitorenter获取锁的指令。这就是**锁的重入性**，即在同一锁程中，线程不需要再次获取同一把锁。**synchronized先天具有重入性**。每个对象拥有一个计数器，当线程获取该对象锁后，计数器就会加一，释放锁后就会将计数器减一。
 
 
 
@@ -1794,7 +1794,7 @@ volatile是怎样实现的？比如一个很简单的Java代码：
 instance = new Instancce() //instance是volatile变量
 ```
 
-在生成汇编代码时会在volatile修饰的共享变量进行写操作的时候会多出**Lock前缀的指令**（具体的大家可以使用一些工具去看一下，这里我就只把结果说出来）。我们想这个Lock指令肯定有神奇的地方，那么Lock前缀的指令在多核处理器下会发现什么事情了？主要有这两个方面的影响：
+​		在生成汇编代码时会在volatile修饰的共享变量进行写操作的时候会多出**Lock前缀的指令**（具体的大家可以使用一些工具去看一下，这里我就只把结果说出来）。我们想这个Lock指令肯定有神奇的地方，那么Lock前缀的指令在多核处理器下会发现什么事情了？主要有这两个方面的影响：
 
 - 将当前处理器**缓存行的数据写回系统内存**；
 - 这个写回内存的操作会使得其他CPU里**缓存了该内存地址的数据无效.**
@@ -1805,21 +1805,21 @@ instance = new Instancce() //instance是volatile变量
 - 一个处理器的缓存回写到内存会导致其他处理器的缓存失效；
 - 当处理器发现本地缓存失效后，就会从内存中重读该变量数据，即可以获取当前最新值。
 
-这样针对volatile变量通过这样的机制就使得每个线程都能获得该变量的最新值。
+​       这样针对volatile变量通过这样的机制就使得每个线程都能获得该变量的最新值。
 
 
 
 ##### 3.Java并发关键字-final
 
-在Java中变量，可以分为成员变量以及方法局部变量。因此也是按照这种方式依次来说，以避免漏掉任何一个死角。
+​		在Java中变量，可以分为成员变量以及方法局部变量。因此也是按照这种方式依次来说，以避免漏掉任何一个死角。
 
 ###### **final成员变量**
 
-通常每个类中的成员变量可以分为**类变量**（static修饰的变量）以及**实例变量**。针对这两种类型的变量赋初值的时机是不同的，类变量可以在声明变量的时候直接赋初值或者在静态代码块中给类变量赋初值。而实例变量可以在声明变量的时候给实例变量赋初值，在非静态初始化块中以及构造器中赋初值。类变量有两个时机赋初值，而实例变量则可以有三个时机赋初值。当final变量未初始化时系统**不会进行隐式初始化**，会出现报错。
+​		通常每个类中的成员变量可以分为**类变量**（static修饰的变量）以及**实例变量**。针对这两种类型的变量赋初值的时机是不同的，类变量可以在声明变量的时候直接赋初值或者在静态代码块中给类变量赋初值。而实例变量可以在声明变量的时候给实例变量赋初值，在非静态初始化块中以及构造器中赋初值。类变量有两个时机赋初值，而实例变量则可以有三个时机赋初值。当final变量未初始化时系统**不会进行隐式初始化**，会出现报错。
 
 ###### final局部变量
 
-final局部变量由程序员**进行显式初始化**，如果final局部变量已经进行了初始化则后面**就不能再次进行更改**，如果final变量**未进行初始化，可以进行赋值**，**当且仅有一次**赋值，一旦赋值之后**再次赋值就会出错**。
+​		final局部变量由程序员**进行显式初始化**，如果final局部变量已经进行了初始化则后面**就不能再次进行更改**，如果final变量**未进行初始化，可以进行赋值**，**当且仅有一次**赋值，一旦赋值之后**再次赋值就会出错**。
 
 
 
@@ -1851,7 +1851,7 @@ final局部变量由程序员**进行显式初始化**，如果final局部变量
 
 **Java对象头**
 
-​	在操作同步资源之前需要给同步资源先加锁，这把**锁就是存在Java对象头里的**，Java对象头是什么？以Hotspot虚拟机为例，Hotspot的对象头主要包括两部分数据：**Mark Word**（标记字段）、**Class Pointer**（类型指针）。
+​		在操作同步资源之前需要给同步资源先加锁，这把**锁就是存在Java对象头里的**，Java对象头是什么？以Hotspot虚拟机为例，Hotspot的对象头主要包括两部分数据：**Mark Word**（标记字段）、**Class Pointer**（类型指针）。
 
 ​		**Markword**
 
