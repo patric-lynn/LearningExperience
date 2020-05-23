@@ -1316,7 +1316,7 @@ public static ExecutorService newSingleThreadExecutor() {
 }
 ```
 
-从参数可以看出来，SingleThreadExecutor 相当于特殊的 FixedThreadPool，它的执行流程如下：
+​		从参数可以看出来，SingleThreadExecutor 相当于特殊的 FixedThreadPool，它的执行流程如下：
 
 1. 线程池中没有线程时，**新建一个线程执行任务**
 2. 有一个线程以后，**将任务加入阻塞队列**，不停的加
@@ -1366,9 +1366,9 @@ public static ExecutorService newFixedThreadPool(int nThreads) {
 }
 ```
 
-可以看到，FixedThreadPool 的**核心线程数和最大线程数都是指定值**，也就是说当线程池中的线程数超过核心线程数后，任务都会被放到阻塞队列中。此外 **keepAliveTime 为 0，也就是多余的空余线程会被立即终止**（由于这里没有多余线程，这个参数也没什么意义了）。而这里选用的**阻塞队列是 LinkedBlockingQueue**，使用的是默认容量 Integer.MAX_VALUE，相当于没有上限。
+​		可以看到，FixedThreadPool 的**核心线程数和最大线程数都是指定值**，也就是说当线程池中的线程数超过核心线程数后，任务都会被放到阻塞队列中。此外 **keepAliveTime 为 0，也就是多余的空余线程会被立即终止**（由于这里没有多余线程，这个参数也没什么意义了）。而这里选用的**阻塞队列是 LinkedBlockingQueue**，使用的是默认容量 Integer.MAX_VALUE，相当于没有上限。
 
-因此这个线程池执行任务的流程如下：
+​		因此这个线程池执行任务的流程如下：
 
 1. 线程数少于核心线程数，也就是设置的线程数时，新建线程执行任务
 2. 线程数等于核心线程数后，**将任务加入阻塞队列**
@@ -1419,20 +1419,20 @@ public static ExecutorService newCachedThreadPool() {
 }
 ```
 
-可以看到，CachedThreadPool **没有核心线程**，**非核心线程数无上限**，也就是全部使用外包，但是每个外包空闲的时间**只有 60 秒**，超过后就会被回收。
+​		可以看到，CachedThreadPool **没有核心线程**，**非核心线程数无上限**，也就是全部使用外包，但是每个外包空闲的时间**只有 60 秒**，超过后就会被回收。
 
-CachedThreadPool 使用的队列是 **SynchronousQueue**，这个队列的作用就是**传递任务**，并不会保存。
+​		CachedThreadPool 使用的队列是 **SynchronousQueue**，这个队列的作用就是**传递任务**，并不会保存。
 
-因此当提交任务的速度大于处理任务的速度时，**每次提交一个任务，就会创建一个线程**。极端情况下会创建过多的线程，**耗尽 CPU 和内存资源**。
+​		因此当提交任务的速度大于处理任务的速度时，**每次提交一个任务，就会创建一个线程**。极端情况下会创建过多的线程，**耗尽 CPU 和内存资源**。
 
-它的执行流程如下：
+​		它的执行流程如下：
 
 1. 没有核心线程，直接向 SynchronousQueue 中提交任务
 2. 如果有空闲线程，**就去取出任务执行**；如果没有空闲线程，就新建一个
 3. 执行完任务的线程有 60 秒生存时间，如果在这个时间内**可以接到新任务，就可以继续活下去，否则就拜拜**
 4. 由于空闲 60 秒的线程会被终止，**长时间保持空闲的 CachedThreadPool 不会占用任何资源**。
 
-**CachedThreadPool 用于并发执行大量短期的小任务，或者是负载较轻的服务器**。
+​       **CachedThreadPool 用于并发执行大量短期的小任务，或者是负载较轻的服务器**。
 
 
 
@@ -1482,13 +1482,13 @@ public ScheduledThreadPoolExecutor(int corePoolSize) {
 }
 ```
 
-ScheduledThreadPoolExecutor 的执行流程如下：
+​		ScheduledThreadPoolExecutor 的执行流程如下：
 
 1. 添加一个任务
 2. 线程池中的线程从 DelayQueue 中取任务
 3. 然后执行任务
 
-具体执行任务的步骤也比较复杂：
+​       具体执行任务的步骤也比较复杂：
 
 1. 线程**从 DelayQueue 中获取 time 大于等于当前时间的 ScheduledFutureTask**
 2. 执行完后修改这个 **task 的 time 为下次被执行的时间**
@@ -1500,7 +1500,7 @@ ScheduledThreadPoolExecutor 的执行流程如下：
 
 ###### 3.Executors和ThreaPoolExecutor创建线程池的区别
 
-Executors 各个方法的弊端：
+​		Executors 各个方法的弊端：
 
 1. newFixedThreadPool 和 newSingleThreadExecutor:
     主要问题是**堆积的请求处理队列可能会耗费非常大的内存**，甚至 OOM。
@@ -1522,7 +1522,7 @@ ThreaPoolExecutor
 
 **1.构造方法**
 
-ScheduledThreadPoolExecutor有如下几个构造方法：
+​		ScheduledThreadPoolExecutor有如下几个构造方法：
 
 ```Java
 public ScheduledThreadPoolExecutor(int corePoolSize) {
@@ -1692,7 +1692,7 @@ void ensurePrestart() {
 }
 ```
 
-可以看出该方法逻辑很简单，关键在于它所调用的`addWorker方法`，该方法主要功能：**新建`Worker类`，当执行任务时，就会调用被`Worker所重写的run方法`，进而会继续执行`runWorker`方法。在`runWorker`方法中会调用`getTask`方法从阻塞队列中不断的去获取任务进行执行，直到从阻塞队列中获取的任务为null的话，线程结束终止**。addWorker方法是ThreadPoolExecutor类中的方法。
+​		可以看出该方法逻辑很简单，关键在于它所调用的`addWorker方法`，该方法主要功能：**新建`Worker类`，当执行任务时，就会调用被`Worker所重写的run方法`，进而会继续执行`runWorker`方法。在`runWorker`方法中会调用`getTask`方法从阻塞队列中不断的去获取任务进行执行，直到从阻塞队列中获取的任务为null的话，线程结束终止**。addWorker方法是ThreadPoolExecutor类中的方法。
 
 
 
@@ -1730,13 +1730,13 @@ private static final int INTERRUPTING = 5;
 private static final int INTERRUPTED  = 6;
 ```
 
-另外，在《Java并发编程的艺术》一书，作者根据FutureTask.run()方法的执行的时机，FutureTask分为了3种状态：
+​		另外，在《Java并发编程的艺术》一书，作者根据FutureTask.run()方法的执行的时机，FutureTask分为了3种状态：
 
 1. **未启动**。FutureTask.run()方法还没有被执行之前，FutureTask处于未启动状态。当创建一个FutureTask，还没有执行FutureTask.run()方法之前，FutureTask处于未启动状态。
 2. **已启动**。FutureTask.run()方法被执行的过程中，FutureTask处于已启动状态。
 3. **已完成**。FutureTask.run()方法执行结束，或者调用FutureTask.cancel(…)方法取消任务，或者在执行任务期间抛出异常，这些情况都称之为FutureTask的已完成状态。
 
-由于FutureTask具有这三种状态，因此执行FutureTask的get方法和cancel方法，当前处于不同的状态对应的结果也是大不相同。这里对get方法和cancel方法做个总结：
+​       由于FutureTask具有这三种状态，因此执行FutureTask的get方法和cancel方法，当前处于不同的状态对应的结果也是大不相同。这里对get方法和cancel方法做个总结：
 
 > get方法
 
@@ -1754,7 +1754,7 @@ private static final int INTERRUPTED  = 6;
 
 **FutureTask的基本使用**
 
-FutureTask除了实现Future接口外，还**实现了Runnable接口**。因此，FutureTask**可以交给Executor执行**，也可以由调用的线程直接执行（FutureTask.run()）。另外，FutureTask的获取也可以通过ExecutorService.submit()方法返回一个FutureTask对象，然后在通过FutureTask.get()或者FutureTask.cancel方法。
+​		FutureTask除了实现Future接口外，还**实现了Runnable接口**。因此，FutureTask**可以交给Executor执行**，也可以由调用的线程直接执行（FutureTask.run()）。另外，FutureTask的获取也可以通过ExecutorService.submit()方法返回一个FutureTask对象，然后在通过FutureTask.get()或者FutureTask.cancel方法。
 
 **应用场景**：**当一个线程需要等待另一个线程把某个任务执行完后它才能继续执行，此时可以使用FutureTask**。假设有多个线程执行若干任务，每个任务最多只能被执行一次。当多个线程试图执行同一个任务时，只允许一个线程执行任务，其他线程需要等待这个任务执行完后才能继续执行。
 
