@@ -4,7 +4,7 @@
 
 ##### 1.什么是spring?
 
-​		Spring是一个轻量级Java开发框架，最早有Rod Johnson创建，目的是为了解决**企业级应用开发**的业务逻辑层和其他各层的耦合问题。它是一个分层的JavaSE/JavaEE full-stack（一站式）轻量级开源框架，为开发Java应用程序提供全面的基础架构支持。Spring负责基础架构，因此Java开发者可以专注于应用程序的开发。
+​		Spring是一个**轻量级Java开发框架**，最早有Rod Johnson创建，目的是为了解决**企业级应用开发**的业务逻辑层和其他各层的耦合问题。它是一个分层的JavaSE/JavaEE full-stack（一站式）轻量级开源框架，为开发Java应用程序提供全面的基础架构支持。Spring负责基础架构，因此Java开发者可以专注于应用程序的开发。
 
 ​		Spring最根本的使命是解决企业级应用开发的复杂性，即简化Java开发。
 
@@ -24,8 +24,8 @@
 ​		Spring价值：
 
 - Spring是**非侵入式**的框架，目标是使应用程序代码对框架依赖最小化；
-- Spring提供一个一致的编程模型，使应用直接使用POJO开发，与运行环境隔离开来；
-- Spring推动应用设计风格向面向对象和面向接口开发转变，提高了代码的重用性和可测试性；
+- Spring提供**一致的编程模型**，使应用直接使用POJO开发，与运行环境隔离开来；
+- Spring推动应用设计风格向**面向对象**和**面向接口**开发转变，提高了代码的**重用性和可测试性**；
 
 ##### 3.Spring由哪些模块组成？
 
@@ -33,12 +33,12 @@
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200308110437683.png" alt="image-20200308110437683" style="zoom:30%;" />
 
-​		**spring core**：提供了框架的基本组成部分，包括控制反转（Inversion of Control，IOC）和依赖注入（Dependency Injection，DI）功能。
-​		**spring beans**：提供了BeanFactory，是**工厂模式的一个经典实现**，Spring将管理对象称为Bean。
-​		**spring context**：构建于 core 封装包基础上的 context 封装包，提供了一种框架式的对象访问方法。
-​		**spring jdbc**：提供了一个JDBC的抽象层，消除了烦琐的JDBC编码和数据库厂商特有的错误代码解析， 用于简化JDBC。
-​		**spring aop**：提供了面向切面的编程实现，让你可以**自定义拦截器、切点**等。
-​		**spring Web**：提供了针对 Web 开发的集成特性，例如文件上传，利用 servlet listeners 进行 ioc 容器初始化和针对 Web 的 ApplicationContext。
+​		**spring core**：提供了框架的基本组成部分，包括**控制反转（Inversion of Control，IOC）**和**依赖注入（Dependency Injection，DI）**功能。
+​		**spring beans**：提供了BeanFactory，是**工厂模式的一个经典实现**，Spring将管理对象称为**Bean**。
+​		**spring context**：构建于 core 封装包基础上的 **context 封装包**，提供了一种**框架式的对象访问方法**。
+​		**spring jdbc**：提供了一个**JDBC的抽象层**，消除了烦琐的JDBC编码和数据库厂商特有的错误代码解析， 用于简化JDBC。
+​		**spring aop**：提供了**面向切面**的编程实现，让你可以**自定义拦截器、切点**等。
+​		**spring Web**：提供了针对 Web 开发的集成特性，例如文件上传，利用 servlet listeners 进行 **ioc 容器初始化**和针对 Web 的 **ApplicationContext**。
 ​		**spring test**：主要为测试提供支持的，支持使用JUnit或TestNG对Spring组件进行单元测试和集成测试。
 
 ##### 4.Spring 框架中都用到了哪些设计模式？
@@ -51,13 +51,13 @@
 
 ##### 5.详细讲解一下核心容器（spring context应用上下文) 模块
 
-​		这是基本的Spring模块，提供spring 框架的**基础功能**，BeanFactory 是 任何以spring为基础的应用的核心。Spring 框架建立在此模块之上，它使Spring成为一个容器。
+​		这是基本的Spring模块，提供spring 框架的**基础功能**，BeanFactory 是 任何以spring为基础的**应用的核心**。Spring 框架建立在此模块之上，它使Spring成为一个容器。
 
-​		Bean 工厂是工厂模式的一个实现，提供了**控制反转功能**，用来把应用的配置和依赖从真正的应用代码中分离。最常用的就是org.springframework.beans.factory.xml.XmlBeanFactory ，它根据XML文件中的定义加载beans。该容器从XML 文件读取配置元数据并用它去创建一个完全配置的系统或应用。
+​		Bean 工厂是**工厂模式**的一个实现，提供了**控制反转功能**，用来把应用的配置和依赖从真正的应用代码中分离。最常用的就是org.springframework.beans.factory.xml.XmlBeanFactory ，它根据XML文件中的定义加载beans。该容器从XML 文件读取配置**元数据**并用它去创建一个完全配置的系统或应用。
 
 ##### 6.使用 Spring 有哪些方式？
 
-使用 Spring 有以下方式：
+​		使用 Spring 有以下方式：
 
 - 作为一个成熟的 Spring Web 应用程序。
 - 作为第三方 Web 框架，使用 Spring Frameworks 中间层。
@@ -70,62 +70,66 @@
 
 ##### 1.什么是Spring IOC 容器？
 
-​		控制反转即IoC (Inversion of Control)，它把传统上由**程序代码直接操控的对象的调用权交给容器**，通过容器来实现对象组件的装配和管理。所谓的“控制反转”概念就是对组件对象控制权的转移，从程序代码本身转移到了外部容器。
+​		控制反转即IoC (Inversion of Control)，它把传统上由**程序代码直接操控的对象的调用权交给容器**，通过容器来实现对象组件的**装配和管理**。所谓的“控制反转”概念就是对组件对象控制权的转移，**从程序代码本身转移到了外部容器**。
 
 ​		Spring IOC 负责创建对象，管理对象（通过依赖注入（DI），装配对象，配置对象，并且管理这些对象的整个生命周期。
 
 ##### 2.控制反转(IoC)有什么作用
 
-- 管理对象的创建和依赖关系的维护。对象的创建并不是一件简单的事，在对象关系比较复杂时，如果依赖关系需要程序猿来维护的话，那是相当头疼的
+- 管理对象的**创建**和**依赖关系的维护**。对象的创建并不是一件简单的事，在对象关系比较复杂时，如果依赖关系需要程序猿来维护的话，那是相当头疼的
 - 解耦，由容器去维护具体的对象
 - 托管了类的产生过程，比如我们需要在类的产生过程中做一些处理，最直接的例子就是代理，如果有容器程序可以把这部分处理交给容器，应用程序则无需去关心类是如何完成代理的
 
 ##### 3.BeanFactory 和 ApplicationContext有什么区别？
 
-​		BeanFactory和ApplicationContext是Spring的两大核心接口，都可以当做Spring的容器。其中ApplicationContext是BeanFactory的子接口。
+​		BeanFactory和ApplicationContext是Spring的**两大核心接口**，都可以当做Spring的容器。其中ApplicationContext是BeanFactory的**子接口**。
 
-###### 依赖关系
+###### 1.两者的依赖关系
 
-​		BeanFactory：是Spring里面最底层的接口，包含了各种Bean的定义，读取bean配置文档，管理bean的加载、实例化，控制bean的生命周期，维护bean之间的依赖关系。
+​		BeanFactory：是Spring里面最**底层的接口**，包含了各种Bean的定义，读取bean配置文档，管理bean的加载、实例化，控制bean的**生命周期**，维护bean之间的**依赖关系**。
 
 ​		ApplicationContext接口作为BeanFactory的派生，除了提供BeanFactory所具有的功能外，还提供了更完整的框架功能：
 
 - 继承MessageSource，因此支持国际化。
 - 统一的资源文件访问方式。
-- 提供在监听器中注册bean的事件。
+- 提供在监听器中**注册bean的事件**。
 - 同时加载多个配置文件。
 - 载入多个（有继承关系）上下文 ，使得每一个上下文都专注于一个特定的层次，比如应用的web层。
 
-###### 加载方式
+###### 2.加载方式
 
-​		BeanFactroy采用的是延迟加载形式来注入Bean的，即只有在使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化。这样，我们就不能发现一些存在的Spring的配置问题。如果Bean的某一个属性没有注入，BeanFacotry加载后，直至第一次使用调用getBean方法才会抛出异常。
+​		**BeanFactroy采用的是延迟加载形式来注入Bean的**，即只有在使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化。这样，我们就不能发现一些存在的Spring的配置问题。如果Bean的某一个属性没有注入，BeanFacotry加载后，直至第一次使用调用getBean方法才会抛出异常。
 
-​		ApplicationContext，它是在容器启动时，一次性创建了所有的Bean。这样，在容器启动时，我们就可以发现Spring中存在的配置错误，这样有利于检查所依赖属性是否注入。 ApplicationContext启动后预载入所有的单实例Bean，通过预载入单实例bean ,确保当你需要的时候，你就不用等待，因为它们已经创建好了。
-
-​		相对于基本的BeanFactory，ApplicationContext 唯一的不足是占用内存空间。当应用程序配置Bean较多时，程序启动较慢。
+​		**ApplicationContext，它是在容器启动时，一次性创建了所有的Bean**。这样，在容器启动时，我们就可以发现Spring中存在的配置错误，这样有利于检查所依赖属性是否注入。 ApplicationContext启动后预载入所有的单实例Bean，通过预载入**单实例bean** ,确保当你需要的时候，你就不用等待，因为它们已经创建好了。相对于基本的BeanFactory，ApplicationContext **唯一的不足是占用内存空间**。当应用程序配置Bean较多时，程序启动较慢。
 
 ###### 创建方式
 
-​		BeanFactory通常以编程的方式被创建，ApplicationContext还能以声明的方式创建，如使用ContextLoader。
+​		**BeanFactory通常以编程的方式被创建**，**ApplicationContext还能以声明的方式创建**，如使用ContextLoader。
 
-###### 注册方式
+###### 4.注册方式
 
-​		BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，但两者之间的区别是：BeanFactory需要手动注册，而ApplicationContext则是自动注册。
+​		BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，但两者之间的区别是：BeanFactory需要**手动注册**，而ApplicationContext则是**自动注册**。
+
+
 
 ##### 4.什么是Spring的依赖注入？
 
-​		控制反转IoC是一个很大的概念，可以用不同的方式来实现。其主要实现方式有两种：依赖注入和依赖查找
+​		控制反转IoC是一个很大的概念，可以用不同的方式来实现。其主要实现方式有两种：**依赖注入**和**依赖查找**
 
-​		**依赖注入**：相对于IoC而言，依赖注入(DI)更加准确地描述了IoC的设计理念。所谓依赖注入（Dependency Injection），即组件之间的依赖关系由容器在应用系统运行期来决定，也就是由容器动态地将某种依赖关系的目标对象实例注入到应用系统中的各个关联的组件之中。组件不做定位查询，只提供普通的Java方法让容器去决定依赖关系。
+​		**依赖注入**：相对于IoC而言，依赖注入(DI)更加准确地描述了IoC的设计理念。所谓依赖注入（Dependency Injection），即**组件之间的依赖关系由容器在应用系统运行期来决定**，也就是由容器**动态地**将某种依赖关系的目标对象**实例**注入到应用系统中的**各个关联的组件之中**。组件不做定位查询，只提供普通的Java方法让容器去决定依赖关系。
+
+
 
 ##### 5.有哪些不同类型的依赖注入实现方式？
 
-​		依赖注入是时下最流行的IoC实现方式，依赖注入分为**接口注入**（Interface Injection），**Setter方法注入**（Setter Injection）和**构造器注入**（Constructor Injection）三种方式。其中接口注入由于在灵活性和易用性比较差，现在从Spring4开始已被废弃。
+​		依赖注入是时下**最流行的IoC实现方式**，依赖注入分为**接口注入**（Interface Injection），**Setter方法注入**（Setter Injection）和**构造器注入**（Constructor Injection）三种方式。其中接口注入由于在灵活性和易用性比较差，现在从Spring4开始已被废弃。
 
-​		**构造器依赖注入**：构造器依赖注入通过容器触发一个类的构造器来实现的，该类有一系列参数，每个参数代表一个对其他类的依赖。
+​		**构造器依赖注入**：构造器依赖注入通过容器**触发一个类的构造器来实现**的，该类有一系列参数，每个参数代表一个对其他类的依赖。
 
-​		**Setter方法注入**：Setter方法注入是容器通过调用无参构造器或无参static工厂 方法实例化bean之后，调用该bean的setter方法，即实现了基于setter的依赖注入。
+​		**Setter方法注入**：Setter方法注入是容器通过**调用无参构造器或无参static工厂** 方法实例化bean之后，调用该bean的setter方法，即实现了基于setter的依赖注入。
 ![image-20200308130216043](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200308130216043.png)
+
+
 
 
 
@@ -133,66 +137,76 @@
 
 ##### 1.什么是Spring beans？
 
-​		Spring beans 是那些形成Spring应用的主干的java对象。它们被Spring IOC容器初始化，装配，和管理。这些beans通过容器中配置的元数据创建。比如，以XML文件中 的形式定义。
+​		Spring beans 是那些形成Spring应用的**主干的java对象**。它们被Spring IOC容器初始化，装配，和管理。这些beans通过容器中配置的元数据创建。比如，以XML文件形式定义。
+
+
 
 ##### 2.如何给Spring 容器提供配置元数据？Spring有几种配置方式
 
 ​		这里有三种重要的方法给Spring 容器提供配置元数据。
 
 - XML配置文件。
-- 基于注解的配置。
+- 基于**注解**的配置。
 - 基于java的配置。
+
+
 
 ##### 3.解释Spring支持的几种bean的作用域
 
 Spring框架支持以下五种bean的作用域：
 
-- singleton : bean在每个Spring ioc 容器中只有一个实例。
-- prototype：一个bean的定义可以有多个实例。
-- request：每次http请求都会创建一个bean，该作用域仅在基于web的Spring ApplicationContext情形下有效。
-- session：在一个HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。
-- global-session：在一个全局的HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。
+- singleton : bean在每个Spring ioc 容器中**只有一个实例**。
+- prototype：一个bean的定义**可以有多个实例**。
+- request：每次http请求都会**创建一个bean**，该作用域仅在**基于web的Spring ApplicationContext情形下有效**。
+- session：在一个HTTP Session中，一个bean定义**对应一个实例**。该作用域仅在基于web的Spring ApplicationContext情形下有效。
+- global-session：在一个**全局的HTTP Session中**，一个bean定义**对应一个实例**。该作用域仅在基于web的Spring ApplicationContext情形下有效。
+
+
 
 ##### 4.Spring框架中的单例bean是线程安全的吗？
 
 ​		不是，Spring框架中的单例bean**不是线程安全**的。spring 中的 bean 默认是单例模式，spring 框架并没有对单例 bean 进行**多线程的封装处理**。
 
-​		实际上大部分时候 spring bean 无状态的（比如 dao 类），所有某种程度上来说 bean 也是安全的，但如果 bean 有状态的话（比如 view model 对象），那就要开发者自己去保证线程安全了，最简单的就是改变 bean 的作用域，**把“singleton”变更为“prototype”**，这样请求 bean 相当于 new Bean()了，所以就可以保证线程安全了。
+​		实际上大部分时候 spring bean 是无状态的（比如 dao 类），所有某种程度上来说 bean 也是安全的，但如果 bean 有状态的话（比如 view model 对象），那就要**开发者自己去保证线程安全了**，最简单的就是改变 bean 的作用域，**把“singleton”变更为“prototype”**，这样请求 bean 相当于 new Bean()了，所以就可以保证线程安全了。
 
 - 有状态就是**有数据存储功能**。
 - 无状态就是**不会保存数据**。
 
+
+
 ##### 5.Spring如何处理线程并发问题？
 
-​		在一般情况下，只有无状态的Bean才可以在多线程环境下共享，在Spring中，绝大部分Bean都可以声明为singleton作用域，因为Spring对一些Bean中**非线程安全状态采用ThreadLocal进行处理**，解决线程安全问题。
+​		在一般情况下，只有**无状态的Bean才可以在多线程环境下共享**，在Spring中，绝大部分Bean都可以声明为singleton作用域，因为Spring对一些Bean中**非线程安全状态采用ThreadLocal进行处理**，解决线程安全问题。
 
-​		ThreadLocal和线程同步机制都是为了**解决多线程中相同变量的访问冲突问题**。同步机制采用了“时间换空间”的方式，仅提供一份变量，不同的线程在访问前需要获取锁，没获得锁的线程则需要排队。而ThreadLocal采用了“空间换时间”的方式。
+​		**ThreadLocal**和**线程同步机制**都是为了**解决多线程中相同变量的访问冲突问题**。同步机制采用了“时间换空间”的方式，仅提供一份变量，不同的线程在访问前需要获取锁，没获得锁的线程则需要排队。而ThreadLocal采用了**“空间换时间”的方式**。
 
-​		ThreadLocal会为每一个线程提供**一个独立的变量副本**，从而隔离了多个线程对数据的访问冲突。因为每一个线程都拥有自己的变量副本，从而也就没有必要对该变量进行同步了。ThreadLocal提供了线程安全的共享对象，在编写多线程代码时，可以把不安全的变量封装进ThreadLocal。
+​		ThreadLocal会为每一个线程提供**一个独立的变量副本**，从而隔离了多个线程对数据的访问冲突。因为每一个线程都拥有自己的变量副本，从而也就**没有必要对该变量进行同步了**。ThreadLocal提供了线程安全的共享对象，在编写多线程代码时，可以把不安全的变量封装进ThreadLocal。
+
+
 
 ##### 6.什么是bean装配？
 
 ​		装配，或bean 装配是指在Spring 容器中把bean组装到一起，前提是容器需要知道bean的依赖关系，如何通过依赖注入来把它们装配到一起。
 
+
+
 ##### 7.什么是bean的自动装配？
 
 ​		在Spring框架中，在配置文件中设定bean的依赖关系是一个很好的机制，Spring 容器能够自动装配相互合作的bean，这意味着容器不需要和配置，能通过Bean工厂自动处理bean之间的协作。这意味着 Spring可以通过向Bean Factory中注入的方式自动搞定bean之间的依赖关系。自动装配可以设置在每个bean上，也可以设定在特定的bean上。
 
+
+
 ##### 8.解释不同方式的自动装配，spring 自动装配 bean 有哪些方式？
 
-​		在spring中，对象无需自己查找或创建与其关联的其他对象，由容器负责把需要相互协作的对象引用赋予各个对象，使用autowire来配置自动装载模式。
-
-​		在Spring框架xml配置中共有5种自动装配：
+​		在spring中，对象无需自己查找或创建与其关联的其他对象，由容器负责把需要相互协作的对象引用赋予各个对象，**使用autowire来配置自动装载模式**。在Spring框架xml配置中共有5种自动装配：
 
 - no：默认的方式是不进行自动装配的，通过手工设置ref属性来进行装配bean。
-
 - byName：通过bean的名称进行自动装配，如果一个bean的 property 与另一bean 的name 相同，就进行自动装配。
-
 - byType：通过参数的数据类型进行自动装配。
-
 - constructor：利用构造函数进行装配，并且构造函数的参数通过byType进行装配。
-
 - autodetect：自动探测，如果有构造方法，通过 construct的方式自动装配，否则使用 byType的方式自动装配。
+
+
 
 ##### 9.使用@Autowired注解自动装配的过程是怎样的？
 
@@ -201,14 +215,14 @@ Spring框架支持以下五种bean的作用域：
 ​		在启动spring IoC时，容器自动装载了一个AutowiredAnnotationBeanPostProcessor后置处理器，当容器扫描到@Autowied、@Resource或@Inject时，就会在IoC容器自动查找需要的bean，并装配给该对象的属性。在使用@Autowired时，首先在容器中查询对应类型的bean：
 
 - 如果查询结果刚好为一个，就将该bean装配给@Autowired指定的数据；
-
 - 如果查询的结果不止一个，那么@Autowired会根据名称来查找；
-
 - 如果上述查找的结果为空，那么会抛出异常。解决方法时，使用required=false。
+
+
 
 ##### 10.自动装配有哪些局限性？
 
-​	自动装配的局限性是：
+​		自动装配的局限性是：
 
 **重写**：你仍需用 和 配置来定义依赖，意味着总要重写自动装配。
 
@@ -218,7 +232,7 @@ Spring框架支持以下五种bean的作用域：
 
 
 
-#### 4.Spring注解
+#### 4.Spring注解（5.26）
 
 ##### 1.@Component, @Controller, @Repository, @Service 有何区别？
 
@@ -698,7 +712,7 @@ JPA
    
    
 
-###### **2.懒汉式单例**
+###### **2.第一种-懒汉式单例**
 
 ```Java
 //懒汉式单例类.在第一次调用的时候实例化自己   
@@ -720,7 +734,7 @@ public class Singleton {
 ​		Singleton通过将**构造方法限定为private**避免了类在**外部被实例化**，在同一个虚拟机范围内，Singleton的**唯一实例只能通过getInstance()方法访问**。事实上，通过Java反射机制**是能够实例化构造方法为private的类的**，那基本上会使所有的Java单例实现失效。此问题在此处不做讨论，**姑且掩耳盗铃地认为反射机制不存在**。
 ​		但是以上懒汉式单例的实现**没有考虑线程安全问题，它是线程不安全的**，并发环境下很可能**出现多个Singleton实例**，要实现线程安全，有以下三种方式，都是对getInstance这个方法改造，保证了懒汉式单例的线程安全:
 
-​		**2.1 在getInstance方法上加同步**
+​		**2.1 方法整体加同步锁——在getInstance方法上加同步**
 
 ```java
 public static synchronized  Singleton getInstance() {
@@ -731,10 +745,10 @@ public static synchronized  Singleton getInstance() {
 }
 ```
 
-​		**2.2 双重检查锁定**
+​		**2.2 避免已存在实例也被同步——双重检查锁定**
 ​		可以使用“双重检查加锁”的方式来实现，就可以**既实现线程安全**，**又能够使性能不受很大的影响**。那么什么是“双重检查加锁”机制呢？
 ​		所谓“**双重检查加锁**”机制，指的是：并不是每次进入getInstance方法都需要同步，而是先不同步，进入方法后，**先检查实例是否存在**，如果不存在**才进行下面的同步块**，这是**第一重检查** ；进入同步块过后，**再次检查实例是否存在**，如果不存在，就在**同步的情况下**创建一个实例，这是**第二重检查**。这样 一来，就**只需要同步一次**了，从而减少了**多次在同步情况下进行判断所浪费的时间**。
-​		“双重检查加锁”机制的实现**会使用关键字volatile**，它的意思是：**被volatile修饰的变量的值，将不会被本地线程缓存，所有对该变量的读写都是直接操作共享内存，从而确保多个线程能正确的处理该变量**。注意：在java1.4及以前版本中，很多JVM对于volatile关键字的实现的问题，会导致“双重检查加锁”的失败，因此“双重检查加锁”机制**只能用在java5及以上的版本**。
+​		“双重检查加锁”机制的实现**会使用关键字volatile**，它的意思是：**被volatile修饰的变量的值，将不会被本地线程缓存，所有对该变量的读写都是直接操作共享内存，从而确保多个线程能正确的处理该变量**。注意：在java1.4及以前版本中，很多JVM对于volatile关键字的实现的问题，会**导致“双重检查加锁”的失败**，因此“双重检查加锁”机制**只能用在java5及以上的版本**。
 
 ```Java
 public class Singleton {
@@ -757,10 +771,10 @@ public class Singleton {
 }
 ```
 
-​		这种实现方式既可以实现线程安全地创建实例，而又不会对性能造成太大的影响。它只是第一次创建实例的时候同步，以后就不需要同步了，从而加快了运行速度。
+​		这种实现方式既可以实现线程安全地创建实例，而又不会对性能造成太大的影响。它只是**第一次创建实例的时候同步，以后就不需要同步了**，从而加快了运行速度。
 ​		提示：由于volatile关键字**可能会屏蔽掉虚拟机中一些必要的代码优化**，所以运行效率并不是很高。因此一般建议，没有特别的需要，不要使用。也就是说，虽然可以使用“双重检查加锁”机制**来实现线程安全的单例**，但并不建议大量采用，可以根据情况来选用。
 
-​		**2.3 静态(类级)内部类**
+​		**2.3 通过内部类来实现（只执行一个域的访问）——静态(类级)内部类**
 
 ```Java
 public class Singleton {
@@ -808,7 +822,7 @@ public class EagerSingleton {
 }
 ```
 
-​		饿汉式在类创建的同时就已经创建好一个静态的对象供系统使用，以后不再改变，所以天生是线程安全的。
+​		饿汉式在类创建的同时就已经**创建好一个静态的对象供系统使用**，以后不再改变，所以天生是线程安全的。缺点则是会占用一定空间。
 
 
 
@@ -821,15 +835,15 @@ public class EagerSingleton {
 ​		懒汉式本身是**非线程安全**的，为了实现线程安全有三种写法，这三种实现在资源加载和性能方面有些区别。
 
 ​		**4.2资源加载和性能**：
-​		饿汉式在类创建的同时就实例化一个静态对象出来，不管之后会不会使用这个单例，都会占据一定的内存，但是相应的，在第一次调用时速度也会更快，因为其资源已经初始化完成，而懒汉式顾名思义，会延迟加载，在第一次使用该单例的时候才会实例化对象出来，第一次调用时要做初始化，如果要做的工作比较多，性能上会有些延迟，之后就和饿汉式一样了。
+​		饿汉式在类创建的同时就实例化一个静态对象出来，不管之后会不会使用这个单例，都会**占据一定的内存**，但是相应的，在第一次调用时速度也会更快，因为其资源已经初始化完成，而懒汉式顾名思义，会**延迟加载**，在第一次使用该单例的时候才会实例化对象出来，第一次调用时要做初始化，如果要做的工作比较多，性能上会有些延迟，之后就和饿汉式一样了。
 ​		**至于懒汉式的三种实现方式又有些区别：**
  		第1种，在方法调用上加了同步，虽然线程安全了，但是每次都要同步，**会影响性能**，毕竟99%的情况下是不需要同步的；
 ​		第2种，在getInstance中**做了两次null检查**，确保了只有第一次调用单例的时候才会做同步，这样也是线程安全的，同时**避免了每次都同步的性能损耗**；
-​		第3种，保证初始化instance时只有一个线程，所以也是线程安全的，**同时没有性能损耗**，一般倾向于使用这一种。
+​		第3种，保证初始化instance时只有一个线程，所以也是线程安全的，**同时没有性能损耗**，一般倾向于使用这一种。（最建议选择的）
 
 ​		**4.3什么是线程安全**？
 ​		如果你的代码所在的进程中**有多个线程在同时运行**，而这些线程可能会同时运行这段代码。如果每次运行结果和单线程运行的结果是一样的，而且其他的变量的值也和预期的是一样的，就是线程安全的。
-​		或者说：一个类或者程序所提供的接口对于线程来说是原子操作，或者多个线程之间的切换不会导致该接口的执行**结果存在二义性**,也就是说我们**不用考虑同步的问题**，那就是线程安全的。
+​		或者说：一个类或者程序所提供的接口对于线程来说是**原子操作**，或者多个线程之间的切换不会导致该接口的执行**结果存在二义性**,也就是说我们**不用考虑同步的问题**，那就是线程安全的。
 
 
 
@@ -914,7 +928,7 @@ true
 
 ​       在这些情况,新对象的建立就是一个“过程”，不仅是一个操作，像一部大机器中的一个齿轮传动。模式的问题：你如何能**轻松方便地构造对象实例**，而**不必关心构造对象实例的细节和复杂过程**呢？解决方案：建立一个工厂来创建对象。
 
-###### 1.工厂模式定义与分类
+###### 1.定义与分类
 
 ​		假如还没有工业革命，如果一个客户要一款车,一般的做法是客户去打造一款车，然后拿来用，这显示很低效。工厂模式主要是**为创建对象提供过渡接口**，以便将创建对象的**具体过程屏蔽隔离起来**，达到提高**灵活性**的目的。工厂模式在《Java与模式》中分为三类：
 
@@ -1122,13 +1136,13 @@ public class Client {
     private static abstractFactory benzcarfactory,bmwcarfactory;
     public static void main(String[] args) throws Exception {
         //告诉(工厂) 要奔驰车
-        benzcarfactory=new benzCarFactory();
-        benzcar=benzcarfactory.driveFactory();
+        benzcarfactory = new benzCarFactory();
+        benzcar = benzcarfactory.driveFactory();
         //可以开车了
         benzcar.drive();
         System.out.println("-------------------");
-        bmwcarfactory=new bmwCarFactory();
-        bmwcar=bmwcarfactory.driveFactory();
+        bmwcarfactory = new bmwCarFactory();
+        bmwcar = bmwcarfactory.driveFactory();
         bmwcar.drive();
     }
 }
@@ -1171,11 +1185,11 @@ public class Client {
 ​        以下是抽象工厂模式的实现实例：
 
 ```Java
-// 抽象工厂类  定义不同的产品之间的标准，商务车
+// 抽象产品类  定义不同的产品之间的标准，商务车
 public interface ICarA {
     public void drive();
 }
-// 抽象工厂类  定义不同的产品之间的标准 跑车族
+// 抽象产品类  定义不同的产品之间的标准 跑车族
 public interface ICarB {
     public void drive();
 }
@@ -1187,7 +1201,7 @@ public class productAHongqi implements ICarA {
         System.out.println("开商务族--红旗车");
     }
 }
-//具体工厂类
+//具体产品类
 public class productABmw implements ICarA {
     @Override
     public void drive() {
@@ -1202,7 +1216,7 @@ public class producSporttBAudi implements ICarB {
         System.out.println("开跑车族--奥迪车...");
     }
 }
-//具体工厂类
+//具体产品类
 public class productSportBBenz implements ICarB {
     @Override
     public void drive() {
@@ -1288,7 +1302,7 @@ public class Client {
 
 
 
-##### 3.建造者模式
+##### 3.建造者模式（5.26日）
 
 ###### 1.建造者模式概念　
 
