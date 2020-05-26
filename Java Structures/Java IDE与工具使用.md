@@ -1,35 +1,37 @@
 ### Java技术栈之工具使用
 
-#### Maven简介
+#### Maven简介与配置
 
 ##### 1.什么是Maven
 
 ​		在Java项目开发中，项目的编译、测试、打包等是比较繁琐的，属于重复劳动的工作，浪费人力和时间成本。以往开发项目时，程序员往往需要花较多的精力在**引用jar包搭建项目环境**上，跨部门甚至跨人员之间的项目结构都有可能不一样。Maven的**仓库管理、依赖管理、继承和聚合**等特性为项目的构建提供了一整套完善的解决方案。
 
-​		Apache Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project’s build, reporting and documentation from a central piece of information.从官网的介绍中我们可以看到Apache Maven是一个**项目管理工具**，它基于项目对象模型(POM)的概念，通过一小段描述信息来管理项目的构建、报告和文档。
+​		Apache Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project’s build, reporting and documentation from a central piece of information.
+
+​		从官网的介绍中我们可以看到Apache Maven是一个**项目管理工具**，它基于**项目对象模型(POM)的概念**，通过一小段描述信息来管理项目的构建、报告和文档。
 
 
 
 ##### 2.Maven的作用
 
-​		Maven是跨平台的项目管理工具。主要服务于基于Java平台的项目构建，依赖管理和项目信息管理。
+​		Maven是**跨平台的项目管理工具**。主要服务于基于Java平台的项目构建，依赖管理和项目信息管理。
 
-###### 项目构建：
+###### 1.项目构建：
 
 ​		项目构建包括清理，···，编译，测试，报告，打包，部署···等步骤
 
-###### 理想的项目构建
+###### 2.理想的项目构建
 
 ​		高度自动化，跨平台，可重用的组件，标准化
 
-###### 传统方式管理jar包依赖的问题：
+###### 3.传统方式管理jar包依赖的问题：
 
 - jar包冲突
 - jar包依赖
 - jar包体积过大
 - jar包在不同阶段无法个性化配置
 
-###### 使用maven方式管理jar包依赖的好处：
+###### 4.使用maven方式管理jar包依赖的好处：
 
 - 解决jar包冲突
 - 解决jar包依赖问题
@@ -40,7 +42,7 @@
 
 ##### 3.Maven安装与配置
 
-###### Maven安装
+###### 1.Maven安装
 
 1. 到Maven官网(http://maven.apache.org)下载软件
 
@@ -58,7 +60,7 @@
 
 4. 在命令提示符下输入mvn –version
 
-```
+```Java
 Apache Maven 3.6.0 (97c98ec64a1fdfee7767ce5ffb20918da4f719f3; 2018-10-25T02:41:47+08:00)
 Maven home: C:\develop\Maven\apache-maven-3.6.0\bin\..
 Java version: 1.8.0_191, vendor: Oracle Corporation, runtime: C:\develop\Java\jdk1.8.0_191\jre
@@ -66,23 +68,23 @@ Default locale: zh_CN, platform encoding: GBK
 OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
 ```
 
-如果你看到类似消息，说明 Apache Maven 在 Windows 上已安装成功。
+​		如果你看到类似消息，说明 Apache Maven 在 Windows 上已安装成功。
 
-###### Maven配置
+###### 2.Maven配置
 
-**配置本地仓库位置**
+​		**1.配置本地仓库位置**
 
 ​		Maven安装好之后默认配置了本地仓库，在%user%/.m2/respository目录，但是通常不会使用Maven的默认本地仓库，而是修改maven的本地仓库的地址，修改Maven目录的conf/settings.xml
 
-```
+```Java
 <localRepository>C:\develop\Maven\apache-maven-3.6.0\respository</localRepository>
 ```
 
-**配置阿里云镜像**
+​		**2.配置阿里云镜像**
 
-​		为了更好的下载速度，我们会选用国内镜像，这里配置的是**阿里云镜像**，修改Maven目录的conf/settings.xml
+​		为了更好的下载速度，我们会选用**国内镜像**，这里配置的是**阿里云镜像**，修改Maven目录的conf/settings.xml
 
-```
+```Java
 <!-- 配置阿里云镜像 -->
 <mirror>
     <!--该镜像的唯一标识符。id用来区分不同的mirror元素。 -->
@@ -96,7 +98,7 @@ OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
 </mirror> 
 ```
 
-**设置Maven工程的默认jdk**
+​		**3.设置Maven工程的默认jdk**
 
 ​		创建Maven项目的时候，默认编译的jdk版本是1.7，但是我们需要使用的是**jdk1.8版本**，所以需要修改Maven目录的conf/settings.xml
 
@@ -142,19 +144,19 @@ project
 
 ##### 5.Maven的几个核心概念
 
-###### POM
+###### 1.POM
 
-​		POM(Project Object Model)项目对象模型，一个项目所有的配置都放在POM文件中：定义项目的类型、名字、管理依赖关系，定制插件的行为等等。Maven通过pom.xml文件来管理依赖和管理项目的构建生命周期，而项目构建的生命周期是依靠一个个的插件完成的。
+​		**POM(Project Object Model)项目对象模型**，一个项目所有的配置都放在POM文件中：定义项目的类型、名字、管理依赖关系，定制插件的行为等等。Maven通过pom.xml文件来管理依赖和管理项目的构建生命周期，而项目构建的生命周期是依靠一个个的插件完成的。
 
-###### Maven仓库
+###### 2.Maven仓库
 
-​		Maven管理资源的位置。仓库里面包含依赖（jar包）和插件（plug-in）。Maven仓库分为本地仓库和远程仓库，而远程仓库又包括私服和中央仓库。
+​		Maven管理资源的位置。仓库里面包含**依赖**（jar包）和**插件**（plug-in）。Maven仓库分为本地仓库和远程仓库，而远程仓库又包括私服和中央仓库。
 
-###### 本地仓库
+###### 3.本地仓库
 
 ​		用户自己电脑上的仓库，直接从本地获取。
 
-###### 远程仓库
+###### 4.远程仓库
 
 ​		**私服**
 
@@ -164,11 +166,11 @@ project
 
 ​		Maven官方提供的远程仓库，里面拥有最全的jar包资源，Maven首先从本地仓库中寻找项目所需的jar包，若本地仓库没有，再到Maven的中央仓库下载所需jar包。地址是：http://repo1.maven.org/maven2/。
 
-###### 坐标
+###### 5.坐标
 
 ​		在Maven中，坐标是jar包的唯一标识，Maven通过坐标在仓库中找到项目所需的jar包。
 
-```
+```Java
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-web</artifactId>
@@ -176,7 +178,7 @@ project
 </dependency>
 ```
 
-```
+```Java
 groupId：公司或组织域名倒序
 artifactId：模块名
 version：版本号
@@ -186,45 +188,45 @@ groupId、artifactId、versioin简称GAV(Maven坐标)，是用来唯一标识jar
 
 ​		最新最全的Maven依赖项版本查询网站：http://mvnrepository.com/
 
-###### Maven工程的坐标与仓库中路径的关系
+###### 6.Maven工程的坐标与仓库中路径的关系
 
 ​		Maven坐标和仓库对应的映射关系：
 
-```
+```Java
 [groupId][artifactId][version][artifactId]-[version].jar
 ```
 
 ​		对应本地仓库目录：
 
-```
+```Java
 org\springframework\spring-core\4.3.4.RELEASE\spring-core-4.3.4.RELEASE.jar
 ```
 
-###### 依赖传递
+###### 7.依赖传递
 
 ​		如果我们的项目引用了一个Jar包，而该Jar包又引用了其他Jar包，那么在默认情况下项目编译时，Maven会把直接引用和简洁引用的Jar包都下载到本地。
 
 ​		传递性依赖机制能够大大的简化依赖声明，而且大部分情况下我们只需要关心项目的直接依赖是什么，而不用考虑这些直接依赖会引入什么传递性依赖，但是当出现冲突了，则需要很清楚传递性依赖是从什么依赖路径引入的。
 
-###### 依赖冲突
+###### 8.依赖冲突
 
 ​		依赖的原则主要是为了解决模块之间jar包冲突问题。我们分两种情况说明一下：
 
-​		**路径最短者优先**
+​		**1.路径最短者优先**
 
 ![image-20200310111700662](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310111700662.png)
 
 ​		例如：当我们工程Animal依赖Cat，Cat又依赖Action，每个单独工程中Action依赖log4j-1.2.17，Cat依赖log4j-1.2.14，那我们的Animal工程要依赖于哪个版本呢？其实Maven为我们提供了内置的原则，就是路径最短者优先，我们的Animal工程最终依赖的是log4j-1.2.14
 
-​		**路径相同先声明优先**
+​		**2.路径相同先声明优先**
 
 ![image-20200310111647815](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310111647815.png)
 
 ​		例如：当我们工程Animal同时依赖Cat，又依赖Action，每个单独工程中Action依赖log4j-1.2.17，Cat依赖log4j-1.2.14，这时候依赖的路径是相同的，那我们的Animal工程最终依赖的是哪个版本呢？
 
-​		**统一管理依赖的版本**
+​		**3.统一管理依赖的版本**
 
-```
+```Java
 <properties>
 	<!-- 在properties里面统一管理依赖的版本 -->  
 	<spring-boot.version>2.1.3.RELEASE</spring-boot.version>
@@ -253,17 +255,17 @@ org\springframework\spring-core\4.3.4.RELEASE\spring-core-4.3.4.RELEASE.jar
 </dependencies>
 ```
 
-###### 依赖范围
+###### 9.依赖范围
 
 ​		依赖范围就是控制依赖在不同阶段的作用。**不同的依赖会使用不同的classpath**，在Maven中依赖的域有这几个：import、provided、runtime、compile、system、test。默认取值为compile。
 
 ![image-20200310111855570](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310111855570.png)
 
-###### 可选依赖和依赖排除
+###### 10.可选依赖和依赖排除
 
 ​		**可选依赖**
 
-```
+```Java
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-web</artifactId>
@@ -282,7 +284,7 @@ true：不可以向下传递
 
 ​		如果我们只想下载直接引用的Jar包，那么需要在pom.xml中做如下配置：(将需要排除的Jar包的坐标写在中)
 
-```
+```Java
 <dependency>  
     <groupId>org.springframework.boot</groupId>  
     <artifactId>spring-boot-starter-web</artifactId>  
@@ -296,7 +298,7 @@ true：不可以向下传递
 </dependency> 
 ```
 
-###### 聚合
+###### 11.聚合
 
 ​		**什么是聚合？**
 
@@ -306,7 +308,7 @@ true：不可以向下传递
 
 只需在pom中作如下配置即可实现聚合
 
-```
+```Java
 <modules>
 	<module>nacos-config-example</module>
 	<module>nacos-discovery-example</module>
@@ -314,7 +316,7 @@ true：不可以向下传递
 </modues>
 ```
 
-###### 继承
+###### 12.继承
 
 ​		**什么是继承？**
 
@@ -322,9 +324,9 @@ true：不可以向下传递
 
 ​		**如何实现继承？**
 
-父pom配置：将需要继承的Jar包的坐标放入标签即可。
+​		父pom配置：将需要继承的Jar包的坐标放入标签即可。
 
-```
+```Java
 <dependencyManagement>
     <dependencies>
         <dependency>
@@ -336,9 +338,9 @@ true：不可以向下传递
 </dependencyManagement>
 ```
 
-子pom配置：
+​		子pom配置：
 
-```
+```Java
 <parent>
     <groupId>父pom所在项目的groupId</groupId>
     <artifactId>父pom所在项目的artifactId</artifactId>
@@ -346,50 +348,51 @@ true：不可以向下传递
 </parent>
 ```
 
-###### 生命周期
+###### 13.生命周期
 
 ​		Maven有三套相互独立的生命周期，请注意这里说的是“三套”，而且“相互独立”，初学者容易将Maven的生命周期看成一个整体，其实不然。这三套生命周期分别是：
 
 **① Clean Lifecycle 在进行真正的构建之前进行一些清理工作。 **Clean生命周期一共包含了三个阶段：
 
-pre-clean 执行一些需要在clean之前完成的工作
-clean 移除所有上一次构建生成的文件
-post-clean 执行一些需要在clean之后立刻完成的工作
+-   pre-clean 执行一些需要在clean之前完成的工作
+    clean 移除所有上一次构建生成的文件
+    post-clean 执行一些需要在clean之后立刻完成的工作
 
 **② Default Lifecycle 构建的核心部分，编译，测试，打包，部署等等。**
 
-validate
-generate-sources
-process-sources
-generate-resources
-process-resources 复制并处理资源文件，至目标目录，准备打包
-compile 编译项目的源代码
-process-classes
-generate-test-sources
-process-test-sources
-generate-test-resources
-process-test-resources 复制并处理资源文件，至目标测试目录
-test-compile 编译测试源代码
-process-test-classes
-test 使用合适的单元测试框架运行测试。这些测试代码不会被打包或部署
-prepare-package
-package 接受编译好的代码，打包成可发布的格式，如 JAR
-pre-integration-test
-integration-test
-post-integration-test
-verify
-install 将包安装至本地仓库，以让其它项目依赖。
-deploy 将最终的包复制到远程的仓库，以让其它开发人员与项目共享
+-   validate
+    generate-sources
+    process-sources
+    generate-resources
+    process-resources 复制并处理资源文件，至目标目录，准备打包
+    compile 编译项目的源代码
+    process-classes
+    generate-test-sources
+    process-test-sources
+    generate-test-resources
+    process-test-resources 复制并处理资源文件，至目标测试目录
+    test-compile 编译测试源代码
+    process-test-classes
+    test 使用合适的单元测试框架运行测试。这些测试代码不会被打包或部署
+    prepare-package
+    package 接受编译好的代码，打包成可发布的格式，如 JAR
+    pre-integration-test
+    integration-test
+    post-integration-test
+    verify
+    install 将包安装至本地仓库，以让其它项目依赖。
+    deploy 将最终的包复制到远程的仓库，以让其它开发人员与项目共享
+
 **总结**：不论你要执行生命周期的哪一个阶段，maven都是从这个生命周期的开始执行
 
 **插件**：每个阶段都有插件（plugin）。插件的职责就是执行它对应的命令。
 
 **③ Site Lifecycle 生成项目报告，站点，发布站点。**
 
-pre-site 执行一些需要在生成站点文档之前完成的工作
-site 生成项目的站点文档
-post-site 执行一些需要在生成站点文档之后完成的工作，并且为部署做准备
-site-deploy 将生成的站点文档部署到特定的服务器上
+-   pre-site 执行一些需要在生成站点文档之前完成的工作
+    site 生成项目的站点文档
+    post-site 执行一些需要在生成站点文档之后完成的工作，并且为部署做准备
+    site-deploy 将生成的站点文档部署到特定的服务器上
 
 
 
@@ -518,13 +521,9 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 
 ​		这段配置会被应用到所有子模块的compiler插件中，因为Maven内置了compiler插件与生命周期的绑定，因此子模块不需要任何maven-compiler-plugin的配置了。
 
-
-
 ###### 4.Maven常用命令
 
 ![image-20200310112640077](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310112640077.png)
-
-
 
 ###### 5.Maven常用插件
 
@@ -534,7 +533,7 @@ Maven本质上是一个插件框架，它的核心并不执行任何具体的构
 
 用来编译Java代码，在对Java代码进行编译的时候，可以指定使用哪个JDK版本来进行编译，配置如下所示：
 
-```
+```Java
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-compiler-plugin</artifactId>
@@ -558,7 +557,7 @@ Maven本质上是一个插件框架，它的核心并不执行任何具体的构
 
 Maven区别对待Java代码和资源文件，maven-resources-plugin则用来处理资源文件。默认的主资源文件目录是src/main/resources，很多时候会需要添加额外的资源文件目录，这个时候就可以通过配置maven-resources-plugin来实现，配置如下所示：
 
-```
+```Java
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-resources-plugin</artifactId>
@@ -576,7 +575,7 @@ Maven区别对待Java代码和资源文件，maven-resources-plugin则用来处�
 
 主要作用就是清理构建目录下的全部内容，有些项目，构建时需要清理构建目录以外的文件，比如指定的库文件，这时候就需要配置来实现了，配置如下所示：
 
-```
+```Java
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-clean-plugin</artifactId>
@@ -602,7 +601,7 @@ Maven区别对待Java代码和资源文件，maven-resources-plugin则用来处�
 
 主要作用就是用来打包的，在打包的时候经常需要排除一些文件，就需要对warSourceExcludes进行配置了，配置如下所示：
 
-```
+```Java
 <plugin>
     <artifactId>maven-war-plugin</artifactId>
     <version>3.2.3</version>
@@ -614,7 +613,7 @@ Maven区别对待Java代码和资源文件，maven-resources-plugin则用来处�
 
 
 
-#### IDEA使用与配置技巧
+#### IDEA使用与配置
 
 参见博客:
 
@@ -624,39 +623,40 @@ Maven区别对待Java代码和资源文件，maven-resources-plugin则用来处�
 
 ##### 常用插件
 
-Alibaba Java Coding Guidelines -阿里巴巴代码规范检查插件
+-   Alibaba Java Coding Guidelines -阿里巴巴代码规范检查插件
 
-FindBugs-IDEA -检查潜在bug插件
+-   FindBugs-IDEA -检查潜在bug插件
 
-Free Mybatis plugin -Mybatis 辅助插件
+-   Free Mybatis plugin -Mybatis 辅助插件
 
-GsonFormat -将JSON字符串转换为内部类实体类插件
+-   GsonFormat -将JSON字符串转换为内部类实体类插件
 
-Lombok plugin -简化实体类编写插件
+-   Lombok plugin -简化实体类编写插件
 
-Maven Helper -Maven辅助插件
+-   Maven Helper -Maven辅助插件
 
-SonarLint -代码质量检查插件
+-   SonarLint -代码质量检查插件
 
-Translation -翻译插件
+-   Translation -翻译插件
 
-CodeGlance -代码地图
+-   CodeGlance -代码地图
 
-.ignore -git忽略文件
+-   .ignore -git忽略文件
 
-CamelCase -驼峰式转换插件
+-   CamelCase -驼峰式转换插件
 
-String Manipulation -一款强大的字符串转换工具
+-   String Manipulation -一款强大的字符串转换工具
 
-Key Promoter X -一款可以进行快捷键提示的插件
+-   Key Promoter X -一款可以进行快捷键提示的插件
 
-AceJump -一款可以彻底摆脱鼠标的插件
+-   AceJump -一款可以彻底摆脱鼠标的插件
 
-IDEA查看日志的插件
+-   IDEA查看日志的插件
 
-ANSI Hignlighter - 高亮插件
+-   ANSI Hignlighter - 高亮插件
 
-Ideolog – ide查看日志插件
+-   Ideolog – ide查看日志插件
+
 
 
 
@@ -666,19 +666,19 @@ Ideolog – ide查看日志插件
 
 ##### 1.版本控制概念
 
-###### 什么是版本控制
+###### 1.什么是版本控制
 
 ​		版本控制是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。 除了项目源代码，你可以对任何类型的文件进行版本控制。
 
-###### 版本控制的作用
+###### 2.版本控制的作用
 
 ​		有了它你就可以将某个文件回溯到之前的状态，甚至将整个项目都回退到过去某个时间点的状态，你可以比较文件的变化细节，查出最后是谁修改了哪个地方，从而找出导致怪异问题出现的原因，又是谁在何时报告了某个功能缺陷等等。
 
-###### 本地版本控制系统
+###### 3.本地版本控制系统
 
 ​		许多人习惯用复制整个项目目录的方式来保存不同的版本，或许还会改名加上备份时间以示区别。 这么做唯一的好处就是简单，但是特别容易犯错。 有时候会混淆所在的工作目录，一不小心会写错文件或者覆盖文件。为了解决这个问题，人们很久以前就开发了许多种本地版本控制系统，大多都是采用某种简单的数据库来记录文件的历次更新差异。下图来源于Git官网。
 
-###### 集中式版本控制系统
+###### 4.集中式版本控制系统
 
 ​		接下来人们又遇到一个问题，如何让在不同系统上的开发者协同工作？ 于是，集中化的版本控制系统（Centralized Version Control Systems，简称 CVCS）应运而生。集中化的版本控制系统都有一个单一的集中管理的服务器，保存所有文件的修订版本，而协同工作的人们都通过客户端连到这台服务器，取出最新的文件或者提交更新。
 
@@ -688,7 +688,7 @@ Ideolog – ide查看日志插件
 
 •**必须联网才能工作**：受网络状况、带宽影响。
 
-###### 分布式版本控制系统
+###### 5.分布式版本控制系统
 
 ​		于是分布式版本控制系统（Distributed Version Control System，简称 DVCS）面世了。 Git 就是一个典型的分布式版本控制系统。这类系统，客户端并不只提取最新版本的文件快照，而是把代码仓库完整地镜像下来。 这么一来，任何一处协同工作用的服务器发生故障，事后都可以用任何一个镜像出来的本地仓库恢复。 因为每一次的克隆操作，实际上都是一次对代码仓库的完整备份。
 
@@ -732,7 +732,7 @@ Ideolog – ide查看日志插件
 
 SVN是**集中式版本控制系统**，而Git是**分布式版本控制系统**
 
-###### SVN
+###### 1.SVN
 
 ​		SVN是集中式版本控制系统，版本库是集中放在中央服务器的，而干活的时候，用的都是自己的电脑，所以首先要从中央服务器哪里得到最新的版本，然后干活，干完后，需要把自己做完的活推送到中央服务器。集中式版本控制系统是必须联网才能工作，如果在局域网还可以，带宽够大，速度够快，如果在互联网下，如果网速慢的话，就郁闷了。下图就是标准的集中式版本控制工具管理方式：
 
@@ -747,13 +747,13 @@ SVN是**集中式版本控制系统**，而Git是**分布式版本控制系统**
 
 
 
-###### Git
+###### 2.Git
 
 ​		Git是分布式版本控制系统，它没有中央服务器，每个人的电脑就是一个完整的版本库，这样工作的时候就不需要联网了，因为版本都是在自己的电脑上。既然每个人的电脑都有一个完整的版本库，那多个人如何协作呢？比如说自己在电脑上改了文件A，其他人也在电脑上改了文件A，这时，你们两之间只需把各自的修改**推送给对方**，就可以互相看到对方的修改了。下图就是分布式版本控制工具管理方式：
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310140957683.png" alt="image-20200310140957683" style="zoom:50%;" />
 
-###### Git与SVN的区别
+###### 3.Git与SVN的区别
 
 ​		Git不仅仅是个版本控制系统，它也是个**内容管理系统**(CMS),工作管理系统等。如果你是一个具有使用SVN背景的人，你需要做一定的思想转换，来适应Git提供的一些概念和特征。
 ​		Git 与 SVN 区别点：
@@ -764,7 +764,7 @@ SVN是**集中式版本控制系统**，而Git是**分布式版本控制系统**
 - Git没有一个全局的版本号，而SVN有：目前为止这是跟SVN相比GIT缺少的最大的一个特征。
 - Git的内容完整性要优于SVN：Git的内容存储使用的是SHA-1哈希算法。这能确保代码内容的完整性，确保在遇到磁盘故障和网络问题时降低对版本库的破坏。
 
-###### Git 与其他版本管理系统的区别
+###### 4.Git 与其他版本管理系统的区别
 
 ​		Git 在保存和对待各种信息的时候与其它版本控制系统有很大差异，尽管操作起来的命令形式非常相近，理解这些差异将有助于防止你使用中的困惑。 Git与其他版本管理系统的主要差别：**对待数据的方式。**
 
@@ -801,8 +801,6 @@ SVN是**集中式版本控制系统**，而Git是**分布式版本控制系统**
 **Repository**： 仓库区（或版本库），就是安全存放数据的位置，这里面有你提交到所有版本的数据。其中HEAD指向最新放入仓库的版本
 
 **Remote**： 远程仓库，托管代码的服务器，可以简单的认为是你项目组中的一台电脑用于远程数据交换
-
-
 
 ###### 2.分支
 
@@ -845,8 +843,6 @@ SVN是**集中式版本控制系统**，而Git是**分布式版本控制系统**
 ​		在本地创建了一个Git仓库，又想让其他人来协作开发，此时就可以把本地仓库同步到远程仓库，同时还增加了本地仓库的一个备份。常用的远程仓库就是github：https://github.com/
 
 ​		Github支持两种同步方式“https”和“ssh”。如果使用https很简单基本不需要配置就可以使用，但是每次提交代码和下载代码时都需要输入用户名和密码。而且如果是公司配置的私有git服务器一般不提供https方式访问。
-
-
 
 ###### 4.忽略文件
 
@@ -1013,7 +1009,7 @@ $ git config –list
 
 ###### 2.配置https和ssh
 
-推送时保存用户名和密码
+​		推送时保存用户名和密码
 
 ```shell
 # https提交保存用户名和密码
@@ -1025,7 +1021,7 @@ $ ssh-keygen -t rsa
 $ cat ~/.ssh/id_rsa.pub
 ```
 
-###### 推送到远程仓库
+###### 3.推送到远程仓库
 
 ```shell
 1. git init # 初始化仓库
@@ -1088,7 +1084,7 @@ $ git commit --amend -m [message]
 $ git commit --amend [file1] [file2] ...
 ```
 
-###### 分支
+###### 7.分支
 
 ```shell
 # 列出所有本地分支
