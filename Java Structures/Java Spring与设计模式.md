@@ -232,7 +232,7 @@ Spring框架支持以下五种bean的作用域：
 
 
 
-#### 4.Spring注解（5.26）
+#### 4.Spring注解
 
 ##### 1.@Component, @Controller, @Repository, @Service 有何区别？
 
@@ -284,9 +284,9 @@ public class Employee {
 
 @Autowired和@Resource之间的区别
 
-@Autowired默认是按照类型装配注入的，默认情况下它要求依赖对象必须存在（可以设置它required属性为false）。
+@Autowired默认是按照**类型装配注入**的，默认情况下它**要求依赖对象必须存在**（可以设置它required属性为false）。
 
-@Resource默认是按照名称来装配注入的，只有当找不到与名称匹配的bean才会按照类型来装配注入。
+@Resource默认是按照**名称来装配注入**的，只有当找不到与名称匹配的bean才会按照类型来装配注入。
 
 ##### 5.@RequestMapping 注解有什么用？
 
