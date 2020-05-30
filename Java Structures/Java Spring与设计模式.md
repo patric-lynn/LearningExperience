@@ -357,10 +357,10 @@ public class Employee {
 
 ##### 9.Spring框架的事务管理有哪些优点？
 
-为不同的事务API 如 JTA，JDBC，Hibernate，JPA 和JDO，提供一个不变的编程模式。
-为编程式事务管理提供了一套简单的API而不是一些复杂的事务API。
-支持声明式事务管理。
-和Spring各种数据访问抽象层很好得集成。
+​		为不同的事务API 如 JTA，JDBC，Hibernate，JPA 和JDO，提供一个不变的编程模式。
+​		为编程式事务管理提供了一套简单的API而不是一些复杂的事务API。
+​		支持声明式事务管理。
+​		和Spring各种数据访问抽象层很好得集成。
 
 
 
