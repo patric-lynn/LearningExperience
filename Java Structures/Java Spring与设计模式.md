@@ -433,42 +433,45 @@ AOP 的工作重心在于如何将增强编织目标对象的连接点上, 这�
 
 ​		启动类上面的注解是**@SpringBootApplication**，它也是 Spring Boot 的**核心注解**，主要组合包含了以下 3 个注解：
 
-@SpringBootConfiguration：组合了 @Configuration 注解，实现配置文件的功能。
+-   @SpringBootConfiguration：组合了 @Configuration 注解，实现配置文件的功能。
 
-@EnableAutoConfiguration：打开自动配置的功能，也可以关闭某个自动配置的选项，如关闭数据源自动配置功能： @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })。
+-   @EnableAutoConfiguration：打开自动配置的功能，也可以关闭某个自动配置的选项，如关闭数据源自动配置功能： @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })。
 
-@ComponentScan：Spring组件扫描。
+-   @ComponentScan：Spring组件扫描。
+
 
 
 
 #### 2.SpringBoot配置
 
-##### 什么是 JavaConfig？
+##### 1.什么是 JavaConfig？
 
 ​		Spring JavaConfig 是 Spring 社区的产品，它提供了配置 Spring IoC 容器的纯Java 方法。因此它有助于避免使用 XML 配置。使用 JavaConfig 的优点在于：
 
-（1）面向对象的配置。由于配置被定义为 JavaConfig 中的类，因此用户可以充分利用 Java 中的面向对象功能。一个配置类可以继承另一个，重写它的@Bean 方法等。
+（1）**面向对象的配置**。由于配置被定义为 JavaConfig 中的类，因此用户可以充分利用 Java 中的面向对象功能。一个配置类可以继承另一个，重写它的@Bean 方法等。
 
-（2）减少或消除 XML 配置。基于依赖注入原则的外化配置的好处已被证明。但是，许多开发人员不希望在 XML 和 Java 之间来回切换。JavaConfig 为开发人员提供了一种纯 Java 方法来配置与 XML 配置概念相似的 Spring 容器。从技术角度来讲，只使用 JavaConfig 配置类来配置容器是可行的，但实际上很多人认为将JavaConfig 与 XML 混合匹配是理想的。
+（2）**减少或消除 XML 配置**。基于依赖注入原则的外化配置的好处已被证明。但是，许多开发人员不希望在 XML 和 Java 之间来回切换。JavaConfig 为开发人员提供了一种纯 Java 方法来配置与 XML 配置概念相似的 Spring 容器。从技术角度来讲，只使用 JavaConfig 配置类来配置容器是可行的，但实际上很多人认为将JavaConfig 与 XML 混合匹配是理想的。
 
-（3）类型安全和重构友好。JavaConfig 提供了一种类型安全的方法来配置 Spring容器。由于 Java 5.0 对泛型的支持，现在可以按类型而不是按名称检索 bean，不需要任何强制转换或基于字符串的查找。
+（3）**类型安全和重构友好**。JavaConfig 提供了一种类型安全的方法来配置 Spring容器。由于 Java 5.0 对泛型的支持，现在可以按类型而不是按名称检索 bean，不需要任何强制转换或基于字符串的查找。
+
+
 
 ##### 2.Spring Boot 自动配置原理是什么？
 
-注解 @EnableAutoConfiguration, @Configuration, @ConditionalOnClass 就是自动配置的核心，
+​		注解 @EnableAutoConfiguration, @Configuration, @ConditionalOnClass 就是自动配置的核心，@EnableAutoConfiguration 给容器导入META-INF/spring.factories 里定义的自动配置类。筛选有效的自动配置类。每一个自动配置类结合对应的 xxxProperties.java 读取配置文件进行自动配置功能
 
-@EnableAutoConfiguration 给容器导入META-INF/spring.factories 里定义的自动配置类。
 
-筛选有效的自动配置类。每一个自动配置类结合对应的 xxxProperties.java 读取配置文件进行自动配置功能
 
-##### spring boot 核心配置文件是什么？
+##### 3.spring boot 核心配置文件是什么？
 
 ​		单纯做 Spring Boot 开发，可能不太容易遇到 bootstrap.properties 配置文件，但是在结合 Spring Cloud 时，这个配置就会经常遇到了，特别是在需要加载一些远程配置文件的时侯。
 
-spring boot 核心的两个配置文件：
+​		spring boot 核心的两个配置文件：
 
-bootstrap (. yml 或者 . properties)：boostrap 由父 ApplicationContext 加载的，比 applicaton 优先加载，配置在应用程序上下文的引导阶段生效。一般来说我们在 Spring Cloud Config 或者 Nacos 中会用到它。且 boostrap 里面的属性不能被覆盖；
-application (. yml 或者 . properties)： 由ApplicatonContext 加载，用于 spring boot 项目的自动化配置。
+-   bootstrap (. yml 或者 . properties)：boostrap 由父 ApplicationContext 加载的，比 applicaton 优先加载，配置在应用程序上下文的引导阶段生效。一般来说我们在 Spring Cloud Config 或者 Nacos 中会用到它。且 boostrap 里面的属性不能被覆盖；
+-   application (. yml 或者 . properties)： **由ApplicatonContext 加载**，用于 spring boot 项目的自动化配置。
+
+
 
 ##### 4.在自定义端口上运行 Spring Boot 应用程序？
 
@@ -478,17 +481,23 @@ application (. yml 或者 . properties)： 由ApplicatonContext 加载，用于 
 
 #### 3.安全与监视器
 
-##### 如何实现 Spring Boot 应用程序的安全性？
+##### 1.如何实现 Spring Boot 应用程序的安全性？
 
 ​		为了实现 Spring Boot 的安全性，我们使用 spring-boot-starter-security 依赖项，并且必须添加安全配置。它只需要很少的代码。配置类将必须扩展WebSecurityConfigurerAdapter 并覆盖其方法。
 
+
+
 ##### 2.什么是 CSRF 攻击？
 
-​		CSRF 代表跨站请求伪造。这是一种攻击，迫使最终用户在当前通过身份验证的Web 应用程序上执行不需要的操作。CSRF 攻击专门针对状态改变请求，而不是数据窃取，因为攻击者无法查看对伪造请求的响应。
+​		CSRF 代表**跨站请求伪造**。这是一种攻击，迫使最终用户在当前通过身份验证的Web 应用程序上执行不需要的操作。CSRF 攻击专门针对状态改变请求，而不是数据窃取，因为攻击者无法查看对伪造请求的响应。
+
+
 
 ##### 3.Spring Boot 中的监视器是什么？
 
 ​		Spring boot actuator 是 spring 启动框架中的重要功能之一。Spring boot 监视器可帮助您访问生产环境中正在运行的应用程序的当前状态。有几个指标必须在生产环境中进行检查和监控。即使一些外部应用程序可能正在使用这些服务来向相关人员触发警报消息。监视器模块公开了一组可直接作为 HTTP URL 访问的REST 端点来检查状态。
+
+
 
 ##### 4.我们如何监视所有 Spring Boot 微服务？
 
@@ -510,39 +519,49 @@ WebSocket 是一种计算机通信协议，通过单个 TCP 连接提供全双�
 
 4、Light -与 http 相比，**WebSocket 消息数据交换要轻得多**。
 
+
+
 ##### 2.什么是 Spring Data ?
 
 ​		Spring Data 是 Spring 的一个子项目。用于简化数据库访问，支持NoSQL 和 关系数据存储。其主要目标是使数据库的访问变得方便快捷。Spring Data 具有如下特点：
 
-###### SpringData 项目支持 NoSQL 存储：
+###### 1.SpringData 项目支持 NoSQL 存储：
 
-MongoDB （文档数据库）
-Neo4j（图形数据库）
-Redis（键/值存储）
-Hbase（列族数据库）
+-   MongoDB （文档数据库）
+-   Neo4j（图形数据库）
+-   Redis（键/值存储）
+-   Hbase（列族数据库）
 
-###### SpringData 项目所支持的关系数据存储技术：
+###### 2.SpringData 项目所支持的关系数据存储技术：
 
-JDBC
-JPA
+-   JDBC
+-   JPA
 
-###### Spring Data Jpa 致力于减少数据访问层 (DAO) 的开发量.
+###### 3.Spring Data Jpa 致力于减少数据访问层 (DAO) 的开发量.
 
 ​		开发者唯一要做的，就是声明持久层的接口，其他都交给 Spring Data JPA 来帮你完成！Spring Data JPA 通过**规范方法的名字**，根据**符合规范的名字来确定方法需要实现什么样的逻辑**。
 
+
+
 ##### 3.什么是 Spring Batch？
 
-​		Spring Boot Batch 提供可重用的函数，这些函数在处理大量记录时非常重要，包括日志/跟踪，事务管理，作业处理统计信息，作业重新启动，跳过和资源管理。它还提供了更先进的技术服务和功能，通过优化和分区技术，可以实现极高批量和高性能批处理作业。简单以及复杂的大批量批处理作业可以高度可扩展的方式利用框架处理重要大量的信息。
+​		Spring Boot Batch 提供**可重用的函数**，这些函数在处理大量记录时非常重要，包括日志/跟踪，事务管理，作业处理统计信息，作业重新启动，跳过和资源管理。它还提供了更先进的技术服务和功能，通过优化和分区技术，可以实现极高批量和高性能批处理作业。简单以及复杂的大批量批处理作业可以高度可扩展的方式利用框架处理重要大量的信息。
+
+
 
 ##### 4.什么是 Apache Kafka？
 
 ​		Apache Kafka 是一个**分布式发布 - 订阅消息系统**。它是一个**可扩展**的，**容错的**发布 - 订阅消息系统，它使我们能够构建分布式应用程序。这是一个 Apache 顶级项目。Kafka 适合**离线和在线消息消费**。
 
+
+
 ##### 5.什么是 Swagger？
 
 ​		Swagger 广泛用于**可视化 API**，使用 Swagger UI 为前端开发人员提供在线沙箱。Swagger 是用于**生成 RESTful Web 服务**的可视化表示的工具，规范和完整框架实现。它使文档能够以与服务器相同的速度更新。当通过 Swagger 正确定义时，消费者可以使用最少量的实现逻辑来理解远程服务并与其进行交互。因此，Swagger消除了调用服务时的猜测。
 
-##### Swagger如何维护接口文档 ?
+
+
+##### 6.Swagger如何维护接口文档 ?
 
 ​		前后端分离开发日益流行，大部分情况下，我们都是通过 Spring Boot 做前后端分离开发，前后端分离一定会有接口文档，不然会前后端会深深陷入到扯皮中。一个比较笨的方法就是使用 word 或者 md 来维护接口文档，但是效率太低，接口一变，所有人手上的文档都得变。在 Spring Boot 中，这个问题常见的解决方案是 **Swagger** ，使用 Swagger 我们可以**快速生成一个接口文档网站**，接口一旦发生变化，文档就会自动更新，所有开发工程师访问这一个在线网站**就可以获取到最新的接口文档**，非常方便。
 
@@ -561,13 +580,17 @@ JPA
 </dependency>
 ```
 
-**2.Spring Boot 中的 starter 到底是什么 ?**
+
+
+##### **2.Spring Boot 中的 starter 到底是什么 ?**
 
 ​		首先，这个 Starter 并非什么新的技术点，基本上还是基于 Spring 已有功能来实现的。首先它提供了一个自动化配置类，一般命名为 XXXAutoConfiguration ，在这个配置类中通过条件注解来决定一个配置是否生效（条件注解就是 Spring 中原本就有的），然后它还会提供一系列的默认配置，也允许开发者根据实际情况自定义相关配置，然后通过类型安全的属性注入将这些配置属性注入进来，新注入的属性会代替掉默认属性。正因为如此，很多第三方框架，我们只需要引入依赖就可以直接使用了。当然，开发者也可以自定义 Starter
 
-##### spring-boot-starter-parent 有什么用 ?
 
-​		我们都知道，新创建一个 Spring Boot 项目，默认都是有 parent 的，这个 parent 就是 spring-boot-starter-parent ，spring-boot-starter-parent 主要有如下作用：
+
+##### 3.spring-boot-starter-parent 有什么用 ?
+
+​		我们都知道，新创建一个 Spring Boot 项目，默认都是有 parent 的，这个 parent 就是 spring-boot-starter-parent ，**spring-boot-starter-parent** 主要有如下作用：
 
 - 定义了 Java 编译版本为 1.8 。
 - 使用 UTF-8 格式编码。
@@ -577,11 +600,15 @@ JPA
 - 自动化的插件配置。
 - 针对 application.properties 和 application.yml 的资源过滤，包括通过 profile 定义的不同环境的配置文件，例如 application-dev.properties 和 application-dev.yml。
 
+
+
 ##### 4.Spring Boot 打成的 jar 和普通的 jar 有什么区别 ?
 
-​		Spring Boot 项目最终打包成的 jar 是可执行 jar ，这种 jar 可以直接通过 java -jar xxx.jar 命令来运行，这种 jar **不可以作为普通的 jar 被其他项目依赖**，**即使依赖了也无法使用其中的类**。
+​		Spring Boot 项目最终打包成的 jar 是**可执行 jar** ，这种 jar 可以直接通过 java -jar xxx.jar 命令来运行，这种 jar **不可以作为普通的 jar 被其他项目依赖**，**即使依赖了也无法使用其中的类**。
 
-​		Spring Boot 的 jar 无法被其他项目依赖，**主要还是他和普通 jar 的结构不同**。普通的 jar 包，解压后直接就是包名，包里就是我们的代码，而 Spring Boot 打包成的可执行 jar 解压后，在 \BOOT-INF\classes 目录下才是我们的代码，因此无法被直接引用。**如果非要引用，可以在 pom.xml 文件中增加配置**，将 Spring Boot 项目**打包成两个 jar ，一个可执行，一个可引用。**
+​		Spring Boot 的 jar 无法被其他项目依赖，**主要还是他和普通 jar 的结构不同**。普通的 jar 包，解压后直接就是包名，包里就是我们的代码，而 Spring Boot 打包成的可执行 jar 解压后，在 \BOOT-INF\classes 目录下才是代码，因此无法被直接引用。**如果非要引用，可以在 pom.xml 文件中增加配置**，将 Spring Boot 项目**打包成两个 jar ，一个可执行，一个可引用。**
+
+
 
 ##### 5.运行 Spring Boot 有哪几种方式？
 
@@ -591,23 +618,33 @@ JPA
 
 3）直接执行 main 方法运行
 
+
+
 ##### 6.开启 Spring Boot 特性有哪几种方式？
 
 1）继承spring-boot-starter-parent项目
 
 2）导入spring-boot-dependencies项目依赖
 
-##### 如何使用 Spring Boot 实现异常处理？
+
+
+##### 7.如何使用 Spring Boot 实现异常处理？
 
 ​		Spring 提供了一种使用 ControllerAdvice 处理异常的非常有用的方法。 我们通过实现一个 ControlerAdvice 类，来处理控制器类抛出的所有异常。
+
+
 
 ##### **8.如何使用 Spring Boot 实现分页和排序？**
 
 ​		使用 Spring Boot 实现分页非常简单。使用 Spring Data-JPA 可以实现将可分页的传递给存储库方法。
 
+
+
 ##### **9.微服务中如何实现 session 共享 ?**
 
 ​		在微服务中，一个完整的项目被拆分成多个不相同的独立的服务，各个服务**独立部署在不同的服务器上**，各自的 session 被从物理空间上隔离开了，但是经常，我们需要在不同微服务之间共享 session ，常见的方案就是 Spring Session + Redis 来实现 session 共享。将所有微服务的 session 统一保存在 Redis 上，当各个微服务对 session 有相关的读写操作时，都去操作 Redis 上的 session 。这样就**实现了 session 共享**，Spring Session 基于 Spring 中的代理过滤器实现，使得 session 的同步操作对开发人员而言是透明的，非常简便。
+
+
 
 ##### 10.Spring Boot 中如何实现定时任务 ?
 
