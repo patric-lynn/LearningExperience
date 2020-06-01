@@ -1495,14 +1495,14 @@ public class Client {
 -   一个部分是**Builder接口**，这里是定义了如何构建各个部件，也就是知道每个部件功能如何实现
 -   另外一个部分是**Director**，Director是知道如何组合来构建产品，也就是说Director负责整体的构建算法，而且通常是分步骤地来执行,也就是说如何组装这些部件。
 
-​        不管如何变化，建造模式都存在这么两个部分，一个部分是部件构造。另一个部分是整体构建的算法。
+​        不管如何变化，建造模式都存在这么两个部分，一个部分是**部件构造**。另一个部分是**整体构建的算法**。
 再直白点说，建造模式的重心在于分离构建算法和具体的构造实现，从而使得构建算法可以重用。具体的构造实现可以很方便地扩展和切换，从而可以灵活地组合来构造出不同的产品对象。
 
 
 
 ###### 3.建造模式使用场景
 
-​		假设有一个电子杂志系统，定期地向用户的电子邮件信箱发送电子杂志。用户可以通过网页订阅电子杂志，也可以通过网页结束订阅。当客户开始订阅 时，系统发送一个电子邮件表示欢迎，当客户结束订阅时，系统发送一个电子邮件表示欢送。本例子就是这个系统负责发送“欢迎”和“欢送”邮件的模块。在本例中，产品类就是发给某个客户的“欢迎”和“欢送”邮件，如下图所示。
+​		假设有一个电子杂志系统，定期地向用户的电子邮件信箱发送电子杂志。用户可以通过网页订阅电子杂志，也可以通过网页结束订阅。当客户开始订阅 时，系统发送一个电子邮件表示欢迎，当客户结束订阅时，系统发送一个电子邮件表示欢送。本例子就是这个系统负责**发送“欢迎”和“欢送”邮件的模块**。在本例中，产品类就是发给某个客户的“欢迎”和“欢送”邮件，如下图所示。
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160124163938147.png" alt="系统类图" style="zoom:70%;" />
 
@@ -1510,7 +1510,7 @@ public class Client {
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160124164002522.png" alt="系统类图" style="zoom:90%;" />
 
-​		这个系统含有客户端（Client）、导演者（Director）、抽象建造者（Builder）、具体建造者（WelcomeBuilder和GoodbyeBuilder）、产品（WelcomeMessage和GoodbyeMessage）等角色。
+​		这个系统含有**客户端（Client）、导演者（Director）、抽象建造者（Builder）、具体建造者（WelcomeBuilder和GoodbyeBuilder）、产品（WelcomeMessage和GoodbyeMessage）**等角色。
 
 ​		**源代码**
 
@@ -1588,7 +1588,7 @@ public class GoodbyeMessage extends AutoMessage{
 
 //抽象建造者类
 public abstract class Builder {
-    protected AutoMessage msg;
+ protected AutoMessage msg;
     //标题零件的建造方法
  public abstract void buildSubject();
     //内容零件的建造方法
@@ -2139,7 +2139,7 @@ false
 
 
 
-##### 七类结构模式
+##### 七类结构模式 （6.1）
 
 ##### 5.适配器模式
 
