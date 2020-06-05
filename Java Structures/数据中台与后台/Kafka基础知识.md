@@ -219,19 +219,19 @@ class DemoProducerCallBack implements Callback {
 }
 ```
 
-首先实现回调需要定义一个实现了`org.apache.kafka.clients.producer.Callback`的类，这个接口只有一个 `onCompletion`方法。如果 kafka 返回一个错误，onCompletion 方法会抛出一个**非空(non null)异常**，这里我们只是简单的把它打印出来，如果是生产环境需要更详细的处理，然后在 send() 方法发送的时候**传递一个 Callback 回调的对象**。
+​		首先实现回调需要定义一个实现了`org.apache.kafka.clients.producer.Callback`的类，这个接口只有一个 `onCompletion`方法。如果 kafka 返回一个错误，onCompletion 方法会抛出一个**非空(non null)异常**，这里我们只是简单的把它打印出来，如果是生产环境需要更详细的处理，然后在 send() 方法发送的时候**传递一个 Callback 回调的对象**。
 
 
 
 ###### 3.生产者分区机制
 
-Kafka 对于数据的读写是**以分区为粒度的**，分区可以分布在多个主机（Broker）中，这样每个节点能够**实现独立的数据写入和读取**，并且能够通过**增加新的节点来增加 Kafka 集群的吞吐量**，通过分区部署在多个 Broker 来实现**负载均衡的效果**。
+​		Kafka 对于数据的读写是**以分区为粒度的**，分区可以分布在多个主机（Broker）中，这样每个节点能够**实现独立的数据写入和读取**，并且能够通过**增加新的节点来增加 Kafka 集群的吞吐量**，通过分区部署在多个 Broker 来实现**负载均衡的效果**。
 
-上面我们介绍了生产者的发送方式有三种：**不管结果如何直接发送、发送并返回结果、发送并回调**。由于消息是存在主题（topic）的分区（partition）中的，所以当 Producer 生产者发送产生一条消息发给 topic 的时候，你如何判断这条消息会存在哪个分区中呢？这其实就设计到 **Kafka 的分区机制**了。
+​		上面我们介绍了生产者的发送方式有三种：**不管结果如何直接发送、发送并返回结果、发送并回调**。由于消息是存在主题（topic）的分区（partition）中的，所以当 Producer 生产者发送产生一条消息发给 topic 的时候，你如何判断这条消息会存在哪个分区中呢？这其实就设计到 **Kafka 的分区机制**了。
 
 **分区策略**
 
-Kafka 的分区策略指的就是**将生产者发送到哪个分区的算法**。Kafka 为我们提供了默认的分区策略，同时它也支持你自定义分区策略。如果要自定义分区策略的话，你需要**显式配置生产者端的参数 Partitioner.class**，我们可以看一下这个类它位于 org.apache.kafka.clients.producer 包下
+​		Kafka 的分区策略指的就是**将生产者发送到哪个分区的算法**。Kafka 为我们提供了默认的分区策略，同时它也支持你自定义分区策略。如果要自定义分区策略的话，你需要**显式配置生产者端的参数 Partitioner.class**，我们可以看一下这个类它位于 org.apache.kafka.clients.producer 包下
 
 ```Java
 public interface Partitioner extends Configurable, Closeable {
@@ -241,7 +241,7 @@ public interface Partitioner extends Configurable, Closeable {
 }
 ```
 
-Partitioner 类有三个方法，分别来解释一下
+​		Partitioner 类有三个方法，分别来解释一下
 
 - **partition()**: 这个类有几个参数: **topic，表示需要传递的主题**；key 表示**消息中的键值**；keyBytes表示分区中**序列化过后的key**，byte数组的**形式传递**；value 表示消息**的 value 值**；valueBytes 表示分区中**序列化后的值数组**；cluster表示**当前集群的原数据**。Kafka 给你这么多信息，就是希望让你能够充分地利用这些信息对消息进行分区，计算出它要被发送到哪个分区中。
 - **close()** : 继承了 Closeable 接口能够实现 close() 方法，**在分区关闭时调用**。
@@ -309,7 +309,7 @@ ProducerRecord<String,String> record =
 
 ###### 5.生产者配置
 
-介绍一下 Kafka 生产者重要的配置。生产者有很多可配置的参数，在此介绍几个在内存使用、性能和可靠性方面对生产者影响比较大的参数进行说明
+​		介绍一下 Kafka 生产者重要的配置。生产者有很多可配置的参数，在此介绍几个在内存使用、性能和可靠性方面对生产者影响比较大的参数进行说明
 
 - **key.serializer**
 
@@ -369,7 +369,7 @@ ProducerRecord<String,String> record =
 
 
 
-##### 2.Consumer 消费者
+##### 2.Consumer 消费者（6.5）
 
 ​		Kafka 生产的消息**最终流向哪里**呢？当然是需要消费了，要不只产生**一系列数据没有任何作用啊**，如果把 Kafka 比作餐厅的话，那么生产者就是厨师的角色，消费者就是客人，只有厨师的话，那么炒出来的菜没有人吃也没有意义，如果只有客人没有厨师的话，谁会去这个店吃饭呢？
 
