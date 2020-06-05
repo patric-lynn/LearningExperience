@@ -35,7 +35,7 @@
 
 - **高吞吐、低延迟**：kakfa 最大的特点就是**收发消息非常快**，kafka 每秒可以处理**几十万条消息**，它的最低延迟只有几毫秒。
 - **高伸缩性**： 每个主题(topic) 包含**多个分区**(partition)，主题中的分区可以**分布在不同的主机(broker)中**。
-- **持久性、可靠性**： Kafka 能够允许数据的持久化存储，消息被**持久化到磁盘**，并支持数据备份防止数据丢失，Kafka 底层的数据存储是**基于 Zookeeper 存储的**，Zookeeper 我们知道它的**数据能够持久存储**。
+- **持久性、可靠性**： Kafka 能够允许**数据的持久化存储**，消息被**持久化到磁盘**，并支持数据备份防止数据丢失，Kafka 底层的数据存储是**基于 Zookeeper 存储的**，Zookeeper 我们知道它的**数据能够持久存储**。
 - **容错性**： 允许集群中的**节点失败**，某个节点宕机，Kafka 集群能够正常工作。
 - **高并发**： 支持**数千个客户端同时读写**。
 
@@ -107,12 +107,12 @@ Kafka 有四个核心API，它们分别是
 - 如果发送过程中未指定分区，则将使用**key 的 hash 函数映射指定一个分区**。
 - 如果发送的过程中**既没有分区号也没有hash**，则将以**循环的方式**分配一个分区。
 
-​        选好分区后，生产者就知道向哪个主题和分区发送数据了。ProducerRecord 还有**关联的时间戳**，如果用户**没有提供时间戳**，那么生产者将会在记录中使用**当前的时间作为时间戳**。Kafka 最终使用的时间戳**取决于 topic 主题配置的时间戳类型**。
+​        **选好分区后，生产者就知道向哪个主题和分区发送数据了**。ProducerRecord 还有**关联的时间戳**，如果用户**没有提供时间戳**，那么生产者将会在记录中使用**当前的时间作为时间戳**。Kafka 最终使用的时间戳**取决于 topic 主题配置的时间戳类型**。
 
 - 如果将主题配置为使用 `CreateTime`，则生产者记录中的时间戳**将由 broker 使用**。
 - 如果将主题配置为使用`LogAppendTime`，则生产者记录中的**时间戳在将消息添加到其日志中时**，将由 broker 重写。
 
-​        然后，这条消息被**存放在一个记录批次里**，这个批次里的所有消息**会被发送到相同的主题和分区上**。由一个**独立的线程**负责把它们发到 Kafka Broker 上。Kafka Broker 在收到消息时**会返回一个响应**：
+​        然后，这条消息被**存放在一个记录批次里**，这个批次里的所有消息**会被发送到相同的主题和分区上**。由一个**独立的线程**负责把它们**发到 Kafka Broker 上**。Kafka Broker 在收到消息时**会返回一个响应**：
 
 - 如果**写入成功，会返回一个** **RecordMetaData 对象**，它包含了**主题和分区信息**，以及记录在**分区里的偏移量**，上面两种的时间戳类型也会返回给用户。
 - 如果**写入失败**，会返回**一个错误**。生产者在收到错误之后会**尝试重新发送消息**，几次之后如果还是失败的话，就返回错误消息。
@@ -121,7 +121,7 @@ Kafka 有四个核心API，它们分别是
 
 ###### 1.Kafka 生产者创建
 
-要向 Kafka 写入消息，首先需要**创建一个生产者对象**，并设置一些属性。Kafka 生产者有3个必选的属性
+​		要向 Kafka 写入消息，首先需要**创建一个生产者对象**，并设置一些属性。Kafka 生产者有3个必选的属性
 
 - **bootstrap.servers**
 
@@ -131,13 +131,13 @@ Kafka 有四个核心API，它们分别是
 
 ​         broker 需要接收到序列化之后的 **`key/value`**值，所以生产者发送的消息需要经过**序列化之后**才传递给 Kafka Broker。生产者需要知道采用何种方式把 Java 对象**转换为字节数组**。key.serializer 必须被设置为一个实现了`org.apache.kafka.common.serialization.Serializer` 接口的类，生产者会使用这个类**把键对象序列化为**字节数组。
 
-​     这里拓展一下 Serializer 类:Serializer 是一个接口，它表示类将会**采用何种方式序列化**，它的作用是把对象转换为字节，实现了 Serializer 接口的类主要有 `ByteArraySerializer`、`StringSerializer`、`IntegerSerializer` ，其中 ByteArraySerialize 是 Kafka **默认使用的序列化器**，其他的序列化器还有很多，你可以通过 [这里](https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html) 查看其他序列化器。要注意的一点：**key.serializer 是必须要设置的，即使你打算只发送值的内容**。
+​     这里拓展一下 **Serializer 类**: Serializer 是一个接口，它表示类将会**采用何种方式序列化**，它的作用是把对象转换为字节，实现了 Serializer 接口的类主要有 `ByteArraySerializer`、`StringSerializer`、`IntegerSerializer` ，其中 ByteArraySerialize 是 Kafka **默认使用的序列化器**，其他的序列化器还有很多，你可以通过 [这里](https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html) 查看其他序列化器。要注意的一点：**key.serializer 是必须要设置的，即使你打算只发送值的内容**。
 
 - **value.serializer**
 
-与 key.serializer 一样，value.serializer 指定的类会**将值序列化**。
+    与 key.serializer 一样，value.serializer 指定的类会**将值序列化**。
 
-下面代码演示了如何创建一个 Kafka 生产者，这里只指定了必要的属性，其他使用默认的配置
+​		下面代码演示了如何创建一个 Kafka 生产者，这里只指定了必要的属性，其他使用默认的配置
 
 ```java
 private Properties properties = new Properties();
@@ -147,21 +147,21 @@ properties.put("value.serializer","org.apache.kafka.common.serialization.StringS
 properties = new KafkaProducer<String,String>(properties);
 ```
 
-来解释一下这段代码
+​		来解释一下这段代码
 
-- 首先创建了一个 Properties 对象
+- 首先创建了一个 **Properties 对象**
 - 使用 `StringSerializer` 序列化器序列化 key / value 键值对
-- 在这里我们创建了一个新的生产者对象，并为键值设置了恰当的类型，然后把 Properties 对象传递给他。
+- 在这里我们**创建了一个新的生产者对象**，并为键值设置了恰当的类型，然后把 Properties 对象传递给他。
 
 
 
 ###### 2.生产者消息发送
 
-实例化生产者对象后，接下来就可以开始**发送消息**了，发送消息主要由下面几种方式
+​		实例化生产者对象后，接下来就可以开始**发送消息**了，发送消息主要由下面几种方式
 
 **①简单消息发送**
 
-Kafka **最简单的消息发送**如下：
+​		Kafka **最简单的消息发送**如下：
 
 ```java
 ProducerRecord<String,String> record =
@@ -169,23 +169,23 @@ ProducerRecord<String,String> record =
 producer.send(record);
 ```
 
-代码中生产者(producer)的 **`send()`** 方法需要把 `ProducerRecord` 的对象作为参数进行发送，ProducerRecord 有很多构造函数，这个我们下面讨论，这里调用的是
+​		代码中生产者(producer)的 **`send()`** 方法需要把 `ProducerRecord` 的对象作为参数发送，ProducerRecord 有很多构造函数，这个我们下面讨论，这里调用的是
 
 ```java
 public ProducerRecord(String topic, K key, V value) {}
 ```
 
-这个构造函数，**需要传递的是 topic主题，key 和 value。**把对应的参数传递完成后，**生产者调用 send()** 方法发送消息**（ProducerRecord对象）**。我们可以从生产者的架构图中看出，消息是先被写入**分区中的缓冲区**中，然后分批次**发送给 Kafka Broker**。
+​		这个构造函数，**需要传递的是 topic主题，key 和 value。**把对应的参数传递完成后，**生产者调用 send()** 方法发送消息**（ProducerRecord对象）**。我们可以从生产者的架构图中看出，消息是先被写入**分区中的缓冲区**中，然后分批次**发送给 Kafka Broker**。
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/format,png-4776602.png" alt="img" style="zoom:40%;" />
 
-发送成功后，send() 方法会返回一个 `Future(java.util.concurrent)` 对象，Future 对象的类型是 `RecordMetadata` 类型，我们上面这段代码**没有考虑返回值，所以没有生成对应的 Future 对象**，所以没有办法知道消息是否发送成功。如果不是很重要的信息或者对结果不会产生影响的信息，可以使用这种方式进行发送。
+​		发送成功后，send() 方法会返回一个 `Future(java.util.concurrent)` 对象，Future 对象的类型是 `RecordMetadata` 类型，我们上面这段代码**没有考虑返回值，所以没有生成对应的 Future 对象**，所以没有办法知道消息是否发送成功。如果**不是很重要的信息或者对结果不会产生影响的信息**，可以使用这种方式进行发送。
 
-我们可以忽略发送消息时可能发生的错误或者在服务器端可能发生的错误，但在消息发送之前，**生产者还可能发生其他的异常**。这些异常有可能是 `SerializationException(序列化失败)`，`BufferedExhaustedException 或 TimeoutException(说明缓冲区已满)`，又或是 `InterruptedException(说明发送线程被中断)`
+​		我们可以忽略发送消息时可能发生的错误或者在服务器端可能发生的错误，但在消息发送之前，**生产者还可能发生其他的异常**。这些异常有可能是 `SerializationException(序列化失败)`，`BufferedExhaustedException 或 TimeoutException(说明缓冲区已满)`，又或是 `InterruptedException(说明发送线程被中断)`
 
 ②**同步发送消息**
 
-第二种消息发送机制如下所示
+​		第二种消息发送机制如下所示
 
 ```java
 ProducerRecord<String,String> record =
@@ -197,15 +197,15 @@ try{
 }
 ```
 
-这种发送消息的方式较上面的发送方式有了改进，**首先调用 send() 方法**，然后**再调用 get() 方法等待 Kafka 响应**。如果服务器返回错误，get() 方法**会抛出异常**，如果没有发生错误，我们会得到 `RecordMetadata` 对象，可以**用它来查看消息记录**。
+​		这种发送消息的方式较上面的发送方式有了改进，**首先调用 send() 方法**，然后**再调用 get() 方法等待 Kafka 响应**。如果服务器返回错误，get() 方法**会抛出异常**，如果没有发生错误，我们会得到 `RecordMetadata` 对象，可以**用它来查看消息记录**。
 
-生产者（KafkaProducer）在发送的过程中会出现两类错误：其中一类是**重试错误**，这类错误可以通过**重发消息**来解决。比如连接的错误，可以通过再次建立连接来解决；第二类**无主错误**则可以通过**重新为分区选举首领**来解决。KafkaProducer 被配置为**自动重试**，如果多次重试后仍无法解决问题，则会抛出重试异常。另一类错误是无法通过重试来解决的，比如`消息过大`对于这类错误，KafkaProducer 不会进行重试，直接抛出异常。
+​		生产者（KafkaProducer）在发送的过程中会出现两类错误：其中一类是**重试错误**，这类错误可以通过**重发消息**来解决。比如连接的错误，可以通过再次建立连接来解决；第二类**无主错误**则可以通过**重新为分区选举首领**来解决。KafkaProducer 被配置为**自动重试**，如果多次重试后仍无法解决问题，则会抛出重试异常。另一类错误是无法通过重试来解决的，比如`消息过大`对于这类错误，KafkaProducer 不会进行重试，直接抛出异常。
 
 ③**异步发送消息**
 
-同步发送消息都有个问题，那就是**同一时间只能有一个消息在发送**，这会造成许多消息无法直接发送，造成消息滞后，无法发挥效益最大化。比如消息在应用程序和 Kafka 集群之间**一个来回需要 10ms**。如果发送完每个消息后都等待响应的话，那么发送100个消息需要 1 秒，但是如果是`异步`方式的话，发送 100 条消息所需要的时间就会少很多很多。大多数时候，**虽然Kafka 会返回 `RecordMetadata` 消息**，**但是我们并不需要等待响应**。
+​		同步发送消息都有个问题，那就是**同一时间只能有一个消息在发送**，这会造成许多消息无法直接发送，造成消息滞后，无法发挥效益最大化。比如消息在应用程序和 Kafka 集群之间**一个来回需要 10ms**。如果发送完每个消息后都等待响应的话，那么发送100个消息需要 1 秒，但是如果是`异步`方式的话，发送 100 条消息所需要的时间就会少很多很多。大多数时候，**虽然Kafka 会返回 `RecordMetadata` 消息**，**但是我们并不需要等待响应**。
 
-为了在异步发送消息的同时能够对异常情况进行处理，生产者提供了回掉支持。下面是回调的一个例子
+​		为了在异步发送消息的同时能够对异常情况进行处理，生产者提供了回调支持。下面是回调的一个例子
 
 ```java
 ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>("CustomerCountry", "Huston", "America");
