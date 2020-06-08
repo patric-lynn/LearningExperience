@@ -4400,8 +4400,8 @@ private void deleteEntry(Entry<K,V> p) {
 
 ##### Java异常简介
 
-Java异常是Java提供的一种识别及响应错误的**一致性机制**。
-Java异常机制可以使程序中异常处理代码和正常业务代码分离，保证程序代码更加优雅，并提高程序健壮性。在有效使用异常的情况下，异常能清晰的回答what, where, why这3个问题：异常类型回答了“什么”被抛出，异常堆栈跟踪回答了“在哪”抛出，异常信息回答了“为什么”会抛出。
+​		Java异常是Java提供的一种识别及响应错误的**一致性机制**。
+​		Java异常机制可以使程序中异常处理代码和正常业务代码分离，保证程序代码更加优雅，并提高程序健壮性。在有效使用异常的情况下，异常能清晰的回答what, where, why这3个问题：异常类型回答了“什么”被抛出，异常堆栈跟踪回答了“在哪”抛出，异常信息回答了“为什么”会抛出。
 
 ##### Java异常架构
 
@@ -4425,7 +4425,7 @@ Throwable 包含了其线程创建时线程执行堆栈的快照，它提供了 
 
 3. ###### Exception（异常）
 
-程序**本身可以捕获并且可以处理的异常**。Exception 这种异常又分为两类：**运行时异常**和**编译时异常**。
+    ​	程序**本身可以捕获并且可以处理的异常**。Exception 这种异常又分为两类：**运行时异常**和**编译时异常**。
 
 **运行时异常**
 
@@ -4441,15 +4441,15 @@ Throwable 包含了其线程创建时线程执行堆栈的快照，它提供了 
 
 4. ###### 受检异常与非受检异常
 
-Java 的所有异常可以分为受检异常（checked exception）和非受检异常（unchecked exception）。
+    ​	Java 的所有异常可以分为受检异常（checked exception）和非受检异常（unchecked exception）。
 
 **受检异常**
 
-编译器要求必须处理的异常。正确的程序在运行过程中，经常容易出现的、符合预期的异常情况。一旦发生此类异常，就必须采用某种方式进行处理。除 RuntimeException 及其子类外，其他的 Exception 异常都属于受检异常。编译器会检查此类异常，也就是说当编译器检查到应用中的某处可能会此类异常时，将会提示你处理本异常——要么使用try-catch捕获，**要么使用方法签名中用 throws 关键字抛出，否则编译不通过。**
+​		编译器要求必须处理的异常。正确的程序在运行过程中，经常容易出现的、符合预期的异常情况。一旦发生此类异常，就必须采用某种方式进行处理。除 RuntimeException 及其子类外，其他的 Exception 异常都属于受检异常。编译器会检查此类异常，也就是说当编译器检查到应用中的某处可能会此类异常时，将会提示你处理本异常——要么使用try-catch捕获，**要么使用方法签名中用 throws 关键字抛出，否则编译不通过。**
 
 **非受检异常**
 
-编译器不会进行检查并且不要求必须处理的异常，也就说当程序中出现此类异常时，即使我们没有try-catch捕获它，也没有使用throws抛出该异常，编译也会正常通过。该类异常包括运行时异常（RuntimeException极其子类）和错误（Error）。
+​		编译器不会进行检查并且不要求必须处理的异常，也就说当程序中出现此类异常时，即使我们没有try-catch捕获它，也没有使用throws抛出该异常，编译也会正常通过。该类异常包括运行时异常（RuntimeException极其子类）和错误（Error）。
 
 ##### Java异常关键字
 
@@ -4465,11 +4465,11 @@ Java 的所有异常可以分为受检异常（checked exception）和非受检�
 
 ![image-20200309182750070](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200309182750070.png)
 
-Java 通过面向对象的方法进行异常处理，一旦方法抛出异常，系统自动根据该异常对象寻找合适异常处理器（Exception Handler）来处理该异常，把各种不同的异常进行分类，并提供了良好的接口。在 Java 中，每个异常都是一个对象，它是 Throwable 类或其子类的实例。当一个方法出现异常后**便抛出一个异常对象**，该对象中包含有异常信息，调用这个对象的方法可以捕获到这个异常并可以对其进行处理。Java 的异常处理是通过 5 个关键词来实现的：try、catch、throw、throws 和 finally。在Java应用中，异常的处理机制分为**声明异常**，**抛出异常**和**捕获异常**。
+​		Java 通过面向对象的方法进行异常处理，一旦方法抛出异常，系统自动根据该异常对象寻找合适异常处理器（Exception Handler）来处理该异常，把各种不同的异常进行分类，并提供了良好的接口。在 Java 中，每个异常都是一个对象，它是 Throwable 类或其子类的实例。当一个方法出现异常后**便抛出一个异常对象**，该对象中包含有异常信息，调用这个对象的方法可以捕获到这个异常并可以对其进行处理。Java 的异常处理是通过 5 个关键词来实现的：try、catch、throw、throws 和 finally。在Java应用中，异常的处理机制分为**声明异常**，**抛出异常**和**捕获异常**。
 
 ##### 声明异常
 
-通常，应该捕获那些知道如何处理的异常，将不知道如何处理的异常继续传递下去。传递异常可以在方法签名处使用 throws 关键字声明可能会抛出的异常。
+​		通常，应该捕获那些知道如何处理的异常，将不知道如何处理的异常继续传递下去。传递异常可以在方法签名处使用 throws 关键字声明可能会抛出的异常。
 
 注意
 
@@ -4478,17 +4478,17 @@ Java 通过面向对象的方法进行异常处理，一旦方法抛出异常，
 
 ##### 抛出异常
 
-如果你觉得解决不了某些异常问题，且不需要调用者处理，那么你可以抛出异常。
+​		如果你觉得解决不了某些异常问题，且不需要调用者处理，那么你可以抛出异常。
 
-throw关键字作用是在方法内部抛出一个Throwable类型的异常。任何Java代码都可以通过throw语句抛出异常。
+​		throw关键字作用是在方法内部抛出一个Throwable类型的异常。任何Java代码都可以通过throw语句抛出异常。
 
 ##### 捕获异常
 
-程序通常在运行之前不报错，但是运行后可能会出现某些未知的错误，但是还不想直接抛出到上一级，那么就需要通过try…catch…的形式进行异常捕获，之后根据不同的异常情况来进行相应的处理。
+​		程序通常在运行之前不报错，但是运行后可能会出现某些未知的错误，但是还不想直接抛出到上一级，那么就需要通过try…catch…的形式进行异常捕获，之后根据不同的异常情况来进行相应的处理。
 
 ##### 如何选择异常类型
 
-可以根据下图来选择是捕获异常，声明异常还是抛出异常
+​		可以根据下图来选择是捕获异常，声明异常还是抛出异常
 
 ![image-20200309183047208](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200309183047208.png)
 
@@ -4496,7 +4496,7 @@ throw关键字作用是在方法内部抛出一个Throwable类型的异常。任
 
 ##### 直接抛出异常
 
-通常，应该捕获那些知道如何处理的异常，将不知道如何处理的异常继续传递下去。传递异常可以在方法签名处使用 throws 关键字声明可能会抛出的异常。
+​		通常，应该捕获那些知道如何处理的异常，将不知道如何处理的异常继续传递下去。传递异常可以在方法签名处使用 throws 关键字声明可能会抛出的异常。
 
 ```Java
 private static void readFile(String filePath) throws IOException {
@@ -4512,7 +4512,7 @@ private static void readFile(String filePath) throws IOException {
 
 ##### 封装异常再抛出
 
-有时我们会从 catch 中抛出一个异常，目的是为了改变异常的类型。多用于在多系统集成时，当某个子系统故障，异常类型可能有多种，可以用统一的异常类型向外暴露，不需暴露太多内部异常细节。
+​		有时我们会从 catch 中抛出一个异常，目的是为了改变异常的类型。多用于在多系统集成时，当某个子系统故障，异常类型可能有多种，可以用统一的异常类型向外暴露，不需暴露太多内部异常细节。
 
 ```Java
 private static void readFile(String filePath) throws MyException {    
@@ -4528,7 +4528,7 @@ private static void readFile(String filePath) throws MyException {
 
 ##### 捕获异常
 
-在一个 try-catch 语句块中可以捕获多个异常类型，并对不同类型的异常做出不同的处理
+​		在一个 try-catch 语句块中可以捕获多个异常类型，并对不同类型的异常做出不同的处理
 
 ```Java
 private static void readFile(String filePath) {
@@ -4544,7 +4544,7 @@ private static void readFile(String filePath) {
 
 ##### 自定义异常
 
-习惯上，定义一个异常类应包含两个构造函数，一个无参构造函数和一个带有详细描述信息的构造函数（Throwable 的 toString 方法会打印这些详细信息，调试时很有用）
+​		习惯上，定义一个异常类应包含两个构造函数，一个无参构造函数和一个带有详细描述信息的构造函数（Throwable 的 toString 方法会打印这些详细信息，调试时很有用）
 
 ```Java
 public class MyException extends Exception {
@@ -4558,7 +4558,7 @@ public class MyException extends Exception {
 
 ##### try-catch-finally
 
-当方法中发生异常，异常处之后的代码不会再执行，如果之前获取了一些本地资源需要释放，则需要在方法正常结束时和 catch 语句中都调用释放本地资源的代码，显得代码比较繁琐，finally 语句可以解决这个问题。
+​		当方法中发生异常，异常处之后的代码不会再执行，如果之前获取了一些本地资源需要释放，则需要在方法正常结束时和 catch 语句中都调用释放本地资源的代码，显得代码比较繁琐，finally 语句可以解决这个问题。
 
 ```Java
 private static void readFile(String filePath) throws MyException {
@@ -4589,7 +4589,7 @@ private static void readFile(String filePath) throws MyException {
 ```
 
 
-调用该方法时，读取文件时若发生异常，代码会进入 catch 代码块，之后进入 finally 代码块；若读取文件时未发生异常，则会跳过 catch 代码块直接进入 finally 代码块。所以无论代码中是否发生异常，fianlly 中的代码都会执行。若 catch 代码块中包含 return 语句，finally 中的代码还会执行吗？将以上代码中的 catch 子句修改如下：
+​		调用该方法时，读取文件时若发生异常，代码会进入 catch 代码块，之后进入 finally 代码块；若读取文件时未发生异常，则会跳过 catch 代码块直接进入 finally 代码块。所以无论代码中是否发生异常，fianlly 中的代码都会执行。若 catch 代码块中包含 return 语句，finally 中的代码还会执行吗？将以上代码中的 catch 子句修改如下：
 
 ```java 
 catch (IOException e) {
@@ -4604,11 +4604,11 @@ readFile method finally block.
 ```
 
 
-调用 readFile 方法，观察当 catch 子句中调用 return 语句时，finally 子句是否执行。可见，即使 catch 中包含了 return 语句，finally 子句依然会执行。若 finally 中也包含 return 语句，finally 中的 return 会覆盖前面的 return.
+​		调用 readFile 方法，观察当 catch 子句中调用 return 语句时，finally 子句是否执行。可见，即使 catch 中包含了 return 语句，finally 子句依然会执行。若 finally 中也包含 return 语句，finally 中的 return 会覆盖前面的 return.
 
 ##### try-with-resource
 
-上面例子中，finally 中的 close 方法也可能抛出 IOException, 从而覆盖了原始异常。JAVA 7 提供了更优雅的方式来实现资源的自动释放，自动释放的资源需要是实现了 AutoCloseable 接口的类。
+​		上面例子中，finally 中的 close 方法也可能抛出 IOException, 从而覆盖了原始异常。JAVA 7 提供了更优雅的方式来实现资源的自动释放，自动释放的资源需要是实现了 AutoCloseable 接口的类。
 
 ```Java
 private  static void tryWithResourceTest(){
@@ -4621,7 +4621,7 @@ private  static void tryWithResourceTest(){
 ```
 
 
-try 代码块退出时，会自动调用 scanner.close 方法，和把 scanner.close 方法放在 finally 代码块中不同的是，若 scanner.close 抛出异常，则会被抑制，抛出的仍然为原始异常。被抑制的异常会由 addSusppressed 方法添加到原来的异常，如果想要获取被抑制的异常列表，可以调用 getSuppressed 方法来获取。
+​		try 代码块退出时，会自动调用 scanner.close 方法，和把 scanner.close 方法放在 finally 代码块中不同的是，若 scanner.close 抛出异常，则会被抑制，抛出的仍然为原始异常。被抑制的异常会由 addSusppressed 方法添加到原来的异常，如果想要获取被抑制的异常列表，可以调用 getSuppressed 方法来获取。
 
 
 
