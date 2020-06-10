@@ -1031,7 +1031,7 @@ netstat [-acCeFghilMnNoprstuvVwx][-A<网络类型>][--ip]
 ​		发送指定的信号到**相应进程**。不指定型号将发送SIGTERM（15）终止指定进程。如果任无法终止该程序可用"-KILL" 参数，其发送的信号为SIGKILL(9) ，将强制结束进程，使用ps命令或者jobs 命令可以查看进程号。root用户将影响用户的进程，非root用户只能影响自己的进程。
 
 
-###### ps进程状态命令
+###### ps当前进程状态命令
 
 ​		ps(process status)，用来查看**当前运行的进程状态**，一次性查看，如果需要动态连续结果使用 top
 
@@ -1046,11 +1046,9 @@ netstat [-acCeFghilMnNoprstuvVwx][-A<网络类型>][--ip]
 -   **停止**(进程收到SIGSTOP, SIGSTP, SIGTIN, SIGTOU信号后停止运行运行)
 
 
-###### top 命令
+###### top 正在执行进程信息命令
 
 ​		显示当前系统正在执行的进程的相关信息，包括进程 ID、内存占用率、CPU 占用率等
-
-
 
 ###### yum 命令
 
@@ -1058,7 +1056,7 @@ netstat [-acCeFghilMnNoprstuvVwx][-A<网络类型>][--ip]
 
 
 
-#### 2.Redis面试题
+#### 2.Redis面试题（6.10）
 
 ##### 1.概述
 
