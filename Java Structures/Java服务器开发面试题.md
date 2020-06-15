@@ -1795,7 +1795,7 @@ Tip:分布式事务在互联网公司里面实在常见，我也不在这里大�
 
 ##### 2.kafka 原理面试题
 
-​		我们通常用流这个词来描述kafka这类系统的数据，很多时候，人们把一个主题的数据看成一个流，不管这个主题有多少个分区。流是生产者流向消费者的数据。
+​		我们通常用流这个词来描述kafka这类系统的数据，很多时候，人们把一个主题的数据看成一个流，不管这个主题有多少个分区。流是**生产者流向消费者的数据**。
 
 ###### 1、消息和批次
 
@@ -1952,7 +1952,7 @@ value.serializer
 
 ###### 13、kafka的复制
 
-​		复制是kafka的核心功能。在kafka的文档里，kafka把自己描述成“一个分布式的、可分区、可复制的提交日志的服务”。复制功能可以保证在个别节点失效时仍能保证kafka的可用性和持久性。kafka使用主题来组织数据，每个主题分为若干个分区，每个分区有多个副本。每个broker可以保存成百上千个不同的主题和分区副本。
+​		复制是kafka的**核心功能**。在kafka的文档里，kafka把自己描述成“一个分布式的、可分区、可复制的提交日志的服务”。复制功能可以保证在个别节点失效时仍能保证kafka的**可用性和持久性**。kafka使用主题来组织数据，每个主题分为若干个分区，每个分区有多个副本。每个broker可以保存成百上千个不同的主题和分区副本。
 
 
 
@@ -2031,7 +2031,7 @@ value.serializer
 
 ###### 2、Kafka消息是采用Pull模式，还是Push模式？
 
-​		Kafka最初考虑的问题是，consumer应该从brokes拉取消息还是brokers将消息推送到consumer，也就是pull还push。在这方面，Kafka遵循了一种大部分消息系统共同的传统的设计：producer将消息推送到broker，consumer从broker拉取消息。
+​		Kafka最初考虑的问题是，consumer应该**从brokes拉取消息还是brokers将消息推送到consumer**，也就是pull还push。在这方面，Kafka遵循了一种大部分消息系统共同的传统的设计：producer将消息推送到broker，consumer从broker拉取消息。
 
 ​		一些消息系统比如Scribe和Apache Flume采用了push模式，将消息推送到下游的consumer。这样做有好处也有坏处：由broker决定消息推送的速率，对于不同消费速率的consumer就不太好处理了。消息系统都致力于让consumer以最大的速率最快速的消费消息，但不幸的是，push模式下，当broker推送的速率远大于consumer消费的速率时，consumer恐怕就要崩溃了。最终Kafka还是选取了传统的pull模式。
 
