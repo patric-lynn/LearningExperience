@@ -244,7 +244,7 @@ Redis提供两种持久化机制 RDB 和 AOF 机制:
 
 ##### **Redis主从同步**
 
-数据可以从主服务器向任意数量的从服务器上同步，从服务器可以是关联其他从服务器的主服务器。这使得Redis可执行单层树复制。存盘可以有意无意的对数据进行写操作。由于完全实现了发布/订阅机制，使得从数据库在任何地方同步树时，可订阅一个频道并接收主服务器完整的消息发布 记录。同步对读取操作的可扩展性和数据冗余很有帮助。
+​		数据可以从主服务器向任意数量的从服务器上同步，从服务器可以是关联其他从服务器的主服务器。这使得Redis可执行单层树复制。存盘可以有意无意的对数据进行写操作。由于完全实现了发布/订阅机制，使得从数据库在任何地方同步树时，可订阅一个频道并接收主服务器完整的消息发布 记录。同步对读取操作的可扩展性和数据冗余很有帮助。
 
 [主从同步具体方式]https://blog.csdn.net/weixin_42711549/article/details/83061052?depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2&utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2
 
@@ -252,7 +252,7 @@ Redis提供两种持久化机制 RDB 和 AOF 机制:
 
 ##### **主从同步工作原理**
 
-Redis的主从结构可以采用一主多从或者级联结构，Redis主从复制可以根据是否是全量分为全量同步和增量同步。
+​		Redis的主从结构可以采用一主多从或者级联结构，Redis主从复制可以根据是否是全量分为全量同步和增量同步。
 
 **全同步是指salve启动时进行的初始化同步。**
 
@@ -260,7 +260,7 @@ Redis的主从结构可以采用一主多从或者级联结构，Redis主从复�
 
 ###### 一、**全同步/全量拷贝**
 
-全同步过程如下：
+​		全同步过程如下：
 
 1）在salve启动时，会向master发送一条SYNC指令。
 2）master收到这条指令后，会启动一个备份进程将所有数据写到rdb文件中去。
@@ -272,26 +272,26 @@ Redis的主从结构可以采用一主多从或者级联结构，Redis主从复�
 
 ###### 二、**部分同步/增量拷贝**
 
-当Redis的master/salve服务启动后，**首先进行全同步**。之后，所有的**写操作都在master上**，而所有的读操作都在salve上。因此**写操作需要及时同步到所有的salve上，这种同步就是部分同步**。
+​		当Redis的master/salve服务启动后，**首先进行全同步**。之后，所有的**写操作都在master上**，而所有的读操作都在salve上。因此**写操作需要及时同步到所有的salve上，这种同步就是部分同步**。
 
-部分同步过程如下：
+​		部分同步过程如下：
 
 1）master收到一个操作，然后判断是否需要同步到salve。
 2）如果需要同步，则**将操作记录到aof文件中**。
 3）遍历所有的salve，将操作的指令和参数**写入到savle的回复缓存中**。
 4）一旦slave对应的socket发送缓存中有空间写入数据，即将数据通过socket发出去。
 
-具体过程为：
+​		具体过程为：
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200405201817911.png" alt="image-20200405201817911" style="zoom:50%;" />
 
 #### 14、Pipeline 有什么好处，为什么要用 pipeline？
 
-答：可以将多次 IO 往返的时间缩减为一次，前提是 pipeline 执行的**指令之间没有因果相关性**。使用 redis-benchmark 进行压测的时候可以发现影响 redis 的 QPS峰值的一个重要因素是 pipeline 批次指令的数目。 
+​		答：可以将多次 IO 往返的时间缩减为一次，前提是 pipeline 执行的**指令之间没有因果相关性**。使用 redis-benchmark 进行压测的时候可以发现影响 redis 的 QPS峰值的一个重要因素是 pipeline 批次指令的数目。 
 
 #### 15、是否使用过 Redis 集群，集群的原理是什么？
 
-参考：[深入剖析Redis - Redis集群模式搭建与原理详解]https://www.jianshu.com/p/84dbb25cc8dc
+​		参考：[深入剖析Redis - Redis集群模式搭建与原理详解]https://www.jianshu.com/p/84dbb25cc8dc
 
 ##### 1.集群简介
 
