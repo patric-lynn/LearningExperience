@@ -249,7 +249,7 @@ Collection接口的子接口包括：**Set接口和List接口**
 
 ###### 怎么确保一个集合不能被修改？
 
-可以使用 Collections. unmodifiableCollection(Collection c) 方法来创建一个只读集合，这样改变集合的任何操作都会抛出 Java. lang. UnsupportedOperationException 异常。
+​		可以使用 Collections. unmodifiableCollection(Collection c) 方法来创建一个只读集合，这样改变集合的任何操作都会抛出 Java. lang.UnsupportedOperationException 异常。
 
 
 
@@ -259,11 +259,11 @@ Collection接口的子接口包括：**Set接口和List接口**
 
 **迭代器 Iterator 是什么？**
 
-Iterator 接口提供遍历任何 Collection 的接口。我们可以从一个 Collection 中使用迭代器方法来获取迭代器实例。迭代器取代了 Java 集合框架中的 Enumeration，迭代器允许调用者在迭代过程中移除元素。
+​		Iterator 接口提供遍历任何 Collection 的接口。我们可以从一个 Collection 中使用迭代器方法来获取迭代器实例。迭代器取代了 Java 集合框架中的 Enumeration，迭代器允许调用者在迭代过程中移除元素。
 
 **Iterator 怎么使用？有什么特点？**
 
-Iterator 使用代码如下：
+​		Iterator 使用代码如下：
 
 ```
 List<String> list = new ArrayList<>();
@@ -274,11 +274,11 @@ while(it. hasNext()){
 }
 ```
 
-Iterator 的特点是只能单向遍历，但是更加安全，因为它可以确保，在当前遍历的集合元素被更改的时候，就会抛出 ConcurrentModificationException 异常。
+​		Iterator 的特点是只能单向遍历，但是更加安全，因为它可以确保，在当前遍历的集合元素被更改的时候，就会抛出 ConcurrentModificationException 异常。
 
 **如何边遍历边移除 Collection 中的元素？**
 
-边遍历边修改 Collection 的唯一正确方式是使用 Iterator.remove() 方法，如下：
+​		边遍历边修改 Collection 的唯一正确方式是使用 Iterator.remove() 方法，如下：
 
 ```
 Iterator<Integer> it = list.iterator();
@@ -289,7 +289,7 @@ while(it.hasNext()){
 ```
 
 
-一种最常见的错误代码如下：
+​		一种最常见的错误代码如下：
 
 ```
 for(Integer i : list){
@@ -309,8 +309,8 @@ for(Integer i : list){
 
 **Java Collections 框架中提供了一个 RandomAccess 接口，用来标记 List 实现是否支持 Random Access。**
 
-如果一个数据集合实现了该接口，就意味着它支持 Random Access，按位置读取元素的平均时间复杂度为 O(1)，如ArrayList。如果没有实现该接口，表示不支持 Random Access，如LinkedList。
-推荐的做法就是，**支持 Random Access 的列表可用 for 循环遍历**，**否则建议用 Iterator 或 foreach 遍历。**
+-   如果一个数据集合实现了该接口，就意味着它支持 Random Access，按位置读取元素的平均时间复杂度为 O(1)，如ArrayList。如果没有实现该接口，表示不支持 Random Access，如LinkedList。
+-   推荐的做法就是，**支持 Random Access 的列表可用 for 循环遍历**，**否则建议用 Iterator 或 foreach 遍历。**
 
 
 
@@ -335,18 +335,17 @@ Arrays.asList(array);
 
 ###### ArrayList 和 Vector (过时)的区别是什么？
 
-这两个类都实现了 **List 接口**（List 接口继承了 Collection 接口），他们都是**有序集合**
+​		这两个类都实现了 **List 接口**（List 接口继承了 Collection 接口），他们都是**有序集合**
 
-线程安全：Vector 使用了 **Synchronized** 来实现线程同步，是线程安全的，而 ArrayList 是非线程安全的。
-性能：ArrayList 在**性能方面要优于 Vector。**
-扩容：ArrayList 和 Vector **都会根据实际的需要动态的调整容量**，只不过在 Vector 扩容每次会增加 1 倍，而 ArrayList 只会增加 50%。
-Vector类的所有方法都是同步的。可以由两个线程安全地访问一个Vector对象、但是一个线程访问Vector的话代码要在同步操作上耗费大量的时间。Arraylist和linkedlist**都不是同步的**，所以在不需要保证线程安全时时建议使用Arraylist。
+-   线程安全：Vector 使用了 **Synchronized** 来实现线程同步，是线程安全的，而 ArrayList 是非线程安全的。
+-   性能：ArrayList 在**性能方面要优于 Vector。**
+-   扩容：ArrayList 和 Vector **都会根据实际的需要动态的调整容量**，只不过在 Vector 扩容每次会增加 1 倍，而 ArrayList 只会增加 50%。Vector类的所有方法都是同步的。可以由两个线程安全地访问一个Vector对象、但是一个线程访问Vector的话代码要在同步操作上耗费大量的时间。Arraylist和linkedlist**都不是同步的**，所以在不需要保证线程安全时时建议使用Arraylist。
 
 
 
 ###### 多线程场景下如何使用 ArrayList？
 
-ArrayList 不是线程安全的，如果遇到多线程场景，可以通过 Collections 的 synchronizedList 方法将其转换成线程安全的容器后再使用。例如像下面这样：
+​		ArrayList 不是线程安全的，如果遇到多线程场景，可以通过 Collections 的 synchronizedList 方法将其转换成线程安全的容器后再使用。例如像下面这样：
 
 ```Java
 List<String> synchronizedList = Collections.synchronizedList(list);
@@ -364,13 +363,14 @@ for (int i = 0; i < synchronizedList.size(); i++) {
 
 ###### List 和 Set 的区别
 
-List , Set 都是继承自Collection 接口
+​		List , Set 都是继承自Collection 接口
 
-List 特点：一个有序（元素存入集合的顺序和取出的顺序一致）容器，元素可以重复，可以插入多个null元素，元素都有索引。常用的实现类有 ArrayList、LinkedList 和 Vector。
+-   List 特点：一个有序（元素存入集合的顺序和取出的顺序一致）容器，元素可以重复，可以插入多个null元素，元素都有索引。常用的实现类有 ArrayList、LinkedList 和 Vector。
 
-Set 特点：一个无序（存入和取出顺序有可能不一致）容器，不可以存储重复元素，只允许存入一个null元素，必须保证元素唯一性。Set 接口常用实现类是 HashSet、LinkedHashSet 以及 TreeSet。
+-   Set 特点：一个无序（存入和取出顺序有可能不一致）容器，不可以存储重复元素，只允许存入一个null元素，必须保证元素唯一性。Set 接口常用实现类是 HashSet、LinkedHashSet 以及 TreeSet。
 
-Set和List对比
+
+​        Set和List对比
 
 -  List 支持for循环，也就是通过下标来遍历，也可以用迭代器，但是set只能用迭代，因为他无序，无法用下标来取得想要的值。
 - Set：检索元素效率低下，删除和插入效率高，插入和删除不会引起元素位置改变。
@@ -380,16 +380,16 @@ Set和List对比
 
 ###### 说一下 HashSet 的实现原理？
 
-HashSet 是**基于 HashMap 实现**的，HashSet的值存放于HashMap的key上，HashMap的value统一为PRESENT，因此 HashSet 的实现比较简单，相关 HashSet 的操作，基本上都是**直接调用底层 HashMap** 的相关方法来完成，**HashSet 不允许重复的值**。
+​		HashSet 是**基于 HashMap 实现**的，HashSet的值存放于HashMap的key上，HashMap的value统一为PRESENT，因此 HashSet 的实现比较简单，相关 HashSet 的操作，基本上都是**直接调用底层 HashMap** 的相关方法来完成，**HashSet 不允许重复的值**。
 
 
 
 ###### HashSet如何检查重复？HashSet是如何保证数据不可重复的？
 
-向HashSet 中add ()元素时，判断元素是否存在的依据，**不仅要比较hash值**，同时还要**结合equles 方法**比较。
-HashSet 中的add ()方法会使用HashMap **的put()方法**。
+-   向HashSet 中add ()元素时，判断元素是否存在的依据，**不仅要比较hash值**，同时还要**结合equles 方法**比较。
+-   HashSet 中的add ()方法会使用HashMap **的put()方法**。
+-   HashMap 的 key 是唯一的，由源码可以看出 HashSet 添加进去的值就是作为HashMap 的key，并且在HashMap中如果K/V相同时，**会用新的V覆盖掉旧的V，然后返回旧的V**。所以不会重复（ **HashMap 比较key是否相等是先比较hashcode 再比较equals** ）。
 
-HashMap 的 key 是唯一的，由源码可以看出 HashSet 添加进去的值就是作为HashMap 的key，并且在HashMap中如果K/V相同时，**会用新的V覆盖掉旧的V，然后返回旧的V**。所以不会重复（ **HashMap 比较key是否相等是先比较hashcode 再比较equals** ）。
 
 ```Java
 private static final Object PRESENT = new Object();
@@ -430,7 +430,7 @@ public boolean add(E e) {
 
 ###### BlockingQueue是什么？
 
-Java.util.concurrent.BlockingQueue是一个队列，在进行检索或移除一个元素的时候，它会等待队列变为非空；当在添加一个元素时，它会等待队列中的可用空间。BlockingQueue接口是Java集合框架的一部分，主要用于实现生产者-消费者模式。我们不需要担心等待生产者有可用的空间，或消费者有可用的对象，因为它都在BlockingQueue的实现类中被处理了。Java提供了集中BlockingQueue的实现，比如ArrayBlockingQueue、LinkedBlockingQueue、PriorityBlockingQueue,、SynchronousQueue等。
+​		Java.util.concurrent.BlockingQueue是一个队列，在进行检索或移除一个元素的时候，它会等待队列变为非空；当在添加一个元素时，它会等待队列中的可用空间。BlockingQueue接口是Java集合框架的一部分，主要用于实现生产者-消费者模式。我们不需要担心等待生产者有可用的空间，或消费者有可用的对象，因为它都在BlockingQueue的实现类中被处理了。Java提供了集中BlockingQueue的实现，比如ArrayBlockingQueue、LinkedBlockingQueue、PriorityBlockingQueue,、SynchronousQueue等。
 
 ###### 在 Queue 中 poll()和 remove()有什么区别？
 
@@ -465,7 +465,7 @@ HashMap 基于 Hash 算法实现的：
 
 **hash()函数**
 
-如果使用hashCode取余，那么相当于参与运算的只有hashCode的低位，高位是没有起到任何作用的，所以我们的思路就是让hashCode取值出的高位也参与运算，进一步降低hash碰撞的概率，使得数据分布更平均，我们把这样的操作称为扰动，在JDK 1.8中的hash()函数如下：
+​		如果使用hashCode取余，那么相当于参与运算的只有hashCode的低位，高位是没有起到任何作用的，所以我们的思路就是让hashCode取值出的高位也参与运算，进一步降低hash碰撞的概率，使得数据分布更平均，我们把这样的操作称为扰动，在JDK 1.8中的hash()函数如下：
 
 ```Java
 static final int hash(Object key) {
@@ -501,8 +501,8 @@ static final int hash(Object key) {
 
 答：重写hashCode()和equals()方法
 
-重写hashCode()是因为需要计算存储数据的存储位置，需要注意不要试图从散列码计算中排除掉一个对象的关键部分来提高性能，这样虽然能更快但可能会导致更多的Hash碰撞；
-重写equals()方法，需要遵守自反性、对称性、传递性、一致性以及对于任何非null的引用值x，x.equals(null)必须返回false的这几个特性，目的是为了保证key在哈希表中的唯一性；
+-   重写hashCode()是因为需要计算存储数据的存储位置，需要注意不要试图从散列码计算中排除掉一个对象的关键部分来提高性能，这样虽然能更快但可能会导致更多的Hash碰撞；
+-   重写equals()方法，需要遵守自反性、对称性、传递性、一致性以及对于任何非null的引用值x，x.equals(null)必须返回false的这几个特性，目的是为了保证key在哈希表中的唯一性；
 
 
 
@@ -528,13 +528,14 @@ static final int hash(Object key) {
 
 **JDK1.7**
 
-首先将数据分为一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据时，其他段的数据也能被其他线程访问。在JDK1.7中，ConcurrentHashMap采用Segment + HashEntry的方式进行实现，结构如下：
+-   首先将数据分为一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据时，其他段的数据也能被其他线程访问。在JDK1.7中，ConcurrentHashMap采用Segment + HashEntry的方式进行实现，结构如下：
 
-一个 ConcurrentHashMap 里包含一个 Segment 数组。Segment 的结构和HashMap类似，是一种数组和链表结构，一个 Segment 包含一个 HashEntry 数组，每个 HashEntry 是一个链表结构的元素，每个 Segment 守护着一个HashEntry数组里的元素，当对 HashEntry 数组的数据进行修改时，必须首先获得对应的 Segment的锁。
+-   一个 ConcurrentHashMap 里包含一个 Segment 数组。Segment 的结构和HashMap类似，是一种数组和链表结构，一个 Segment 包含一个 HashEntry 数组，每个 HashEntry 是一个链表结构的元素，每个 Segment 守护着一个HashEntry数组里的元素，当对 HashEntry 数组的数据进行修改时，必须首先获得对应的 Segment的锁。
+
 
 **JDK1.8**
 
-在**JDK1.8中，放弃了Segment臃肿的设计，取而代之的是采用Node + CAS + Synchronized来保证并发安全进行实现**，synchronized只锁定当前链表或红黑二叉树的首节点，这样只要hash不冲突，就不会产生并发，效率又提升N倍。
+​		在**JDK1.8中，放弃了Segment臃肿的设计，取而代之的是采用Node + CAS + Synchronized来保证并发安全进行实现**，synchronized只锁定当前链表或红黑二叉树的首节点，这样只要hash不冲突，就不会产生并发，效率又提升N倍。
 
 
 
@@ -557,20 +558,20 @@ static final int hash(Object key) {
 
 ###### Collection 和 Collections 有什么区别？
 
-java.util.Collection 是一个**集合接口**（集合类的一个顶级接口）。它提供了对集合对象进行基本操作的**通用接口方法**。Collection接口在Java 类库中有**很多具体的实现**。Collection接口的意义是为各种具体的集合提供了最大化的统一操作方式，其直接**继承接口有List与Set**。
-Collections则是集合类的一个**工具类/帮助类**，其中提供了一系列**静态方法**，用于对集合中元素进行**排序、搜索以及线程安全**等各种操作。
+-   java.util.Collection 是一个**集合接口**（集合类的一个顶级接口）。它提供了对集合对象进行基本操作的**通用接口方法**。Collection接口在Java 类库中有**很多具体的实现**。Collection接口的意义是为各种具体的集合提供了最大化的统一操作方式，其直接**继承接口有List与Set**。
+-   Collections则是集合类的一个**工具类/帮助类**，其中提供了一系列**静态方法**，用于对集合中元素进行**排序、搜索以及线程安全**等各种操作。
 
 
 
 ###### TreeMap 和 TreeSet 在排序时如何比较元素？
 
-TreeSet 要求存放的对象所属的类必须**实现 Comparable 接口**，该接口提供了比较元素的 **compareTo()**方法，当插入元素时会**回调该方法比较元素的大小**。TreeMap 要求存放的键值对映射的键必须实现 Comparable 接口从而根据键对元素进行排序。
+​		TreeSet 要求存放的对象所属的类必须**实现 Comparable 接口**，该接口提供了比较元素的 **compareTo()**方法，当插入元素时会**回调该方法比较元素的大小**。TreeMap 要求存放的键值对映射的键必须实现 Comparable 接口从而根据键对元素进行排序。
 
 
 
 ###### Collections 工具类中的 sort()方法如何比较元素？
 
-Collections 工具类的 sort 方法有两种重载的形式，
+​		Collections 工具类的 sort 方法有两种重载的形式，
 
 - 第一种要求传入的待排序容器中存放的对象比较实现 Comparable 接口以实现元素的比较；
 - 第二种不强制性的要求容器中的元素必须可比较，但是要求传入第二个参数，参数是Comparator 接口的子类型（需要重写 compare 方法实现元素的比较），相当于一个临时定义的排序规则，其实就是通过接口注入比较元素大小的算法，也是对回调模式的应用（Java 中对函数式编程的支持）。
