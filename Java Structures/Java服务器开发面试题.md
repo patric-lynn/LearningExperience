@@ -437,7 +437,7 @@ private String CHECKSQL = “^(.+)\\sand\\s(.+)|(.+)\\sor(.+)\\s$”;
 
 判断是否匹配：
 
-Pattern.matches(CHECKSQL,targerStr);
+Pattern.matches(CHECKSQL,t	argerStr);
 ```
 
 -   **3.字符串过滤**
@@ -460,7 +460,7 @@ String inj_stra[] = split(inj_str,"|");
 
 ##### 6.TCP的拥塞控制机制是什么？请简单说说。
 
-​		TCP通过一个**定时器**（timer）采样了**RTT并计算RTO**，但是，如果网络上的延时突然增加，那么，TCP对这个事做出的应对只有重传数据，然而重传会导致**网络的负担更重**，于是会导致**更大的延迟以及更多的丢包**，这就导致了恶性循环，最终形成“网络风暴” —— TCP的拥塞控制机制就是用于应对这种情况。
+​			TCP通过一个**定时器**（timer）采样了**RTT并计算RTO**，但是，如果网络上的延时突然增加，那么，TCP对这个事做出的应对只有重传数据，然而重传会导致**网络的负担更重**，于是会导致**更大的延迟以及更多的丢包**，这就导致了恶性循环，最终形成“网络风暴” —— TCP的拥塞控制机制就是用于应对这种情况。
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200520014935022.png" alt="image-20200520014935022" style="zoom:50%;" />
 
