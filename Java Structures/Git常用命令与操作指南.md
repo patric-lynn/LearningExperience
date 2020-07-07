@@ -190,7 +190,10 @@ $ git rebase [branch]
 
 #### 八、远程同步
 
+###### **fetch vs pull**
 
+-   git fetch是将远程主机的最新内容拉到本地，用户在检查了以后决定是否合并到工作本机分支中。
+-   而git pull 则是将远程主机的最新内容拉下来后直接合并，即：git pull = git fetch + git merge，这样可能会产生冲突，需要手动解决。
 
 ```ruby
 $ git remote update  --更新远程仓储
@@ -210,4 +213,89 @@ $ git push [remote] [branch]
 $ git push [remote] --force
 # 推送所有分支到远程仓库
 $ git push [remote] --all
+```
+
+#### 九、撤销
+
+```ruby
+# 恢复暂存区的指定文件到工作区
+$ git checkout [file]
+# 恢复某个commit的指定文件到暂存区和工作区
+$ git checkout [commit] [file]
+# 恢复暂存区的所有文件到工作区
+$ git checkout .
+# 重置暂存区的指定文件，与上一次commit保持一致，但工作区不变
+$ git reset [file]
+# 重置暂存区与工作区，与上一次commit保持一致
+$ git reset --hard
+# 重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变
+$ git reset [commit]
+# 重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致
+$ git reset --hard [commit]
+# 重置当前HEAD为指定commit，但保持暂存区和工作区不变
+$ git reset --keep [commit]
+# 新建一个commit，用来撤销指定commit
+# 后者的所有变化都将被前者抵消，并且应用到当前分支
+$ git revert [commit]
+# 暂时将未提交的变化移除，稍后再移入
+$ git stash
+$ git stash pop
+```
+
+#### 十、其他
+
+```ruby
+# 生成一个可供发布的压缩包
+$ git archive
+```
+
+#### 十一、一个流程
+
+上传本地项目到远程仓库
+1、（先进入项目文件夹）通过命令 git init 把这个目录变成git可以管理的仓库
+
+```kotlin
+git init
+```
+
+2、把文件添加到版本库中，使用命令 git add .添加到暂存区里面去，不要忘记后面的小数点“.”，意为添加文件夹下的所有文件
+
+```csharp
+git add .
+```
+
+3、用命令 git commit告诉Git，把文件提交到仓库。引号内为提交说明
+
+```bash
+git commit -m 'first commit'
+```
+
+4、关联到远程库
+
+```csharp
+git remote add origin 你的远程库地址
+```
+
+如：
+
+```csharp
+git remote add origin https://github.com/githubusername/demo.git
+```
+
+5、获取远程库与本地同步合并（如果远程库不为空必须做这一步，否则后面的提交会失败）
+
+```undefined
+git pull --rebase origin master
+```
+
+6、把本地库的内容推送到远程，使用 git push命令，实际上是把当前分支master推送到远程。执行此命令后会要求输入用户名、密码，验证通过后即开始上传。
+
+```undefined
+git push -u origin master
+```
+
+7、状态查询命令
+
+```undefined
+git status
 ```
