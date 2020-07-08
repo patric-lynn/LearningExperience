@@ -131,8 +131,6 @@
 
 
 
-
-
 #### 3.Spring Beans
 
 ##### 1.什么是Spring beans？
@@ -210,7 +208,7 @@ Spring框架支持以下五种bean的作用域：
 
 ##### 9.使用@Autowired注解自动装配的过程是怎样的？
 
-​		使用@Autowired注解来自动装配指定的bean。在使用@Autowired注解之前需要在Spring配置文件进行配置，<context:annotation-config />。
+​		使用@Autowired注解来**自动装配指定的bean**。在使用@Autowired注解之前需要在Spring配置文件进行配置，<context:annotation-config />。
 
 ​		在启动spring IoC时，容器自动装载了一个AutowiredAnnotationBeanPostProcessor后置处理器，当容器扫描到@Autowied、@Resource或@Inject时，就会在IoC容器自动查找需要的bean，并装配给该对象的属性。在使用@Autowired时，首先在容器中查询对应类型的bean：
 
