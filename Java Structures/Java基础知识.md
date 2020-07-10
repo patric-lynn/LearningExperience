@@ -949,9 +949,10 @@ do {
 
 ###### 定义格式
 
-数据类型 变量名 = 初始化值;
-注意：格式是固定的，记住格式，以不变应万变
-举例
+-   数据类型 变量名 = 初始化值;
+-   注意：格式是固定的，记住格式，以不变应万变
+
+​       举例
 
 ```Java
 public class Variable{
@@ -999,7 +1000,7 @@ public class Variable{
 
 ###### 1.定义
 
-数据类型的转换是在所赋值的数值类型和被变量接收的数据类型不一致时发生的，它需要从一种数据类型转换成另一种数据类型。
+​		数据类型的转换是在所赋值的数值类型和被变量接收的数据类型不一致时发生的，它需要从一种数据类型转换成另一种数据类型。
 
 ###### 2.隐式转换
 
@@ -1046,7 +1047,7 @@ public class Variable{
 
 ###### 反射的优点
 
-使用反射机制，代码可以在运行时装配，提高了程序的灵活性和扩展性，**降低耦合性**，提高自适应能力。它允许程序创建和控制任何类的对象，无需硬编码目标类
+​		使用反射机制，代码可以在运行时装配，提高了程序的灵活性和扩展性，**降低耦合性**，提高自适应能力。它允许程序创建和控制任何类的对象，无需硬编码目标类
 
 ###### 反射的缺点
 
@@ -1058,7 +1059,7 @@ public class Variable{
 
 ##### 反射机制的相关类
 
-与Java反射相关的类如下：
+​		与Java反射相关的类如下：
 
 **类名					  用途**
 Class类				 代表类的实体，在运行的Java应用程序中表示类和接口
@@ -1159,7 +1160,7 @@ Class代表**类的实体**，在运行的Java应用程序中表示**类和接�
 
 ##### 什么是注解
 
-​		注解也叫**元数据**，即一种描述数据的数据。例如我们常见的**@Override**和@Deprecated，注解是JDK1.5版本开始引入的一个特性，用于对代码进行说明，可以对包、类、接口、字段、方法参数、局部变量等进行注解。Annotation接口中有下面这句话来描述注解：**Annotation 是所有注解继承的公共接口**
+​		注解也叫**元数据**，即一种描述数据的数据。例如我们常见的**@Override**和**@Deprecated**，注解是JDK1.5版本开始引入的一个特性，用于对代码进行说明，可以对包、类、接口、字段、方法参数、局部变量等进行注解。Annotation接口中有下面这句话来描述注解：**Annotation 是所有注解继承的公共接口**
 
 ​		The common interface extended by all annotation types.注解的本质就是一个继承了 Annotation 接口的接口。有关这一点，你可以去反编译任意一个注解类得到结果。**一个注解准确意义上来说，只不过是一种特殊的注释而已，如果没有解析它的代码，它可能连注释都不如。**而解析一个类或者方法的注解往往有两种形式，一种是**编译期直接的扫描**，一种是**运行期反射**。反射的事情我们先不讨论，而编译器的扫描指的是编译器在对 Java 代码编译成字节码的过程中会检测到某个类或者方法被一些注解修饰，这时它就会对于这些注解进行某些处理。
 
@@ -1186,33 +1187,33 @@ public String toString() {
 
 - 自定义注解，可以根据自己的需求定义注解
 
-- 元注解，元注解是用于**定义注解的注解**，包括@Retention（标明注解被保留的阶段）、@Target（标明注解使用的范围）、@Inherited（标明注解可继承）、@Documented（标明是否生成javadoc文档）
+- 元注解，元注解是用于**定义注解的注解**，包括**@Retention**（标明注解被保留的阶段）、**@Target**（标明注解使用的范围）、**@Inherited**（标明注解可继承）、**@Documented**（标明是否生成javadoc文档）、**@Repeatable**.
 
     **元注解具体介绍**
 
-    要想真正掌握怎么使用注解，还需要先学习一下元注解。
+    ​		要想真正掌握怎么使用注解，还需要先学习一下元注解。
 
-    元注解是用于修饰注解的注解
+    ​		元注解是用于修饰注解的注解
 
-    元注解有 @Retention、@Documented、@Target、@Inherited、@Repeatable 5 种。
+    ​		元注解有 @Retention、@Documented、@Target、@Inherited、@Repeatable 5 种。
 
-    ###### @Retention
+    ###### 1.@Retention
 
-    Retention 的英文意为保留期的意思。当 @Retention 应用到一个注解上的时候，它解释说明了这个注解的的存活时间。它的取值如下：
+    Retention 的英文意为**保留期**的意思。当 @Retention 应用到一个注解上的时候，它解释说明了这个注解的的存活时间。它的取值如下：
 
-    - RetentionPolicy.SOURCE 注解只在源码阶段保留，在编译器进行编译时它将被丢弃忽视。
-    - RetentionPolicy.CLASS 注解只被保留到编译进行的时候，它并不会被加载到 JVM 中。如Java内置注解，@Override、@Deprecated、@SuppressWarnning等
-    - RetentionPolicy.RUNTIME 注解可以保留到程序运行的时候，它会被加载进入到 JVM 中，所以在程序运行时可以获取到它们。如SpringMvc中的@Controller、@Autowired、@RequestMapping等。
+    - RetentionPolicy.SOURCE 注解**只在源码阶段保留**，在编译器进行编译时它将被丢弃忽视。
+    - RetentionPolicy.CLASS 注解只被**保留到编译进行的时候**，它并不会被加载到 JVM 中。如Java内置注解，@Override、@Deprecated、@SuppressWarnning等
+    - RetentionPolicy.RUNTIME 注解可以**保留到程序运行的时候**，它会被加载进入到 JVM 中，所以在程序运行时可以获取到它们。如SpringMvc中的@Controller、@Autowired、@RequestMapping等。
 
-    ###### @Documented
+    ###### 2.@Documented
 
-    顾名思义，这个元注解肯定是和文档有关。它的作用是能够将注解中的元素包含到 Javadoc 中去。
+    ​		顾名思义，这个元注解肯定是和文档有关。它的作用是能够将注解中的元素包含到 Javadoc 中去。
 
-    ###### @Target
+    ###### 3.@Target
 
-    Target 是目标的意思，@Target 指定了注解运用的地方。
+    ​		Target 是目标的意思，@Target 指定了注解运用的地方。
 
-    你可以这样理解，当一个注解被 @Target 注解时，这个注解就被限定了运用的场景。类比到标签，原本标签是你想张贴到哪个地方就到哪个地方，但是因为 @Target 的存在，它张贴的地方就非常具体了，比如只能张贴到方法上、类上、方法参数上等等。@Target 有下面的取值
+    ​		你可以这样理解，当一个注解被 @Target 注解时，这个注解就被限定了运用的场景。类比到标签，原本标签是你想张贴到哪个地方就到哪个地方，但是因为 @Target 的存在，它张贴的地方就非常具体了，比如只能张贴到方法上、类上、方法参数上等等。@Target 有下面的取值
 
     - ElementType.ANNOTATION_TYPE 可以给一个注解进行注解
     - ElementType.CONSTRUCTOR 可以给构造方法进行注解
@@ -1223,15 +1224,15 @@ public String toString() {
     - ElementType.PARAMETER 可以给一个方法内的参数进行注解
     - ElementType.TYPE 可以给一个类型进行注解，比如类、接口、枚举
 
-    ###### @Inherited
+    ###### 4.@Inherited
 
-    Inherited 是继承的意思，但是它并不是说注解本身可以继承，而是说如果一个超类使用了@Inherited 注解，那么如果它的子类没有被任何注解应用的话，那么这个子类就继承了超类的注解。
+    ​		Inherited 是继承的意思，但是它并不是说注解本身可以继承，而是说如果一个超类使用了@Inherited 注解，那么如果它的子类没有被任何注解应用的话，那么这个子类就继承了超类的注解。
 
     ###### @Repeatable
 
-    Repeatable 自然是可重复的意思。@Repeatable 是 Java 1.8 才加进来的，所以算是一个新的特性。
+    ​		Repeatable 自然是可重复的意思。@Repeatable 是 Java 1.8 才加进来的，所以算是一个新的特性。
 
-    Repeatable使用场景：在需要对同一种注解多次使用时，往往需要借助@Repeatable。
+    ​		Repeatable使用场景：在需要对同一种注解多次使用时，往往需要借助@Repeatable。
 
 ##### 注解的属性
 
@@ -1279,11 +1280,11 @@ public class QuicklyWay {
 
 ##### 注解不支持继承
 
-注解是不支持继承的，因此不能使用关键字extends来继承某个@interface，但注解在编译后，编译器会自动继承java.lang.annotation.Annotation接口
+​		注解是不支持继承的，因此不能使用关键字extends来继承某个@interface，但注解在编译后，编译器会自动继承java.lang.annotation.Annotation接口
 
 ##### 声明注解
 
-这里总共定义了4个注解来演示注解的声明
+​		这里总共定义了4个注解来演示注解的声明
 
 1. 定义一个可以注解在Class，interface，enum上的注解
 2. 定义一个可以注解在METHOD上的注解
@@ -1292,7 +1293,7 @@ public class QuicklyWay {
 
 ##### Java预置的注解
 
-学习了上面相关的知识，我们已经可以自己定义一个注解了。其实 Java 语言本身已经提供了几个现成的注解。
+​		学习了上面相关的知识，我们已经可以自己定义一个注解了。其实 Java 语言本身已经提供了几个现成的注解。
 
 @Deprecated
 
