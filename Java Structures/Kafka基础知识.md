@@ -969,9 +969,9 @@ cd /usr/local/zookeeper/zookeeper-3.4.10/bin./zkServer.sh start
 - 搭建好的 Zookeeper 集群
 - Kafka 压缩包 （https://www.apache.org/dyn/closer.cgi?path=/kafka/2.3.0/kafka_2.12-2.3.0.tgz）
 
-在 `/usr/local` 下新建 `kafka` 文件夹，然后把下载完成的 tar.gz 包移到 /usr/local/kafka 目录下，使用 `tar -zxvf 压缩包` 进行解压，解压完成后，进入到 kafka_2.12-2.3.0 目录下，新建 log 文件夹，进入到 config 目录下。我们可以看到有很多 **properties 配置文件**，这里主要关注 `server.properties` 这个文件即可。
+​       在 `/usr/local` 下新建 `kafka` 文件夹，然后把下载完成的 tar.gz 包移到 /usr/local/kafka 目录下，使用 `tar -zxvf 压缩包` 进行解压，解压完成后，进入到 kafka_2.12-2.3.0 目录下，新建 log 文件夹，进入到 config 目录下。我们可以看到有很多 **properties 配置文件**，这里主要关注 `server.properties` 这个文件即可。
 
-kafka 启动方式有两种，一种是**使用 kafka 自带的 zookeeper 配置文件来启动**（可以按照官网来进行启动，并使用单个服务多个节点来模拟集群http://kafka.apache.org/quickstart#quickstart_multibroker），一种是**通过使用独立的zk集群来启动，这里推荐使用第二种方式**，使用 zk 集群来启动
+​		kafka 启动方式有两种，一种是**使用 kafka 自带的 zookeeper 配置文件来启动**（可以按照官网来进行启动，并使用单个服务多个节点来模拟集群http://kafka.apache.org/quickstart#quickstart_multibroker），一种是**通过使用独立的zk集群来启动，这里推荐使用第二种方式**，使用 zk 集群来启动
 
 ###### 2.修改配置项
 
@@ -1148,7 +1148,7 @@ bin/kafka-console-consumer.sh --bootstrap-server 192.168.1.7:9092 --topic cxuant
 
 ###### 2.主题默认配置
 
-Kafka 为新创建的主题提供了很多默认配置参数，下面就来一起认识一下这些参数：
+​		Kafka 为新创建的主题提供了很多默认配置参数，下面就来一起认识一下这些参数：
 
 - **num.partitions**
     num.partitions 参数指定了**新创建的主题需要包含多少个分区**。如果启用了主题自动创建功能（该功能是默认启用的），主题分区的个数就是该参数指定的值。该参数的默认值是 1。要注意，我们可以增加主题分区的个数，但不能减少分区的个数。
@@ -1171,9 +1171,11 @@ Kafka 为新创建的主题提供了很多默认配置参数，下面就来一�
 
 ###### 3.JVM 参数配置
 
-JDK 版本一般推荐直接使用 JDK1.8，这个版本也是现在中国大部分程序员的**首选版本**。
+​		JDK 版本一般推荐直接使用 JDK1.8，这个版本也是现在中国大部分程序员的**首选版本**。
 
-​		说到 JVM 端设置，就绕不开堆这个话题，业界最推崇的一种设置方式就是**直接将 JVM 堆大小设置为 6GB**，这样会避免很多 Bug 出现。JVM 端配置的另一个重要参数就是**垃圾回收器的设置**，也就是平时常说的 **GC 设置**。
+​		说到 JVM 端设置，就绕不开堆这个话题，业界最推崇的一种设置方式就是**直接将 JVM 堆大小设置为 6GB**，这样会避免很多 Bug 出现。
+
+​		JVM 端配置的另一个重要参数就是**垃圾回收器的设置**，也就是平时常说的 **GC 设置**。
 
 **如果你依然在使用 Java 7**，那么可以根据以下法则选择合适的垃圾回收器：
 
