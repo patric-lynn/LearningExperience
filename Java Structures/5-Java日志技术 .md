@@ -48,7 +48,7 @@
 
 ##### 日志门面SLF4J
 
-​		上述介绍的是一些日志框架的实现（Log4j、Logback、log4j2），这里我们需要用日志门面来解决系统与日志实现框架的耦合性。SLF4J，即**简单日志门面**（Simple Logging Facade for Java），它不是一个真正的日志实现，而是一个抽象层（ abstraction layer），它允许你在后台使用任意一个日志实现。
+​		上述介绍的是一些日志框架的实现（Log4j、Logback、log4j2），这里我们需要用日志门面来解决系统与日志实现框架的耦合性。SLF4J，即**简单日志门面**（Simple Logging Facade for Java），它不是一个真正的日志实现，而是一个**抽象层**（ abstraction layer），它允许你在后台使用任意一个日志实现。
 
 ![image-20200309202818708](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200309202818708.png)
 
@@ -72,7 +72,7 @@
 
 ###### 性能提升
 
-​		Log4j 2包含基于LMAX Disruptor库的下一代异步记录器。在多线程场景中，异步记录器的吞吐量比Log4j 1.x和Logback高18倍，延迟低。
+​		Log4j 2包含基于LMAX Disruptor库的下一代**异步记录器**。在多线程场景中，异步记录器的吞吐量比Log4j 1.x和Logback高18倍，延迟低。
 
 ###### 自动重新加载配置
 
