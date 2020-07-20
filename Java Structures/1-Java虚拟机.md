@@ -358,7 +358,7 @@
 
 ###### 3.再谈引用
 
-​		无论是通过引用计数器还是通过可达性分析来判断对象是否可以被回收都设计到「引用」的概念。在 Java 中，根据引用关系的强弱不一样，将引用类型划为强引用（Strong Reference）、软引用（Soft Reference）、弱引用（Weak Reference）和虚引用（Phantom Reference）。
+​		无论是通过引用计数器还是通过可达性分析来判断对象是否可以被回收都设计到「引用」的概念。在 Java 中，根据引用关系的强弱不一样，将引用类型划为**强引用（Strong Reference）、软引用（Soft Reference）、弱引用（Weak Reference）和虚引用（Phantom Reference）**。
 
 **强引用**：Object obj = new Object()这种方式就是强引用，只要这种强引用存在，垃圾收集器就永远不会回收被引用的对象。
 
