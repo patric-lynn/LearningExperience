@@ -8,7 +8,7 @@
 
 4、Redis 相比 Memcached 有哪些优势？
 
-5、Memcache 与 Redis 的区别都有哪些？
+5、Memcac**he 与 Redis 的区别都有哪些？**
 
 6、Redis 是单进程单线程的？
 
