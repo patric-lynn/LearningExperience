@@ -812,9 +812,10 @@ Thread-8 terminated.
 
 **sleep**
 
-​		public static native void sleep(long millis)方法显然是Thread的静态方法，很显然它是让当前线程按照指定的时间休眠，其休眠时间的精度取决于处理器的计时器和调度器。需要注意的是如果当前线程获得了锁，sleep方法并不会失去锁。sleep方法经常拿来与Object.wait()方法进行比价，这也是面试经常被问的地方。
+​		public static native void sleep(long millis)方法显然是Thread的**静态方法**，很显然它是让当前线程按照指定的时间休眠，其休眠时间的精度取决于处理器的计时器和调度器。需要注意的是如果当前线程获得了锁，sleep方法并不会失去锁。sleep方法经常拿来与Object.wait()方法进行比价，这也是面试经常被问的地方。
 
 ​	**sleep() VS wait()**
+
 ​	两者主要的区别：
 
 - sleep()方法是Thread的静态方法，而wait是Object实例方法
@@ -1196,7 +1197,8 @@ public void execute(Runnable command) {
 ​		**PriorityBlockingQueue**：支持**优先级的无界阻塞队列**，使用较少
 
 ​		**LinkedBlockingQueue**：一个用**链表实现的有界阻塞队列**，队列默认和最长长度为**Integer.MAX_VALUE**。
-队列按照先入先出的原则对元素进行排序，**使用较多**
+
+​		队列按照先入先出的原则对元素进行排序，**使用较多**
 
 - 吞吐量通常要**高于** ArrayBlockingQueue
 - Executors.**newFixedThreadPool()** 使用了这个队列
@@ -1248,8 +1250,10 @@ DiscardPolicy：舍弃策略，不处理，直接丢弃
 **最佳线程数目 = （线程等待时间与线程CPU时间之比 + 1）* CPU数目**
 
 **可以得出一个结论**：
-线程等待时间所占比例越高，需要越多线程。线程CPU时间所占比例越高，需要越少线程。
-以上公式与之前的CPU和IO密集型任务设置线程数基本吻合。
+
+​		线程等待时间所占比例越高，需要越多线程。线程CPU时间所占比例越高，需要越少线程。
+
+​		以上公式与之前的CPU和IO密集型任务设置线程数基本吻合。
 
 
 
@@ -1268,7 +1272,7 @@ DiscardPolicy：舍弃策略，不处理，直接丢弃
 
 ​		要配置一个线程池是比较复杂的，尤其是对于线程池的原理不是很清楚的情况下，很有可能配置的线程池不是较优的，因此在Executors类里面提供了一些静态工厂，生成一些常用的线程池。
 
-Java通过**Executors工厂类提供四种线程池**，分别为：
+​		Java通过**Executors工厂类提供四种线程池**，分别为：
 
 1. **newCachedThreadPool** ：创建一个**可缓存线程池**，如果线程池长度超过处理需要，**可灵活回收空闲线程**，若无可回收，否则新建线程。（线程最大并发数**不可控制**）
 2. **newFixedThreadPool**：创建一个**固定大小的线程池**，可控制线程**最大并发数**，超出的线程会在队列中等待。
