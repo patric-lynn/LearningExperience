@@ -454,7 +454,7 @@ double area = pi * r * r; //C
 
 
 
-#### 3.Java线程与线程池 7.29
+#### 3.Java线程与线程池
 
 ##### 1.进程和线程的区别
 
@@ -570,7 +570,7 @@ double area = pi * r * r; //C
 
 - 定义Runnable接口实现**类MyRunnable**，并**重写run()方法**
 - 创建MyRunnable实例myRunnable，以myRunnable作为target创建Thread对象，**该Thread对象才是真正的线程对象**
-- 调用线程对象的start()方法
+- 调用线程对象的**start()方法**
 
 ```Java
 public class MyRunnable implements Runnable {
@@ -599,9 +599,9 @@ Thread-0 run()方法执行中...
 
 **3.使用Callable和Future创建线程**
 
-- 创建实现Callable接口的类myCallable
+- 创建**实现Callable接口的类**myCallable
 - **以myCallable为参数创建FutureTask对象**
-- 将FutureTask作为参数创建Thread对象
+- **将FutureTask作为参数**创建Thread对象
 - 调用线程对象的start()方法
 
 ```Java
@@ -755,7 +755,7 @@ java.lang.InterruptedException: sleep interrupted
 ​		join方法可以看做是线程间**协作**的一种方式，很多时候，一个线程的输入可能**非常依赖于另一个线程的输出**，这就像两个好基友，一个基友先走在前面突然看见另一个基友落在后面了，这个时候他就会在原处等一等这个基友，等基友赶上来后，就两人携手并进。其实线程间的这种**协作方式**也符合现实生活。在软件开发的过程中，从客户那里获取需求后，需要经过需求分析师进行需求分解后，这个时候产品，开发才会继续跟进。如果一个线程实例A执行了**threadB.join()**，其含义是：当前**线程A会等待threadB线程终止后threadA才会继续执行**。关于join方法一共提供如下这些方法:
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310180135709.png" alt="image-20200310180135709" style="zoom:50%;" />
 
-​		Thread类除了提供join()方法外，另外还提供了超时等待的方法，如果线程threadB在等待的时间内还没有结束的话，threadA会在超时之后继续执行。join方法源码关键是： 
+​		Thread类除了提供join()方法外，另外还提供了**超时等待**的方法，如果线程threadB在等待的时间内还没有结束的话，threadA会在超时之后继续执行。join方法源码关键是： 
 
 ```
 while (isAlive()) {
@@ -763,7 +763,7 @@ while (isAlive()) {
  }
 ```
 
-​		可以看出来当前等待对象threadA会一直阻塞，直到被等待对象threadB结束后即isAlive()返回false的时候才会结束while循环，当threadB退出时会调用notifyAll()方法通知所有的等待线程。下面用一个具体的例子来说说join方法的使用：
+​		可以看出来当前等待对象threadA会一直阻塞，直到被等待对象threadB结束后即isAlive()返回false的时候才会结束while循环，当threadB退出时会**调用notifyAll()方法通知所有的等待线程**。下面用一个具体的例子来说说join方法的使用：
 
 ```Java
 public class JoinDemo {
@@ -842,7 +842,7 @@ Thread-8 terminated.
 
 ​		另外，线程优先级具有继承特性比如 **A 线程启动 B 线程，则 B 线程的优先级和 A 是一样的**。线程优先级还具有**随机性**也就是说线程优先级高的不一定每一次都先执行完。
 
-​		Thread 类中包含的成员变量代表了线程的某些优先级。如Thread.MIN_PRIORITY（常数 1），Thread.NORM_PRIORITY（常数 5）,Thread.MAX_PRIORITY（常数 10）。其中每个线程的优先级都在1到10 之间，1的优先级为最低，10的优先级为最高，在默认情况下优先级都是Thread.NORM_PRIORITY（常数 5）。
+​		Thread 类中包含的**成员变量**代表了线程的某些优先级。如Thread.MIN_PRIORITY（常数 1），Thread.NORM_PRIORITY（常数 5）,Thread.MAX_PRIORITY（常数 10）。其中每个线程的优先级都在1到10 之间，1的优先级为最低，10的优先级为最高，在默认情况下优先级都是Thread.NORM_PRIORITY（常数 5）。
 
 ​		一般情况下，不会对线程设定优先级别，**更不会让某些业务严重地依赖线程的优先级别**，比如权重，借助优先级设定某个任务的权重，这种方式是不可取的，一般定义线程的时候使用默认的优先级就好了。设定优先级：
 
