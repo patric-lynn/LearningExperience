@@ -303,16 +303,16 @@ Found 1 deadlock.
 
 ​		上面提到了可以用 **volatile 和 synchronized 来保证有序性**。除此之外，JVM 还规定了**先行发生原则**，让一个操作无需控制就能先于另一个操作完成。
 
-1. 单一线程原则：在一个线程内，在程序前面的操作**先行发生**于后面的操作。
+1. **单一线程原则**：在一个线程内，在程序前面的操作**先行发生**于后面的操作。
 
-2. 管程锁定规则：一个 unlock 操作**先行发生于**后面对同一个锁的 lock 操作。
-3. volatile 变量规则：对一个 volatile 变量的**写操作先行发生于**后面对这个变量的读操作。
-4. 线程启动规则：Thread 对象的 start() 方法调用**先行发生于此线程的每一个动作**。
+2. **管程锁定规则**：一个 unlock 操作**先行发生于**后面对同一个锁的 lock 操作。
+3. **volatile 变量规则**：对一个 volatile 变量的**写操作先行发生于**后面对这个变量的读操作。
+4. **线程启动规则**：Thread 对象的 start() 方法调用**先行发生于此线程的每一个动作**。
 
-5. 线程加入规则：Thread 对象的结束先行发生于 join() 方法返回。
-6. 线程中断规则：对线程 interrupt() 方法的调用**先行发生于被中断线程的代码检测到中断事件的发生**，可以通过 interrupted() 方法检测到是否有中断发生。
-7. 对象终结规则：一个对象的初始化完成（构造函数执行结束）先行发生于它的 finalize() 方法的开始。
-8. 传递性： 如果操作 A 先行发生于操作 B，操作 B 先行发生于操作 C，那么操作 A 先行发生于操作 C。
+5. **线程加入规则**：Thread 对象的结束先行发生于 join() 方法返回。
+6. **线程中断规则**：对线程 interrupt() 方法的调用**先行发生于被中断线程的代码检测到中断事件的发生**，可以通过 interrupted() 方法检测到是否有中断发生。
+7. **对象终结规则**：一个对象的初始化完成（构造函数执行结束）先行发生于它的 finalize() 方法的开始。
+8. **传递性**： 如果操作 A 先行发生于操作 B，操作 B 先行发生于操作 C，那么操作 A 先行发生于操作 C。
 
 
 
@@ -644,7 +644,7 @@ main main()方法执行完成
 
 ​		Executors提供了**一系列工厂方法用于创先线程池**，返回的线程池都实现了ExecutorService接口。
 
-​		主要有newFixedThreadPool，newCachedThreadPool，newSingleThreadExecutor，newScheduledThreadPool，后续详细介绍这四种线程池
+​		主要有**newFixedThreadPool，newCachedThreadPool，newSingleThreadExecutor，newScheduledThreadPool**，后续详细介绍这四种线程池
 
 ```Java
 public class MyRunnable implements Runnable {
