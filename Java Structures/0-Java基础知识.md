@@ -1608,7 +1608,7 @@ public final class T extends Enum<T> {
 
 ##### 糖块六 、内部类
 
-内部类又称为嵌套类，可以把内部类理解为外部类的一个普通成员。内部类之所以也是语法糖，是因为它仅仅是一个编译时的概念。outer.java里面定义了一个内部类inner，一旦编译成功，就会生成两个完全不同的.class文件了，分别是outer.class和outer$inner.class。所以内部类的名字完全可以和它的外部类名字相同。
+​		内部类又称为嵌套类，可以把内部类理解为外部类的一个普通成员。内部类之所以也是语法糖，是因为它仅仅是一个编译时的概念。outer.java里面定义了一个内部类inner，一旦编译成功，就会生成两个完全不同的.class文件了，分别是outer.class和outer$inner.class。所以内部类的名字完全可以和它的外部类名字相同。
 
 ```java
 public class OutterClass {
@@ -1642,9 +1642,9 @@ public class OutterClass {
 }
 ```
 
-以上代码编译后会生成两个class文件：OutterClass$InnerClass.class 、OutterClass.class 。
+​		以上代码编译后会生成两个class文件：OutterClass$InnerClass.class 、OutterClass.class 。
 
-当我们尝试使用jad对OutterClass.class文件进行反编译的时候，命令行会打印以下内容：
+​		当我们尝试使用jad对OutterClass.class文件进行反编译的时候，命令行会打印以下内容：
 
 ```java
 Parsing OutterClass.class...
@@ -1652,7 +1652,7 @@ Parsing inner class OutterClass$InnerClass.class...
 Generating OutterClass.jad
 ```
 
-它会把两个文件全部进行反编译，然后一起生成一个OutterClass.jad文件。文件内容如下：
+​		它会把两个文件全部进行反编译，然后一起生成一个OutterClass.jad文件。文件内容如下：		
 
 ```java
 public class OutterClass {
@@ -1696,7 +1696,7 @@ public class OutterClass {
 
 ##### 糖块七 、条件编译
 
-—般情况下，程序中的每一行代码都要参加编译。但有时候出于**对程序代码优化的考虑**，希望只对其中一部分内容进行编译，此时就需要在程序中**加上条件**，让编译器只对满足条件的代码进行编译，将不满足条件的代码舍弃，这就是条件编译。如在C或C++中，可以**通过预处理语句来实现条件编译**。其实在Java中也可实现条件编译。我们先来看一段代码：
+​		—般情况下，程序中的每一行代码都要参加编译。但有时候出于**对程序代码优化的考虑**，希望只对其中一部分内容进行编译，此时就需要在程序中**加上条件**，让编译器只对满足条件的代码进行编译，将不满足条件的代码舍弃，这就是条件编译。如在C或C++中，可以**通过预处理语句来实现条件编译**。其实在Java中也可实现条件编译。我们先来看一段代码：
 
 ```java
 public class ConditionalCompilation {
@@ -1715,7 +1715,7 @@ public class ConditionalCompilation {
 }
 ```
 
-反编译后代码如下：
+​		反编译后代码如下：
 
 ```java
 public class ConditionalCompilation {
@@ -1728,19 +1728,19 @@ public class ConditionalCompilation {
 }
 ```
 
-首先，我们发现，在反编译后的代码中没有System.out.println(“Hello, ONLINE!”);，这其实就是条件编译。当if(ONLINE)为false的时候，编译器就没有对其内的代码进行编译。
+​		首先，我们发现，在反编译后的代码中没有System.out.println(“Hello, ONLINE!”);，这其实就是条件编译。当if(ONLINE)为false的时候，编译器就没有对其内的代码进行编译。
 
-所以，Java语法的条件编译，**是通过判断条件为常量的if语句实现的**。根据if判断条件的真假，**编译器直接把分支为false的代码块消除**。通过该方式实现的条件编译，**必须在方法体内实现**，而无法在整个Java类的结构或者类的属性上进行条件编译。这与C/C++的条件编译相比，确实更有局限性。在Java语言设计之初并没有引入条件编译的功能，虽有局限，但是总比没有更强。
+​		所以，Java语法的条件编译，**是通过判断条件为常量的if语句实现的**。根据if判断条件的真假，**编译器直接把分支为false的代码块消除**。通过该方式实现的条件编译，**必须在方法体内实现**，而无法在整个Java类的结构或者类的属性上进行条件编译。这与C/C++的条件编译相比，确实更有局限性。在Java语言设计之初并没有引入条件编译的功能，虽有局限，但是总比没有更强。
 
 
 
 ##### 糖块八 、断言
 
-在Java中，assert关键字是从JAVA SE 1.4 引入的，为了避免和老版本的Java代码中使用了assert关键字导致错误，Java在执行的时候默认是不启动断言检查的（这个时候，所有的断言语句都将忽略）。
+​		在Java中，assert关键字是从JAVA SE 1.4 引入的，为了避免和老版本的Java代码中使用了assert关键字导致错误，Java在执行的时候默认是不启动断言检查的（这个时候，所有的断言语句都将忽略）。
 
-如果要开启断言检查，则需要用开关-enableassertions或-ea来开启。
+​		如果要开启断言检查，则需要用开关-enableassertions或-ea来开启。
 
-看一段包含断言的代码：
+​		看一段包含断言的代码：
 
 ```java
 public class AssertTest {
@@ -1755,7 +1755,7 @@ public class AssertTest {
 }
 ```
 
-反编译后代码如下：
+​		反编译后代码如下：
 
 ```java
 public class AssertTest {
@@ -1779,15 +1779,15 @@ public class AssertTest {
 }
 ```
 
-很明显，反编译之后的代码要比我们自己的代码复杂的多。所以，使用了assert这个语法糖我们节省了很多代码。
+​		很明显，反编译之后的代码要比我们自己的代码复杂的多。所以，使用了assert这个语法糖我们节省了很多代码。
 
-其实断言的底层实现就是**if语言**，如果断言结果为true，则什么都不做，程序继续执行，如果断言结果为false，则程序抛出AssertError来打断程序的执行。-enableassertions会设置$assertionsDisabled字段的值。
+​		其实断言的底层实现就是**if语言**，如果断言结果为true，则什么都不做，程序继续执行，如果断言结果为false，则程序抛出AssertError来打断程序的执行。-enableassertions会设置$assertionsDisabled字段的值。
 
 
 
 ##### 糖块九 、数值字面量
 
-在java 7中，数值字面量，不管是整数还是浮点数，都允许在数字之间插入任意多个下划线。这些下划线不会对字面量的数值产生影响，目的就是方便阅读。
+​		在java 7中，数值字面量，不管是整数还是浮点数，都允许在数字之间插入任意多个下划线。这些下划线不会对字面量的数值产生影响，目的就是方便阅读。
 
 ```java
 public class Test {
@@ -1798,7 +1798,7 @@ public class Test {
 }
 ```
 
-反编译后：
+​		反编译后：
 
 ```java
 public class Test {
@@ -1809,7 +1809,7 @@ public class Test {
 }
 ```
 
-反编译后就是把删除了`_`。也就是说编译器并不认识在数字字面量中的`_`，需要在编译阶段把他去掉。
+​		反编译后就是把删除了`_`。也就是说编译器并不认识在数字字面量中的`_`，需要在编译阶段把他去掉。
 
 
 
@@ -1831,7 +1831,7 @@ public static void main(String args[]) {
 }
 ```
 
-反编译后代码如下：
+​		反编译后代码如下：
 
 ```java
 public static void main(String args[]) {
@@ -1852,15 +1852,15 @@ public static void main(String args[]) {
 }
 ```
 
-代码很简单，for-each的实现原理其实就是使用了普通的for循环和迭代器。
+​		代码很简单，for-each的实现原理其实就是使用了普通的for循环和迭代器。
 
 
 
 ##### 糖块十一 、try-with-resource语句
 
-Java里，对于文件操作IO流、数据库连接等开销非常昂贵的资源，用完之后必须及时通过close方法将其关闭，否则资源会一直处于打开状态，可能会导致内存泄露等问题。
+​		Java里，对于文件操作IO流、数据库连接等开销非常昂贵的资源，用完之后必须及时通过close方法将其关闭，否则资源会一直处于打开状态，可能会导致内存泄露等问题。
 
-关闭资源的常用方式就是在finally块里释放，即调用close方法。比如，我们经常会写这样的代码：
+​		关闭资源的常用方式就是在finally块里释放，即调用close方法。比如，我们经常会写这样的代码：
 
 ```java
 public static void main(String args[]) {
@@ -1885,7 +1885,7 @@ public static void main(String args[]) {
 }
 ```
 
-从Java 7开始，jdk提供了一种更好的方式关闭资源，使用try-with-resources语句，改写一下上面的代码，效果如下：
+​		从Java 7开始，jdk提供了一种更好的方式关闭资源，使用try-with-resources语句，改写一下上面的代码，效果如下：
 
 ```java
 public static void main(String args[]) {
@@ -1900,9 +1900,9 @@ public static void main(String args[]) {
 }
 ```
 
-看，这简直是一大福音啊，虽然我之前一般使用IOUtils去关闭流，并不会使用在finally中写很多代码的方式，但是这种新的语法糖看上去好像优雅很多呢。
+​		看，这简直是一大福音啊，虽然我之前一般使用IOUtils去关闭流，并不会使用在finally中写很多代码的方式，但是这种新的语法糖看上去好像优雅很多呢。
 
-反编译以上代码，看下他的背后原理：
+​		反编译以上代码，看下他的背后原理：
 
 ```java
 public static void main(String[] args) {
@@ -1936,9 +1936,9 @@ public static void main(String[] args) {
 }
 ```
 
-其实背后的原理也很简单，那些我们没有做的关闭资源的操作，编译器都帮我们做了。
+​		其实背后的原理也很简单，那些我们没有做的关闭资源的操作，编译器都帮我们做了。
 
-所以，再次印证了，语法糖的作用就是方便程序员的使用，但最终还是要转成编译器认识的语言。
+​		所以，再次印证了，语法糖的作用就是方便程序员的使用，但最终还是要转成编译器认识的语言。
 
 
 
@@ -1959,9 +1959,9 @@ public static void main(String[] args) {
 }
 ```
 
-为啥说他并不是内部类的语法糖呢，前面讲内部类我们说过，内部类在编译之后会有两个class文件，但是，包含Labmda表达式的类编译后只有一个文件。
+​		为啥说他并不是内部类的语法糖呢，前面讲内部类我们说过，内部类在编译之后会有两个class文件，但是，包含Labmda表达式的类编译后只有一个文件。
 
-反编译后代码如下:
+​		反编译后代码如下:
 
 ```java
 public static void main(String[] args) {
@@ -1977,9 +1977,9 @@ public static void main(String[] args) {
 }
 ```
 
-可以看到，在forEach方法中，其实是调用了java.lang.invoke.LambdaMetafactory#metafactory方法，该方法的第四个参数implMethod指定了方法实现。可以看到这里其实是调用了一个lambda\$main$0方法进行了输出。
+​		可以看到，在forEach方法中，其实是调用了java.lang.invoke.LambdaMetafactory#metafactory方法，该方法的第四个参数implMethod指定了方法实现。可以看到这里其实是调用了一个lambda\$main$0方法进行了输出。
 
-再来看一个稍微复杂一点的，先对List进行过滤，然后再输出：
+​		再来看一个稍微复杂一点的，先对List进行过滤，然后再输出：
 
 ```java
 public static void main(String[] args) {
@@ -1994,7 +1994,7 @@ public static void main(String[] args) {
 }
 ```
 
-反编译后代码如下：
+​		反编译后代码如下：
 
 ```java
 public static void main(String[] args) {
@@ -2015,9 +2015,9 @@ private static /* synthetic */ boolean lambda$main$0(String string) {
 }
 ```
 
-两个Labmda表达式分别调用了lambda$main1和lambda1和*l**a**m**b**d**a*main$0两个方法。
+​		两个Labmda表达式分别调用了lambda$main1和lambda1和*l**a**m**b**d**a*main$0两个方法。
 
-所以，Labmda表达式的实现其实是依赖了一些底层的api，在编译阶段，编译器会把Labmda表达式进行解糖，转换成调用内部api的方式。
+​		所以，Labmda表达式的实现其实是依赖了一些底层的api，在编译阶段，编译器会把Labmda表达式进行解糖，转换成调用内部api的方式。
 
 
 
