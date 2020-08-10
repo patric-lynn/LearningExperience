@@ -2592,8 +2592,8 @@ public static void main(String[] args) {
 
 ###### **HashMap、HashTable、TreeMap的区别**
 
-- TreeMap：基于红黑树实现。
-- HashMap：基于哈希表实现。
+- TreeMap：基于**红黑树**实现。
+- HashMap：基于**哈希表**实现。
 - HashTable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程可以同时写入 HashTable 并且不会导致数据不一致。**它是遗留类，不应该去使用它**。现在可以使用 **ConcurrentHashMap** 来支持线程安全，并且 ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
 - LinkedHashMap：使用**双向链表来维护元素的顺序**，顺序为插入顺序或者最近最少使用（LRU）顺序。
     ![image-20200304163233608](/Users/xiaoxiangyuzhu/Library/Application Support/typora-user-images/image-20200304163233608.png)
@@ -2610,7 +2610,17 @@ public static void main(String[] args) {
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200405165052495.png" alt="image-20200405165052495" style="zoom:40%;" />
 
-​		JDK8中ConcurrentHashMap参考了**JDK8 HashMap的实现**，采用了**数组+链表+红黑树的实现方式**来设计，内部大量采用**CAS操作**。Java8 ConcurrentHashMap结构基本上和Java8的HashMap一样，不过保证线程安全性。**1.数据结构**：取消了Segment分段锁的数据结构，取而代之的是数组+链表+红黑树的结构。**2.保证线程安全机制**：JDK1.7采用segment的分段锁机制实现线程安全，其中segment继承自ReentrantLock。JDK1.8采用**CAS+Synchronized保证线程安全**。**3.锁的粒度**：原来是对需要进行数据操作的Segment加锁，现调整为对每个数组**元素加锁**（Node）。**4.链表转化为红黑树**:定位结点的hash算法简化会带来弊端,**Hash冲突加剧**,因此在链表节点数量大于8时，会将链表转化为红黑树进行存储。**5.查询时间复杂度**：从原来的遍历链表O(n)，变成遍历红黑树O(logN)。整个结构看起来就像是**优化过且线程安全的HashMap**，虽然在JDK1.8中还能看到Segment的数据结构，但是已经简化了属性，只是**为了兼容旧版本**。说明：ConcurrentHashMap的数据结构（数组+链表+红黑树），桶中的结构可能是链表，也可能是红黑树，**红黑树是为了提高查找效率**。
+​		JDK8中ConcurrentHashMap参考了**JDK8 HashMap的实现**，采用了**数组+链表+红黑树的实现方式**来设计，内部大量采用**CAS操作**。Java8 ConcurrentHashMap结构基本上和Java8的HashMap一样，不过保证线程安全性。
+
+​		**1.数据结构**：取消了Segment分段锁的数据结构，取而代之的是数组+链表+红黑树的结构。
+
+​		**2.保证线程安全机制**：JDK1.7采用segment的分段锁机制实现线程安全，其中segment继承自ReentrantLock。JDK1.8采用**CAS+Synchronized保证线程安全**。
+
+​		**3.锁的粒度**：原来是对需要进行数据操作的Segment加锁，现调整为对每个数组**元素加锁**（Node）。
+
+​		**4.链表转化为红黑树**:定位结点的hash算法简化会带来弊端,**Hash冲突加剧**,因此在链表节点数量大于8时，会将链表转化为红黑树化。
+
+​		**5.查询时间复杂度**：从原来的遍历链表O(n)，变成遍历红黑树O(logN)。整个结构看起来就像是**优化过且线程安全的HashMap**，虽然在JDK1.8中还能看到Segment的数据结构，但是已经简化了属性，只是**为了兼容旧版本**。说明：ConcurrentHashMap的数据结构（数组+链表+红黑树），桶中的结构可能是链表，也可能是红黑树，**红黑树是为了提高查找效率**。
 
 -   Node是ConcurrentHashMap存储结构的**基本单元**，继承于HashMap中的**Entry**，用于存储数据, 数据结构很简单，就构成一个**链表**，但是只允许对数据进行查找，不允许进行修改；
 -   TreeNode继承于Node，但是数据结构换成了二叉树结构，它是**红黑树的数据的存储结构**，用于红黑树中存储数据，当链表的节点数大于8时会转换成红黑树的结构，他就是通过TreeNode作为存储结构代替Node来转换成红黑树。
@@ -2624,7 +2634,7 @@ public static void main(String[] args) {
 
 Collections：集合工具类，方便对集合的操作。这个类不需要创建对象，内部提供的都是静态方法。
 
-静态方法：
+**静态方法：**
 
 ```java
 Collections.sort(list);//list集合进行元素的自然顺序排序。
@@ -2649,9 +2659,11 @@ Map synchronizedMap(map);
 
 **Collection 和 Collections的区别**
 
-  Collections是个**java.util下的类**，是针对集合类的一个工具类,提供一系列静态方法,实现对集合的**查找、排序、替换、线程安全化**（将非同步的集合转换成同步的）等操作。
+-    Collections是个**java.util下的类**，是针对集合类的一个工具类,提供一系列静态方法,实现对集合的**查找、排序、替换、线程安全化**（将非同步的集合转换成同步的）等操作。
 
-  Collection是个**java.util下的接口**，它是**各种集合结构的父接口**，继承于它的接口主要有Set和List,提供了关于集合的一些操作,如插入、删除、判断一个元素是否其成员、遍历等。
+
+-    Collection是个**java.util下的接口**，它是**各种集合结构的父接口**，继承于它的接口主要有Set和List,提供了关于集合的一些操作,如插入、删除、判断一个元素是否其成员、遍历等。
+
 
 
 
@@ -2707,7 +2719,7 @@ public static void main(String[] args) {
 }
 ```
 
-asList方法接受的参数是一个**泛型的变长参数**，我们知道**基本数据类型是无法泛型化的**，也就是说基本类型是无法作为asList方法的参数的， 要想作为泛型参数就必须使用其所对应的包装类型。但是这个这个实例中为什么没有出错呢？因为该实例是**将int 类型的数组当做其参数**，而在Java中**数组是一个对象**，它是**可以泛型化的**。所以该例子是不会产生错误的。既然例子是将整个int 类型的数组当做泛型参数，那么经过asList转换就只有一个int 的列表了.
+​		asList方法接受的参数是一个**泛型的变长参数**，我们知道**基本数据类型是无法泛型化的**，也就是说基本类型是无法作为asList方法的参数的， 要想作为泛型参数就必须使用其所对应的包装类型。但是这个这个实例中为什么没有出错呢？因为该实例是**将int 类型的数组当做其参数**，而在Java中**数组是一个对象**，它是**可以泛型化的**。所以该例子是不会产生错误的。既然例子是将整个int 类型的数组当做泛型参数，那么经过asList转换就只有一个int 的列表了.
 
 **结论：**在使用asList()时**尽量不要将基本数据类型数组转List**. 
 
@@ -2723,8 +2735,7 @@ public static void main(String[] args) {
 ```
 
 **原因：**
-此处ArrayList是Arrays的内部类,并没有add方法,**add方法是父类AbstractList的**,但是没有具体实现,
-而是直接抛出UnsupportedOperationException异常.
+		此处ArrayList是Arrays的内部类,并没有add方法,**add方法是父类AbstractList的**,但是没有具体实现，而是直接抛出UnsupportedOperationException异常.
 
 **正确操作**
 
@@ -2739,9 +2750,7 @@ public static void main(String[] args) {
 
 ##### 9.如何选用集合?
 
-主要根据集合的特点来选用，比如我们需要根据键值获取到元素值时就选用Map接口下的集合，需要排序时选择TreeMap,**不需要排序时就选择HashMap**,需要**保证线程安全就选用ConcurrentHashMap**.当我们只需要存放元素值时，就选择实现Collection接口的集合，需要保证元素唯一时选择实现**Set接口的集合比如TreeSet或HashSet**，不需要就选择实现**List接口的比如ArrayList或LinkedList**，然后再根据实现这些接口的集合的特点来选用。
-
-
+​		主要根据集合的特点来选用，比如我们需要根据键值获取到元素值时就选用Map接口下的集合，需要排序时选择TreeMap,**不需要排序时就选择HashMap**,需要**保证线程安全就选用ConcurrentHashMap**.当我们只需要存放元素值时，就选择实现Collection接口的集合，需要保证元素唯一时选择实现**Set接口的集合比如TreeSet或HashSet**，不需要就选择实现**List接口的比如ArrayList或LinkedList**，然后再根据实现这些接口的集合的特点来选用。
 
 
 
@@ -2843,7 +2852,7 @@ public ArrayList(Collection<? extends E> c) {
 }
 ```
 
-以无参数构造方法创建 ArrayList 时，实际上初始化赋值的**是一个空数组**。当真正对数组进行添加元素操作时，才真正分配容量。即向数组中添加第一个元素时，数组容量扩为10。
+​		以无参数构造方法创建 ArrayList 时，实际上初始化赋值的**是一个空数组**。当真正对数组进行添加元素操作时，才真正分配容量。即向数组中添加第一个元素时，数组容量扩为10。
 
 ##### 4.内部类
 
@@ -2854,14 +2863,14 @@ public ArrayList(Collection<? extends E> c) {
 (4)static final class ArrayListSpliterator<E> implements Spliterator<E>  
 ```
 
-ArrayList有四个内部类，其中的Itr是实现了Iterator接口，同时重写了里面的hasNext()， next()， remove() 等方法；其中的ListItr 继承 Itr，实现了ListIterator接口，同时重写了hasPrevious()， nextIndex()， previousIndex()， previous()， set(E e)， add(E e) 等方法，所以这也可以看出了 Iterator和ListIterator的区别：ListIterator在Iterator的基础上增加了**添加对象**，**修改对象**，**逆向遍历**等方法，这些是Iterator不能实现的。
+​		ArrayList有四个内部类，其中的Itr是实现了Iterator接口，同时重写了里面的hasNext()， next()， remove() 等方法；其中的ListItr 继承 Itr，实现了ListIterator接口，同时重写了hasPrevious()， nextIndex()， previousIndex()， previous()， set(E e)， add(E e) 等方法，所以这也可以看出了 Iterator和ListIterator的区别：ListIterator在Iterator的基础上增加了**添加对象**，**修改对象**，**逆向遍历**等方法，这些是Iterator不能实现的。
 
 
 ##### 5.核心方法
 
 ###### add()方法
 
-增和删是`ArrayList`最重要的部分，这部分代码需要我们细细研究
+​		增和删是`ArrayList`最重要的部分，这部分代码需要我们细细研究		
 
 ```java
 //添加一个特定的元素到list的末尾
@@ -2992,16 +3001,16 @@ private static int hugeCapacity(int minCapacity) {
 }
 ```
 
-至此，我们彻底明白了`ArrayList`的扩容机制了。首先创建一个空数组**elementData**，第一次插入数据时直接扩充至10，然后如果**elementData**的长度不足，就扩充至1.5倍，如果扩充完还不够，就使用需要的长度作为**elementData**的长度。
+​		至此，我们彻底明白了`ArrayList`的扩容机制了。首先创建一个空数组**elementData**，第一次插入数据时直接扩充至10，然后如果**elementData**的长度不足，就扩充至1.5倍，如果扩充完还不够，就使用需要的长度作为**elementData**的长度。
 
 **大数据插入问题**
 
-这样的方式显然比我们例子中好一些，但是在遇到大量数据时还是会频繁的拷贝数据。那么如何缓解这种问题呢，ArrayList为我们提供了两种可行的方案：
+​		这样的方式显然比我们例子中好一些，但是在遇到大量数据时还是会频繁的拷贝数据。那么如何缓解这种问题呢，ArrayList为我们提供了两种可行的方案：
 
-- 使用ArrayList(int initialCapacity)这个有参构造，在创建时就声明一个较大的大小，这样解决了频繁拷贝问题，但是需要我们提前预知数据的数量级，也会一直占有较大的内存。
-- 除了添加数据时可以自动扩容外，我们还可以在插入前先进行一次扩容。只要提前预知数据的数量级，就可以在需要时直接一次扩充到位，与ArrayList(int initialCapacity)相比的好处在于不必一直占有较大内存，同时数据拷贝的次数也大大减少了。这个方法就是ensureCapacity(int minCapacity)，其内部就是调用了ensureCapacityInternal(int minCapacity)。
+- 使用ArrayList(int initialCapacity)这个有参构造，在创建时就声明一个较大的大小，这样**解决了频繁拷贝问题**，但是需要我们提前预知数据的数量级，也会一直占有较大的内存。
+- 除了添加数据时可以自动扩容外，我们还可以在插入前先进行一次扩容。只要提前预知数据的数量级，就可以在需要时直接一次扩充到位，与ArrayList(int initialCapacity)相比的好处在于不必一直占有较大内存，同时数据拷贝的次数也大大减少了。这个方法就是**ensureCapacity(int minCapacity)**，其内部就是调用了ensureCapacityInternal(int minCapacity)。
 
-我们这里使用ensureCapacity()方法测试
+​       我们这里使用ensureCapacity()方法测试
 
 ```java
 public class EnsureCapacityTest {
@@ -3027,14 +3036,14 @@ public class EnsureCapacityTest {
 }
 ```
 
-运行结果
+​		运行结果
 
 ```
 使用ensureCapacity方法前：2700
 使用ensureCapacity方法后：1054
 ```
 
-通过运行结果，我们可以很明显的看出向 ArrayList 添加大量元素之前最好先使用`ensureCapacity` 方法，以减少增量重新分配的次数
+​		通过运行结果，我们可以很明显的看出向 ArrayList 添加大量元素之前最好先使用`ensureCapacity` 方法，以减少增量重新分配的次数
 
 ###### remove()方法
 
