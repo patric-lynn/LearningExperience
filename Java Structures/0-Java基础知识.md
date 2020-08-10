@@ -2415,7 +2415,9 @@ for (Iterator it2 = list1.iterator(); it2.hasNext(); ) {
 
 ##### 4.ListIterator接口
 
-ListIterator是一个**功能更加强大的迭代器**， 它继承于Iterator接口，只能用于**各种List类型的访问**。可以通过调用listIterator()方法产生一个指向List开始处的ListIterator， 还可以调用listIterator(n)方法创建一个一开始就指向列表索引为n的元素处的ListIterator。
+​		ListIterator是一个**功能更加强大的迭代器**， 它继承于Iterator接口，只能用于**各种List类型的访问**。可以通过调用listIterator()方法产生
+
+一个指向List开始处的ListIterator， 还可以调用listIterator(n)方法创建一个一开始就指向列表索引为n的元素处的ListIterator。
 
 **特点**
 
@@ -2426,7 +2428,7 @@ ListIterator是一个**功能更加强大的迭代器**， 它继承于Iterator�
 **常用API**
 
 修饰与类型	方法与描述
-void				add(E e) 将指定的元素插入到列表 （可选操作）。
+void				**add(E e)** 将指定的元素插入到列表 （可选操作）。
 boolean		 **hasNext()** 如果此列表迭代器在前进方向还有更多的元素时，返回 true。
 boolean		 **hasPrevious()** 如果此列表迭代器在相反方向还有更多的元素时，返回 true。
 E					  **next()** 返回列表中的下一个元素和光标的位置向后推进。
@@ -2434,18 +2436,18 @@ int				   **nextIndex()** 返回调用 next()后返回的元素索引。
 E					  **previous()** 返回列表中的上一个元素和光标的位置向前移动。
 int					**previousIndex()** 返回调用previous() 后返回的元素索引 。
 void				 remove() **删除列表中调用next()或previous()的返回最后一个元素**。
-void				 set(E e) 用指定元素替换列表中调用next()或previous()的返回最后一个元素。
+void				 **set(E e)** 用指定元素替换列表中调用next()或previous()的返回最后一个元素。
 
 
 
 ##### 5.Collection接口(单列集合)
 
-所有集合类都位于java.util包下。Java的集合类主要由两个接口派生而出：Collection和Map，Collection和Map是Java集合框架的根接口，这两个接口又包含了一些子接口或实现类。
+​		所有集合类都位于**java.util**包下。Java的集合类主要由两个接口派生而出：Collection和Map，Collection和Map是Java集合框架的根接口，这两个接口又包含了一些子接口或实现类。
 
-- Collection一次存一个元素，是单列集合；
+- Collection一次存一个元素，是**单列集合**；
 
 
-- Map一次存一对元素，是双列集合。Map存储的一对元素：键–值，键（key）与值(value)间有对应(映射)关系。
+- Map一次存一对元素，是**双列集合**。Map存储的一对元素：键–值，键（key）与值(value)间有对应(映射)关系。
 
 **单列集合继承关系图**
 
@@ -2453,9 +2455,11 @@ void				 set(E e) 用指定元素替换列表中调用next()或previous()的返�
 
 **Collection集合主要有List和Set两大接口**
 
-List：有序(元素存入集合的顺序和取出的顺序一致)，元素都有索引。元素可以重复。
+-   List：有序(元素存入集合的顺序和取出的顺序一致)，元素都有索引。元素可以重复。
 
-Set：无序(存入和取出顺序有可能不一致)，不可以存储重复元素。必须保证元素唯一性。
+
+-   Set：无序(存入和取出顺序有可能不一致)，不可以存储重复元素。必须保证元素唯一性。
+
 
 ###### List集合
 
@@ -2468,11 +2472,12 @@ Set：无序(存入和取出顺序有可能不一致)，不可以存储重复元
 **ArrayList、LinkedList、Vector 的区别**
 
 ![image-20200304162128807](/Users/xiaoxiangyuzhu/Library/Application Support/typora-user-images/image-20200304162128807.png)
+
 总结：ArrayList 和 Vector **基于数组实现**，对于随机访问get和set，ArrayList优于LinkedList，因为LinkedList要移动指针。
 
-- LinkedList 不会出现扩容的问题，所以比较适合随机位置增、删。但是其基于链表实现，所以在定位时需要线性扫描，效率比较低。
+- LinkedList 不会出现扩容的问题，所以比较适合随机位置增、删。但是其基于链表实现，所以在**定位时需要线性扫描，效率比较低**。
 - 当操作是在一列数据的后面添加数据而不是在前面或中间，并且需要随机地访问其中的元素时，使用ArrayList会提供比较好的性能；
-- 当你的操作是在一列数据的前面或中间添加或删除数据，并且按照顺序访问其中的元素时，就应该使用LinkedList了。
+- 当你的操作是在**一列数据的前面或中间添加或删除数据，并且按照顺序访问其中的元素时，就应该使用LinkedList了**。
 
 **遍历时操作元素**
 
@@ -2549,8 +2554,9 @@ public static void main(String[] args) {
 
 ###### Set集合
 
-Set集合元素无序(存入和取出的顺序不一定一致)，并且没有重复对象。
-Set的主要实现类：HashSet， TreeSet。
+​		Set集合元素无序(存入和取出的顺序不一定一致)，并且没有重复对象。
+
+​		Set的主要实现类：**HashSet**， **TreeSet**。
 
 **HashSet、TreeSet、LinkedHashSet的区别**
 
@@ -2559,23 +2565,26 @@ Set的主要实现类：HashSet， TreeSet。
 **HashSet如何检查重复**
 
 ​		当你把对象加入HashSet时，HashSet会先计算对象的**hashcode值来判断对象加入的位置**，同时也会与其他加入的对象的hashcode值作比较，如果没有相符的hashcode，HashSet会假设对象没有重复出现。但是如果发现有相同hashcode值的对象，这时会调用equals()方法来检查hashcode相等的对象是否真的相同。如果两者相同，HashSet就不会让加入操作成功。
-hashCode()与equals()的相关规定：
 
-- 如果两个对象相等，则hashcode一定也是相同的
-- 两个对象相等，equals方法返回true
-- 两个对象有相同的hashcode值，它们也不一定是相等的
-- 综上，equals方法被覆盖过，则hashCode方法也必须被覆盖
-- hashCode()的默认行为是对堆上的对象产生独特值。如果没有重写hashCode()，则该class的两个对象无论如何都不会相等（即使这两个对象指向相同的数据）。
+**hashCode()与equals()的相关规定：**
+
+- 如果两个对象相等，则hashcode一定也是相同的（充分条件）
+- 两个对象相等，equals方法返回true 
+- 两个对象有相同的hashcode值，它们也不一定是相等的 （必要条件）
+- 综上，equals方法被覆盖过，则hashCode方法也必须被覆盖 （必要条件）
+- **hashCode()的默认行为是对堆上的对象产生独特值**。如果没有重写hashCode()，则该class的两个对象无论如何都不会相等（即使这两个对象指向相同的数据）。
 
 **总结：**
-HashSet是一个通用功能的Set，而LinkedHashSet 提供元素**插入顺序保证**，TreeSet是一个SortedSet实现，由Comparator 或者 Comparable指定的元素顺序存储元素。
+
+​		HashSet是一个**通用功能的Set**，而LinkedHashSet 提供元素**插入顺序保证**，TreeSet是一个**SortedSet实现**，由Comparator 或者 Comparable指定的元素顺序存储元素。
 
 
 
 ##### 6.Map接口(双列集合)
 
-Map 是一种把键对象和值对象映射的集合，它的每一个元素都包含一对键对象和值对象。 Map没有继承于Collection接口，从Map集合中检索元素时，只要给出键对象，就会返回对应的值对象。
-Map 的常用实现类：HashMap、TreeMap、HashTable、LinkedHashMap、**ConcurrentHashMap**
+​		Map 是一种把键对象和值对象映射的集合，它的每一个元素都包含一对键对象和值对象。 Map没有继承于Collection接口，从Map集合中检索元素时，只要给出键对象，就会返回对应的值对象。
+
+​		Map 的常用实现类：**HashMap**、TreeMap、HashTable、LinkedHashMap、**ConcurrentHashMap**
 
 **双列集合继承关系图**
 
