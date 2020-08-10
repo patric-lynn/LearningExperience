@@ -3226,7 +3226,7 @@ public int lastIndexOf(Object o) {
 }
 ```
 
-说明：从头开始查找与指定元素相等的元素，需要注意的是可以查找null元素，意味着ArrayList中可以存放null元素的。与此函数对应的lastIndexOf，表示从尾部开始查找。
+​		说明：从头开始查找与指定元素相等的元素，需要注意的是可以查找null元素，意味着ArrayList中可以存放null元素的。与此函数对应的lastIndexOf，表示从尾部开始查找。
 
 ###### contains()方法
 
@@ -3271,7 +3271,7 @@ public <T> T[] toArray(T[] a) {
 
 ##### 继承体系
 
-​		LinkedList 的继承体系较为复杂，继承自 AbstractSequentialList，同时又实现了 List 和 Deque 接口。LinkedList 继承自 AbstractSequentialList，AbstractSequentialList 又是什么呢？从实现上，AbstractSequentialList 提供了一套基于顺序访问的接口。通过继承此类，子类仅需实现部分代码即可拥有完整的一套访问某种序列表（比如链表）的接口。深入源码，AbstractSequentialList 提供的方法基本上都是通过 ListIterator 实现的，比如：
+​		LinkedList 的继承体系较为复杂，继承自 AbstractSequentialList，同时又实现了 **List 和 Deque 接口**。LinkedList 继承自 AbstractSequentialList，AbstractSequentialList 又是什么呢？从实现上，AbstractSequentialList 提供了一套基于顺序访问的接口。通过继承此类，子类仅需实现部分代码即可拥有完整的一套访问某种序列表（比如链表）的接口。深入源码，AbstractSequentialList 提供的方法基本上都是通过 ListIterator 实现的，比如：
 
 ```java
 public E get(int index) {
@@ -3467,7 +3467,7 @@ void linkBefore(E e, Node<E> succ) {
 
 ##### 简介
 
-​		在JDK1.8之前，HashMap采用数组+链表实现，即使用链表处理冲突，同一hash值的节点都存储在一个链表里。但是当位于一个桶中的元素较多，即hash值相等的元素较多时，通过key值依次查找的效率较低。而JDK1.8中，为了解决hash碰撞过于频繁的问题，HashMap采用**数组+链表+红黑树实现**，当链表长度超过阈值（8）时，将链表(查询时间复杂度为O(n))转换为红黑树(时间复杂度为O(lg n))，极大的提高了查询效率。以下没有特别说明的均为JDK1.8中的HashMap。
+​		在JDK1.8之前，HashMap采用**数组+链表实现**，即使用链表处理冲突，同一hash值的节点都存储在一个链表里。但是当位于一个桶中的元素较多，即hash值相等的元素较多时，通过key值依次查找的效率较低。而JDK1.8中，为了解决hash碰撞过于频繁的问题，HashMap采用**数组+链表+红黑树实现**，当链表长度超过阈值（8）时，将链表(查询时间复杂度为O(n))转换为红黑树(时间复杂度为O(lg n))，极大的提高了查询效率。以下没有特别说明的均为JDK1.8中的HashMap。
 
 ##### 特点
 
@@ -3484,7 +3484,7 @@ void linkBefore(E e, Node<E> succ) {
 
 **JDK1.8之前**
 
-​		JDK1.8之前采用的是拉链法。拉链法：将链表和数组相结合。也就是说创建一个链表数组，数组中每一格就是一个链表。若遇到哈希冲突，则将冲突的值加到链表中即可。
+​		JDK1.8之前采用的是**拉链法**。拉链法：将链表和数组相结合。也就是说创建一个链表数组，数组中每一格就是一个链表。若遇到哈希冲突，则将冲突的值加到链表中即可。
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200305231409179.png" alt="image-20200305231409179" style="zoom:50%;" />
 
@@ -3498,7 +3498,7 @@ void linkBefore(E e, Node<E> succ) {
 
 JDK1.8主要解决或优化了一下问题：
 
-- resize 扩容优化
+- resize **扩容优化**
 - 引入了红黑树，目的是避免单条链表过长而影响查询效率，红黑树算法请参考
 - 解决了多线程死循环问题，但仍是非线程安全的，多线程时可能会造成数据丢失问题。
 
@@ -3508,7 +3508,7 @@ JDK1.8主要解决或优化了一下问题：
 
 ![HashMap继承关系图](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/format,png.png)
 
-HashMap继承抽象类AbstractMap，实现Map接口。除此之外，它还实现了两个标识型接口，这两个接口都没有任何方法，仅作为标识表示实现类具备某项功能。`Cloneable`表示实现类支持克隆，`java.io.Serializable`则表示支持序列化。
+​		HashMap继承抽象类AbstractMap，实现Map接口。除此之外，它还实现了两个标识型接口，这两个接口都没有任何方法，仅作为标识表示实现类具备某项功能。`Cloneable`表示实现类支持克隆，`java.io.Serializable`则表示支持序列化。
 
 ##### 成员变量
 
@@ -3540,11 +3540,11 @@ transient Node<K,V>[] table;
 transient Set<Map.Entry<K,V>> entrySet;
 ```
 
-capacity、threshold和loadFactor之间的关系：
+​		capacity、threshold和loadFactor之间的关系：
 
-- capacity table的容量，默认容量是16
-- threshold table扩容的临界值
-- loadFactor 负载因子，一般 threshold = capacity * loadFactor，默认的负载因子0.75是对空间和时间效率的一个平衡选择，建议大家不要修改。
+- capacity table的容量，**默认容量是16**
+- threshold table扩容的**临界值**
+- loadFactor **负载因子**，一般 threshold = capacity * loadFactor，默认的负载因子0.75是对空间和时间效率的一个平衡选择，建议大家不要修改。
 
 ##### 构造方法
 
@@ -3589,7 +3589,7 @@ public HashMap(Map<? extends K, ? extends V> m) {
 
 ##### 核心方法
 
-###### hash()算法
+###### hash()算法—— 注意！！！此处是hash算法，利用的是hashcode值
 
 ​		JDK1.8 之前 HashMap 底层是 数组和链表 结合在一起使用。HashMap 通过 key 的 hashCode 经过扰动函数处理过后得到 hash 值，然后通过 (n - 1) & hash 判断当前元素存放的位置（这里的 n 指的是数组的长度），如果当前位置存在元素的话，就判断该元素与要存入的元素的 hash 值以及 key 是否相同，如果相同的话，直接覆盖，不相同就通过拉链法解决冲突。
 
@@ -3611,7 +3611,7 @@ static final int hash(Object key) {
 }
 ```
 
-（1）首先获取对象的hashCode()值，然后将hashCode值右移16位，然后将右移后的值与原来的hashCode做异或运算，返回结果。（其中h>>>16，在JDK1.8中，优化了高位运算的算法，使用了零扩展，无论正数还是负数，都在高位插入0）。
+（1）**首先获取对象的hashCode()值**，然后将hashCode值**右移16位**，然后将右移后的值与原来的hashCode做**异或运算**，返回结果。（其中h>>>16，在JDK1.8中，优化了高位运算的算法，使用了零扩展，无论正数还是负数，都在高位插入0）。
 
 （2）在putVal源码中，通过(n-1)&hash获取该对象的键在hashmap中的位置。（其中hash的值就是（1）中获得的值）其中n表示的是hash桶数组的长度，并且该长度为2的n次方，这样(n-1)&hash就等价于hash%n。因为&运算的效率高于%运算。
 
