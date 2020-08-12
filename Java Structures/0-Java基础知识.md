@@ -3480,7 +3480,7 @@ void linkBefore(E e, Node<E> succ) {
 
 ##### 数据结构
 
-​		在Java中，保存数据有两种比较简单的数据结构：数组和链表。数组的特点是：寻址容易，插入和删除困难；链表的特点是：寻址困难，但插入和删除容易；所以我们将数组和链表结合在一起，发挥两者各自的优势，使用一种叫做拉链法的方式可以解决哈希冲突。
+​		在Java中，保存数据有两种比较简单的数据结构：**数组和链表**。数组的特点是：寻址容易，插入和删除困难；链表的特点是：寻址困难，但插入和删除容易；所以我们将数组和链表结合在一起，发挥两者各自的优势，使用一种叫做拉链法的方式可以解决哈希冲突。
 
 **JDK1.8之前**
 
@@ -3496,10 +3496,10 @@ void linkBefore(E e, Node<E> succ) {
 
 **JDK1.7 VS JDK1.8 比较**
 
-JDK1.8主要解决或优化了一下问题：
+​		JDK1.8主要解决或优化了一下问题：
 
 - resize **扩容优化**
-- 引入了红黑树，目的是避免单条链表过长而影响查询效率，红黑树算法请参考
+- 引入了红黑树，目的是**避免单条链表过长而影响查询效率**，红黑树算法请参考
 - 解决了多线程死循环问题，但仍是非线程安全的，多线程时可能会造成数据丢失问题。
 
 ![image-20200305231518724](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200305231518724.png)
@@ -3544,7 +3544,7 @@ transient Set<Map.Entry<K,V>> entrySet;
 
 - capacity table的容量，**默认容量是16**
 - threshold table扩容的**临界值**
-- loadFactor **负载因子**，一般 threshold = capacity * loadFactor，默认的负载因子0.75是对空间和时间效率的一个平衡选择，建议大家不要修改。
+- loadFactor **负载因子**，一般 threshold = capacity * loadFactor，默认的**负载因子0.75**是对空间和时间效率的一个平衡选择，建议大家不要修改。
 
 ##### 构造方法
 
@@ -3613,7 +3613,7 @@ static final int hash(Object key) {
 
 （1）**首先获取对象的hashCode()值**，然后将hashCode值**右移16位**，然后将右移后的值与原来的hashCode做**异或运算**，返回结果。（其中h>>>16，在JDK1.8中，优化了高位运算的算法，使用了零扩展，无论正数还是负数，都在高位插入0）。
 
-（2）在putVal源码中，通过(n-1)&hash获取该对象的键在hashmap中的位置。（其中hash的值就是（1）中获得的值）其中n表示的是hash桶数组的长度，并且该长度为2的n次方，这样(n-1)&hash就等价于hash%n。因为&运算的效率高于%运算。
+（2）在putVal源码中，通过 **(n-1)&hash** 获取该对象的键在hashmap中的位置。（其中hash的值就是（1）中获得的值）其中n表示的是hash桶数组的长度，并且该长度为2的n次方，这样 (n-1)&hash 就等价于hash%n。因为&运算的效率高于%运算。
 
 ```java
 final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
@@ -3670,7 +3670,7 @@ public V remove(Object key) {
 
 ###### 遍历
 
-​		HashMap的四种遍历方式
+​		HashMap的**四种遍历**方式
 
 ```Java 
 //HashMap的四种遍历方式
@@ -3727,7 +3727,7 @@ public static void main(String[] args) {
 
 ​		链表的建立过程是在插入键值对节点时开始的，初始情况下，让 LinkedHashMap 的 head 和 tail 引用同时指向新节点，链表就算建立起来了。随后不断有新节点插入，通过将新节点接在 tail 引用指向节点的后面，即可实现链表的更新。
 
-​		Map 类型的集合类是通过 put(K,V) 方法插入键值对，LinkedHashMap 本身并没有覆写父类的 put 方法，而是直接使用了父类的实现。但在 HashMap 中，put 方法插入的是 HashMap 内部类 Node 类型的节点，该类型的节点并不具备与 LinkedHashMap 内部类 Entry 及其子类型节点组成链表的能力。那么，LinkedHashMap 是怎样建立链表的呢？在展开说明之前，我们先看一下 LinkedHashMap 插入操作相关的代码：
+​		Map 类型的集合类是**通过 put(K,V) 方法插入键值对**，LinkedHashMap 本身并没有覆写父类的 put 方法，而是直接使用了父类的实现。但在 HashMap 中，put 方法插入的是 HashMap 内部类 Node 类型的节点，该类型的节点并不具备与 LinkedHashMap 内部类 Entry 及其子类型节点组成链表的能力。那么，LinkedHashMap 是怎样建立链表的呢？在展开说明之前，我们先看一下 LinkedHashMap 插入操作相关的代码：
 
 ```java
 // HashMap 中实现
@@ -3879,7 +3879,7 @@ void afterNodeRemoval(Node<K,V> e) { // unlink
 }
 ```
 
-删除的过程并不复杂，上面这么多代码其实就做了三件事：
+​		删除的过程并不复杂，上面这么多代码其实就做了三件事：
 
 1. 根据 hash 定位到桶位置
 2. 遍历链表或调用红黑树相关的删除方法
@@ -3889,7 +3889,7 @@ void afterNodeRemoval(Node<K,V> e) { // unlink
 
 ​		前面介绍了 LinkedHashMap 是如何维护插入和访问顺序的，大家对 LinkedHashMap 的原理应该有了一定的认识。本节我们来写一些代码实践一下，这里通过继承 LinkedHashMap 实现了一个简单的 LRU 策略的缓存。在写代码之前，先介绍一下前置知识。
 
-在3.1节分析链表建立过程时，我故意忽略了部分源码分析。本节就把忽略的部分补上，先看源码吧：
+​		在3.1节分析链表建立过程时，我故意忽略了部分源码分析。本节就把忽略的部分补上，先看源码吧：
 
 ```java
 void afterNodeInsertion(boolean evict) { // possibly remove eldest
@@ -3949,7 +3949,7 @@ public class SimpleCache<K, V> extends LinkedHashMap<K, V> {
 }
 ```
 
-测试代码如下：
+​		测试代码如下：
 
 ```java
 public class SimpleCacheTest {
@@ -3976,7 +3976,7 @@ public class SimpleCacheTest {
 }
 ```
 
-输出结果
+​		输出结果
 
 ```java
 插入10个键值对后，缓存内容：
@@ -4199,7 +4199,7 @@ public class SimpleCacheTest {
 
 ```
 
-​		ConcurrentHashMap的get操作的流程很简单，也很清晰，可以分为三个步骤来描述
+​		**ConcurrentHashMap**的get操作的流程很简单，也很清晰，可以分为三个步骤来描述
 
 1.  计算hash值，定位到该table索引位置，如果是首节点符合就返回
 2.  如果遇到扩容的时候，会调用标志正在扩容节点ForwardingNode的find方法，查找该节点，匹配就返回
@@ -4231,7 +4231,7 @@ public class SimpleCacheTest {
 
 ##### 查找
 
-​		`TreeMap`基于红黑树实现，而红黑树是一种自平衡二叉查找树，所以 TreeMap 的查找操作流程和二叉查找树一致。二叉树的查找流程是这样的，先将目标值和根节点的值进行比较，如果目标值小于根节点的值，则再和根节点的左孩子进行比较。如果目标值大于根节点的值，则继续和根节点的右孩子比较。在查找过程中，如果目标值和二叉树中的某个节点值相等，则返回 true，否则返回 false。TreeMap 查找和此类似，只不过在 TreeMap 中，节点（Entry）存储的是键值对。在查找过程中，比较的是键的大小，返回的是值，如果没找到，则返回`null`。TreeMap 中的查找方法是`get`，具体实现在`getEntry`方法中，相关源码如下：
+​		`TreeMap`基于红黑树实现，而红黑树是一种**自平衡二叉查找树**，所以 TreeMap 的查找操作流程和二叉查找树一致。二叉树的查找流程是这样的，先将目标值和根节点的值进行比较，如果目标值小于根节点的值，则再和根节点的左孩子进行比较。如果目标值大于根节点的值，则继续和根节点的右孩子比较。在查找过程中，如果目标值和二叉树中的某个节点值相等，则返回 true，否则返回 false。TreeMap 查找和此类似，只不过在 TreeMap 中，节点（Entry）存储的是键值对。在查找过程中，比较的是键的大小，返回的是值，如果没找到，则返回`null`。TreeMap 中的查找方法是`get`，具体实现在`getEntry`方法中，相关源码如下：
 
 ```java
 public V get(Object key) {
@@ -4283,7 +4283,7 @@ for(Map.Entry entry : map.entrySet()) {
 }
 ```
 
-​		从上面代码片段中可以看出，大家一般都是对 TreeMap 的 key 集合或 Entry 集合进行遍历。上面代码片段中用 foreach 遍历keySet 方法产生的集合，在编译时会转换成用迭代器遍历，等价于：
+​		从上面代码片段中可以看出，大家一般都是对 TreeMap 的 key 集合或 Entry 集合进行遍历。上面代码片段中用 foreach 遍历keySet 方法产生的集合，在编译时会转换成用**迭代器遍历**，等价于：
 
 ```java
 Set keys = map.keySet();
@@ -4478,9 +4478,9 @@ private void deleteEntry(Entry<K,V> p) {
 
 Throwable 是 Java 语言中所有**错误**与**异常**的超类。
 
-Throwable 包含两个子类：**Error**（错误）和 **Exception**（异常），它们通常用于指示发生了异常情况。
+Throwable 包含两个子类：**Error**（错误）和 **Exception**（异常），它们通常用于指示发生了**异常情况**。
 
-Throwable 包含了其线程创建时线程执行堆栈的快照，它提供了 **printStackTrace() 等接口**用于获取堆栈跟踪数据等信息。
+Throwable 包含了其线程创建时线程执行**堆栈的快照**，它提供了 **printStackTrace() 等接口**用于获取堆栈跟踪数据等信息。
 
 2. ###### Error（错误）
 
@@ -4502,13 +4502,13 @@ Throwable 包含了其线程创建时线程执行堆栈的快照，它提供了 
 
 **编译时异常**
 
-​		定义: Exception 中除 RuntimeException 及其子类之外的异常。
+​		定义: Exception 中除 **RuntimeException** 及其子类之外的异常。
 
 ​		特点: Java 编译器会检查它。如果程序中出现此类异常，比如 **ClassNotFoundException**（没有找到指定的类异常），**IOException**（IO流异常），**要么通过throws进行声明抛出**，**要么通过try-catch进行捕获处理**，否则不能通过编译。在程序中，**通常不会自定义该类异常**，而是直接使用系统提供的异常类。该异常我们必须手动在代码里添加捕获语句来处理该异常。
 
 4. ###### 受检异常与非受检异常
 
-    ​	Java 的所有异常可以分为受检异常（checked exception）和非受检异常（unchecked exception）。
+    ​	Java 的所有异常可以分为**受检异常（checked exception）**和**非受检异常（unchecked exception）**。
 
 **受检异常**
 
@@ -4520,11 +4520,11 @@ Throwable 包含了其线程创建时线程执行堆栈的快照，它提供了 
 
 ##### Java异常关键字
 
-• try – 用于监听。将要被监听的代码(可能抛出异常的代码)放在try语句块之内，当try语句块内发生异常时，异常就被抛出。
-• catch – 用于捕获异常。catch用来捕获try语句块中发生的异常。
-• finally – finally语句块总是会被执行。它主要用于回收在try块里打开的物力资源(如数据库连接、网络连接和磁盘文件)。只有finally块，执行完成之后，才会回来执行try或者catch块中的return或者throw语句，如果finally中使用了return或者throw等终止方法的语句，则就不会跳回执行，直接停止。
-• throw – 用于抛出异常。
-• throws – 用在方法签名中，用于声明该方法可能抛出的异常。
+• try – 用于**监听**。将要被监听的代码(可能抛出异常的代码)放在try语句块之内，当try语句块内发生异常时，异常就被抛出。
+• catch – 用于**捕获异常**。catch用来捕获try语句块中发生的异常。
+• finally – finally语句块**总是会被执行**。它主要用于回收在try块里打开的物力资源(如数据库连接、网络连接和磁盘文件)。只有finally块，执行完成之后，才会回来执行try或者catch块中的return或者throw语句，如果finally中使用了return或者throw等终止方法的语句，则就不会跳回执行，直接停止。
+• throw – 用于**抛出异常**。
+• throws – 用在方法签名中，用于声明该方法**可能抛出的异常**。
 
 
 
@@ -4547,7 +4547,7 @@ Throwable 包含了其线程创建时线程执行堆栈的快照，它提供了 
 
 ​		如果你觉得解决不了某些异常问题，且不需要调用者处理，那么你可以抛出异常。
 
-​		throw关键字作用是在方法内部抛出一个Throwable类型的异常。任何Java代码都可以通过throw语句抛出异常。
+​		throw关键字作用是在方法内部抛出**一个Throwable类型的异常**。任何Java代码都可以通过throw语句抛出异常。
 
 ##### 捕获异常
 
@@ -4579,7 +4579,7 @@ private static void readFile(String filePath) throws IOException {
 
 ##### 封装异常再抛出
 
-​		有时我们会从 catch 中抛出一个异常，目的是为了改变异常的类型。多用于在多系统集成时，当某个子系统故障，异常类型可能有多种，可以用统一的异常类型向外暴露，不需暴露太多内部异常细节。
+​		有时我们会**从 catch 中抛出一个异常**，目的是为了改变异常的类型。多用于在多系统集成时，当某个子系统故障，异常类型可能有多种，可以用统一的异常类型向外暴露，不需暴露太多内部异常细节。
 
 ```Java
 private static void readFile(String filePath) throws MyException {    
