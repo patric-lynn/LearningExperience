@@ -44,9 +44,13 @@
 ##### 4.Spring 框架中都用到了哪些设计模式？
 
 **工厂模式**：BeanFactory就是简单工厂模式的体现，用来创建对象的实例；
+
 **单例模式**：Bean默认为**单例模式**。
+
 **代理模式**：Spring的AOP功能用到了**JDK的动态代理**和**CGLIB字节码生成技术**；
+
 **模板方法**：用来解**决代码重复的问题**。比如. RestTemplate, JmsTemplate, JpaTemplate。
+
 **观察者模式**：定义对象键一种**一对多的依赖关系**，当一个对象的状态发生改变时，所有依赖于它的对象都会得到通知被制动更新，如Spring中listener的实现–ApplicationListener。
 
 ##### 5.详细讲解一下核心容器（spring context应用上下文) 模块
@@ -317,8 +321,8 @@ public class Employee {
 
 ​		在Spring中有两种方式访问Hibernate：
 
-- 使用 Hibernate 模板和回调进行控制反转
-- 扩展 HibernateDAOSupport 并应用 AOP 拦截器节点
+- 使用 Hibernate 模板和回调进行**控制反转**
+- 扩展 HibernateDAOSupport 并应用 **AOP 拦截器节点**
 
 ##### 6.Spring支持的事务管理类型， spring 事务实现方式有哪些？
 
@@ -366,7 +370,7 @@ public class Employee {
 
 ##### 1.什么是AOP
 
-​		OOP(Object-Oriented Programming)面向对象编程，允许开发者定义纵向的关系，但并适用于定义横向的关系，导致了大量代码的重复，而不利于各个模块的重用。
+​		OOP(Object-Oriented Programming)面向对象编程，允许开发者定义**纵向的关系**，但并适用于定义横向的关系，导致了大量代码的重复，而不利于各个模块的重用。
 
 ​		AOP(Aspect-Oriented Programming)，一般称为**面向切面编程**，作为面向对象的一种补充，用于将那些与业务无关，但却对多个对象产生影响的公共行为和逻辑，抽取并封装为一个可重用的模块，这个模块被命名为“切面”（Aspect），减少系统中的重复代码，**降低了模块间的耦合度，同时提高了系统的可维护性**。可用于**权限认证、日志、事务处理**等。
 
@@ -431,11 +435,13 @@ AOP 的工作重心在于如何将增强编织目标对象的连接点上, 这�
 
 ​		启动类上面的注解是**@SpringBootApplication**，它也是 Spring Boot 的**核心注解**，主要组合包含了以下 3 个注解：
 
--   @SpringBootConfiguration：组合了 @Configuration 注解，实现配置文件的功能。
+-   @SpringBootConfiguration：组合了 **@Configuration 注解**，实现配置文件的功能。
 
--   @EnableAutoConfiguration：打开自动配置的功能，也可以关闭某个自动配置的选项，如关闭数据源自动配置功能： @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })。
+-   @EnableAutoConfiguration：打开**自动配置**的功能，也可以关闭某个自动配置的选项，如关闭数据源自动配置功能： 
 
--   @ComponentScan：Spring组件扫描。
+    @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })。
+
+-   @ComponentScan：**Spring组件扫描**。
 
 
 
@@ -462,7 +468,7 @@ AOP 的工作重心在于如何将增强编织目标对象的连接点上, 这�
 
 ##### 3.spring boot 核心配置文件是什么？
 
-​		单纯做 Spring Boot 开发，可能不太容易遇到 bootstrap.properties 配置文件，但是在结合 Spring Cloud 时，这个配置就会经常遇到了，特别是在需要加载一些远程配置文件的时侯。
+​		单纯做 Spring Boot 开发，可能不太容易遇到 bootstrap.properties 配置文件，但是在结合 Spring Cloud 时，这个配置就会经常遇到了，特别是在需要加载一些**远程配置文件**的时侯。
 
 ​		spring boot 核心的两个配置文件：
 
@@ -507,7 +513,7 @@ AOP 的工作重心在于如何将增强编织目标对象的连接点上, 这�
 
 ##### 1.什么是 WebSockets？
 
-WebSocket 是一种计算机通信协议，通过单个 TCP 连接提供全双工通信信道。
+​		WebSocket 是一种**计算机通信协议**，通过单个 TCP 连接提供全双工通信信道。
 
 1、WebSocket 是双向的 -使用 WebSocket 客户端或服务器可以发起消息发送。
 
@@ -555,13 +561,13 @@ WebSocket 是一种计算机通信协议，通过单个 TCP 连接提供全双�
 
 ##### 5.什么是 Swagger？
 
-​		Swagger 广泛用于**可视化 API**，使用 Swagger UI 为前端开发人员提供在线沙箱。Swagger 是用于**生成 RESTful Web 服务**的可视化表示的工具，规范和完整框架实现。它使文档能够以与服务器相同的速度更新。当通过 Swagger 正确定义时，消费者可以使用最少量的实现逻辑来理解远程服务并与其进行交互。因此，Swagger消除了调用服务时的猜测。
+​		Swagger 广泛用于**可视化 API**，使用 Swagger UI 为前端开发人员提供**在线沙箱**。Swagger 是用于**生成 RESTful Web 服务**的可视化表示的工具，规范和完整框架实现。它使文档能够以与服务器相同的速度更新。当通过 Swagger 正确定义时，消费者可以使用最少量的实现逻辑来理解远程服务并与其进行交互。因此，Swagger消除了调用服务时的猜测。
 
 
 
 ##### 6.Swagger如何维护接口文档 ?
 
-​		前后端分离开发日益流行，大部分情况下，我们都是通过 Spring Boot 做前后端分离开发，前后端分离一定会有接口文档，不然会前后端会深深陷入到扯皮中。一个比较笨的方法就是使用 word 或者 md 来维护接口文档，但是效率太低，接口一变，所有人手上的文档都得变。在 Spring Boot 中，这个问题常见的解决方案是 **Swagger** ，使用 Swagger 我们可以**快速生成一个接口文档网站**，接口一旦发生变化，文档就会自动更新，所有开发工程师访问这一个在线网站**就可以获取到最新的接口文档**，非常方便。
+​		前后端分离开发日益流行，大部分情况下，我们都是通过 Spring Boot 做**前后端分离开发**，前后端分离一定会有接口文档，不然会前后端会深深陷入到扯皮中。一个比较笨的方法就是使用 word 或者 md 来维护接口文档，但是效率太低，接口一变，所有人手上的文档都得变。在 Spring Boot 中，这个问题常见的解决方案是 **Swagger** ，使用 Swagger 我们可以**快速生成一个接口文档网站**，接口一旦发生变化，文档就会自动更新，所有开发工程师访问这一个在线网站**就可以获取到最新的接口文档**，非常方便。
 
 
 
@@ -582,7 +588,7 @@ WebSocket 是一种计算机通信协议，通过单个 TCP 连接提供全双�
 
 ##### **2.Spring Boot 中的 starter 到底是什么 ?**
 
-​		首先，这个 Starter 并非什么新的技术点，基本上还是基于 Spring 已有功能来实现的。首先它提供了一个自动化配置类，一般命名为 XXXAutoConfiguration ，在这个配置类中通过条件注解来决定一个配置是否生效（条件注解就是 Spring 中原本就有的），然后它还会提供一系列的默认配置，也允许开发者根据实际情况自定义相关配置，然后通过类型安全的属性注入将这些配置属性注入进来，新注入的属性会代替掉默认属性。正因为如此，很多第三方框架，我们只需要引入依赖就可以直接使用了。当然，开发者也可以自定义 Starter。
+​		首先，这个 Starter 并非什么新的技术点，基本上还是基于 Spring 已有功能来实现的。首先它提供了一个**自动化配置类**，一般命名为 XXXAutoConfiguration ，在这个配置类中通过条件注解来决定一个配置是否生效（条件注解就是 Spring 中原本就有的），然后它还会提供一系列的默认配置，也允许开发者根据实际情况自定义相关配置，然后通过类型安全的属性注入将这些配置属性注入进来，新注入的属性会代替掉默认属性。正因为如此，很多第三方框架，我们只需要引入依赖就可以直接使用了。当然，开发者也可以自定义 Starter。
 
 
 
