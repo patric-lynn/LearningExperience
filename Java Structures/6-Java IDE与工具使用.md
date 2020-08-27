@@ -124,7 +124,7 @@ OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
 
 ##### 4.Maven标准目录结构
 
-​		若要使用Maven，那么项目的目录结构必须符合Maven的规范，其目录结构如下：
+​		若要使用Maven，那么项目的目录结构**必须符合Maven的规范**，其目录结构如下：
 
 ```
 project
@@ -162,11 +162,11 @@ project
 
 ​		**私服**
 
-​		私服是一种特殊的远程仓库，搭建在局域网内的仓库，私服代理广域网的仓库，提供给局域网内的用户使用，可用减少局域网内的用户与外界仓库的传输，每一个jar包只需要拉取一次就可以提供给局域网内所有的用户使用，并且也更加稳定。
+​		私服是一种特殊的**远程仓库**，搭建在局域网内的仓库，私服代理广域网的仓库，提供给局域网内的用户使用，可用减少局域网内的用户与外界仓库的传输，每一个jar包只需要拉取一次就可以提供给局域网内所有的用户使用，并且也更加稳定。
 
 ​		**中央仓库**
 
-​		Maven官方提供的远程仓库，里面拥有最全的jar包资源，Maven首先从本地仓库中寻找项目所需的jar包，若本地仓库没有，再到Maven的中央仓库下载所需jar包。地址是：http://repo1.maven.org/maven2/。
+​		Maven官方提供的远程仓库，里面拥有**最全的jar包资源**，Maven首先从本地仓库中寻找项目所需的jar包，若本地仓库没有，再到Maven的中央仓库下载所需jar包。地址是：http://repo1.maven.org/maven2/。
 
 ###### 5.坐标
 
@@ -208,7 +208,7 @@ org\springframework\spring-core\4.3.4.RELEASE\spring-core-4.3.4.RELEASE.jar
 
 ​		如果我们的项目引用了一个Jar包，而该Jar包又引用了其他Jar包，那么在默认情况下项目编译时，Maven会把直接引用和简洁引用的Jar包都下载到本地。
 
-​		传递性依赖机制能够大大的**简化依赖声明**，而且大部分情况下我们只需要关心项目的直接依赖是什么，而不用考虑这些直接依赖会引入什么传递性依赖，但是当出现冲突了，则需要很清楚传递性依赖是从什么依赖路径引入的。
+​		传递性依赖机制能够大大的**简化依赖声明**，而且大部分情况下我们只需要关心项目的直接依赖是什么，而不用考虑这些直接依赖会引入什么传递性依赖，但是当出现冲突了，则需要很清楚传递性依赖是从**什么依赖路径**引入的。
 
 ###### 8.依赖冲突
 
@@ -278,9 +278,9 @@ org\springframework\spring-core\4.3.4.RELEASE\spring-core-4.3.4.RELEASE.jar
 在导入一个依赖的时候，是否需要把这个依赖向下传递
 ```
 
-false：可以向下传递（默认值）
+​		false：可以向下传递（默认值）
 
-true：不可以向下传递
+​		true：不可以向下传递
 
 ​		**排除依赖**
 
@@ -304,11 +304,11 @@ true：不可以向下传递
 
 ​		**什么是聚合？**
 
-将多个项目同时运行就称为聚合。聚合的作用，是为了简化构建项目的过程。一次性构建多个项目！
+​		将多个项目同时运行就称为聚合。聚合的作用，是为了简化构建项目的过程。一次性构建多个项目！
 
 ​		**如何实现聚合？**
 
-只需在pom中作如下配置即可实现聚合
+​		只需在pom中作如下配置即可实现聚合
 
 ```Java
 <modules>
@@ -420,7 +420,10 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 
 ###### 2.部署jar包到远程仓库
 
-​		部署jar包到远程仓库主要包括两个部分：远程仓库认证，部署jar包到远程仓库
+​		部署jar包到远程仓库主要包括两个部分：
+
+-   **远程仓库认证**
+-   **部署jar包到远程仓库**
 
 ###### 3.构建多模块Maven项目
 
@@ -458,7 +461,7 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 </dependency>
 ```
 
-​		会发现A模块和B模块对junit和log4j库依赖的版本是不同的，出现这种情况是十分危险的，因为依赖不同版本的库可能会造成很多未知的风险。怎么解决不同模块之间对同一个库的依赖版本一样呢？Maven提供了优雅的解决办法，使用继承机制以及dependencyManagement元素来解决这个问题。 如果你在父模块中配置dependencies，那么所有的子模块都自动继承，不仅达到了依赖一致的目的，还省了大段的代码，但这样来做会存在问题的。比如B模块需要spring-aop模块，但是C模块不需要spring-aop模块，如果用dependencies在父类中统一配置，C模块中也会包含有spring-aop模块，不符合我们的要求。但是用dependencyManagement就没有这样的问题。dependencyManagement只会影响现有依赖的配置，但不会引入依赖。 这样我们在父模块中的配置可以更改为如下所示：
+​		会发现A模块和B模块对junit和log4j库依赖的版本是不同的，出现这种情况是十分危险的，因为依赖不同版本的库可能会造成很多未知的风险。怎么解决不同模块之间对同一个库的依赖版本一样呢？Maven提供了优雅的解决办法，使用继承机制以及dependencyManagement元素来解决这个问题。 如果你在父模块中配置dependencies，那么**所有的子模块都自动继承**，不仅达到了依赖一致的目的，还省了大段的代码，但这样来做会存在问题的。比如B模块需要spring-aop模块，但是C模块不需要spring-aop模块，如果用dependencies在父类中统一配置，C模块中也会包含有spring-aop模块，不符合我们的要求。但是用dependencyManagement就没有这样的问题。dependencyManagement**只会影响现有依赖的配置**，但不会引入依赖。 这样我们在父模块中的配置可以更改为如下所示：
 
 ```Java
 <!-- dependencyManagement只会影响现有依赖的配置，但不会引入依赖。 -->
@@ -479,7 +482,7 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 </dependencyManagement>
 ```
 
-​		这段配置不会给任何子模块引入依赖，如果某个子模块需要junit和log4j，只需要这样配置即可：
+​		这段配置**不会给任何子模块引入依赖**，如果某个子模块需要junit和log4j，只需要这样配置即可：
 
 ```Java
 <dependencies>
