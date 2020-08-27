@@ -151,7 +151,7 @@ properties = new KafkaProducer<String,String>(properties);
 
 - 首先创建了一个 **Properties 对象**
 - 使用 `StringSerializer` 序列化器序列化 key / value 键值对
-- 在这里我们**创建了一个新的生产者对象**，并为键值设置了恰当的类型，然后把 Properties 对象传递给他。
+- 在这里我们**创建了一个新的生产者对象**，并为键值设置了恰当的类型，然后把 **Properties 对象传递给他**。
 
 
 
@@ -181,7 +181,7 @@ public ProducerRecord(String topic, K key, V value) {}
 
 ​		发送成功后，send() 方法会返回一个 `Future(java.util.concurrent)` 对象，Future 对象的类型是 `RecordMetadata` 类型，我们上面这段代码**没有考虑返回值，所以没有生成对应的 Future 对象**，所以没有办法知道消息是否发送成功。如果**不是很重要的信息或者对结果不会产生影响的信息**，可以使用这种方式进行发送。
 
-​		我们可以忽略发送消息时可能发生的错误或者在服务器端可能发生的错误，但在消息发送之前，**生产者还可能发生其他的异常**。这些异常有可能是 `SerializationException(序列化失败)`，`BufferedExhaustedException 或 TimeoutException(说明缓冲区已满)`，又或是 `InterruptedException(说明发送线程被中断)`
+​		我们可以忽略发送消息时**可能发生的错误**或者在**服务器端可能发生的错误**，但在消息发送之前，**生产者还可能发生其他的异常**。这些异常有可能是 `SerializationException(序列化失败)`，`BufferedExhaustedException 或 TimeoutException(说明缓冲区已满)`，又或是 `InterruptedException(说明发送线程被中断)`
 
 ②**同步发送消息**
 
