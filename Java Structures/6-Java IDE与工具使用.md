@@ -4,7 +4,7 @@
 
 ##### 1.什么是Maven
 
-​		在Java项目开发中，项目的编译、测试、打包等是比较繁琐的，属于重复劳动的工作，浪费人力和时间成本。以往开发项目时，程序员往往需要花较多的精力在**引用jar包搭建项目环境**上，跨部门甚至跨人员之间的项目结构都有可能不一样。Maven的**仓库管理、依赖管理、继承和聚合**等特性为项目的构建提供了一整套完善的解决方案。
+​		在Java项目开发中，项目的**编译、测试、打包**等是比较繁琐的，属于**重复劳动**的工作，浪费人力和时间成本。以往开发项目时，程序员往往需要花较多的精力在**引用jar包搭建项目环境**上，跨部门甚至跨人员之间的项目结构都有可能不一样。Maven的**仓库管理、依赖管理、继承和聚合**等特性为项目的构建提供了一整套完善的解决方案。
 
 ​		Apache Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project’s build, reporting and documentation from a central piece of information.
 
@@ -26,10 +26,10 @@
 
 ###### 3.传统方式管理jar包依赖的问题：
 
-- jar包冲突
-- jar包依赖
-- jar包体积过大
-- jar包在不同阶段无法个性化配置
+- jar包**冲突**
+- jar包**依赖**
+- jar包**体积过大**
+- jar包在不同阶段**无法个性化配置**
 
 ###### 4.使用maven方式管理jar包依赖的好处：
 
@@ -76,7 +76,7 @@ OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
 
 ​		**1.配置本地仓库位置**
 
-​		Maven安装好之后默认配置了本地仓库，在%user%/.m2/respository目录，但是通常不会使用Maven的默认本地仓库，而是修改maven的本地仓库的地址，修改Maven目录的conf/settings.xml
+​		Maven安装好之后默认配置了**本地仓库**，在%user%/.m2/respository目录，但是通常不会使用Maven的默认本地仓库，而是修改maven的本地仓库的地址，修改Maven目录的conf/settings.xml
 
 ```Java
 <localRepository>C:\develop\Maven\apache-maven-3.6.0\respository</localRepository>
