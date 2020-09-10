@@ -23,13 +23,13 @@
 
 ​		Spring价值：
 
-- Spring是**非侵入式**的框架，目标是使应用程序代码对框架依赖最小化；
-- Spring提供**一致的编程模型**，使应用直接使用POJO开发，与运行环境隔离开来；
+- Spring是**非侵入式**的框架，目标是使应用程序代码**对框架依赖最小化**；
+- Spring提供**一致的编程模型**，使应用**直接使用POJO开发**，与运行环境隔离开来；
 - Spring推动应用设计风格向**面向对象**和**面向接口**开发转变，提高了代码的**重用性和可测试性**；
 
 ##### 3.Spring由哪些模块组成？
 
-​			Spring 总共大约有 20 个模块， 由 1300 多个不同的文件构成。 而这些组件被分别整合在**核心容器（Core Container）** 、 **AOP（Aspect Oriented Programming）**和**设备支持（Instrmentation）** 、**数据访问与集成（Data Access/Integeration）** 、 **Web**、 **消息**（Messaging） 、 **Test**等 6 个模块中。 以下是 Spring 5 的模块结构图：
+​			Spring 总共大约有 **20 个模块**， 由 1300 多个不同的文件构成。 而这些组件被分别整合在**核心容器（Core Container）** 、 **AOP（Aspect Oriented Programming）**和**设备支持（Instrmentation）** 、**数据访问与集成（Data Access/Integeration）** 、 **Web**、 **消息**（Messaging） 、 **Test**等 6 个模块中。 以下是 Spring 5 的模块结构图：
 
 <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200308110437683.png" alt="image-20200308110437683" style="zoom:30%;" />
 
@@ -92,7 +92,7 @@
 
 ​		BeanFactory：是Spring里面最**底层的接口**，包含了各种Bean的定义，读取bean配置文档，管理bean的加载、实例化，控制bean的**生命周期**，维护bean之间的**依赖关系**。
 
-​		ApplicationContext接口作为**BeanFactory的派生**，除了提供BeanFactory所具有的功能外，还提供了更完整的框架功能：
+​		ApplicationContext接口作为**BeanFactory的派生**，除了**提供BeanFactory所具有的功能外，还提供了更完整的框架功能**：
 
 - 继承MessageSource，因此支持国际化。
 - 统一的资源文件访问方式。
@@ -102,11 +102,11 @@
 
 ###### 2.加载方式
 
-​		**BeanFactroy采用的是延迟加载形式来注入Bean的**，即只有在使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化。这样，我们就不能发现一些存在的Spring的配置问题。如果Bean的某一个属性没有注入，BeanFacotry加载后，直至第一次使用调用getBean方法才会抛出异常。
+​		**BeanFactroy采用的是延迟加载形式来注入Bean的**，即只有在**使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化**。这样，我们就不能发现一些存在的Spring的配置问题。如果Bean的某一个属性没有注入，BeanFacotry加载后，直至第一次使用调用getBean方法才会抛出异常。
 
 ​		**ApplicationContext，它是在容器启动时，一次性创建了所有的Bean**。这样，在容器启动时，我们就可以发现Spring中存在的配置错误，这样有利于检查所依赖属性是否注入。 ApplicationContext启动后预载入所有的单实例Bean，通过预载入**单实例bean** ,确保当你需要的时候，你就不用等待，因为它们已经创建好了。相对于基本的BeanFactory，ApplicationContext **唯一的不足是占用内存空间**。当应用程序配置Bean较多时，程序启动较慢。
 
-###### 创建方式
+###### 3.创建方式
 
 ​		**BeanFactory通常以编程的方式被创建**，**ApplicationContext还能以声明的方式创建**，如使用ContextLoader。
 
