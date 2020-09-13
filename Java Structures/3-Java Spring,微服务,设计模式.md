@@ -126,11 +126,13 @@
 
 ##### 5.有哪些不同类型的依赖注入实现方式？
 
-​		依赖注入是时下**最流行的IoC实现方式**，依赖注入分为**接口注入**（Interface Injection），**Setter方法注入**（Setter Injection）和**构造器注入**（Constructor Injection）三种方式。其中接口注入由于在灵活性和易用性比较差，现在从Spring4开始已被废弃。
+​		依赖注入是时下**最流行的IoC实现方式**，依赖注入分为**接口注入**（Interface Injection），**Setter方法注入**（Setter Injection）和**构造器注入**（Constructor Injection）三种方式。
 
-​		**构造器依赖注入**：构造器依赖注入通过容器**触发一个类的构造器来实现**的，该类有一系列参数，每个参数代表一个对其他类的依赖。
+​		**其中接口注入由于在灵活性和易用性比较差，现在从Spring4开始已被废弃。**
 
-​		**Setter方法注入**：Setter方法注入是容器通过**调用无参构造器或无参static工厂** 方法实例化bean之后，调用该bean的setter方法，即实现了基于setter的依赖注入。
+​		1.**构造器依赖注入**：构造器依赖注入通过容器**触发一个类的构造器来实现**的，该类有一系列参数，**每个参数代表一个对其他类的依赖**。
+
+​		2.**Setter方法注入**：Setter方法注入是容器通过**调用无参构造器或无参static工厂** 方法实例化bean之后，**调用该bean的setter方法**，即实现了基于setter的依赖注入。
 ![image-20200308130216043](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200308130216043.png)
 
 
