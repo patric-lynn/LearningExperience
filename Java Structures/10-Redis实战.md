@@ -175,7 +175,7 @@ Redis提供两种持久化机制 RDB 和 AOF 机制:
 
 数据安全性低。RDB 是间隔一段时间进行持久化，如果持久化之间 redis 发生故障，会发生数据丢失。所以这种方式更适合数据要求不严谨的时候
 
-##### 2、AOFAppend-only file)持久化方式：
+##### 2、AOF(Append-only file)持久化方式：
 
 是指所有的命令行记录以 redis 命令请求协议的格式完全持久化存储)保存为 aof 文件。
 
@@ -268,7 +268,7 @@ Redis提供两种持久化机制 RDB 和 AOF 机制:
 
 ​		注意，master并不会立即将rdb内容发送给salve。而是**为每个等待中的salve注册写事件**，当salve对应的socket可以发送数据时，**再将rdb内容发送给salve**。具体过程为：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200405201713227.png" alt="image-20200405201713227" style="zoom:50%;" />
+<img src="参考图片/image-20200405201713227.png" alt="image-20200405201713227" style="zoom:50%;" />
 
 ###### 二、**部分同步/增量拷贝**
 
@@ -283,7 +283,7 @@ Redis提供两种持久化机制 RDB 和 AOF 机制:
 
 ​		具体过程为：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200405201817911.png" alt="image-20200405201817911" style="zoom:50%;" />
+<img src="参考图片/image-20200405201817911.png" alt="image-20200405201817911" style="zoom:50%;" />
 
 #### 14、Pipeline 有什么好处，为什么要用 pipeline？
 
@@ -352,8 +352,8 @@ Redis Cluster 集群模式通常具有 **高可用**、**可扩展性**、**分�
 ##### 3.集群模式
 
 * 主从模式
-* Sentinel模式：着眼于**高可用**，在 master 宕机时会自动将 slave 提升为master，继续提供服务。
-* Cluster模式：着眼于**扩展性**，在单个 redis 内存不足时，使用 Cluster 进行分片存储。
+* Sentinel哨兵模式：着眼于**高可用**，在 master 宕机时会自动将 slave 提升为master，继续提供服务。
+* Cluster集群模式：着眼于**扩展性**，在单个 redis 内存不足时，使用 Cluster 进行分片存储。
 
 ###### 1.主从模式
 
@@ -433,22 +433,22 @@ Redis Cluster 集群模式通常具有 **高可用**、**可扩展性**、**分�
 
 ​		sentinel模式基本可以满足一般生产的需求，具备**高可用性**。但是当数据量过大到一台服务器存放不下的情况时，主从模式或sentinel模式就不能满足需求了，这个时候需要对存储的数据进行分片，将数据存储到多个Redis实例中。cluster模式的出现就是为了解决单机Redis容量有限的问题，将Redis的数据根据一定的规则分配到多台机器。
 
-​		cluster可以说是sentinel和主从模式的结合体，通过cluster可以实现主从和master重选功能，所以如果配置两个副本三个分片的话，就需要六个Redis实例。因为Redis的数据是根据一定规则分配到cluster的不同机器的，当数据量过大时，可以新增机器进行扩容。
+​		cluster可以说是sentinel和主从模式的结合体，通过cluster可以**实现主从**和**master重选**功能，所以如果配置两个副本三个分片的话，就需要六个Redis实例。因为Redis的数据是根据一定规则分配到cluster的不同机器的，当数据量过大时，可以新增机器进行扩容。
 
 ​		使用集群，只需要将redis配置文件中的`cluster-enable`配置打开即可。每个集群中至少需要三个主数据库才能正常运行，新增节点非常方便。
 
 **cluster集群特点：**
 
-* 多个redis节点网络互联，数据共享
+* 多个redis节点**网络互联**，数据共享
 * 所有的节点都是一主一从（也可以是一主多从），其中从不提供服务，仅作为备用
 * 不支持同时处理多个key（如MSET/MGET），因为redis需要把key均匀分布在各个节点上，
   并发量很高的情况下同时创建key-value会降低性能并导致不可预测的行为
-* 支持在线增加、删除节点
+* 支持**在线增加、删除节点**
 * 客户端可以连接任何一个主节点进行读写
 
 #### 16、Redis 集群方案什么情况下会导致整个集群不可用？
 
-​		答：有 A，B，C 三个节点的集群,在没有复制模型的情况下,如果节点 B 失败了，那么整个集群就会以为缺少 5501-11000 这个范围的槽而不可用。
+​		答：有 A，B，C 三个节点的集群,在没有**复制模型**的情况下,如果节点 B 失败了，那么整个集群就会以为缺少 5501-11000 这个范围的槽而不可用。
 
 #### 17、Redis 支持的 Java 客户端都有哪些？官方推荐用哪个？
 
@@ -474,7 +474,7 @@ Redis Cluster 集群模式通常具有 **高可用**、**可扩展性**、**分�
 
 #### 22、Redis 集群会有写操作丢失吗？为什么？
 
-​		答 ：Redis 并不能保证数据的强一致性，这意味这在实际中集群在特定的条件下可能会丢失写操作。 
+​		答 ：Redis 并不能保证**数据的强一致性**，这意味这在实际中集群在特定的条件下可能会丢失写操作。 
 
 #### 23、Redis 集群之间是如何复制的？
 
@@ -524,7 +524,7 @@ Redis Cluster 集群模式通常具有 **高可用**、**可扩展性**、**分�
 
 #### 34、一个 Redis 实例最多能存放多少的 keys？List、Set、Sorted Set 他们最多能存放多少元素？
 
-​		答：理论上 Redis 可以处理多达 232 的 keys，并且在实际中进行了测试，每个实例至少存放了 2 亿 5 千万的 keys。我们正在测试一些较大的值。任何 list、set、和 sorted set 都可以放 232 个元素。换句话说，Redis 的存储极限是系统中的可用内存值。 
+​		答：理论上 Redis 可以处理多达 2^32 的 keys，并且在实际中进行了测试，每个实例至少存放了 2 亿 5 千万的 keys。我们正在测试一些较大的值。任何 list、set、和 sorted set 都可以放 232 个元素。换句话说，Redis 的存储极限是系统中的可用内存值。 
 
 #### 35、MySQL 里有 2000w 数据，redis 中只存 20w 的数据，如何保证 redis 中的数据都是热点数据？
 
@@ -925,7 +925,7 @@ private static BloomFilter<Integer> bf = BloomFilter.create(Funnels.integerFunne
 
 ​		单机的 redis，能够承载的 QPS 大概就在上万到几万不等。对于缓存来说，一般都是用来支撑读高并发的。因此架构做成**主从(master-slave)架构**，**一主多从，主负责写，并且将数据复制到其它的 slave 节点，从节点负责读**。所有的读请求全部走从节点。这样也可以很轻松实现水平扩容，支撑读高并发。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200414000920224.png" alt="image-20200414000920224" style="zoom:40%;" />
+<img src="参考图片/image-20200414000920224.png" alt="image-20200414000920224" style="zoom:40%;" />
 
 ​		**redis replication -> 主从架构 -> 读写分离 -> 水平扩容支撑读高并发**
 
@@ -956,7 +956,7 @@ private static BloomFilter<Integer> bf = BloomFilter.create(Funnels.integerFunne
 
 ​		slave node 如果跟 master node 有网络故障，**断开了连接，会自动重连**，连接之后 master node **仅会复制给 slave 部分缺少的数据**。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200414001426795.png" alt="image-20200414001426795" style="zoom:50%;" />
+<img src="参考图片/image-20200414001426795.png" alt="image-20200414001426795" style="zoom:50%;" />
 
 ###### **过程原理**
 

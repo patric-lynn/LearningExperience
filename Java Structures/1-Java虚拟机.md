@@ -58,7 +58,7 @@
 
 ##### 2.运行时数据区域
 
-<img src="file:///Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200306125246331.png?lastModify=1584461517" alt="image-20200306125246331" style="zoom:50%;" />
+<img src="参考图片/image-20200306125246331.png?lastModify=1584461517" alt="image-20200306125246331" style="zoom:50%;" />
 
 ​		JVM包含**两个子系统**和**两个组件**，两个子系统为**Class loader(类装载)、Execution engine(执行引擎)**；两个组件为**Runtime data area(运行时数据区)、Native Interface(本地接口)**。
 
@@ -69,9 +69,9 @@
 
 ​		**Java 虚拟机在执行 Java 程序的过程中会把它所管理的内存区域划分为若干个不同的数据区域**。这些区域都有各自的用途，以及创建和销毁的时间，有些区域随着虚拟机进程的启动而存在，有些区域则是依赖线程的启动和结束而建立和销毁。Java 虚拟机所**管理的内存**被划分为如下几个区域：
 
-<img src="file:///Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200306125440890.png?lastModify=1584461517" alt="image-20200306125440890" style="zoom:27%;" />
+<img src="参考图片/image-20200306125440890.png?lastModify=1584461517" alt="image-20200306125440890" style="zoom:27%;" />
 
-<img src="file:///Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200306125516358.png?lastModify=1584461517" alt="image-20200306125516358" style="zoom:38%;" />
+<img src="参考图片/image-20200306125516358.png?lastModify=1584461517" alt="image-20200306125516358" style="zoom:38%;" />
 
 ###### 1.程序计数器（线程私有）
 
@@ -221,7 +221,7 @@
 - **指针碰撞**：如果Java堆的内存是规整，即所有用过的内存放在一边，而空闲的的放在另一边。分配内存时将位于中间的**指针指示器向空闲的内存移动一段与对象大小相等的距离**，这样便完成分配内存工作。
 - **空闲列表**：如果Java堆的内存不是规整的，则需要由虚拟机**维护一个列表来记录哪些内存是可用的**，这样在分配的时候可以**从列表中查询到足够大的内存分配给对象**，并在分配后更新列表记录。
 
-​		选择哪种分配方式**是由 Java 堆是否规整来决定的**，而 Java 堆是否规整又**由所采用的垃圾收集器是否带有压缩整理功能决定**。 ![image-20200306133742019](file:///Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200306133742019.png?lastModify=1584461517)
+​		选择哪种分配方式**是由 Java 堆是否规整来决定的**，而 Java 堆是否规整又**由所采用的垃圾收集器是否带有压缩整理功能决定**。 ![image-20200306133742019](参考图片/image-20200306133742019.png?lastModify=1584461517)
 
 ###### 3.处理并发安全问题
 
@@ -230,7 +230,7 @@
 - 对分配内存空间的动作进行**同步处理**（采用 **CAS + 失败重试**来保障更新操作的原子性）；
 - 把内存分配的动作**按照线程划分在不同的空间之中进行**，即每个线程在 **Java 堆**中预先分配一小块内存，称为**本地线程分配缓冲**（Thread Local Allocation Buffer, TLAB）。哪个线程要分配内存，就在哪个线程的 TLAB 上分配。只有 TLAB **用完并分配新的 TLAB 时，才需要同步锁**。通过-XX:+/-UserTLAB参数来设定虚拟机是否使用TLAB。
 
-![image-20200306133910751](file:///Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200306133910751.png?lastModify=1584461517)
+![image-20200306133910751](参考图片/image-20200306133910751.png?lastModify=1584461517)
 
 ###### 4.初始化分配到的内存空间
 
@@ -254,7 +254,7 @@
 
 ​		在HotSpot虚拟机中，对象头有两部分信息组成：**运行时数据 和 类型指针**，如果是数组对象，还有一个保存数组长度的空间。
 
-​		**Mark Word（运行时数据）**：用于存储对象自身运行时的数据，如哈希码（hashCode）、GC分带年龄、线程持有的锁、偏向线程ID 等信息。在32位系统占4字节，在64位系统中占8字节；HotSpot虚拟机对象头Mark Word在其他状态（**轻量级锁定、重量级锁定、GC标记、可偏向**）下对象的存储内容如下表所示： ![image-20200306134319415](file:///Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200306134319415.png?lastModify=1584461517)
+​		**Mark Word（运行时数据）**：用于存储对象自身运行时的数据，如哈希码（hashCode）、GC分带年龄、线程持有的锁、偏向线程ID 等信息。在32位系统占4字节，在64位系统中占8字节；HotSpot虚拟机对象头Mark Word在其他状态（**轻量级锁定、重量级锁定、GC标记、可偏向**）下对象的存储内容如下表所示： ![image-20200306134319415](参考图片/image-20200306134319415.png?lastModify=1584461517)
 
 ###### 实例数据
 
@@ -289,7 +289,7 @@
 
 ​		如果使用**直接指针**访问，**引用** 中存储的直接就是**对象地址**，那么`Java`堆对象内部的布局中就必须考虑如何放置访问**类型数据**的相关信息。
 
-![image-20200306134708051](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200306134708051-4461689-6145871.png)
+![image-20200306134708051](参考图片/image-20200306134708051-4461689-6145871.png)
 
 ​		**优势**：速度更**快**，节省了**一次指针定位**的时间开销。由于对象的访问在`Java`中非常频繁，因此这类开销积少成多后也是非常可观的执行成本。HotSpot 中采用的就是这种方式。
 
@@ -1010,11 +1010,11 @@
 
 ​		昨日发现部分开发测试机器出现异常：**java.lang.OutOfMemoryError: GC overhead limit exceeded**，这个异常代表：GC为了释放**很小的空间却耗费了太多的时间**，其原因一般有两个：1，堆太小，2，有死循环或大对象；笔者首先排除了第2个原因，因为这个应用同时是在线上运行的，如果有问题，早就挂了。所以怀疑是这台机器中堆设置太小；使用ps -ef |grep "java"查看，发现：
 
-![img](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/af00bbf9-50dc-3127-a917-e78aced45e01.png) 
+![img](参考图片/af00bbf9-50dc-3127-a917-e78aced45e01.png) 
 
  		该应用的堆区设置只有768m，而机器内存有2g，机器上只跑这一个java应用，没有其他需要占用内存的地方。另外，这个应用比较大，需要占用的内存也比较多；通过上面的情况判断，只需要改变堆中各区域的大小设置即可，于是改成下面的情况：
 
-![img](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/196da884-1c12-3b4e-9d5a-08300587d5e4.png) 
+![img](参考图片/196da884-1c12-3b4e-9d5a-08300587d5e4.png) 
 
 ​		跟踪运行情况发现，相关异常没有再出现；
 
@@ -1044,6 +1044,6 @@ S0   S1   E   O    P     YGC YGCT FGC FGCT  GCT
 
 ​		一应用在性能测试过程中，发现内存占用率很高，Full GC频繁，使用**sudo -u admin -H  jmap -dump:format=b,file=文件名.hprof pid** 来dump内存，生成dump文件，并使用Eclipse下的mat差距进行分析，发现：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200406125318829.png" alt="image-20200406125318829" style="zoom:50%;" />
+<img src="参考图片/image-20200406125318829.png" alt="image-20200406125318829" style="zoom:50%;" />
  		从图中可以看出，这个线程存在问题，队列LinkedBlockingQueue所引用的**大量对象并未释放**，导致整个线程占用**内存高达378m**，此时通知开发人员进行代码优化，将相关对象释放掉即可。
 

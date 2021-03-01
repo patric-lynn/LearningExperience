@@ -42,7 +42,7 @@
 
 ​		其中，`Loggers all async`是基于[LMAX Disruptor](http://lmax-exchange.github.com/disruptor/)实现的。可见Log4j2的异步日志性能是最棒的。
 
-![image-20200309202609821](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200309202609821.png)
+![image-20200309202609821](参考图片/image-20200309202609821.png)
 
 
 
@@ -50,7 +50,7 @@
 
 ​		上述介绍的是一些日志框架的实现（Log4j、Logback、log4j2），这里我们需要用日志门面来解决系统与日志实现框架的耦合性。SLF4J，即**简单日志门面**（Simple Logging Facade for Java），它不是一个真正的日志实现，而是一个**抽象层**（ abstraction layer），它允许你在后台使用任意一个日志实现。
 
-![image-20200309202818708](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200309202818708.png)
+![image-20200309202818708](参考图片/image-20200309202818708.png)
 
 ​		前面介绍的几种日志框架一样，每一种日志框架都有自己单独的API，要使用对应的框架就要使用其对应的API，这就大大的增加应用程序代码对于日志框架的耦合性。使用了SLF4J后，对于应用程序来说，无论底层的日志框架如何变，应用程序不需要修改任意一行代码，就可以直接上线了。
 

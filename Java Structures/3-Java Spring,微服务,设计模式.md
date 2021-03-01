@@ -31,7 +31,7 @@
 
 ​			Spring 总共大约有 **20 个模块**， 由 1300 多个不同的文件构成。 而这些组件被分别整合在**核心容器（Core Container）** 、 **AOP（Aspect Oriented Programming）**和**设备支持（Instrmentation）** 、**数据访问与集成（Data Access/Integeration）** 、 **Web**、 **消息**（Messaging） 、 **Test**等 6 个模块中。 以下是 Spring 5 的模块结构图：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200308110437683.png" alt="image-20200308110437683" style="zoom:30%;" />
+<img src="参考图片/image-20200308110437683.png" alt="image-20200308110437683" style="zoom:30%;" />
 
 ​		**spring core**：提供了框架的基本组成部分，包括**控制反转（Inversion of Control，IOC）**和**依赖注入（Dependency Injection，DI）**功能。
 ​		**spring beans**：提供了BeanFactory，是**工厂模式的一个经典实现**，Spring将管理对象称为**Bean**。
@@ -133,7 +133,7 @@
 ​		1.**构造器依赖注入**：构造器依赖注入通过容器**触发一个类的构造器来实现**的，该类有一系列参数，**每个参数代表一个对其他类的依赖**。
 
 ​		2.**Setter方法注入**：Setter方法注入是容器通过**调用无参构造器或无参static工厂** 方法实例化bean之后，**调用该bean的setter方法**，即实现了基于setter的依赖注入。
-![image-20200308130216043](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200308130216043.png)
+![image-20200308130216043](参考图片/image-20200308130216043.png)
 
 
 
@@ -984,7 +984,7 @@ AOP 的工作重心在于如何将增强编织目标对象的连接点上, 这�
 
 其实还有两类：**并发型模式和线程池模式**。用一个图片来整体描述一下：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200406131324724.png" alt="image-20200406131324724" style="zoom:50%;" />
+<img src="参考图片/image-20200406131324724.png" alt="image-20200406131324724" style="zoom:50%;" />
 
  
 
@@ -1294,7 +1294,7 @@ true
 
 -   **普通简单工厂**。就是建立一个工厂类，对实现了**同一接口**的**一些类进行实例**的创建。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200411010340530.png" alt="image-20200411010340530" style="zoom:40%;" />
+<img src="参考图片/image-20200411010340530.png" alt="image-20200411010340530" style="zoom:40%;" />
 
 ```Java
 //举例如下：（我们举一个发送邮件和短信的例子）
@@ -1344,7 +1344,7 @@ public class FactoryTest {
 
 -   **多个方法简单工厂**。是对普通工厂方法模式的改进，在普通工厂方法模式中，如果传递的字符串出错，则不能正确创建对象，而多个工厂方法模式是**提供多个工厂方法**，**分别创建对象**。
 
-    <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200411011051494.png" alt="image-20200411011051494" style="zoom:40%;" />
+    <img src="参考图片/image-20200411011051494.png" alt="image-20200411011051494" style="zoom:40%;" />
 
 ```Java
 //将上面的代码做下修改，改动下SendFactory类就行，如下：
@@ -1664,7 +1664,7 @@ public class Client {
 
 ###### 2.建造者模式结构
 
-![建造者模式](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160124163530064.png)
+![建造者模式](参考图片/20160124163530064.png)
 
 ​		在这个示意性的系统里，最终产品Product只有两个零件，即part1和part2。相应的建造方法也有两个：**buildPart1()和buildPart2()**、同时可以看出本模式涉及到四个角色，它们分别是：
 
@@ -1790,7 +1790,7 @@ public class Client {
 
 ​		**时序图**
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160124163803926.png" alt="这里写图片描述" style="zoom:70%;" />
+<img src="参考图片/20160124163803926.png" alt="这里写图片描述" style="zoom:70%;" />
 
 ​		客户端负责**创建导演者和具体建造者对象**。然后，客户端把**具体建造者对象交给导演者**，导演者操作具体建造者，开始创建产品。当产品完成后，建造者把产品返还给客户端。
 ​		把创建具体建造者对象的任务交给客户端而不是导演者对象，是为了将导演者对象与具体建造者对象的耦合变成动态的，从而使导演者对象可以操纵数个具体建造者对象中的任何一个。
@@ -1809,11 +1809,11 @@ public class Client {
 
 ​		假设有一个电子杂志系统，定期地向用户的电子邮件信箱发送电子杂志。用户可以通过网页订阅电子杂志，也可以通过网页结束订阅。当客户开始订阅 时，系统发送一个电子邮件表示欢迎，当客户结束订阅时，系统发送一个电子邮件表示欢送。本例子就是这个系统负责**发送“欢迎”和“欢送”邮件的模块**。在本例中，产品类就是发给某个客户的“欢迎”和“欢送”邮件，如下图所示。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160124163938147.png" alt="系统类图" style="zoom:70%;" />
+<img src="参考图片/20160124163938147.png" alt="系统类图" style="zoom:70%;" />
 
 ​		虽然在这个例子里面各个产品类均有一个共同的接口，但这仅仅是本例特有的，并不代表建造模式的特点。建造模式可以**应用到具有完全不同接口的产品类**上。大多数情况下是不知道最终构建出来的产品是什么样的，所以在标准的建造模式里面，一般是不需要对产品定义抽象接口的，因为最终构造的产品千差万别，给这些产品定义公共接口几乎是没有意义的。下图所示就是这个系统的类图。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160124164002522.png" alt="系统类图" style="zoom:90%;" />
+<img src="参考图片/20160124164002522.png" alt="系统类图" style="zoom:90%;" />
 
 ​		这个系统含有**客户端（Client）、导演者（Director）、抽象建造者（Builder）、具体建造者（WelcomeBuilder和GoodbyeBuilder）、产品（WelcomeMessage和GoodbyeMessage）**等角色。
 
@@ -2170,11 +2170,11 @@ public class Prototype implements Cloneable {
 
 -   **浅复制**：将一个对象复制后，基本数据类型的**变量都会重新创建**，而引用类型，指向的还是**原对象所指向的**。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200412180848269.png" alt="image-20200412180848269" style="zoom:40%;" />
+<img src="参考图片/image-20200412180848269.png" alt="image-20200412180848269" style="zoom:40%;" />
 
 -   **深复制**：将一个对象复制后，不论是基本数据类型还有引用类型，都是**重新创建的**。简单来说，就是**深复制进行了完全彻底的复制，而浅复制不彻底。**
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200412180825788.png" alt="image-20200412180825788" style="zoom:40%;" />
+<img src="参考图片/image-20200412180825788.png" alt="image-20200412180825788" style="zoom:40%;" />
 
 ###### **4.浅度克隆**
 
@@ -2450,7 +2450,7 @@ false
 
  		适配器模式将某个类的**接口转换成客户端期望的另一个接口表示**，目的是消除由于**接口不匹配所造成的类的兼容性问题**。主要分为三类：**类的适配器模式**、**对象的适配器模式**、**接口的适配器模式**。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413005609200.png" alt="image-20200413005609200" style="zoom:30%;" />
+<img src="参考图片/image-20200413005609200.png" alt="image-20200413005609200" style="zoom:30%;" />
 
 ###### 1.适配器模式的概念
 
@@ -2487,7 +2487,7 @@ false
 
 ​		核心思想就是：有一个Source类，拥有一个方法，待适配，目标接口是Targetable，通过Adapter类，将Source的功能扩展到Targetable里.
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413002146674.png" alt="image-20200413002146674" style="zoom:40%;" />
+<img src="参考图片/image-20200413002146674.png" alt="image-20200413002146674" style="zoom:40%;" />
 
 ```Java
 //目标接口，或称为标准接口 
@@ -2530,7 +2530,7 @@ public class Client {
 
 ​		基本思路和类的适配器模式相同，只是将Adapter类作修改，这次不继承Source类，而是持有Source类的实例，以达到解决兼容性的问题。（采用对象组合方式实现）
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160128161731671.jpeg" alt="这里写图片描述" style="zoom:80%;" />
+<img src="参考图片/20160128161731671.jpeg" alt="这里写图片描述" style="zoom:80%;" />
 
 ```Java
 //目标接口，或称为标准接口 
@@ -2589,7 +2589,7 @@ public class Client {
 
 ​		第三种适配器模式是**接口的适配器模式**，接口的适配器是这样的：有时我们写的一个**接口中有多个抽象方法**，当我们写该接口的实现类时，必须实现该接口的所有方法，这明显有时比较浪费，因为并不是所有的方法都是我们需要的，有时只需要某一些，此处为了解决这个问题，我们引入了接口的适配器模式，借助于**一个抽象类**，该抽象类实现了该接口，实现了所有的方法，而我们不和原始的接口打交道，只和该抽象类取得联系，所以我们写一个类，**继承该抽象类，重写我们需要的方法**就行。看一下类图：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413003209779.png" alt="image-20200413003209779" style="zoom:35%;" />
+<img src="参考图片/image-20200413003209779.png" alt="image-20200413003209779" style="zoom:35%;" />
 
 ​		这个很好理解，在实际开发中，我们也常会遇到这种接口中定义了太多的方法，以致于有时我们在一些实现类中并不是都需要。
 
@@ -2776,7 +2776,7 @@ public class Client {
 
 ​		顾名思义，装饰模式就是给**一个对象增加一些新的功能**，而且是动态的，要求装饰对象和被装饰对象实现同一个接口，装饰对象持有被装饰对象的实例，关系图如下：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/e1b8b6a3-0150-31ae-8f77-7c3d888b6f80.jpg" alt="img" style="zoom:75%;" />
+<img src="参考图片/e1b8b6a3-0150-31ae-8f77-7c3d888b6f80.jpg" alt="img" style="zoom:75%;" />
 
 ​		Source类是被装饰类，Decorator类是一个装饰类，可以为Source类动态的添加一些功能.
 
@@ -2810,7 +2810,7 @@ public class Client {
 
 ​		装饰模式的**类图**如下：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160129181831723.png" alt="装饰模式类图" style="zoom:70%;" />
+<img src="参考图片/20160129181831723.png" alt="装饰模式类图" style="zoom:70%;" />
 
 ​		**装饰模式中的角色有：**
 
@@ -3029,7 +3029,7 @@ public class Client {
 
 ​		其实每个模式名称就表明了该模式的作用，代理模式就是**多一个代理类**出来，**替原对象进行一些操作**，比如我们在租房子的时候会去找中介，为什么呢？因为你对该地区房屋的信息掌握的不够全面，希望找一个更熟悉的人去帮你做，此处的代理就是这个意思。再如我们有的时候打官司，需要请律师，因为律师在法律方面有专长，可以替我们进行操作，表达我们的想法。先来看看关系图：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413155027434.png" alt="image-20200413155027434" style="zoom:40%;" />
+<img src="参考图片/image-20200413155027434.png" alt="image-20200413155027434" style="zoom:40%;" />
 
 ###### 1.代理模式的特点
 
@@ -3215,7 +3215,7 @@ public class Test {
 
 ​		按照上面所述，我们肯定**必须先把被代理类RealSubject已实现的所有interface都加载到JVM中**，不然JVM怎么能够找到这些方法呢？明白了这个道理，那么我们就可以**创建一个被代理类的实例**，获得该实例的类加载器ClassLoader。所谓的类加载器ClassLoader，就是具有某个类的类定义，即类的内部相关结构（包括继承树、方法区等等）。更重要的是，动态代理模式**可以使得我们在不改变原来已有的代码结构的情况下，对原来的“真实方法”进行扩展、增强其功能**，并且可以达到**控制被代理对象的行为的目的**。请详看下面代码中的DynamicProxy类，其中必须实现的invoke()方法**在调用被代理类的真实方法的前后都可进行一定的特殊操作**。这是动态代理最明显的优点。类图如下：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/20160328211321804.png" alt="这里写图片描述" style="zoom:70%;" />
+<img src="参考图片/20160328211321804.png" alt="这里写图片描述" style="zoom:70%;" />
 
 ```Java
 import java.lang.reflect.InvocationHandler;
@@ -3398,7 +3398,7 @@ public class Test {
 
 ​		外观模式（Facade）是为了解决**类与类之家的依赖关系的**，像spring一样，可以将类和类之间的关系配置到配置文件中，而外观模式就是将他们的**关系放在一个Facade类中**，降低了类类之间的耦合度，该模式中没有涉及到接口，看下类图：（我们以一个计算机的启动过程为例）
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/eebe2103-6ced-35f2-8664-3a2e8a557f81.jpg" alt="img" style="zoom:75%;" />
+<img src="参考图片/eebe2103-6ced-35f2-8664-3a2e8a557f81.jpg" alt="img" style="zoom:75%;" />
 
 ```java
 public class Computer {  
@@ -3526,7 +3526,7 @@ public class Client {
 
 ​		桥接模式就是把事物和其具体实现分开，使他们可以各自独立的变化。桥接的用意是：**将抽象化与实现化解耦，使得二者可以独立变化**，像我们常用的JDBC桥DriverManager一样，JDBC进行连接数据库的时候，在各个数据库之间进行切换，**基本不需要动太多的代码，甚至丝毫不用动**，原因就是**JDBC提供统一接口**，每个数据库提供各自的实现，用一个叫做数据库驱动的程序来桥接就行了。我们来看看关系图：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/35f0b172-b976-3757-bb51-c65d5c9ce68e.jpg" alt="img" style="zoom:67%;" />
+<img src="参考图片/35f0b172-b976-3757-bb51-c65d5c9ce68e.jpg" alt="img" style="zoom:67%;" />
 
 ###### **1.桥接模式的定义**
 
@@ -3699,7 +3699,7 @@ Bwm车安装
 
 ​		组合模式有时又叫**部分-整体**模式在处理类似树形结构的问题时比较方便，看看关系图：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413181627864.png" alt="image-20200413181627864" style="zoom:50%;" />
+<img src="参考图片/image-20200413181627864.png" alt="image-20200413181627864" style="zoom:50%;" />
 
 ​		**使用场景**：将多个**对象组合在一起进行操作**，常用于**表示树形结构中**，例如二叉树，数等。
 
@@ -3771,7 +3771,7 @@ public class Tree {
 
 ​		享元模式的主要目的是**实现对象的共享**，即共享池，当系统中对象多的时候可以**减少内存的开销**，**通常与工厂模式一起使用**。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/f7aae0dd-b250-3829-bb07-49d87069bfbb.jpg" alt="img" style="zoom:70%;" />
+<img src="参考图片/f7aae0dd-b250-3829-bb07-49d87069bfbb.jpg" alt="img" style="zoom:70%;" />
 
 ​		FlyWeightFactory负责**创建和管理享元单元**，当一个客户端请求时，工厂需要检查当前对象池中是否有符合条件的对象，如果有，**就返回已经存在的对象**，如果没有，**则创建一个新对象**，FlyWeight是超类。一提到共享池，我们很容易联想到Java里面的JDBC连接池，想想每个连接的特点，我们不难总结出：适用于作共享的一些个对象，他们有一些共有的属性，就拿数据库连接池来说，url、driverClassName、username、password及dbname，这些**属性对于每个连接来说都是一样的**，所以就适合用**享元模式来处理**，建一个工厂类，将上述类似属性作为内部数据，其它的作为外部数据，在方法调用时，当做参数传进来，这样就节省了空间，减少了实例的数量。
 
@@ -3833,7 +3833,7 @@ public class ConnectionPool {
 
 ​		先来张图，看看这11中模式的关系：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413182208087.png" alt="image-20200413182208087" style="zoom:35%;" />
+<img src="参考图片/image-20200413182208087.png" alt="image-20200413182208087" style="zoom:35%;" />
 
 ​		第一类：通过父类与子类的关系进行实现。
 
@@ -3849,13 +3849,13 @@ public class ConnectionPool {
 
 ​		策略模式定义了一系列算法，并将每个算法封装起来，使他们可以**相互替换**，且算法的变化不会影响到使用算法的客户。需要设计一个接口，为一系列实现类提供**统一的方法**，多个实现类实现该接口，设计一个抽象类（可有可无，属于辅助类），提供辅助函数，关系图如下：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/2319a2c3-7ebd-3ee3-b389-1548074ea9c6.jpg" alt="img" style="zoom:75%;" />
+<img src="参考图片/2319a2c3-7ebd-3ee3-b389-1548074ea9c6.jpg" alt="img" style="zoom:75%;" />
 
 ###### 2.模板方法模式（Template Method）
 
 ​		解释一下**模板方法模式**，就是指：一个抽象类中，有一个主方法，再定义1...n个方法，可以是抽象的，也可以是实际的方法，定义一个类，继承该抽象类，重写抽象方法，通过调用抽象类，实现对子类的调用，先看个关系图：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/c3d57775-ddf9-302b-9dfe-c65967518d3c.jpg" alt="img" style="zoom:75%;" />
+<img src="参考图片/c3d57775-ddf9-302b-9dfe-c65967518d3c.jpg" alt="img" style="zoom:75%;" />
 
 ​		就是在AbstractCalculator类中定义一个主方法calculate，calculate()调用spilt()等，Plus和Minus分别继承AbstractCalculator类，通过对AbstractCalculator的调用实现对子类的调用
 
@@ -3867,7 +3867,7 @@ public class ConnectionPool {
 
 ​		包括这个模式在内的接下来的四个模式，都是类和类之间的关系，**不涉及到继承**，学的时候应该记得归纳。观察者模式很好理解，类似于**邮件订阅和RSS订阅**，当我们浏览一些博客或wiki时，经常会看到RSS图标，就这的意思是，当你订阅了该文章，如果后续有更新，会及时通知你。其实，简单来讲就一句话：当一个对象变化时，其它**依赖该对象的对象都会收到通知**，并且随着变化！对象之间是一种**一对多的关系**。先来看看关系图：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/d588525c-fbad-3040-971c-69b2716c67a4.jpg" alt="img" style="zoom:75%;" />
+<img src="参考图片/d588525c-fbad-3040-971c-69b2716c67a4.jpg" alt="img" style="zoom:75%;" />
 
 ​		我解释下这些类的作用：MySubject类就是我们的主对象，Observer1和Observer2是依赖于MySubject的对象，当MySubject变化时，Observer1和Observer2必然变化。AbstractSubject类中定义着需要监控的对象列表，可以对其进行修改：**增加或删除被监控对象，且当MySubject变化时，负责通知在列表内存在的对象**。
 
@@ -4073,7 +4073,7 @@ A B C D E
 
 ​		接下来我们将要谈谈责任链模式，有多个对象，**每个对象持有对下一个对象的引用，这样就会形成一条链**，请求在这条链上传递，直到某一对象决定处理该请求。但是发出者并不清楚到底最终那个对象会处理该请求，所以，责任链模式可以实现，在隐瞒客户端的情况下，对系统进行动态的调整。先看看关系图： 
 
- <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/729a82ce-0987-347c-a4f1-bf64dee59ddb.jpg" alt="img" style="zoom:75%;" />
+ <img src="参考图片/729a82ce-0987-347c-a4f1-bf64dee59ddb.jpg" alt="img" style="zoom:75%;" />
 
  
 
@@ -4085,7 +4085,7 @@ A B C D E
 
 ​		命令模式很好理解，举个例子，司令员下令让士兵去干件事情，从整个事情的角度来考虑，司令员的作用是，发出口令，口令经过传递，传到了士兵耳朵里，士兵去执行。这个过程好在，三者相互解耦，任何一方都不用去依赖其他人，只需要做好自己的事儿就行，司令员要的是结果，不会去关注到底士兵是怎么实现的。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/98cda4fc-00b1-300d-a25b-63229f0f1cbd.jpg" alt="img" style="zoom:75%;" />
+<img src="参考图片/98cda4fc-00b1-300d-a25b-63229f0f1cbd.jpg" alt="img" style="zoom:75%;" />
 
 ​		Invoker是**调用者**（司令员），Receiver是**被调用者**（士兵），MyCommand是命令，实现了Command接口，持有接收对象。
 
@@ -4101,7 +4101,7 @@ A B C D E
 
 ​		主要目的是**保存一个对象的某个状态**，以便在适当的时候恢复对象，个人觉得叫**备份模式**更形象些，通俗的讲下：假设有原始类A，A中有各种属性，A可以决定需要备份的属性，备忘录类B是用来存储A的一些内部状态，类C呢，就是一个用来存储备忘录的，且只能存储，不能修改等操作。做个图来分析一下：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/853d5c5a-9b7b-3341-a72e-abd3cbc3c81f.jpg" alt="img" style="zoom:75%;" />
+<img src="参考图片/853d5c5a-9b7b-3341-a72e-abd3cbc3c81f.jpg" alt="img" style="zoom:75%;" />
 
 ​		Original类是原始类，里面有需要保存的属性value及创建一个备忘录类，用来保存value值。Memento类是备忘录类，Storage类是**存储备忘录的类**，持有Memento类的实例，该模式很好理解。
 
@@ -4194,7 +4194,7 @@ public class Test {
 
 ​		核心思想就是：**当对象的状态改变时，同时改变其行为**，很好理解！就拿QQ来说，有几种状态，在线、隐身、忙碌等，每个状态对应不同的操作，而且你的好友也能看到你的状态，所以，状态模式就两点：1、可以通过改变状态来获得不同的行为。2、你的好友能同时看到你的变化。看图：
 
-![img](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/006156d2-f41f-3019-a194-b872a59ca426.jpg)
+![img](参考图片/006156d2-f41f-3019-a194-b872a59ca426.jpg)
 
 ​		State类是个状态类，Context类可以实现切换.
 
@@ -4208,7 +4208,7 @@ public class Test {
 
 ​		简单来说，访问者模式就是一种**分离对象数据结构与行为的方法**，通过这种分离，可达到为一个被访问者动态添加新的操作而无需做其它的修改的效果。简单关系图：
 
-![img](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/96bd38f3-2888-3cc5-b90f-0e7542dc5845.jpg)
+![img](参考图片/96bd38f3-2888-3cc5-b90f-0e7542dc5845.jpg)
 
 ​		该模式适用场景：如果我们想为一个现有的类增加新功能，不得不考虑几个事情：1、新功能会不会与现有功能出现兼容性问题？2、以后会不会再需要添加？3、如果类不允许修改代码怎么办？面对这些问题，最好的解决方法就是使用访问者模式，访问者模式**适用于数据结构相对稳定的系统**，把数据结构和算法解耦，
 
@@ -4216,12 +4216,12 @@ public class Test {
 
 ​		中介者模式也是用来降低类类之间的耦合的，因为如果类类之间有依赖关系的话，不利于功能的拓展和维护，因为只要修改一个对象，其它关联的对象都得进行修改。如果使用中介者模式，只需关心和Mediator类的关系，具体类类之间的关系及调度交给Mediator就行，这有点像**spring容器的作用**。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413185157203.png" alt="image-20200413185157203" style="zoom:50%;" />
+<img src="参考图片/image-20200413185157203.png" alt="image-20200413185157203" style="zoom:50%;" />
 
 ###### 3.解释器模式（Interpreter）
 
 ​		解释器模式是我们最后一讲，一般主要应用在OOP开发中的编译器的开发中，所以适用面比较窄。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200413185244680.png" alt="image-20200413185244680" style="zoom:50%;" />
+<img src="参考图片/image-20200413185244680.png" alt="image-20200413185244680" style="zoom:50%;" />
 
 ​		解释器模式用来做各种各样的解释器，如正则表达式等的解释器等等！

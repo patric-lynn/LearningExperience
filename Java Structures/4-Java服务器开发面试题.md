@@ -210,7 +210,7 @@
 
 ##### 4.服务器状态码的含义
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200520013617799.png" alt="image-20200520013617799" style="zoom:50%;" />
+<img src="参考图片/image-20200520013617799.png" alt="image-20200520013617799" style="zoom:50%;" />
 
 ​		状态码响应类别的的定义是必须遵守的，后面的两个数字服务器自己DIY也没什么问题
 
@@ -466,7 +466,7 @@ String inj_stra[] = split(inj_str,"|");
 
 ​			TCP通过一个**定时器**（timer）采样了**RTT并计算RTO**，但是，如果网络上的延时突然增加，那么，TCP对这个事做出的应对只有重传数据，然而重传会导致**网络的负担更重**，于是会导致**更大的延迟以及更多的丢包**，这就导致了恶性循环，最终形成“网络风暴” —— TCP的拥塞控制机制就是用于应对这种情况。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200520014935022.png" alt="image-20200520014935022" style="zoom:50%;" />
+<img src="参考图片/image-20200520014935022.png" alt="image-20200520014935022" style="zoom:50%;" />
 
 ​		首先需要了解一个概念，为了在发送端调节所要发送的数据量，定义了一个“**拥塞窗口**”（Congestion Window），在发送数据时，将拥塞窗口的大小与接收端ack的窗口大小做比较，取较小者作为发送数据量的上限。
 
@@ -1154,7 +1154,7 @@ netstat [-acCeFghilMnNoprstuvVwx][-A<网络类型>][--ip]
 
 ​		Redis主要有5种数据类型，包括String，List，Set，Zset，Hash，满足大部分的使用要求
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200313165323848.png" alt="image-20200313165323848" style="zoom:50%;" />
+<img src="参考图片/image-20200313165323848.png" alt="image-20200313165323848" style="zoom:50%;" />
 
 ###### Redis的应用场景
 
@@ -1457,16 +1457,16 @@ Redis相比其他缓存，有一个非常大的优势，就是支持多种数据
 
 ###### 1.Redis与Memcached的区别
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/%E6%88%AA%E5%B1%8F2020-03-1317.43.49.png" alt="截屏2020-03-1317.43.49" style="zoom:50%;" />
+<img src="参考图片/%E6%88%AA%E5%B1%8F2020-03-1317.43.49.png" alt="截屏2020-03-1317.43.49" style="zoom:50%;" />
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200313174419610.png" alt="image-20200313174419610" style="zoom:50%;" />
+<img src="参考图片/image-20200313174419610.png" alt="image-20200313174419610" style="zoom:50%;" />
 
 ###### 如何保证缓存与数据库双写时的数据一致性？
 
 ​		你只要用缓存，就可能会涉及到缓存与数据库**双存储双写**，你只要是双写，就**一定会有数据一致性的问题**，那么你如何解决一致性问题？
 
 ​		一般来说，就是如果你的系统不是严格要求缓存+数据库必须一致性的话，缓存可以稍微的跟数据库偶尔有不一致的情况，最好不要做这个方案：**读请求和写请求串行化**，串到一个内存队列里去，这样就可以保证一定不会出现不一致的情况。串行化之后，就会导致**系统的吞吐量会大幅度的降低**，用比正常情况下多几倍的机器去支撑线上的一个请求。还有一种方式就是可能会暂时产生不一致的情况，但是发生的几率特别小，就是**先更新数据库，然后再删除缓存**。
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200313174558731.png" alt="image-20200313174558731" style="zoom:50%;" />
+<img src="参考图片/image-20200313174558731.png" alt="image-20200313174558731" style="zoom:50%;" />
 
 ###### 3.Redis常见性能问题和解决方案？
 
@@ -1703,9 +1703,9 @@ Redis相比其他缓存，有一个非常大的优势，就是支持多种数据
 
 ​		**Kafka、ActiveMQ、RabbitMQ、RocketMQ 有什么优缺点？**
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200313181057898.png" alt="image-20200313181057898" style="zoom:50%;" />
+<img src="参考图片/image-20200313181057898.png" alt="image-20200313181057898" style="zoom:50%;" />
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200313181113195.png" alt="image-20200313181113195" style="zoom:50%;" />
+<img src="参考图片/image-20200313181113195.png" alt="image-20200313181113195" style="zoom:50%;" />
 
 
 
@@ -1827,7 +1827,7 @@ Redis相比其他缓存，有一个非常大的优势，就是支持多种数据
 ​		需要注意：由于1个主题，一般包含几个分区，因此无法保证在整个**主题范围内消息的顺序**。但可以保证消息在单个分区内的顺序；
 
 ​		kafka通过分区来实现**数据冗余和伸缩性**，分区可以分布在不同的服务器上。也就是说，一个主题通常横跨多个服务器，通过这种方式来提供单个服务器更强大的功能。
-![在这里插入图片描述](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNTcyMDM4NQ==,size_16,color_FFFFFF,t_70.jpeg)
+![在这里插入图片描述](参考图片/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNTcyMDM4NQ==,size_16,color_FFFFFF,t_70.jpeg)
 
 ###### 4、生产者和消费者
 
@@ -1850,7 +1850,7 @@ Redis相比其他缓存，有一个非常大的优势，就是支持多种数据
 **消费者群组**
 
 ​		消费者是消费者群组的一部分，因为会有1个或多个消费者共同读取一个主题。群组保证每个分区只能被一个消费者使用，如图：
-![在这里插入图片描述](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNTcyMDM4NQ==,size_16,color_FFFFFF,t_70-20200321190008973.png)
+![在这里插入图片描述](参考图片/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNTcyMDM4NQ==,size_16,color_FFFFFF,t_70-20200321190008973.png)
 ​		
 
 ​		上图说明，即分区数决定了同组消费者个数的上限
@@ -1960,7 +1960,7 @@ value.serializer
 ###### 17、零复制技术
 
 ​		省去了数据在**内核空间**和**用户空间**来回拷贝，让数据传输不需要经过**user space**。
-![在这里插入图片描述](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNTcyMDM4NQ==,size_16,color_FFFFFF,t_70-20200321190008923.png)
+![在这里插入图片描述](参考图片/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNTcyMDM4NQ==,size_16,color_FFFFFF,t_70-20200321190008923.png)
 ​		实现零复制技术有3种方式：
 
 -   第一种方式，调用**系统mmap函数**。mmap函数基于内存映射的方式。缺点线程不安全，要加锁。
@@ -2102,15 +2102,15 @@ value.serializer
 2、**零拷贝**
 
 ​		先简单了解下文件系统的操作流程，例如一个程序要把文件内容发送到网络,这个程序是工作在用户空间，文件和网络socket属于硬件资源，两者之间有一个内核空间在操作系统内部，整个过程为：
-![在这里插入图片描述](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNTcyMDM4NQ==,size_16,color_FFFFFF,t_70.png)
+![在这里插入图片描述](参考图片/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNTcyMDM4NQ==,size_16,color_FFFFFF,t_70.png)
 ​		在Linux kernel2.2 之后出现了一种叫做”零拷贝(zero-copy)”系统调用机制，就是跳过“用户缓冲区”的拷贝，建立一个磁盘空间和内存的直接映射，数据不再复制到“用户态缓冲区”系统上下文切换减少为2次，可以提升一倍的性能
-![在这里插入图片描述](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNTcyMDM4NQ==,size_16,color_FFFFFF,t_70-20200321185340314.png)
+![在这里插入图片描述](参考图片/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNTcyMDM4NQ==,size_16,color_FFFFFF,t_70-20200321185340314.png)
 
 3、**文件分段**
 
 ​		kafka的队列topic被分为了多个区partition，每个partition又分为多个段segment，所以一个队列中的消息实际上是保存在N多个片段文件中通过分段的方式，每次文件操作都是对一个小文件的操作，非常轻便，同时也增加了并行处理能力      
 
-![在这里插入图片描述](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNTcyMDM4NQ==,size_16,color_FFFFFF,t_70-20200321185340286.png)
+![在这里插入图片描述](参考图片/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNTcyMDM4NQ==,size_16,color_FFFFFF,t_70-20200321185340286.png)
 
 4、**批量发送**
 
@@ -2148,7 +2148,7 @@ value.serializer
 
 ​		大家去设计索引的时候，会发现索引类型是可以选择的。
 
-![img](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/0082zybply1gbyctrt3swj30sy05wac6.jpg)
+![img](参考图片/0082zybply1gbyctrt3swj30sy05wac6.jpg)
 
 > 为什么哈希表、完全平衡二叉树、B树、B+树都可以优化查询，为何Mysql独独喜欢B+树？
 
@@ -2186,13 +2186,13 @@ value.serializer
 
 ​		二叉树是有序的，所以是支持范围查询的。
 
-![img](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/0082zybply1gbrmizw7s9g30ao07qtbx.gif)
+![img](参考图片/0082zybply1gbrmizw7s9g30ao07qtbx.gif)
 
 ​		但是他的**时间复杂度是O(log(N))**，为了维持这个时间复杂度，**更新的时间复杂度也得是O(log(N))**，那就得保持这棵树是完全平衡二叉树了。怎么听你一说，平衡二叉树用来做索引还不错呢？此言差矣，索引也不只是在内存里面存储的，还是要落盘持久化的，可以看到图中才这么一点数据，如果数据多了，**树高会很高**，查询的成本就会随着树高的增加而增加。为了节约成本很多公司的磁盘还是采用的机械硬盘，这样一次千万级别的查询差不多就要10秒了，这谁顶得住啊？
 
 ​		**如果用B树呢？同理来看看B树的结构：**
 
-**![img](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/0082zybply1gbrmhi9rosg30ag02sdh4.gif)**
+**![img](参考图片/0082zybply1gbrmhi9rosg30ag02sdh4.gif)**
 
 ​		可以发现同样的元素，B树的表示要**比完全平衡二叉树要“矮”**，原因在于B树中的**一个节点可以存储多个元素。**B树其实就已经是一个不错的数据结构，用来做索引效果还是不错的。
 
@@ -2200,7 +2200,7 @@ value.serializer
 
 ​		一样先看一下B+的结构：
 
-![img](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/0082zybply1gbrmh3b29og309m04i43b.gif)
+![img](参考图片/0082zybply1gbrmh3b29og309m04i43b.gif)
 
 ​		我们可以发现同样的元素，B+树的表示要比B树要“胖”，原因在于**B+树中的非叶子节点会冗余一份在叶子节点中**，并且叶子节点之间用指针相连。
 
@@ -2228,7 +2228,7 @@ value.serializer
 
 ​		你提到了页的概念，能跟我简单说一下么？首先Mysql的基本存储结构是页(记录都存在页里边)：
 
-![img](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/0082zybply1gbyawfuy6oj310s0tuqe2.jpg)
+![img](参考图片/0082zybply1gbyawfuy6oj310s0tuqe2.jpg)
 
 - 各个数据页可以组成一个双向链表
 

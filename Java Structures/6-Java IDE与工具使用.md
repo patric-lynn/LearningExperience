@@ -216,13 +216,13 @@ org\springframework\spring-core\4.3.4.RELEASE\spring-core-4.3.4.RELEASE.jar
 
 ​		**1.路径最短者优先**
 
-![image-20200310111700662](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310111700662.png)
+![image-20200310111700662](参考图片/image-20200310111700662.png)
 
 ​		例如：当我们工程Animal依赖Cat，Cat又依赖Action，每个单独工程中Action依赖log4j-1.2.17，Cat依赖log4j-1.2.14，那我们的Animal工程要依赖于哪个版本呢？其实Maven为我们提供了内置的原则，就是路径最短者优先，我们的Animal工程最终依赖的是log4j-1.2.14
 
 ​		**2.路径相同先声明优先**
 
-![image-20200310111647815](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310111647815.png)
+![image-20200310111647815](参考图片/image-20200310111647815.png)
 
 ​		例如：当我们工程Animal同时依赖Cat，又依赖Action，每个单独工程中Action依赖log4j-1.2.17，Cat依赖log4j-1.2.14，这时候依赖的路径是相同的，那我们的Animal工程最终依赖的是哪个版本呢？
 
@@ -261,7 +261,7 @@ org\springframework\spring-core\4.3.4.RELEASE\spring-core-4.3.4.RELEASE.jar
 
 ​		依赖范围就是控制依赖在不同阶段的作用。**不同的依赖会使用不同的classpath**，在Maven中依赖的域有这几个：import、provided、runtime、compile、system、test。默认取值为compile。
 
-![image-20200310111855570](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310111855570.png)
+![image-20200310111855570](参考图片/image-20200310111855570.png)
 
 ###### 10.可选依赖和依赖排除
 
@@ -528,7 +528,7 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 
 ###### 4.Maven常用命令
 
-![image-20200310112640077](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310112640077.png)
+![image-20200310112640077](参考图片/image-20200310112640077.png)
 
 ###### 5.Maven常用插件
 
@@ -667,7 +667,7 @@ Maven区别对待Java代码和资源文件，maven-resources-plugin则用来处�
 
 #### Git使用与配置
 
-![image-20200310144411015](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310144411015.png)
+![image-20200310144411015](参考图片/image-20200310144411015.png)
 
 ##### 1.版本控制概念
 
@@ -741,7 +741,7 @@ Maven区别对待Java代码和资源文件，maven-resources-plugin则用来处�
 
 ​		SVN是**集中式版本控制系统**，版本库是集中放在中央服务器的，而干活的时候，用的都是自己的电脑，所以首先要从中央服务器哪里得到最新的版本，然后干活，干完后，需要把自己做完的活推送到中央服务器。集中式版本控制系统是必须联网才能工作，如果在局域网还可以，带宽够大，速度够快，如果在互联网下，如果网速慢的话，就郁闷了。下图就是标准的集中式版本控制工具管理方式：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310140842474.png" alt="image-20200310140842474" style="zoom:50%;" />
+<img src="参考图片/image-20200310140842474.png" alt="image-20200310140842474" style="zoom:50%;" />
 
 ​		集中管理方式在一定程度上看到其他开发人员在干什么，而管理员也可以很轻松掌握每个人的开发权限。
 
@@ -756,7 +756,7 @@ Maven区别对待Java代码和资源文件，maven-resources-plugin则用来处�
 
 ​		Git是**分布式版本控制系统**，它没有中央服务器，每个人的电脑就是一个完整的版本库，这样工作的时候就不需要联网了，因为版本都是在自己的电脑上。既然每个人的电脑都有一个完整的版本库，那多个人如何协作呢？比如说自己在电脑上改了文件A，其他人也在电脑上改了文件A，这时，你们两之间只需把各自的修改**推送给对方**，就可以互相看到对方的修改了。下图就是分布式版本控制工具管理方式：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310140957683.png" alt="image-20200310140957683" style="zoom:50%;" />
+<img src="参考图片/image-20200310140957683.png" alt="image-20200310140957683" style="zoom:50%;" />
 
 ###### 3.Git与SVN的区别
 
@@ -798,7 +798,7 @@ Maven区别对待Java代码和资源文件，maven-resources-plugin则用来处�
 
 ​		Git和其他版本控制系统如SVN的一个不同之处就是有暂存区的概念。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310141625951.png" alt="image-20200310141625951" style="zoom:30%;" />
+<img src="参考图片/image-20200310141625951.png" alt="image-20200310141625951" style="zoom:30%;" />
 
 **Workspace**： 工作区，就是你平时存放项目代码的地方
 
@@ -812,23 +812,23 @@ Maven区别对待Java代码和资源文件，maven-resources-plugin则用来处�
 
 ​		每次的提交Git都把它们**串成一条时间线**，这条时间线就是一个分支。截止到目前，只有**一条时间线**，在Git里这个分支叫主分支，即master分支。HEAD指针严格来说不是指向提交，而是指向master，master才是指向提交的。一开始的时候，master分支是一条线，Git用master指向最新的提交，再用HEAD指向master，就能确定当前分支，以及当前分支的提交点：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310141752505.png" alt="image-20200310141752505" style="zoom:50%;" />
+<img src="参考图片/image-20200310141752505.png" alt="image-20200310141752505" style="zoom:50%;" />
 
 ​		每次提交，master分支都会向前移动一步，这样随着不断提交，master分支的线也越来越长。当我们创建新的分支，例如dev时，Git新建了一个指针叫dev，指向master相同的提交，再把HEAD指向dev，就表示当前分支在dev上：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310141809774.png" alt="image-20200310141809774" style="zoom:50%;" />
+<img src="参考图片/image-20200310141809774.png" alt="image-20200310141809774" style="zoom:50%;" />
 
 ​		Git创建一个分支很快，因为除了增加一个dev指针，改改HEAD的指向，工作区的文件都没有任何变化！不过切换到了dev分，对工作区的修改和提交就是**针对dev分支**了，比如新提交一次后，dev指针往前移动一步，而master指针不变：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310141917777.png" alt="image-20200310141917777" style="zoom:50%;" />
+<img src="参考图片/image-20200310141917777.png" alt="image-20200310141917777" style="zoom:50%;" />
 
 ​		假如我们在dev上的工作完成了，就可以**把dev合并到master上**。Git怎么合并呢？最简单的方法，就是直接把master指向dev的当前提交，就完成了合并：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310141957308.png" alt="image-20200310141957308" style="zoom:50%;" />
+<img src="参考图片/image-20200310141957308.png" alt="image-20200310141957308" style="zoom:50%;" />
 
 ​		所以Git合并分支也很快！就改改指针，工作区内容也不变！合并完分支后，甚至可以删除dev分支。删除dev分支就是把dev指针给删掉，删掉后就剩下了一条master分支：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310142043097.png" alt="image-20200310142043097" style="zoom:50%;" />
+<img src="参考图片/image-20200310142043097.png" alt="image-20200310142043097" style="zoom:50%;" />
 
 ###### 3.远程仓库
 
@@ -991,7 +991,7 @@ temp/
 
 Git 的工作流程图如下：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310141447570.png" alt="image-20200310141447570" style="zoom:50%;" />
+<img src="参考图片/image-20200310141447570.png" alt="image-20200310141447570" style="zoom:50%;" />
 
 
 

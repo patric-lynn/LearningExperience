@@ -220,7 +220,7 @@ Found 1 deadlock.
 
 ​		处理器上的寄存器的读写的速度比内存快几个数量级，为了解决这种速度矛盾，在它们之间加入了**高速缓存**。加入高速缓存带来了一个新的问题：**缓存一致性**。如果多个缓存共享同一块主内存区域，那么多个缓存的数据可能会不一致，需要一些协议来解决这个问题。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310211610094.png" alt="image-20200310211610094" style="zoom:30%;" />
+<img src="参考图片/image-20200310211610094.png" alt="image-20200310211610094" style="zoom:30%;" />
 
 ​		所有的变量都存储在主内存中，每个线程还有自己的工作内存，工作内存**存储在高速缓存或者寄存器中**，保存了该线程使用的**变量的主内存副本拷贝**。线程只能直接操作工作内存中的变量，不同线程之间的变量值传递需要通过主内存来完成。
 
@@ -230,7 +230,7 @@ Found 1 deadlock.
 
 ​		Java 内存模型定义了 **8 个操作**来完成主内存和工作内存的交互操作。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310211718901.png" alt="image-20200310211718901" style="zoom:40%;" />
+<img src="参考图片/image-20200310211718901.png" alt="image-20200310211718901" style="zoom:40%;" />
 
 - **lock（锁定）**：作用于主内存中的变量，它把一个变量标识为**一个线程独占的状态**；
 - **unlock（解锁）**：作用于主内存中的变量，它把一个处于锁定状态的**变量释放出来**，释放后的变量才可以被其他线程锁定
@@ -295,7 +295,7 @@ Found 1 deadlock.
 
 ​		我们都知道，为了性能优化，JMM在不改变正确语义的前提下，会允许编译器和处理器对指令序列**进行重排序**，那如果想阻止重排序要怎么办了？答案是可以**添加内存屏障**。JMM内存屏障分为四类
 
-![image-20200310212928858](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310212928858.png)
+![image-20200310212928858](参考图片/image-20200310212928858.png)
 
 
 
@@ -374,7 +374,7 @@ class ReorderExample {
 ###### 5.数据依赖性
 
 ​		如果两个操作访问同一个变量，且这两个操作中**有一个为写操作**，此时这两个操作之间就存在数据依赖性。数据依赖分下列三种类型：
-![image-20200310221219768](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310221219768.png)
+![image-20200310221219768](参考图片/image-20200310221219768.png)
 
 ​		上面三种情况，只要重排序两个操作的执行顺序，程序的执行结果将会被改变。前面提到过，编译器和处理器可能**会对操作做重排序**。编译器和处理器在重排序时，会**遵守数据依赖性**，编译器和处理器不会改变存在数据依赖关系的两个操作的执行顺序。注意，这里所说的数据依赖性仅针对**单个处理器中执行的指令序列**和**单个线程中执行的操作**，不同处理器之间和**不同线程之间**的数据依赖性**不被**编译器和处理器考虑。如果两个操作访问同一个变量，且这两个操作中有一个为写操作，此时这两个操作之间就存在数据依赖性。所以有数据依赖性的语句**不能进行重排序**。
 
@@ -514,7 +514,7 @@ double area = pi * r * r; //C
 
 ​		**多线程提高CPU使用率**
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310164711675.png" alt="image-20200310164711675" style="zoom:45%;" />
+<img src="参考图片/image-20200310164711675.png" alt="image-20200310164711675" style="zoom:45%;" />
 
 ​		多线程并不能提高运行速度，但可以提高运行效率，**让CPU的使用率更高**。但是如果多线程有安全问题或出现频繁的上下文切换时，运算速度可能反而更低。
 
@@ -682,11 +682,11 @@ pool-1-thread-1 is running...
 
 ​		Java 线程在运行的生命周期中的指定时刻只可能处于下面 6 种不同状态的其中一个状态
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310175648348.png" alt="image-20200310175648348" style="zoom:50%;" />
+<img src="参考图片/image-20200310175648348.png" alt="image-20200310175648348" style="zoom:50%;" />
 
 ​		线程在生命周期中并不是固定处于某一个状态而是随着代码的执行在不同状态之间切换。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310175725928.png" alt="image-20200310175725928" style="zoom:50%;" />
+<img src="参考图片/image-20200310175725928.png" alt="image-20200310175725928" style="zoom:50%;" />
 
 ​		由上图可以看出：线程创建之后它将处于 **NEW（新建）** 状态，调用 `start()` 方法后开始运行，线程这时候处于 **READY（可运行）** 状态。可运行状态的线程获得了 CPU 时间片（timeslice）后就处于 **RUNNING（运行）** 状态。（操作系统隐藏 Java 虚拟机（JVM）中的 RUNNABLE 和 RUNNING 状态，它只能看到 RUNNABLE 状态，所以 Java 系统一般将这两个状态统称为 **RUNNABLE（运行中）** 状态 ）
 
@@ -702,7 +702,7 @@ pool-1-thread-1 is running...
 
 ​		中断可以理解为**线程的一个标志位**，它表示了一个运行中的线程**是否被其他线程进行了中断操作**。中断好比其他线程对该线程打了一个招呼。其他线程**可以调用该线程的interrupt()方法对其进行中断操作**，同时该线程可以调用isInterrupted()来**感知其他线程对其自身的中断操作**，从而做出响应。另外，同样可以调用Thread的静态方法**interrupted() 对当前线程进行中断操作，该方法会清除中断标志位**。需要注意的是，当抛出InterruptedException时候，**会清除中断标志位**，也就是说在**调用isInterrupted会返回false**。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310175903926.png" alt="image-20200310175903926" style="zoom:50%;" />
+<img src="参考图片/image-20200310175903926.png" alt="image-20200310175903926" style="zoom:50%;" />
 
 ```Java
 public class InterruptDemo {
@@ -753,7 +753,7 @@ java.lang.InterruptedException: sleep interrupted
 **join**
 
 ​		join方法可以看做是线程间**协作**的一种方式，很多时候，一个线程的输入可能**非常依赖于另一个线程的输出**，这就像两个好基友，一个基友先走在前面突然看见另一个基友落在后面了，这个时候他就会在原处等一等这个基友，等基友赶上来后，就两人携手并进。其实线程间的这种**协作方式**也符合现实生活。在软件开发的过程中，从客户那里获取需求后，需要经过需求分析师进行需求分解后，这个时候产品，开发才会继续跟进。如果一个线程实例A执行了**threadB.join()**，其含义是：当前**线程A会等待threadB线程终止后threadA才会继续执行**。关于join方法一共提供如下这些方法:
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310180135709.png" alt="image-20200310180135709" style="zoom:50%;" />
+<img src="参考图片/image-20200310180135709.png" alt="image-20200310180135709" style="zoom:50%;" />
 
 ​		Thread类除了提供join()方法外，另外还提供了**超时等待**的方法，如果线程threadB在等待的时间内还没有结束的话，threadA会在超时之后继续执行。join方法源码关键是： 
 
@@ -948,7 +948,7 @@ Exception in thread "main" java.lang.IllegalThreadStateException
 
 ​		如下图所示，线程 A 持有资源 2，线程 B 持有资源 1，他们同时都想申请对方的资源，所以这两个线程就会互相等待而进入死锁状态。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310185746133.png" alt="image-20200310185746133" style="zoom:50%;" />
+<img src="参考图片/image-20200310185746133.png" alt="image-20200310185746133" style="zoom:50%;" />
 
 ​		下面通过一个例子来说明线程死锁，代码模拟了上图的死锁的情况 (代码来源于《并发编程之美》)：
 
@@ -1152,7 +1152,7 @@ public void execute(Runnable command) {
 
 ​		ThreadPoolExecutor的execute方法执行逻辑请见注释。下图为ThreadPoolExecutor的execute方法的执行示意图：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200314132937966.png" alt="image-20200314132937966" style="zoom:40%;" />
+<img src="参考图片/image-20200314132937966.png" alt="image-20200314132937966" style="zoom:40%;" />
 
 ​	execute方法执行逻辑有这样几种情况：
 
@@ -1176,7 +1176,7 @@ public void execute(Runnable command) {
 
 ​		当一个并发任务提交给线程池，线程池分配线程去执行任务的过程如下图所示：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200314133338847.png" alt="image-20200314133338847" style="zoom:40%;" />
+<img src="参考图片/image-20200314133338847.png" alt="image-20200314133338847" style="zoom:40%;" />
 
 ​		从图可以看出，线程池执行所提交的任务过程主要有这样几个阶段：
 
@@ -1874,7 +1874,7 @@ instance = new Instancce() //instance是volatile变量
 
 ​		markword是java**对象头中的一部分**，这里只做markword的简单介绍，因为对象的markword和java各种类型的锁密切相关；markword数据的长度在32位和64位的虚拟机（未开启压缩指针）中分别为**32bit和64bit**，它的**最后2bit是锁状态标志位**，用来标记当前对象的状态，对象的所处的状态，决定了markword存储的内容，如下表所示:
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200327003928796.png" alt="image-20200327003928796" style="zoom:45%;" />
+<img src="参考图片/image-20200327003928796.png" alt="image-20200327003928796" style="zoom:45%;" />
 
 ​		**Class Pointer**
 
@@ -1896,7 +1896,7 @@ instance = new Instancce() //instance是volatile变量
 
 ​		AbstractQueuedSynchronized **抽象队列式同步器**，AQS定义了一套**多线程访问共享资源的同步器框架**，许多同步类实现都依赖于它，如常用的**ReentrantLock**/**Semaphore**/**CountDownLatch**…
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200327010453513.png" alt="image-20200327010453513" style="zoom:45%;" />
+<img src="参考图片/image-20200327010453513.png" alt="image-20200327010453513" style="zoom:45%;" />
 
 ​		AQS维护了一个**volatile int state**（代表共享资源）和一个**FIFO线程等待队列**（多线程争用资源被阻塞时会进入此队列）。state的访问方式有三种:
 
@@ -1918,7 +1918,7 @@ instance = new Instancce() //instance是volatile变量
 
 ##### 2.Java锁具体分类
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200327152608627.png" alt="image-20200327152608627" style="zoom:70%;" />
+<img src="参考图片/image-20200327152608627.png" alt="image-20200327152608627" style="zoom:70%;" />
 
 ​		以下是很多锁的名词，这些分类**并不全是**是指锁的**状态**，有的指锁的**特性**，有的指锁的**设计**，下面总结的内容是对每个锁的名词进行一定的解释。
 
@@ -1928,7 +1928,7 @@ instance = new Instancce() //instance是volatile变量
 
 -   **自旋锁/无锁**：是指尝试获取锁的线程**不会立即阻塞**，而是采用循环的方式去尝试获取锁，这样的好处是减少线程上下文切换的消耗，缺点是**循环会消耗CPU**。如果持有锁的线程能在**很短时间内释放**锁资源，那么那些等待竞争锁的线程就**不需要做内核态和用户态之间的资源消耗与切换进入阻塞挂起状态**，它们只需要等一等（自旋），等持有锁的线程释放锁后即可**立即获取锁**。但是线程自旋是**需要消耗cpu的**，所以需要设定一个自旋等待的**最大时间**, 如果持有锁的线程执行的时间超过自旋等待的最大时间仍没有释放锁，这时争用线程会**停止自旋**进入阻塞状态。自旋锁的实现原理是**CAS**，实质上是无锁状态，**没有对资源进行锁定**。
 
-    <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200327154613539.png" alt="image-20200327154613539" style="zoom:48%;" />
+    <img src="参考图片/image-20200327154613539.png" alt="image-20200327154613539" style="zoom:48%;" />
 
     -   **1. 自旋锁优缺点与使用场景**：自旋锁尽可能的**减少线程的阻塞**，这对于锁的竞争不激烈，且占用锁时间非常短的代码块来说性能能大幅度的提升，因为自旋的消耗会小于线程阻塞挂起再唤醒的操作的消耗，这些操作会导致线程发生两次上下文切换；是如果锁的竞争激烈，或者**持有锁的线程需要长时间占用锁执行同步块**，这时候就不适合使用自旋锁了。
 
@@ -2016,13 +2016,13 @@ instance = new Instancce() //instance是volatile变量
 
         具体过程如下图所示：
 
-        <img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200327161854920.png" alt="image-20200327161854920" style="zoom:40%;" />
+        <img src="参考图片/image-20200327161854920.png" alt="image-20200327161854920" style="zoom:40%;" />
 
         
 
 **轻量级锁与重量级锁的优缺点对比**：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200327145413763.png" alt="image-20200327145413763" style="zoom:45%;" />
+<img src="参考图片/image-20200327145413763.png" alt="image-20200327145413763" style="zoom:45%;" />
 
 ​		综上，自旋锁**通过CAS操作**尝试获取锁；偏向锁通过**对比Mark Word解决加锁问题**，避免执行CAS操作；而轻量级锁是通过**用CAS操作和自旋来解决加锁问题**，避免线程阻塞和唤醒而影响性能；重量级锁则是将**除了拥有锁的线程以外的线程都阻塞**。
 
@@ -2044,7 +2044,7 @@ instance = new Instancce() //instance是volatile变量
 
 ​		**ReentrantLock**可重入锁通过**构造函数指定该锁是否是公平锁**，默认是非公平锁。非公平锁的优点在于**吞吐量比公平锁大**。根据下图源代码对比，我们可以明显的看出公平锁与非公平锁的**lock()方法**唯一的区别就在于公平锁在**获取同步状态时多了一个限制条件**：hasQueuedPredecessors()。hasQueuedPredecessors()方法主要做一件事情：主要是判断当前线程**是否位于同步队列中的第一个**。如果是则返回true，否则返回false
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200327162747604.png" alt="image-20200327162747604" style="zoom:40%;" />
+<img src="参考图片/image-20200327162747604.png" alt="image-20200327162747604" style="zoom:40%;" />
 
 ​		**synchronized**也是一种**非公平锁**。由于其并不像ReentrantLock是**通过AQS的来实现线程调度**，所以并没有任何办法使其变成公平锁。
 

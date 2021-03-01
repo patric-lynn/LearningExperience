@@ -12,19 +12,19 @@
 - **分区**：主题可以被分为**若干个分区**（partition），同一个主题中的**分区可以不在一个机器上**，有可能会部署在多个机器上，由此来**实现 kafka 的伸缩性**，单一主题中的**分区有序**，但是**无法保证主题中所有的分区有序**。
 - **段**：Segment 被译为段，将 Partition 进一步细分为**若干个 segment**，每个 segment 文件的大小相等。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320105637521.png" alt="image-20200320105637521" style="zoom:30%;" />
+<img src="参考图片/image-20200320105637521.png" alt="image-20200320105637521" style="zoom:30%;" />
 
 - **生产者**： 向**主题发布消息的客户端应用程序**称为生产者（Producer），生产者用于持续不断的向某个主题发送消息。
 - **消费者**：**订阅主题消息的客户端程序称为消费者**（Consumer），消费者用于处理生产者产生的消息。
 - **消费者群组**：生产者与消费者的关系就如同餐厅中的厨师和顾客之间的关系一样，一个厨师对应多个顾客，也就是**一个生产者对应多个消费者**，消费者群组（Consumer Group）指的就是由**一个或多个消费者组成的群体**。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320133330411.png" alt="image-20200320133330411" style="zoom:40%;" />
+<img src="参考图片/image-20200320133330411.png" alt="image-20200320133330411" style="zoom:40%;" />
 
 - **偏移量**：偏移量（Consumer Offset）是一种元数据，它是一个**不断递增的整数值**，用来记录消费者发生**重平衡时的位置**，以便用来恢复数据。
 - **broker**: 一个独立的 Kafka 服务器就被称为 broker，**broker 接收来自生产者的消息**，为消息设置**偏移量**，并提交消息到**磁盘保存**。broker **为消费者提供服务**，对**读取分区的请求作出响应**，返回已经提交到磁盘上的消息。
 - **broker 集群**：broker 是集群的组成部分，broker 集群由**一个或多个 broker 组成**，每个集群都有一个 broker 同时充当了**集群控制器**的角色（自动从集群的**活跃成员中选举出来**）。每个集群中的成员都有可能充当 Leader，Leader 负责管理工作，包括将**分区分配给 broker 和监控 broker**。集群中，一个分区从属于一个 Leader，但是**一个分区可以分配给多个 broker**（非Leader），这时候会发生**分区复制**。这种复制的机制为分区提供了**消息冗余**，如果一个 broker 失效，那么其他活跃用户会**重新选举一个 Leader 接管**。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320134314463.png" alt="image-20200320134314463" style="zoom:40%;" />
+<img src="参考图片/image-20200320134314463.png" alt="image-20200320134314463" style="zoom:40%;" />
 
 - **副本**：Kafka 中消息的备份又叫做**副本（Replica）**，副本的数量是可以配置的，Kafka 定义了两类副本：**领导者副本**（Leader Replica） 和 **追随者副本**（Follower Replica），前者**对外提供服务**，后者只是**被动跟随**。
 - **重平衡**：Rebalance。消费者组内某个消费者实例**挂掉**后，其他消费者实例**自动重新分配订阅主题分区**的过程。Rebalance 是 Kafka 消费者端**实现高可用的重要手段**。
@@ -72,7 +72,7 @@ Kafka 的消息队列一般分为两种模式：**点对点模式和发布订阅
 
 ​		Kafka通过Zookeeper**管理集群配置**，**选举leader**，以及在Consumer Group发生变化时进行**rebalance**。Producer使用**push模式将消息发布到broker**，Consumer使用**pull模式从broker订阅并消费**消息。一个典型的 Kafka 集群中包含：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320111105441.png" alt="image-20200320111105441" style="zoom:30%;" />
+<img src="参考图片/image-20200320111105441.png" alt="image-20200320111105441" style="zoom:30%;" />
 
 - **若干Producer**（可以是web前端产生的**Page View**，或者是**服务器日志**，**系统CPU**、Memory等）
 - **若干broker**（Kafka支持**水平扩展**，一般broker**数量越多，集群吞吐率越高**）
@@ -90,7 +90,7 @@ Kafka 有四个核心API，它们分别是
 - **Streams API**，它允许应用程序作为**流处理器**，从一个或多个主题中**消费输入流并为其生成输出流**，有效的**将输入流转换为输出流**。
 - **Connector API**，它允许构建和运行将 Kafka 主题**连接到现有应用程序或数据系统**的可用生产者和消费者。例如，关系数据库的连接器可能会捕获对表的所有更改。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200320112109908.png" alt="image-20200320112109908" style="zoom:30%;" />
+<img src="参考图片/image-20200320112109908.png" alt="image-20200320112109908" style="zoom:30%;" />
 
 
 
@@ -99,7 +99,7 @@ Kafka 有四个核心API，它们分别是
 ##### 1.Producer 生产者
 
 ​		在 Kafka 中，我们把**产生消息的那一方称为生产者**，比如我们经常回去淘宝购物，你打开淘宝的那一刻，你的登陆信息，登陆次数都会**作为消息传输到 Kafka 后台**，当你浏览购物的时候，你的浏览信息，你的搜索指数，你的购物爱好都会作为一个个消息传递给 Kafka 后台，然后淘宝会根据你的爱好做智能推荐，致使你的钱包从来都禁不住诱惑，那么这些生产者产生的消息是怎么传到 Kafka 应用程序的呢？发送过程是怎么样的呢？尽管消息的产生非常简单，但是消息的发送过程还是比较复杂的，如图
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvaW5jeHVhbi9Kb2luY3h1YW4uZ2l0aHViLmlvL21hc3Rlci9pbWFnZS9rYWZrYS1wcm9kdWNlci8wMS5wbmc.png" alt="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvaW5jeHVhbi9Kb2luY3h1YW4uZ2l0aHViLmlvL21hc3Rlci9pbWFnZS9rYWZrYS1wcm9kdWNlci8wMS5wbmc" style="zoom:45%;" />
+<img src="参考图片/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvaW5jeHVhbi9Kb2luY3h1YW4uZ2l0aHViLmlvL21hc3Rlci9pbWFnZS9rYWZrYS1wcm9kdWNlci8wMS5wbmc.png" alt="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0pvaW5jeHVhbi9Kb2luY3h1YW4uZ2l0aHViLmlvL21hc3Rlci9pbWFnZS9rYWZrYS1wcm9kdWNlci8wMS5wbmc" style="zoom:45%;" />
 
 ​		我们从创建一个`ProducerRecord` 对象开始，**ProducerRecord 是 Kafka 中的一个核心类**，它代表了一组 Kafka 需要发送的 `key/value`键值对，它由记录要发送到的**主题名称（Topic Name）**，可选的**分区号（Partition Number）**以及可选的**键值对**构成。在发送 ProducerRecord 时，我们需要**将键值对对象由序列化器**转换为**字节数组**，这样它们才能够在网络上传输。然后**消息到达了分区器**。
 
@@ -177,7 +177,7 @@ public ProducerRecord(String topic, K key, V value) {}
 
 ​		这个构造函数，**需要传递的是 topic主题，key 和 value。**把对应的参数传递完成后，**生产者调用 send()** 方法发送消息**（ProducerRecord对象）**。我们可以从生产者的架构图中看出，消息是先被写入**分区中的缓冲区**中，然后分批次**发送给 Kafka Broker**。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/format,png-4776602.png" alt="img" style="zoom:40%;" />
+<img src="参考图片/format,png-4776602.png" alt="img" style="zoom:40%;" />
 
 ​		发送成功后，send() 方法会返回一个 `Future(java.util.concurrent)` 对象，Future 对象的类型是 `RecordMetadata` 类型，我们上面这段代码**没有考虑返回值，所以没有生成对应的 Future 对象**，所以没有办法知道消息是否发送成功。如果**不是很重要的信息或者对结果不会产生影响的信息**，可以使用这种方式进行发送。
 
@@ -251,11 +251,11 @@ public interface Partitioner extends Configurable, Closeable {
 
 **①顺序轮训：**顺序分配，消息是均匀的分配给每个 partition，即**每个分区存储一次消息**。轮训策略是 Kafka Producer 提供的**默认策略**，如果你不使用指定的轮训策略的话，Kafka 默认会使用顺序轮训策略的方式。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321155632996.png" alt="image-20200321155632996" style="zoom:30%;" />
+<img src="参考图片/image-20200321155632996.png" alt="image-20200321155632996" style="zoom:30%;" />
 
 **②随机轮训：**随机轮训简而言之就是**随机的向 partition 中保存消息**。先计算出**该主题总的分区数**，然后**随机地返回一个小于它的正整数**。本质上看随机策略也是**力求将数据均匀地打散到各个分区**，但从实际表现来看，它**要逊于轮询策略**，所以如果追求数据的均匀分布，还是使用轮询策略比较好。事实上，随机策略是老版本生产者使用的分区策略，**在新版本中已经改为轮询**了。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321160014828.png" alt="image-20200321160014828" style="zoom:30%;" />
+<img src="参考图片/image-20200321160014828.png" alt="image-20200321160014828" style="zoom:30%;" />
 
 实现随机分配的代码只需要两行，如下
 
@@ -268,7 +268,7 @@ return ThreadLocalRandom.current().nextInt(partitions.size());
 
 这个策略也叫做 **key-ordering** 策略，Kafka 中每条消息都**会有自己的key**，一旦消息被定义了 Key，那么你就可以保证**同一个 Key 的所有消息都进入到相同的分区里面**，由于每个分区下的消息处理都是有顺序的，故这个策略被称为**按消息键保序策略**。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321155935324.png" alt="image-20200321155935324" style="zoom:30%;" />
+<img src="参考图片/image-20200321155935324.png" alt="image-20200321155935324" style="zoom:30%;" />
 
 实现这个策略的 partition 方法同样简单，只需要下面两行代码即可：
 
@@ -435,21 +435,21 @@ try {
 
 ​		Kafka 消费者从属于**消费者群组**。一个群组中的消费者订阅的都是**相同的主题**，每个消费者**接收主题一部分分区的消息**。下面是一个 Kafka 分区消费示意图：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321160925293.png" alt="image-20200321160925293" style="zoom:30%;" />
+<img src="参考图片/image-20200321160925293.png" alt="image-20200321160925293" style="zoom:30%;" />
 
 ​		上图中的主题 T1 有**四个分区**，分别是分区0、分区1、分区2、分区3，我们创建一个消费者群组1，消费者群组中**只有一个消费者**，它订阅主题T1，接收到 T1 中的**全部消息**。由于一个消费者处理四个生产者发送到分区的消息，压力有些大，需要帮手来帮忙分担任务，于是就演变为下图
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321161034444.png" alt="image-20200321161034444" style="zoom:30%;" />
+<img src="参考图片/image-20200321161034444.png" alt="image-20200321161034444" style="zoom:30%;" />
 
 ​		这样一来，消费者的消费能力就大大提高了，但是在某些环境下比如用户产生消息特别多的时候，生产者产生的消息仍旧让消费者吃不消，那就**继续增加消费者**。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321161108221.png" alt="image-20200321161108221" style="zoom:30%;" />
+<img src="参考图片/image-20200321161108221.png" alt="image-20200321161108221" style="zoom:30%;" />
 
 ​		向群组中增加消费者是**横向伸缩消费能力的主要方式**。总而言之，我们可以通过**增加消费组的消费者**来进行水平扩展提升消费能力。这也是为什么**建议创建主题时使用比较多的分区数**，这样可以在消费负载高的情况下**增加消费者来提升性能**。另外，消费者的数量不应该比分区数多，因为多出来的消费者是空闲的，没有任何帮助。
 
 ​		Kafka 一个很重要的特性就是，**只需写入一次消息，可以支持任意多的应用读取这个消息**。换句话说，**每个应用都可以读到全量的消息**。为了使得每个应用都能读到全量消息，**应用需要有不同的消费组**。对于上面的例子，假如我们新增了一个新的消费组 G2，而这个消费组有两个消费者，那么就演变为下图这样
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321161255324.png" alt="image-20200321161255324" style="zoom:30%;" />
+<img src="参考图片/image-20200321161255324.png" alt="image-20200321161255324" style="zoom:30%;" />
 
 ​		在这个场景中，消费组 G1 和消费组 G2 都能收到 T1 主题的全量消息，在逻辑意义上来说它们属于不同的应用。
 
@@ -471,7 +471,7 @@ try {
 **②消费者重平衡**
 
 ​		我们从上面的消费者演变图中可以知道这么一个过程：最初是**一个消费者订阅一个主题并消费其全部分区的消息**，后来**有一个消费者加入群组，随后又有更多的消费者加入群组**，而新加入的消费者实例分摊了最初消费者的部分消息，这种**把分区的所有权通过一个消费者转到其他消费者的行为称为重平衡**，英文名也叫做 Rebalance 。
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321162632156.png" alt="image-20200321162632156" style="zoom:40%;" />
+<img src="参考图片/image-20200321162632156.png" alt="image-20200321162632156" style="zoom:40%;" />
 
 ​		重平衡非常重要，它为消费者群组带来了**高可用性** 和 **伸缩性**，我们可以放心的添加消费者或移除消费者，不过在正常情况下我们并不希望发生这样的行为。在重平衡期间，**消费者无法读取消息**，造成整个消费者组在重平衡的期间都不可用。另外，**当分区被重新分配给另一个消费者时，消息当前的读取状态会丢失**，它有可能还**需要去刷新缓存，在它重新恢复状态之前会拖慢应用程序**。
 
@@ -494,11 +494,11 @@ try {
 
 ​		如果提交的偏移量小于客户端最后一次处理的偏移量，那么**位于两个偏移量之间的消息就会被重复处理**
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321163925577.png" alt="image-20200321163925577" style="zoom:30%;" />
+<img src="参考图片/image-20200321163925577.png" alt="image-20200321163925577" style="zoom:30%;" />
 
 ​		如果提交的偏移量大于最后一次消费时的偏移量，那么处于**两个偏移量中间的消息将会丢失**：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321163941890.png" alt="image-20200321163941890" style="zoom:30%;" />
+<img src="参考图片/image-20200321163941890.png" alt="image-20200321163941890" style="zoom:30%;" />
 
 ​		既然_consumer_offset 如此重要，那么提交方式是怎样的呢？下面我们就来说一下提交方式，**KafkaConsumer API 提供了多种方式来提交偏移量**：
 
@@ -564,7 +564,7 @@ try {
 
 ​		Kafka 采用同步还是异步的呢？都不是，Kafka 采用的是一种 **`响应式(Reactor)模型`**，那么什么是响应式模型呢？简单的说，**Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于处理多个客户端并发向服务器端发送请求的场景**，如下图所示
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321181533110.png" alt="image-20200321181533110" style="zoom:30%;" />
+<img src="参考图片/image-20200321181533110.png" alt="image-20200321181533110" style="zoom:30%;" />
 
 ​		Kafka 的 broker 端有个 SocketServer组件，类似于处理器，SocketServer 是基于 TCP 的 Socket 连接的，它用于接受客户端请求，所有的请求消息都包含一个消息头，消息头中都包含如下信息
 
@@ -576,7 +576,7 @@ try {
 ​        broker 会在它所**监听的每一个端口上运行一个 Acceptor 线程**，这个线程会创建一个连接，并把它交给 Processor(网络线程池)， Processor 的数量可以使用 num.network.threads 进行配置，其默认值是3，表示每台 broker 启动时会创建3个线程，专门处理客户端发送的请求。 
 
 ​        Acceptor 线程会**采用轮询的方式将入栈请求公平的发送至网络线程池中**，因此，在实际使用过程中，这些线程通常具有**相同的机率被分配到待处理请求队列中**，然后从响应队列获取响应消息，把它们发送给客户端。Processor 网络线程池中的请求 - 响应的处理还是比较复杂的，下面是网络线程池中的处理流程图：
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321181616057.png" alt="image-20200321181616057" style="zoom:37%;" />
+<img src="参考图片/image-20200321181616057.png" alt="image-20200321181616057" style="zoom:37%;" />
 
 
 
@@ -601,7 +601,7 @@ try {
 
 ​		客户端可以**设置获取请求数据的上限和下限**，上限指的是客户端为接受足够消息分配的内存空间，这个限制比较重要，如果上限太大的话，很有可能直接耗尽客户端内存。下限可以理解为攒足了数据包再发送的意思，这就相当于项目经理给程序员分配了 10 个bug，程序员每次改一个 bug 就会向项目经理汇报一下，有的时候改好了有的时候可能还没改好，这样就增加了沟通成本和时间成本，所以下限值就是程序员改完10个 bug 汇报。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321182700806.png" alt="image-20200321182700806" style="zoom:40%;" />
+<img src="参考图片/image-20200321182700806.png" alt="image-20200321182700806" style="zoom:40%;" />
 
 ​		如图可以看到，在拉取消息 —> 消息 之间**是有一个等待消息积累**这么一个过程的，这个消息积累你可以把它想象成超时时间，不过超时会跑出异常，消息积累超时后会响应回执。延迟时间可以通过 **replica.lag.time.max.ms** 来配置，它指定了副本在复制消息时可被允许的最大延迟时间。
 
@@ -638,19 +638,19 @@ try {
 
 ​		消费者组一开始处于 **Empty 状态**，当重平衡开启后，它会被置于 PreparingRebalance 状态等待新消费者的加入，一旦有新的消费者加入后，消费者群组就会处于 **CompletingRebalance 状态等待分配**，**只要有新的消费者加入群组或者离开，就会触发重平衡**，消费者的状态处于 PreparingRebalance 状态。等待分配机制指定好后完成分配，那么它的流程图是这样的：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321183821277.png" alt="image-20200321183821277" style="zoom:41%;" />
+<img src="参考图片/image-20200321183821277.png" alt="image-20200321183821277" style="zoom:41%;" />
 
 ​		当消费者群组都**到达 `Stable` 状态后**，一旦有新的**消费者加入/离开/心跳过期**，那么**触发重平衡**，消费者群组的状态**重新处于 PreparingRebalance 状态**。那么它的流程图是这样的。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321183746972.png" alt="image-20200321183746972" style="zoom:38%;" />
+<img src="参考图片/image-20200321183746972.png" alt="image-20200321183746972" style="zoom:38%;" />
 
 ​		在上图的基础上，消费者群组处于 PreparingRebalance 状态后，很不幸，没人玩儿了，**所有消费者都离开**了，这时候还可能会**保留有消费者消费的位移数据**，一旦位移数据过期或者被刷新，**那么消费者群组就处于 `Dead` 状态**了。它的流程图是这样的
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321183928358.png" alt="image-20200321183928358" style="zoom:38%;" />
+<img src="参考图片/image-20200321183928358.png" alt="image-20200321183928358" style="zoom:38%;" />
 
 ​		在上图的基础上，分析了消费者的重平衡，在 `PreparingRebalance`或者 `CompletingRebalance` 或者 `Stable` 任意一种状态下**发生位移主题分区 Leader 发生变更**，群组会直接处于 Dead 状态，它的所有路径如下：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321183956266.png" alt="image-20200321183956266" style="zoom:38%;" />
+<img src="参考图片/image-20200321183956266.png" alt="image-20200321183956266" style="zoom:38%;" />
 
 ###### 3.重平衡流程
 
@@ -662,11 +662,11 @@ try {
 
 ​		新的消费者加入群组时，这个消费者**会向协调器发送 JoinGroup 请求**。在该请求中，每个消费者成员都需要将自己消费的 topic 进行提交，我们上面描述群组协调器中说过，这么做的目的就是为了让协调器收集足够的元数据信息，**来选取消费者组的领导者**。通常情况下，**第一个发送 JoinGroup 请求的消费者会自动称为领导者**。领导者的任务是收集所有成员的订阅信息，然后根据这些信息，制定具体的分区消费分配方案。如图
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321184047790.png" alt="image-20200321184047790" style="zoom:38%;" />
+<img src="参考图片/image-20200321184047790.png" alt="image-20200321184047790" style="zoom:38%;" />
 
 ​		在所有的消费者都加入进来**并把元数据信息提交给领导者后**，领导者做出**分配方案并发送 `SyncGroup`请求给协调者，协调者负责下发群组中的消费策略**。下图描述了 SyncGroup 请求的过程
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321184111436.png" alt="image-20200321184111436" style="zoom:38%;" />
+<img src="参考图片/image-20200321184111436.png" alt="image-20200321184111436" style="zoom:38%;" />
 
 ​		当所有成员都成功接收到分配方案后，消费者组进入到 Stable 状态，即开始正常的消费工作。
 
@@ -687,7 +687,7 @@ try {
 
 ​		我们讨论的场景消费者集群状态**处于Stable 等待分配的过程**，这时候如果有新的成员加入组的话，重平衡的过程
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321184202055.png" alt="image-20200321184202055" style="zoom:38%;" />
+<img src="参考图片/image-20200321184202055.png" alt="image-20200321184202055" style="zoom:38%;" />
 
 ​		从这个角度来看，协调者的过程和消费者类似，只是刚刚从消费者的角度去看，现在从领导者的角度去看
 
@@ -695,13 +695,13 @@ try {
 
 ​		组成员离开消费者群组指的是**消费者实例调用 `close()` 方法主动通知协调者它要退出**。这里又会有一个新的请求出现 **`LeaveGroup()请求`** 。如下图所示
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321184238578.png" alt="image-20200321184238578" style="zoom:38%;" />
+<img src="参考图片/image-20200321184238578.png" alt="image-20200321184238578" style="zoom:38%;" />
 
 **组成员崩溃**
 
 ​		组成员崩溃是指消费者实例出现严重故障，**宕机或者一段时间未响应，协调者接收不到消费者的心跳，就会被认为是`组成员崩溃`**，崩溃离组是被动的，协调者通常需要**等待一段时间才能感知到**，这段时间一般是由消费者端参数 session.timeout.ms 控制的。如下图所示
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321184313568.png" alt="image-20200321184313568" style="zoom:38%;" />
+<img src="参考图片/image-20200321184313568.png" alt="image-20200321184313568" style="zoom:38%;" />
 
 **重平衡时提交位移**
 
@@ -736,12 +736,12 @@ try {
 **①控制器的选举**
 
 ​		Kafka 当前选举控制器的规则是：Kafka 集群中**第一个启动的 broker 通过在 ZooKeeper 里创建一个临时节点 /controller 让自己成为 controller 控制器**。其他 broker 在启动时**也会尝试创建这个节点，但是由于这个节点已存在，所以后面想要创建 /controller 节点时就会收到一个 节点已存在 的异常**。然后其他 broker 会在这个控制器上注册一个 **ZooKeeper 的 watch 对象**，/controller 节点发生变化时，**其他 broker 就会收到节点变更通知**。这种方式可以确保只有一个控制器存在。那么**只有单独的节点一定是有个问题的，那就是单点问题**。
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321174401138.png" alt="image-20200321174401138" style="zoom:45%;" />
+<img src="参考图片/image-20200321174401138.png" alt="image-20200321174401138" style="zoom:45%;" />
 
 
 
 ​		如果控制器关闭或者与 ZooKeeper 断开链接，ZooKeeper 上的**临时节点就会消失**。集群中的其他节点收到 watch 对象发送控制器下线的消息后，其他 broker 节点都会**尝试让自己去成为新的控制器**。其他节点的创建规则和第一个节点的创建原则一致，都是第一个在 ZooKeeper 里成功创建控制器节点的 broker 会成为新的控制器，那么其他节点就会收到节点已存在的异常，然后**在新的控制器节点上再次创建 watch 对象进行监听**。
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321174531543.png" alt="image-20200321174531543" style="zoom:45%;" />
+<img src="参考图片/image-20200321174531543.png" alt="image-20200321174531543" style="zoom:45%;" />
 
 
 
@@ -775,7 +775,7 @@ try {
 
 ​		broker controller 会提供数据服务，用于保存大量的 Kafka 集群数据。如下图
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321175053072.png" alt="image-20200321175053072" style="zoom:30%;" />
+<img src="参考图片/image-20200321175053072.png" alt="image-20200321175053072" style="zoom:30%;" />
 
 ​		可以对上面保存信息归类，主要分为三类
 
@@ -802,7 +802,7 @@ try {
 
 ​		在 Kafka 0.11 之后，Kafka controller 采用了新的设计，**把多线程的方案改成了单线程加事件队列的方案**。如图:
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321175437326.png" alt="image-20200321175437326" style="zoom:40%;" />
+<img src="参考图片/image-20200321175437326.png" alt="image-20200321175437326" style="zoom:40%;" />
 
 ​		主要所做的改变有下面这几点：
 
@@ -819,7 +819,7 @@ try {
 ​		复制功能是 Kafka 架构的**核心功能**，在 Kafka 文档里面 Kafka **把自己描述为 一个分布式的、可分区的、可复制的提交日志服务**。复制之所以这么关键，是因为**消息的持久存储非常重要**，这能够保证在主节点宕机后依旧能够保证 Kafka 高可用。副本机制也可以称为**备份机制(Replication)**，通常指分布式系统在多台网络交互的机器上保存有相同的数据备份/拷贝。
 
 ​		Kafka 使用**主题来组织数据**，每个主题又被分为**若干个分区**，分区会部署在一到多个 broker 上，每个**分区都会有多个副本**，所以副本也会被保存在 broker 上，**每个 broker 可能会保存成千上万个副本**。下图是一个副本复制示意图：
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321175957946.png" alt="image-20200321175957946" style="zoom:37%;" />
+<img src="参考图片/image-20200321175957946.png" alt="image-20200321175957946" style="zoom:37%;" />
 
 ​		为了简单我只画出了两个 broker ,每个 broker 只保存了一个 Topic 的消息，在 broker1 中分区0 是Leader，它负责进行分区的复制工作，把 broker1 中的分区0复制一个副本到 broker2 的主题 A 的分区0。同理，主题 A 的分区1也是一样的道理。副本类型分为两种：一种是 **Leader(领导者) 副本**，一种是**Follower(跟随者)副本**。
 
@@ -831,13 +831,13 @@ try {
 
 ​		除了 Leader 副本以外的副本统称为 `Follower 副本`，Follower 不对外提供服务。下面是 Leader 副本的工作方式
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321180125982.png" alt="image-20200321180125982" style="zoom:30%;" />
+<img src="参考图片/image-20200321180125982.png" alt="image-20200321180125982" style="zoom:30%;" />
 
 - Kafka 中，**Follower 副本也就是追随者副本是不对外提供服务的**。这就是说，任何一个追随者副本**都不能响应消费者和生产者的请求**。所有的请求都是由**领导者副本来处理**。或者说，所有的请求都必须发送到 Leader 副本所在的 broker 中，**Follower 副本只是用做数据拉取，采用异步拉取的方式，并写入到自己的提交日志**中，从而实现与 Leader 的同步
 - 当 Leader 副本所在的 broker 宕机后，**Kafka 依托于 ZooKeeper 提供的监控功能能够实时感知到，并开启新一轮的选举，从追随者副本中选一个作为 Leader**。如果宕机的 broker 重启完成后，该分区的副本会作为 Follower 重新加入。
 
 ​        首领的另一个任务是**搞清楚哪个跟随者的状态与自己是一致的**。跟随者为了保证与领导者的状态一致，**在有新消息到达之前先尝试从领导者那里复制消息**。为了与领导者保持一致，跟随者向领导者发起获取数据的请求，这种请求与消费者为了读取消息而发送的信息是一样的。跟随者向领导者发送消息的过程是这样的，**先请求消息1，然后再接收到消息1，在时候到请求1之后，发送请求2，在收到领导者给发送给跟随者之前，跟随者是不会继续发送消息的。**这个过程如下
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200321180223250.png" alt="image-20200321180223250" style="zoom:37%;" />
+<img src="参考图片/image-20200321180223250.png" alt="image-20200321180223250" style="zoom:37%;" />
 
 ​		跟随者副本在收到响应消息前，是不会继续发送消息，**这一点很重要**。通过查看每个跟随者请求的最新偏移量，首领就会知道每个跟随者复制的进度。如果跟随者在10s 内没有请求任何消息，或者虽然跟随者已经发送请求，但是在10s 内没有收到消息，**就会被认为是不同步的**。如果一个副本没有与领导者同步，那么在领导者掉线后，这个副本将不会称为领导者，因为这个副本的消息不是全部的。与之相反的，如果**跟随者同步的消息和领导者副本的消息一致，那么这个跟随者副本又被称为同步的副本**。也就是说，如果领导者掉线，那么**只有同步的副本能够成为领导者**。关于副本机制说了这么多，那么副本机制的好处是什么呢？
 

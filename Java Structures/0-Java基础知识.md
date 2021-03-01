@@ -467,7 +467,7 @@
 
 ##### **Java工具包的基本构成**
 
-![image-20200310151807287](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310151807287.png)
+![image-20200310151807287](参考图片/image-20200310151807287.png)
 
 ##### **JVM**
 
@@ -530,11 +530,11 @@
 
 ##### **Java关键字/保留字(Java 8版本)**
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310151918898.png" alt="image-20200310151918898" style="zoom:55%;" />
+<img src="参考图片/image-20200310151918898.png" alt="image-20200310151918898" style="zoom:55%;" />
 
 ##### **Java8以后新增关键字**
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200405110940779.png" alt="image-20200405110940779" style="zoom:50%;" />
+<img src="参考图片/image-20200405110940779.png" alt="image-20200405110940779" style="zoom:50%;" />
 
 
 
@@ -585,7 +585,7 @@
 
 ##### **常见转义字符表**
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152141800.png" alt="image-20200310152141800" style="zoom:40%;" />
+<img src="参考图片/image-20200310152141800.png" alt="image-20200310152141800" style="zoom:40%;" />
 
 ##### **Java中需要转义的字符**
 
@@ -715,7 +715,7 @@ do {
 
 ##### 算术运算符
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152315099.png" alt="image-20200310152315099" style="zoom:50%;" />
+<img src="参考图片/image-20200310152315099.png" alt="image-20200310152315099" style="zoom:50%;" />
 
 注意事项
 
@@ -726,7 +726,7 @@ do {
 
 ##### 比较运算符（关系运算符）
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152332471.png" alt="image-20200310152332471" style="zoom:50%;" />
+<img src="参考图片/image-20200310152332471.png" alt="image-20200310152332471" style="zoom:50%;" />
 
 - 注意事项
     - 1、比较运算符的**两端都是boolean类型**，也就是说要么是true，要么是false；
@@ -740,7 +740,7 @@ do {
 
 ##### 逻辑运算符（符号的两端都是boolean类型）
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152348297.png" alt="image-20200310152348297" style="zoom:50%;" />
+<img src="参考图片/image-20200310152348297.png" alt="image-20200310152348297" style="zoom:50%;" />
 
 注意事项
 
@@ -752,11 +752,11 @@ do {
 
 ##### 位运算符（两端都是数值型的数据）
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152412191.png" alt="image-20200310152412191" style="zoom:50%;" />
+<img src="参考图片/image-20200310152412191.png" alt="image-20200310152412191" style="zoom:50%;" />
 
 ##### 三元运算符（三目运算符）
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152445704.png" alt="image-20200310152445704" style="zoom:50%;" />
+<img src="参考图片/image-20200310152445704.png" alt="image-20200310152445704" style="zoom:50%;" />
 
 - 注意事项
     - 1、表达式1与表达式2的**类型必须一致**；
@@ -764,7 +764,7 @@ do {
 
 ##### 运算符优先级
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152502026.png" alt="image-20200310152502026" style="zoom:50%;" />
+<img src="参考图片/image-20200310152502026.png" alt="image-20200310152502026" style="zoom:50%;" />
 
 
 
@@ -983,7 +983,7 @@ public class Variable{
 
 ##### 分类
 
-![image-20200310152544126](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200310152544126.png)
+![image-20200310152544126](参考图片/image-20200310152544126.png)
 
 - 基本数据类型
     - 数值型
@@ -2244,7 +2244,7 @@ XML 声明之前不能有注释
 
 XML中的转义字符与HTML一样。
 因为很多符号已经被XML文档结构所使用，所以在元素体或属性值中想使用这些符号就必须使用转义字符，例如：“<”、“>”、“’”、“””、“&”。
-![image-20200304153621248](/Users/xiaoxiangyuzhu/Library/Application Support/typora-user-images/image-20200304153621248.png)
+![image-20200304153621248](参考图片/image-20200304153621248.png)
 
 ###### CDATA区
 
@@ -2470,7 +2470,7 @@ void				 **set(E e)** 用指定元素替换列表中调用next()或previous()的
 
 **ArrayList、LinkedList、Vector 的区别**
 
-![image-20200304162128807](/Users/xiaoxiangyuzhu/Library/Application Support/typora-user-images/image-20200304162128807.png)
+![image-20200304162128807](参考图片/image-20200304162128807.png)
 
 总结：ArrayList 和 Vector **基于数组实现**，对于随机访问get和set，ArrayList优于LinkedList，因为LinkedList要移动指针。
 
@@ -2559,7 +2559,7 @@ public static void main(String[] args) {
 
 **HashSet、TreeSet、LinkedHashSet的区别**
 
-![image-20200304162550706](/Users/xiaoxiangyuzhu/Library/Application Support/typora-user-images/image-20200304162550706.png)
+![image-20200304162550706](参考图片/image-20200304162550706.png)
 
 **HashSet如何检查重复**
 
@@ -2595,11 +2595,11 @@ public static void main(String[] args) {
 - HashMap：基于**哈希表**实现。
 - HashTable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程可以同时写入 HashTable 并且不会导致数据不一致。**它是遗留类，不应该去使用它**。现在可以使用 **ConcurrentHashMap** 来支持线程安全，并且 ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。
 - LinkedHashMap：使用**双向链表来维护元素的顺序**，顺序为插入顺序或者最近最少使用（LRU）顺序。
-    ![image-20200304163233608](/Users/xiaoxiangyuzhu/Library/Application Support/typora-user-images/image-20200304163233608.png)
+    ![image-20200304163233608](参考图片/image-20200304163233608.png)
 
 ###### **HashMap在JDK1.7和JDK1.8中有哪些不同**
 
-![image-20200304163313037](/Users/xiaoxiangyuzhu/Library/Application Support/typora-user-images/image-20200304163313037.png)
+![image-20200304163313037](参考图片/image-20200304163313037.png)
 
 ###### **ConcurrentHashMap在JDK1.7和JDK1.8中有哪些不同**
 
@@ -2607,7 +2607,7 @@ public static void main(String[] args) {
 
 ​		具体来讲，ConcurrentHashMap的数据结构是由**一个Segment数组和多个HashEntry组成**,Segment数组的意义就是将一个大的table分割成**多个小的table来进行加锁**，也就是**锁分离技术**，而每一个Segment元素存储的是**HashEntry数组+链表**，这个**和HashMap的数据存储结构一样**.ConcurrentHashMap的初始化是会通过位与运算来初始化Segment的大小，用ssize来表示.Segment的大小取值都是**2的N次方**，无关concurrencyLevel的取值。concurrencyLevel最大只能用16位的二进制来表示，即65536，换句话说，Segment的大小最多65536个，没有指定concurrencyLevel的元素初始化，Segment的大小ssize默认为16。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200405165052495.png" alt="image-20200405165052495" style="zoom:40%;" />
+<img src="参考图片/image-20200405165052495.png" alt="image-20200405165052495" style="zoom:40%;" />
 
 ​		JDK8中ConcurrentHashMap参考了**JDK8 HashMap的实现**，采用了**数组+链表+红黑树的实现方式**来设计，内部大量采用**CAS操作**。Java8 ConcurrentHashMap结构基本上和Java8的HashMap一样，不过保证线程安全性。
 
@@ -2625,7 +2625,7 @@ public static void main(String[] args) {
 -   TreeNode继承于Node，但是数据结构换成了二叉树结构，它是**红黑树的数据的存储结构**，用于红黑树中存储数据，当链表的节点数大于8时会转换成红黑树的结构，他就是通过TreeNode作为存储结构代替Node来转换成红黑树。
 -   TreeBin从字面含义中可以理解为**存储树形结构的容器**，而树形结构就是指TreeNode，所以TreeBin就是封装TreeNode的容器，它提供转换黑红树的一些条件和锁的控制。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200405165355267.png" alt="image-20200405165355267" style="zoom:40%;" />
+<img src="参考图片/image-20200405165355267.png" alt="image-20200405165355267" style="zoom:40%;" />
 
 
 
@@ -3485,13 +3485,13 @@ void linkBefore(E e, Node<E> succ) {
 
 ​		JDK1.8之前采用的是**拉链法**。拉链法：将链表和数组相结合。也就是说创建一个链表数组，数组中每一格就是一个链表。若遇到哈希冲突，则将冲突的值加到链表中即可。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200305231409179.png" alt="image-20200305231409179" style="zoom:50%;" />
+<img src="参考图片/image-20200305231409179.png" alt="image-20200305231409179" style="zoom:50%;" />
 
 **JDK1.8之后**
 
 ​		相比于之前的版本，jdk1.8在解决哈希冲突时有了较大的变化，当**链表长度大于阈值（默认为8）时**，数组初始化容量**默认为16**，将链表转化为红黑树，以减少搜索时间。
 
-![image-20200305231352753](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200305231352753.png)
+![image-20200305231352753](参考图片/image-20200305231352753.png)
 
 **JDK1.7 VS JDK1.8 比较**
 
@@ -3501,11 +3501,11 @@ void linkBefore(E e, Node<E> succ) {
 - 引入了红黑树，目的是**避免单条链表过长而影响查询效率**，红黑树算法请参考
 - 解决了多线程死循环问题，但仍是非线程安全的，多线程时可能会造成数据丢失问题。
 
-![image-20200305231518724](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200305231518724.png)
+![image-20200305231518724](参考图片/image-20200305231518724.png)
 
 ##### 继承关系图
 
-![HashMap继承关系图](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/format,png.png)
+![HashMap继承关系图](参考图片/format,png.png)
 
 ​		HashMap继承抽象类AbstractMap，实现Map接口。除此之外，它还实现了两个标识型接口，这两个接口都没有任何方法，仅作为标识表示实现类具备某项功能。`Cloneable`表示实现类支持克隆，`java.io.Serializable`则表示支持序列化。
 
@@ -3630,7 +3630,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 ​		下面举例说明下，n为table的长度。
 
 
-![image-20200305232326677](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200305232326677.png)
+![image-20200305232326677](参考图片/image-20200305232326677.png)
 
 ​		相比于 JDK1.8 的 hash 方法 ，JDK 1.7 的 hash 方法的性能会稍差一点点，因为毕竟扰动了 4 次。
 
@@ -3639,7 +3639,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 ​		当我们put的时候，首先计算 key的hash值，这里调用了 hash方法，hash方法实际是让key.hashCode()与key.hashCode()>>>16进行异或操作，高16bit补0，一个数和0异或不变，所以 hash 函数大概的作用就是：高16bit不变，低16bit和高16bit做了一个异或，目的是减少碰撞。按照函数注释，因为bucket数组大小是2的幂，计算下标index = (table.length - 1) & hash，如果不做 hash 处理，相当于散列生效的只有几个低 bit 位，为了减少散列的碰撞，设计者综合考虑了速度、作用、质量之后，使用高16bit和低16bit异或来简单处理减少碰撞，而且JDK8中用了复杂度 O（logn）的树结构来提升碰撞下的性能。
 
 **putVal方法执行流程图**
-![image-20200305232726735](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200305232726735.png)
+![image-20200305232726735](参考图片/image-20200305232726735.png)
 
 ###### get()方法
 
@@ -4475,7 +4475,7 @@ private void deleteEntry(Entry<K,V> p) {
 
 ##### Java异常架构
 
-![image-20200309181306175](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200309181306175.png)
+![image-20200309181306175](参考图片/image-20200309181306175.png)
 
 1. ###### Throwable
 
@@ -4549,7 +4549,7 @@ Throwable 包含了其线程创建时线程执行**堆栈的快照**，它提供
 
 #### Java异常处理流程
 
-![image-20200309182750070](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200309182750070.png)
+![image-20200309182750070](参考图片/image-20200309182750070.png)
 
 ​		Java 通过面向对象的方法进行异常处理，一旦方法抛出异常，系统自动根据该异常对象寻找合适异常处理器（Exception Handler）来处理该异常，把各种不同的异常进行分类，并提供了良好的接口。在 Java 中，每个异常都是一个对象，它是 Throwable 类或其子类的实例。当一个方法出现异常后**便抛出一个异常对象**，该对象中包含有异常信息，调用这个对象的方法可以捕获到这个异常并可以对其进行处理。Java 的异常处理是通过 5 个关键词来实现的：try、catch、throw、throws 和 finally。在Java应用中，异常的处理机制分为**声明异常**，**抛出异常**和**捕获异常**。
 
@@ -4576,7 +4576,7 @@ Throwable 包含了其线程创建时线程执行**堆栈的快照**，它提供
 
 ​		可以根据下图来选择是捕获异常，声明异常还是抛出异常
 
-![image-20200309183047208](/Users/xiaoxiangyuzhu/Pictures/Typora%20Images/image-20200309183047208.png)
+![image-20200309183047208](参考图片/image-20200309183047208.png)
 
 #### 常见异常处理方式
 
