@@ -297,7 +297,7 @@
 
 ​		`Java`堆中划分出一块内存来作为**句柄池**，引用中存储对象的**句柄地址**，而句柄中包含了**对象实例数据**与**对象类型数据**各自的**具体地址**信息，具体构造如下图所示：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%2520Images/image-20200306134612950-4461689.png" alt="image-20200306134612950" style="zoom:36%;" />
+<img src="参考图片/image-20200306134612950-4461689.png" alt="image-20200306134612950" style="zoom:36%;" />
 
 ​		**优势**：引用中存储的是**稳定**的句柄地址，在对象被移动（垃圾收集时移动对象是**非常普遍的行为**）时只会改变**句柄中**的**实例数据指针**，而**引用**本身不需要修改。
 
@@ -343,7 +343,7 @@
 
 ​		如下图所示: Object5、Object6、Object7 虽然互有关联, 但它们到GC Roots是不可达的, 因此也会被判定为可回收的对象。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%2520Images/image-20200307095606406-4461689.png" alt="image-20200307095606406" style="zoom:30%;" />
+<img src="参考图片/image-20200307095606406-4461689.png" alt="image-20200307095606406" style="zoom:30%;" />
 
 ​		在 Java 中可作为 GC Roots 的对象包含以下几种：
 
@@ -408,9 +408,9 @@
 
 ​		标记-清除算法的执行的过程如下图所示
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%2520Images/image-20200307100324612-4461689.png" alt="image-20200307100324612" style="zoom:30%;" />
+<img src="参考图片/image-20200307100324612-4461689.png" alt="image-20200307100324612" style="zoom:30%;" />
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%2520Images/image-20200307100342383-4461689.png" alt="image-20200307100342383" style="zoom:30%;" />
+<img src="参考图片/image-20200307100342383-4461689.png" alt="image-20200307100342383" style="zoom:30%;" />
 
 
 
@@ -423,9 +423,9 @@
 
 ​		复制算法的执行过程如下图所示
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%2520Images/image-20200307100425740-4461689.png" alt="image-20200307100425740" style="zoom:30%;" />
+<img src="参考图片/image-20200307100425740-4461689.png" alt="image-20200307100425740" style="zoom:30%;" />
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%2520Images/image-20200307100439883-4461689.png" alt="image-20200307100439883" style="zoom:30%;" />
+<img src="参考图片/image-20200307100439883-4461689.png" alt="image-20200307100439883" style="zoom:30%;" />
 
 ​		现在的商业虚拟机都采用这种算法来**回收新生代**，在 IBM 的研究中新生代中的对象 **98% 都是「朝生夕死」**，所以并**不需要按照 1:1 的比例来划分空间**，而是将内存分为一块**较大的 Eden 空间和两块较小的 Survivor 空间**，每次使用 Eden 和其中一块 Survivor。当回收时，将 Eden 和 Survivor 中**还存活的对象一次性复制到另一块 Survivor 空间上**，最后**清理掉 Eden 和刚才用过的 Survivor 空间**。
 
@@ -444,9 +444,9 @@
 
 ​		标记-整理算法的执行过程如下图所示
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%2520Images/image-20200307101709817-4461689.png" alt="image-20200307101709817" style="zoom:30%;" />
+<img src="参考图片/image-20200307101709817-4461689.png" alt="image-20200307101709817" style="zoom:30%;" />
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%2520Images/image-20200307101719762-4461689.png" alt="image-20200307101719762" style="zoom:30%;" />
+<img src="参考图片/image-20200307101719762-4461689.png" alt="image-20200307101719762" style="zoom:30%;" />
 
 
 
@@ -454,7 +454,7 @@
 
 ​		当前商业虚拟机都采用**分代收集**的垃圾收集算法。分代收集算法，顾名思义是根据对象的**存活周期**将内存划分为几块。一般包括**年轻代**、**老年代** 和 **永久代**，如图所示：
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%2520Images/image-20200307101809113-4461689.png" alt="image-20200307101809113" style="zoom:40%;" />
+<img src="参考图片/image-20200307101809113-4461689.png" alt="image-20200307101809113" style="zoom:40%;" />
 
 **1.新生代（Young generation）**
 
@@ -497,7 +497,7 @@
 
 ​		**当所有存活的对象被复制到To Survivor空间，或者晋升到老年代，也就意味着Eden空间和From Survivor空间剩下的都是可回收对象**，如下图所示。
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%2520Images/image-20200307103533473-4461689.png" alt="image-20200307103533473" style="zoom:30%;" />
+<img src="参考图片/image-20200307103533473-4461689.png" alt="image-20200307103533473" style="zoom:30%;" />
 
 ​		这时GC执行Minor Collection，**Eden空间和From Survivor空间都会被清空**，而存活的对象都存放在To Survivor空间。接下来将**From Survivor空间和To Survivor空间互换位置**，也就是此前的From Survivor空间成为了现在的To Survivor空间，每次Survivor空间互换都要保证To Survivor空间是空的，这就是**复制算法在新生代中的应用**。在老年代则**采用了标记-压缩算法**。
 
@@ -515,7 +515,7 @@
 
     **垃圾收集算法小结汇总图**
 
-<img src="/Users/xiaoxiangyuzhu/Pictures/Typora%2520Images/image-20200307103944731-4461689.png" alt="image-20200307103944731" style="zoom:33%;" />
+<img src="参考图片/image-20200307103944731-4461689.png" alt="image-20200307103944731" style="zoom:33%;" />
 
 
 
@@ -753,7 +753,7 @@
 
   	（1）针对**JVM堆的设置**，一般可以通过-Xms -Xmx限定其最小、最大值，**为了防止垃圾收集器在最小、最大之间收缩堆而产生额外的时间，我们通常把最大、最小设置为相同的值**
   	（2）**年轻代和年老代将根据默认的比例（1：2）分配堆内存**，可以通过调整二者之间的比率NewRadio来调整二者之间的大小，也可以针对回收代，比如年轻代，通过 -XX:newSize -XX:MaxNewSize来设置其绝对大小。同样，为了防止年轻代的堆收缩，我们通常会把-XX:newSize -XX:MaxNewSize设置为同样大小
-
+  	
   	（3）年轻代和年老代设置多大才算合理？这个问题**毫无疑问是没有答案的**，否则也就不会有调优。我们观察一下二者大小变化有哪些影响
 
 -   **更大的年轻代必然导致更小的年老代，大的年轻代会延长普通GC的周期，但会增加每次GC的时间；小的年老代会导致更频繁的Full GC**
