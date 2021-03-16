@@ -2627,6 +2627,12 @@ public static void main(String[] args) {
 
 <img src="参考图片/image-20200405165355267.png" alt="image-20200405165355267" style="zoom:40%;" />
 
+###### 多线程下安全的操作 map
+
+- 第一种方法，使用`Hashtable`线程安全类；给整个哈希表加了一把大锁，多线程访问时候，只要有一个线程访问或操作该对象，那其他线程只能阻塞等待需要的锁被释放，在竞争激烈的多线程场景中性能就会非常差，**所以 Hashtable 不推荐使用**
+- 第二种方法，使用`Collections.synchronizedMap`方法，对方法进行加同步锁，对 HashMap 做的方法做了一层包装，里面使用对象锁来保证多线程场景下，操作安全，本质也是对 HashMap 进行全表锁！**使用`Collections.synchronizedMap`方法，在竞争激烈的多线程环境下性能依然也非常差，所以不推荐使用**；
+- 第三种方法，使用并发包中的`ConcurrentHashMap`类；
+
 
 
 ##### 7.集合工具类Collections
@@ -3481,13 +3487,19 @@ void linkBefore(E e, Node<E> succ) {
 
 ​		在Java中，保存数据有两种比较简单的数据结构：**数组和链表**。数组的特点是：寻址容易，插入和删除困难；链表的特点是：寻址困难，但插入和删除容易；所以我们将数组和链表结合在一起，发挥两者各自的优势，使用一种叫做拉链法的方式可以解决哈希冲突。
 
-**JDK1.8之前**
+##### 继承关系图
+
+![HashMap继承关系图](参考图片/format,png.png)
+
+​		HashMap继承抽象类AbstractMap，实现Map接口。除此之外，它还实现了两个标识型接口，这两个接口都没有任何方法，仅作为标识表示实现类具备某项功能。`Cloneable`表示实现类支持克隆，`java.io.Serializable`则表示支持序列化。
+
+##### **JDK1.8之前**
 
 ​		JDK1.8之前采用的是**拉链法**。拉链法：将链表和数组相结合。也就是说创建一个链表数组，数组中每一格就是一个链表。若遇到哈希冲突，则将冲突的值加到链表中即可。
 
 <img src="参考图片/image-20200305231409179.png" alt="image-20200305231409179" style="zoom:50%;" />
 
-**JDK1.8之后**
+##### **JDK1.8之后**
 
 ​		相比于之前的版本，jdk1.8在解决哈希冲突时有了较大的变化，当**链表长度大于阈值（默认为8）时**，数组初始化容量**默认为16**，将链表转化为红黑树，以减少搜索时间。
 
@@ -3503,11 +3515,164 @@ void linkBefore(E e, Node<E> succ) {
 
 ![image-20200305231518724](参考图片/image-20200305231518724.png)
 
-##### 继承关系图
+##### **扩容机制**
 
-![HashMap继承关系图](参考图片/format,png.png)
+###### 1.8之前
 
-​		HashMap继承抽象类AbstractMap，实现Map接口。除此之外，它还实现了两个标识型接口，这两个接口都没有任何方法，仅作为标识表示实现类具备某项功能。`Cloneable`表示实现类支持克隆，`java.io.Serializable`则表示支持序列化。
+​		这里就是使用一个容量更大的数组来代替已有的容量小的数组，transfer()方法将原有Entry数组的元素拷贝到新的Entry数组里。newTable[i]的引用赋给了e.next，也就是使用了**单链表的头插入方式**，同一位置上新元素总会被放在链表的头部位置；这样先放在一个索引上的元素终会被放到Entry链的尾部(**如果发生了hash冲突的话**），这一点和Jdk1.8有区别。
+
+​		这句话是重点----hash(){return key % table.length;}方法,就是翻译下面的一行解释：假设了我们的hash算法就是简单的用key mod 一下表的大小（也就是数组的长度）。其中的哈希桶数组table的size=2， 所以key = 3、7、5，put顺序依次为 5、7、3。在mod 2以后都冲突在table[1]这里了。这里假设负载因子 loadFactor=1，即当键值对的实际大小size 大于 table的实际大小时进行扩容。接下来的三个步骤是哈希桶数组 resize成4，然后所有的Node重新rehash的过程。
+
+![img](参考图片/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BhbmdlMTk5MQ==,size_16,color_FFFFFF,t_70.png)
+
+```
+  void transfer(Entry[] newTable) {
+        Entry[] src = table;                   //src引用了旧的Entry数组
+        int newCapacity = newTable.length;
+        for (int j = 0; j < src.length; j++) { //遍历旧的Entry数组
+            Entry<K, V> e = src[j];             //取得旧Entry数组的每个元素
+            if (e != null) {
+                src[j] = null;//释放旧Entry数组的对象引用（for循环后，旧的Entry数组不再引用任何对象）
+                do {
+                    Entry<K, V> next = e.next;
+                    int i = indexFor(e.hash, newCapacity); //！！重新计算每个元素在数组中的位置
+                    e.next = newTable[i]; //标记[1]
+                    newTable[i] = e;      //将元素放在数组上
+                    e = next;             //访问下一个Entry链上的元素
+                } while (e != null);
+            }
+        }
+    }
+    
+ void resize(int newCapacity) {   //传入新的容量
+        Entry[] oldTable = table;    //引用扩容前的Entry数组
+        int oldCapacity = oldTable.length;
+        if (oldCapacity == MAXIMUM_CAPACITY) {  //扩容前的数组大小如果已经达到最大(2^30)了
+            threshold = Integer.MAX_VALUE; //修改阈值为int的最大值(2^31-1)，这样以后就不会扩容了
+            return;
+        }
+ 
+        Entry[] newTable = new Entry[newCapacity];  //初始化一个新的Entry数组
+        transfer(newTable);                         //！！将数据转移到新的Entry数组里
+        table = newTable;                           //HashMap的table属性引用新的Entry数组
+        threshold = (int) (newCapacity * loadFactor);//修改阈值
+    }
+```
+
+
+
+###### 1.8之后
+
+JDK1.8做了哪些优化。经过观测可以发现，我们使用的是2次幂的扩展(指长度扩为原来2倍)。n为table的长度，图（a）表示扩容前的key1和key2两种key确定索引位置的示例，图（b）表示扩容后key1和key2两种key确定索引位置的示例，其中hash1是key1对应的哈希值(也就是根据key1算出来的hashcode值)与高位与运算的结果。
+
+![img](参考图片/20170123110634173.png)
+
+元素在重新计算hash之后，因为n变为2倍，那么n-1的mask范围在高位多1bit(红色)，因此新的index就会发生这样的变化：
+
+![img](参考图片/20170123110716285.png)
+
+因此，我们在扩充HashMap的时候，不需要像JDK1.7的实现那样重新计算hash，只需要看看原来的hash值新增的那个bit是1还是0就好了，是0的话索引没变，是1的话索引变成“原索引+oldCap”，可以看看下图为16扩充为32的resize示意图：
+
+![img](参考图片/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BhbmdlMTk5MQ==,size_16,color_FFFFFF,t_70-20210316210044013.png)
+
+这个设计确实非常的巧妙，既省去了重新计算hash值的时间，而且同时，由于新增的1bit是0还是1可以认为是随机的，因此resize的过程，均匀的把之前的冲突的节点分散到新的bucket了。这一块就是JDK1.8新增的优化点。有一点注意区别，JDK1.7中rehash的时候，旧链表迁移新链表的时候，如果在新表的数组索引位置相同，则链表元素会倒置，但是从上图可以看出，JDK1.8不会倒置。
+
+```
+final Node<K,V>[] resize() {
+    Node<K,V>[] oldTab = table;
+    int oldCap = (oldTab == null) ? 0 : oldTab.length;
+    int oldThr = threshold;
+    int newCap, newThr = 0;
+    if (oldCap > 0) {
+        // 超过最大值就不再扩充了，就只好随你碰撞去吧
+        if (oldCap >= MAXIMUM_CAPACITY) {
+            threshold = Integer.MAX_VALUE;
+            return oldTab;
+        }
+        // 没超过最大值，就扩充为原来的2倍
+        else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY &&
+                  oldCap >= DEFAULT_INITIAL_CAPACITY)
+             newThr = oldThr << 1; // double threshold
+     }
+     else if (oldThr > 0) // initial capacity was placed in threshold
+         newCap = oldThr;
+     else {               // zero initial threshold signifies using defaults
+         newCap = DEFAULT_INITIAL_CAPACITY;
+         newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
+     }
+     // 计算新的resize上限
+     if (newThr == 0) {
+ 
+         float ft = (float)newCap * loadFactor;
+         newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ?
+                   (int)ft : Integer.MAX_VALUE);
+     }
+     threshold = newThr;
+     @SuppressWarnings({"rawtypes"，"unchecked"})
+         Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];
+    table = newTab;
+    if (oldTab != null) {
+        // 把每个bucket都移动到新的buckets中
+        for (int j = 0; j < oldCap; ++j) {
+            Node<K,V> e;
+            if ((e = oldTab[j]) != null) {
+                oldTab[j] = null;
+                if (e.next == null)
+                    newTab[e.hash & (newCap - 1)] = e;
+                else if (e instanceof TreeNode) //如果是红黑树节点
+                    ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
+                else { // 链表优化重hash的代码块
+                    Node<K,V> loHead = null, loTail = null;
+                    Node<K,V> hiHead = null, hiTail = null;
+                    Node<K,V> next;
+                    do {
+                        next = e.next;
+                        // 原索引
+                        if ((e.hash & oldCap) == 0) {
+                            if (loTail == null)
+                                loHead = e;
+                            else
+                                loTail.next = e;
+                            loTail = e;
+                        }
+                        // 原索引+oldCap
+                        else {
+                            if (hiTail == null)
+                                hiHead = e;
+                            else
+                                hiTail.next = e;
+                            hiTail = e;
+                        }
+                    } while ((e = next) != null);
+                    // 原索引放到bucket里
+                    if (loTail != null) {
+                        loTail.next = null;
+                        newTab[j] = loHead;
+                    }
+                    // 原索引+oldCap放到bucket里
+                    if (hiTail != null) {
+                        hiTail.next = null;
+                        newTab[j + oldCap] = hiHead;
+                    }
+                }
+            }
+        }
+    }
+    return newTab;
+}
+```
+
+###### 扩容小结
+
+(1) 扩容是一个特别耗性能的操作，所以当程序员在使用HashMap的时候，估算map的大小，初始化的时候给一个大致的数值，避免map进行频繁的扩容。
+
+(2) 负载因子是可以修改的，也可以大于1，但是建议不要轻易修改，除非情况非常特殊。
+
+(3) HashMap是线程不安全的，不要在并发的环境中同时操作HashMap，建议使用ConcurrentHashMap。
+
+(4) JDK1.8引入红黑树大程度优化了HashMap的性能。
+
+
 
 ##### 成员变量
 
@@ -3545,9 +3710,13 @@ transient Set<Map.Entry<K,V>> entrySet;
 - threshold table扩容的**临界值**
 - loadFactor **负载因子**，一般 threshold = capacity * loadFactor，默认的**负载因子0.75**是对空间和时间效率的一个平衡选择，建议大家不要修改。
 
-##### 构造方法
 
-```java
+
+##### 核心方法
+
+###### 构造方法
+
+```
 //初始化容量以及负载因子
 public HashMap(int initialCapacity, float loadFactor) {
     //判断初始化数组的容量大小
@@ -3579,16 +3748,16 @@ public HashMap() {
 public HashMap(Map<? extends K, ? extends V> m) {  
     this.loadFactor = DEFAULT_LOAD_FACTOR;  
     putMapEntries(m, false);  
-}  
+} 
 ```
 
 其中主要有两种形式：
 
 ​		定义初始容量大小（table数组的大小，缺省值为16），定义负载因子（缺省值为0.75）的形式，直接拷贝别的HashMap的形式，在此不作讨论。值得注意的是，当我们自定义HashMap初始容量大小时，构造函数并非直接把我们定义的数值当做HashMap容量大小，而是把该数值当做参数调用方法tableSizeFor，然后把返回值作为HashMap的初始容量大小
 
-##### 核心方法
 
-###### hash()算法—— 注意！！！此处是hash算法，利用的是hashcode值
+
+###### hash()算法
 
 ​		JDK1.8 之前 HashMap 底层是 数组和链表 结合在一起使用。HashMap 通过 key 的 hashCode 经过扰动函数处理过后得到 hash 值，然后通过 (n - 1) & hash 判断当前元素存放的位置（这里的 n 指的是数组的长度），如果当前位置存在元素的话，就判断该元素与要存入的元素的 hash 值以及 key 是否相同，如果相同的话，直接覆盖，不相同就通过拉链法解决冲突。
 
@@ -3994,153 +4163,52 @@ public class SimpleCacheTest {
 
 #### ConcurrentHashMap(JDK1.8)源码解析
 
+##### 1.8之前
+
+**1.7及之前版本的分段锁技术**
+
+​		针对HashTable会锁整个hash表的问题，ConcurrentHashMap提出了分段锁的解决方案。
+
+​		分段锁的思想就是：锁的时候不锁整个hash表，而是只锁一部分。如何实现呢？这就用到了ConcurrentHashMap中最关键的Segment。
+
+​		ConcurrentHashMap中维护着一个Segment数组，每个Segment可以看做是一个HashMap。而Segment本身继承了ReentrantLock，它本身就是一个锁。在Segment中通过HashEntry数组来维护其内部的hash表。每个HashEntry就代表了map中的一个K-V，用HashEntry可以组成一个链表结构，通过next字段引用到其下一个元素。所以，JDK7中只要hash值足够分散，那么每次put的时候就会put到不同的segment中去。 而segment自己本身就是一个锁，put的时候，当前segment会将自己锁住，此时其他线程无法操作这个segment， 但不会影响到其他segment的操作。这个就是锁分段带来的好处。
+
+**HashMap的线程安全问题大部分出在扩容(rehash)的过程中。**
+
+​		1.7之前版本的ConcurrentHashMap的扩容**只针对每个segment中的HashEntry数组进行扩容**。由上述put的源码可知，ConcurrentHashMap在**rehash的时候是有锁的**，所以在rehash的过程中，**其他线程无法对segment的hash表做操作**，这就保证了线程安全。
+
+​		成员变量**sizeCtl**在ConcurrentHashMap中的其中一个作用相当于HashMap中的threshold，当hash表中元素个数超过sizeCtl时，触发扩容； 他的另一个作用类似于一个标识，例如，当他**等于-1的时候，说明已经有某一线程在执行hash表的初始化了**，一个小于-1的值表示某一线程正在对hash表执行resize。
+
+​		这个方法首先判断sizeCtl是否小于0，如果小于0，直接将**当前线程变为就绪状态的线程**。
+
+​		当sizeCtl大于等于0时，当前线程会尝试**通过CAS的方式将sizeCtl的值修改为-1**。修改失败的线程会进入下一轮循环，判断sizeCtl<0了，被yield住；修改成功的线程会继续执行下面的初始化代码。
+
+**1.7及前的put操作**
+
+- 第一步，尝试获取对象锁，如果获取到返回 true，否则执行`scanAndLockForPut`方法，这个方法也是尝试获取对象锁；
+- 第二步，获取到锁之后，类似 hashMap 的 put 方法，通过 key 计算所在 HashEntry 数组的下标；
+- 第三步，获取到数组下标之后遍历链表内容，通过 key 和 hash 值判断是否 key 已存在，如果已经存在，通过标识符判断是否覆盖，默认覆盖；
+- 第四步，如果不存在，采用头插法插入到 HashEntry 对象中；
+- 第五步，最后操作完整之后，释放对象锁；
+
+**1.7及之前的remove 操作**
+
+remove 操作和 put 方法差不多，都需要获取对象锁才能操作，通过 key 找到元素所在的 Segment 对象然后移除
+
+- 先获取对象锁；
+- 计算 key 的 hash 值在 HashEntry[]中的角标；
+- 根据 index 角标获取 HashEntry 对象；
+- 循环遍历 HashEntry 对象，HashEntry 为单向链表结构；
+- 通过 key 和 hash 判断 key 是否存在，如果存在，就移除元素，并将需要移除的元素节点的下一个，向上移；
+- 最后就是释放对象锁，以便其他线程使用；
+
+
+
+##### 1.8之后
+
 ##### put操作
 
-```Java
-  public  V put(K key, V value) {  
-
-  return  putVal(key, value,  false    );  
-
-  }  
-
-  /** Implementation for put and putIfAbsent */  
-
-  final  V putVal(K key, V value,  boolean  onlyIfAbsent) {  
-
-  if  (key ==  null  || value ==  null    )  throw  new  NullPointerException();  
-
-  int  hash = spread(key.hashCode());  //两次hash，减少hash冲突，可以均匀分布  
-
-  int  binCount =  0    ;  
-
-  for  (Node<K,V>[] tab = table;;) {  //对这个table进行迭代  
-
-  Node<K,V> f;  int  n, i, fh;  
-
-  //这里就是上面构造方法没有进行初始化，在这里进行判断，为null就调用initTable进行初始化，属于懒汉模式初始化  
-
-  if  (tab ==  null  || (n = tab.length) ==  0    )  
-
-  tab = initTable();  
-
-  else  if  ((f = tabAt(tab, i = (n -  1    ) & hash)) ==  null    ) {    //如果i位置没有数据，就直接无锁插入  
-
-  if  (casTabAt(tab, i,  null    ,  
-
-  new  Node<K,V>(hash, key, value,  null    )))  
-
-  break    ;  // no lock when adding to empty bin  
-
-  }  
-
-  else  if  ((fh = f.hash) == MOVED)    //如果在进行扩容，则先进行扩容操作  
-
-  tab = helpTransfer(tab, f);  
-
-  else  {  
-
-  V oldVal =  null    ;  
-
-  //如果以上条件都不满足，那就要进行加锁操作，也就是存在hash冲突，锁住链表或者红黑树的头结点  
-
-  synchronized  (f) {  
-
-  if  (tabAt(tab, i) == f) {  
-
-  if  (fh >=  0    ) {  //表示该节点是链表结构  
-
-  binCount =  1    ;  
-
-  for  (Node<K,V> e = f;; ++binCount) {  
-
-  K ek;  
-
-  //这里涉及到相同的key进行put就会覆盖原先的value  
-
-  if  (e.hash == hash &&  
-
-  ((ek = e.key) == key ||  
-
-  (ek !=  null  && key.equals(ek)))) {  
-
-  oldVal = e.val;  
-
-  if  (!onlyIfAbsent)  
-
-  e.val = value;  
-
-  break    ;  
-
-  }  
-
-  Node<K,V> pred = e;  
-
-  if  ((e = e.next) ==  null    ) {  //插入链表尾部  
-
-  pred.next =  new  Node<K,V>(hash, key,  
-
-  value,  null    );  
-
-  break    ;  
-
-  }  
-
-  }  
-
-  }  
-
-  else  if  (f  instanceof  TreeBin) {    //红黑树结构  
-
-  Node<K,V> p;  
-
-  binCount =  2    ;  
-
-  //红黑树结构旋转插入  
-
-  if  ((p = ((TreeBin<K,V>)f).putTreeVal(hash, key,  
-
-  value)) !=  null    ) {  
-
-  oldVal = p.val;  
-
-  if  (!onlyIfAbsent)  
-
-  p.val = value;  
-
-  }  
-
-  }  
-
-  }  
-
-  }  
-
-  if  (binCount !=  0    ) {  //如果链表的长度大于8时就会进行红黑树的转换  
-
-  if  (binCount >= TREEIFY_THRESHOLD)  
-
-  treeifyBin(tab, i);  
-
-  if  (oldVal !=  null    )  
-
-  return  oldVal;  
-
-  break    ;  
-
-  }  
-
-  }  
-
-  }  
-
-  addCount(1L, binCount);    //统计size，并且检查是否需要扩容  
-
-  return  null    ;  
-
-  }  
-
-
-```
+不同于JDK7中segment的概念，JDK8中直接用链表的头节点做为锁。 JDK7中，HashMap在多线程并发put的情况下可能会形成环形链表，ConcurrentHashMap通过这个锁的方式，使同一时间只有有一个线程对某一链表执行put，解决了并发问题。
 
 **put的过程很清晰，对当前的table进行无条件自循环直到put成功，可以分成以下六步流程来概述**
 
@@ -4151,58 +4219,70 @@ public class SimpleCacheTest {
 5.  最后一个如果该链表的数量大于阈值8，就要先转换成黑红树的结构，break再一次进入循环
 6.  如果添加成功就调用addCount（）方法统计size，并且检查是否需要扩容
 
+流程分为以下步骤：
+
+- 首先会判断 key、value 是否为空，如果为**空就抛异常**；
+
+- 接着会判断容器数组是否为空，如果为空就**初始化数组**；
+
+- 进一步判断，要插入的元素`f`，在当前数组下标**是否第一次插入**，如果是就通过 **CAS 方式插入**；
+
+- 在接着判断`f.hash == -1`是否成立，如果成立，说明当前`f`是`ForwardingNode`节点，表示有**其它线程正在扩容**，则一起进行扩容操作；
+
+- 其他的情况，就是把新的`Node`节点按链表或红黑树的方式插入到合适的位置；
+
+- 节点插入完成之后，接着判断链表长度是否超过`8`，如果超过`8`个，就将**链表转化为红黑树结构**；
+
+- 最后，插入完成之后，进行addCount扩容判断；
+
+  **addCount 扩容判断**
+
+- 第 1 步，利用 CAS 将方法更新 baseCount 的值
+
+- 第 2 步，检查是否需要扩容，默认 check = 1，需要检查；
+
+- 第 3 步，如果满足扩容条件，判断当前是否正在扩容，如果是正在扩容就一起扩容；
+
+- 第 4 步，如果不在扩容，将 sizeCtl 更新为负数，并进行扩容处理；
+
+put 的流程基本分析完了，可以从中发现，里面大量的使用了`CAS`方法，CAS 表示比较与替换，里面有 3 个参数，分别是**目标内存地址、旧值、新值**，每次判断的时候，会将旧值与目标内存地址中的值进行比较，如果相等，就将新值更新到内存地址里，如果不相等，就继续循环，直到操作成功为止
+
+
+
 ##### get操作
-
-```Java
-  public  V get(Object key) {  
-
-  Node<K,V>[] tab; Node<K,V> e, p;  int  n, eh; K ek;  
-
-  int  h = spread(key.hashCode());  //计算两次hash  
-
-  if  ((tab = table) !=  null  && (n = tab.length) >  0  &&  
-
-  (e = tabAt(tab, (n -  1    ) & h)) !=  null    ) {    //读取首节点的Node元素  
-
-  if  ((eh = e.hash) == h) {  //如果该节点就是首节点就返回  
-
-  if  ((ek = e.key) == key || (ek !=  null  && key.equals(ek)))  
-
-  return  e.val;  
-
-  }  
-
-  //hash值为负值表示正在扩容，这个时候查的是ForwardingNode的find方法来定位到nextTable来  
-
-  //查找，查找到就返回  
-
-  else  if  (eh <  0    )  
-
-  return  (p = e.find(h, key)) !=  null  ? p.val :  null    ;  
-
-  while  ((e = e.next) !=  null    ) {    //既不是首节点也不是ForwardingNode，那就往下遍历  
-
-  if  (e.hash == h &&  
-
-  ((ek = e.key) == key || (ek !=  null  && key.equals(ek))))  
-
-  return  e.val;  
-
-  }  
-
-  }  
-
-  return  null    ;  
-
-  }  
-
-```
 
 ​		**ConcurrentHashMap**的get操作的流程很简单，也很清晰，可以分为三个步骤来描述
 
 1.  计算hash值，定位到该table索引位置，如果是首节点符合就返回
 2.  如果遇到扩容的时候，会调用标志正在扩容节点ForwardingNode的find方法，查找该节点，匹配就返回
 3.  以上都不符合的话，就往下遍历节点，匹配就返回，否则最后就返回null
+
+
+
+##### remove操作
+
+reomve 方法操作和 put 类似，只是方向是反的。从源码中可以看出，步骤如下：
+
+- 第 1 步，循环遍历数组，接着校验参数；
+- 第 2 步，判断是否有别的线程正在扩容，如果是一起扩容；
+- 第 3 步，用 synchronized 同步锁，保证并发时元素移除安全；
+- 第 4 步，因为 `check= -1`，所以不会进行扩容操作，利用 CAS 操作修改 baseCount 值；
+
+
+
+##### 扩容操作
+
+**安全扩容问题**
+
+put方法的最后一步是统计hash表中元素的个数，**如果超过sizeCtl的值，触发扩容**。对ConcurrentHashMap是如何解决HashMap并发问题这一疑问进行简要说明。
+
+- 首先new一个新的hash表(nextTable)出来，大小**是原来的2倍**。后面的rehash都是**针对这个新的hash表操作**，不涉及原hash表(table)。
+- 然后会对原hash表(table)中的**每个链表进行rehash**，此时会**尝试获取头节点的锁**。这一步就保证了在rehash的过程中**不能对这个链表执行put操作**。
+- 通过sizeCtl控制，使**扩容过程中不会new出多个新hash表来**。
+- 最后，将所有键值对重新**rehash到新表(nextTable)中后，用nextTable将table替换**。这就避免了HashMap中**get和扩容并发时**，可能get到null的问题。
+- 在整个过程中，共享变量的存储和读取全部通过**volatile或CAS**的方式，保证了线程安全。
+
+
 
 ##### 总结与思考
 
